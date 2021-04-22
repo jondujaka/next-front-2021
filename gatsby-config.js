@@ -1,3 +1,9 @@
+require('dotenv').config({
+	path: `.env.${process.env.NODE_ENV}`
+});
+
+console.log(process.env.WP_GRAPHQL_URL)
+
 module.exports = {
 	siteMetadata: {
 		title: `Next 2021`,
@@ -5,6 +11,12 @@ module.exports = {
 		author: `@jondujaka`
 	},
 	plugins: [
+		{
+			resolve: `gatsby-source-wordpress`,
+			options: {
+				url: process.env.WP_GRAPHQL_URL
+			}
+		},
 		`gatsby-plugin-react-helmet`,
 		`gatsby-plugin-image`,
 		{
