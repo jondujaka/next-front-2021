@@ -61,7 +61,7 @@ const createPages = async ({pages, gatsbyUtilities}) => {
 
 			return gatsbyUtilities.actions.createPage({
 				
-				path: page.uri,
+				path: page.uri === `/home/` ? `/` : page.uri,
 
 				component: path.resolve(`./src/templates/${componentSlug}.js`),
 

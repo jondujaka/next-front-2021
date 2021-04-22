@@ -1,5 +1,6 @@
 import React from "react"
 import { graphql, Link } from "gatsby"
+import LangSwitcher from '../components/LangSwitcher';
 
 const Home = ({ data: { page } }) => {
 
@@ -8,7 +9,7 @@ const Home = ({ data: { page } }) => {
 
 	  <div>
 	  <h1>{page.title} ??</h1>
-	  {page.translations.length ? <Link to={page.translations[0].uri}>Switch language</Link> : null}
+	  {page.translations.length ? <LangSwitcher item={page.translations[0]}/> : null}
 	  </div>
   )
 }
