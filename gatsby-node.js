@@ -33,7 +33,9 @@ exports.createPages = async gatsbyUtilities => {
 			? artistInfo.artist.language.slug
 			: null;
 
-		const editionSettings = editionsToBuild.find(edition => edition.year == year);
+		const editionSettings = editionsToBuild.find(
+			edition => edition.year == year
+		);
 
 		if (editionSettings.testWebsite) {
 			console.log(`building artists for: ${year}`);
@@ -41,7 +43,11 @@ exports.createPages = async gatsbyUtilities => {
 				lang && lang === `sk` ? `sk/` : ``
 			}artist/${artistInfo.artist.slug}`;
 			const template = `artist`;
-			const context = { edition: year, id: artistInfo.artist.id, settings: {...editionSettings} };
+			const context = {
+				edition: year,
+				id: artistInfo.artist.id,
+				settings: { ...editionSettings }
+			};
 			createArtistsPromises.push(
 				createIndividualPage(slug, template, context, gatsbyUtilities)
 			);
@@ -49,8 +55,6 @@ exports.createPages = async gatsbyUtilities => {
 	});
 
 	await Promise.all(createArtistsPromises);
-
-
 
 	const allEvents = await getAllEvents(gatsbyUtilities);
 	const createEventPromises = [];
@@ -60,19 +64,25 @@ exports.createPages = async gatsbyUtilities => {
 		const lang = eventInfo.event.language
 			? eventInfo.event.language.slug
 			: null;
-		
+
 		console.log(`event ${year}`);
 		console.log(JSON.stringify(editionsToBuild));
 
-		const editionSettings = editionsToBuild.find(edition => edition.year == year);
+		const editionSettings = editionsToBuild.find(
+			edition => edition.year == year
+		);
 
 		if (editionSettings.testWebsite) {
 			console.log(`building events for: ${year}`);
-			const slug = `/${year}/${
-				lang && lang === `sk` ? `sk/` : ``
-			}event/${eventInfo.event.slug}`;
+			const slug = `/${year}/${lang && lang === `sk` ? `sk/` : ``}event/${
+				eventInfo.event.slug
+			}`;
 			const template = `event`;
-			const context = { edition: year, id: eventInfo.event.id, settings: {...editionSettings} };
+			const context = {
+				edition: year,
+				id: eventInfo.event.id,
+				settings: { ...editionSettings }
+			};
 			createEventPromises.push(
 				createIndividualPage(slug, template, context, gatsbyUtilities)
 			);
@@ -80,6 +90,49 @@ exports.createPages = async gatsbyUtilities => {
 	});
 
 	await Promise.all(createEventPromises);
+
+	const mainHome = await getMainHomePage(gatsbyUtilities);
+
+	await buildMainHome(mainHome, gatsbyUtilities);
+};
+
+const buildMainHome = async (mainHome, gatsbyUtilities) => {
+	const homePromises = [];
+
+	let skHome;
+	if (mainHome.translations.length) {
+		skHome = mainHome.translations[0];
+	}
+
+	homePromises.push(
+		createIndividualPage(
+			`/`,
+			`home`,
+			{
+				availableEditions: editionsToBuild,
+				id: mainHome.id,
+				lang: `en`,
+				translation: skHome ? skHome : {}
+			},
+			gatsbyUtilities
+		)
+	);
+	if (skHome) {
+		homePromises.push(
+			createIndividualPage(
+				`/sk`,
+				`home`,
+				{
+					availableEditions: editionsToBuild,
+					id: skHome.id,
+					lang: `sk`,
+					translation: { language: { slug: `en` } }
+				},
+				gatsbyUtilities
+			)
+		);
+	}
+	await Promise.all(homePromises);
 };
 
 const buildEdition = async (year, gatsbyUtilities) => {
@@ -90,7 +143,7 @@ const buildEdition = async (year, gatsbyUtilities) => {
 	if (editionInfo && editionInfo.settings.testWebsite) {
 		// Create the edition
 
-		editionsToBuild.push({...editionInfo.settings, year});
+		editionsToBuild.push({ ...editionInfo.settings, year });
 
 		const editionIndexPromises = [];
 		console.log(`Enabled to be built: ${year}`);
@@ -103,7 +156,13 @@ const buildEdition = async (year, gatsbyUtilities) => {
 			createIndividualPage(
 				`/${year}`,
 				`edition`,
-				{ edition: `${year}`, id: editionInfo.id, lang: `en`, translation: skPage ? skPage : {}, settings: {...editionInfo.settings} },
+				{
+					edition: `${year}`,
+					id: editionInfo.id,
+					lang: `en`,
+					translation: skPage ? skPage : {},
+					settings: { ...editionInfo.settings }
+				},
 				gatsbyUtilities
 			)
 		);
@@ -112,7 +171,13 @@ const buildEdition = async (year, gatsbyUtilities) => {
 				createIndividualPage(
 					`/${year}/sk/`,
 					`edition`,
-					{ edition: `${year}`, id: skPage.id, lang: `sk`, translation: { language: { slug: `en`}}, settings: {...editionInfo.settings} },
+					{
+						edition: `${year}`,
+						id: skPage.id,
+						lang: `sk`,
+						translation: { language: { slug: `en` } },
+						settings: { ...editionInfo.settings }
+					},
 					gatsbyUtilities
 				)
 			);
@@ -215,6 +280,38 @@ const getAllEvents = async ({ graphql, reporter }) => {
 	return graphqlResult.data.allWpEvent.edges;
 };
 
+const getMainHomePage = async ({ graphql, reporter }) => {
+	const graphqlResult = await graphql(/* GraphQL */ `
+		query mainHomePage {
+			# Query index pages from edition
+			wpPage(slug: { eq: "index" }, language: { slug: { eq: "en" } }) {
+				id
+				language {
+					slug
+				}
+				translations {
+					slug
+					id
+					language {
+						slug
+					}
+				}
+				slug
+				uri
+			}
+		}
+	`);
+
+	if (graphqlResult.errors) {
+		reporter.panicOnBuild(
+			`There was an error loading your blog posts`,
+			graphqlResult.errors
+		);
+		return;
+	}
+
+	return graphqlResult.data.wpPage;
+};
 
 async function getEditionInfo(year, { graphql, reporter }) {
 	console.log(`getting edition: ${year}`);
