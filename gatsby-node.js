@@ -6,86 +6,161 @@
 
 // You can delete this file if you're not using it
 
-const path = require(`path`)
+const path = require(`path`);
+const editions = [2021, 2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030];
+const editionsToBuild = [];
 
 exports.createPages = async gatsbyUtilities => {
-	// Query our posts from the GraphQL server
-	const posts = await getPosts(gatsbyUtilities);
+	// const editions = await getEditions(gatsbyUtilities);
 
-	const pages = await getPages(gatsbyUtilities)
-
-	// If there are no posts in WordPress, don't do anything
-
-	if(!posts.length && !pages.length){
-		return;
+	if (editions.length) {
+		const promises = [];
+		editions.forEach(edition => {
+			promises.push(buildEdition(edition, gatsbyUtilities));
+		});
+		// await createEditions({editions, gatsbyUtilities});
+		await Promise.all(promises);
 	}
 
-	// If there are posts, create pages for them
-	if(posts.length){
-		await createIndividualBlogPostPages({ posts, gatsbyUtilities });
-	}
+	console.log("done with editions, now start with artists");
 
-	if(pages.length){
-		await createPages({ pages, gatsbyUtilities });
-	}
+	const allArtists = await getAllArtists(gatsbyUtilities);
+	const createArtistsPromises = [];
 
-	// And a paginated archive
-	// await createBlogPostArchive({ posts, gatsbyUtilities });
+	allArtists.map(artistInfo => {
+		const year = artistInfo.artist.Edition.year.name;
+		const lang = artistInfo.artist.language
+			? artistInfo.artist.language.slug
+			: null;
+
+		const editionSettings = editionsToBuild.find(edition => edition.year == year);
+
+		if (editionSettings.testWebsite) {
+			console.log(`building artists for: ${year}`);
+			const slug = `/${year}/${
+				lang && lang === `sk` ? `sk/` : ``
+			}artist/${artistInfo.artist.slug}`;
+			const template = `artist`;
+			const context = { edition: year, id: artistInfo.artist.id, settings: {...editionSettings} };
+			createArtistsPromises.push(
+				createIndividualPage(slug, template, context, gatsbyUtilities)
+			);
+		}
+	});
+
+	await Promise.all(createArtistsPromises);
+
+
+
+	const allEvents = await getAllEvents(gatsbyUtilities);
+	const createEventPromises = [];
+
+	allEvents.map(eventInfo => {
+		const year = eventInfo.event.Edition.year.name;
+		const lang = eventInfo.event.language
+			? eventInfo.event.language.slug
+			: null;
+		
+		console.log(`event ${year}`);
+		console.log(JSON.stringify(editionsToBuild));
+
+		const editionSettings = editionsToBuild.find(edition => edition.year == year);
+
+		if (editionSettings.testWebsite) {
+			console.log(`building events for: ${year}`);
+			const slug = `/${year}/${
+				lang && lang === `sk` ? `sk/` : ``
+			}event/${eventInfo.event.slug}`;
+			const template = `event`;
+			const context = { edition: year, id: eventInfo.event.id, settings: {...editionSettings} };
+			createEventPromises.push(
+				createIndividualPage(slug, template, context, gatsbyUtilities)
+			);
+		}
+	});
+
+	await Promise.all(createEventPromises);
 };
 
-const createIndividualBlogPostPages = async ({ posts, gatsbyUtilities }) => {
-	console.log(posts);
-	return Promise.all(
-		posts.map(({ previous, post, next }) =>
-			gatsbyUtilities.actions.createPage({
+const buildEdition = async (year, gatsbyUtilities) => {
+	console.log(`start building edition: ${year}`);
+	let editionInfo = await getEditionInfo(year, gatsbyUtilities);
+	// console.log(editionInfo);
 
-				path: post.uri,
+	if (editionInfo && editionInfo.settings.testWebsite) {
+		// Create the edition
 
-				component: path.resolve(`./src/templates/blog-post.js`),
+		editionsToBuild.push({...editionInfo.settings, year});
 
-				context: {
-					id: post.id,
-				}
-			})
-		)
-	);
-}
+		const editionIndexPromises = [];
+		console.log(`Enabled to be built: ${year}`);
 
-const createPages = async ({pages, gatsbyUtilities}) => {
-	console.log(pages);
-	return Promise.all(
-		pages.map(({page}) => {
+		let skPage;
+		if (editionInfo.translations.length) {
+			skPage = editionInfo.translations[0];
+		}
+		editionIndexPromises.push(
+			createIndividualPage(
+				`/${year}`,
+				`edition`,
+				{ edition: `${year}`, id: editionInfo.id, lang: `en`, translation: skPage ? skPage : {}, settings: {...editionInfo.settings} },
+				gatsbyUtilities
+			)
+		);
+		if (skPage) {
+			editionIndexPromises.push(
+				createIndividualPage(
+					`/${year}/sk/`,
+					`edition`,
+					{ edition: `${year}`, id: skPage.id, lang: `sk`, translation: { language: { slug: `en`}}, settings: {...editionInfo.settings} },
+					gatsbyUtilities
+				)
+			);
+		}
 
-			// We always need the english page slug to identify the component
-			let componentSlug = page.language.slug === `en` ? page.slug : page.translations[0].slug;
-
-			return gatsbyUtilities.actions.createPage({
-				
-				path: page.uri === `/home/` ? `/` : page.uri,
-
-				component: path.resolve(`./src/templates/${componentSlug}.js`),
-
-				context: {
-					id: page.id,
-					lang: page.language.slug
-				}
-
-			})
-		})
-	);
+		await Promise.all(editionIndexPromises);
+	}
+	return;
 };
 
+const createIndividualPage = async (
+	slug,
+	templateSlug,
+	context = {},
+	{ actions }
+) => {
+	console.log(`building page: ${slug}`);
+	const { createPage } = actions;
 
-async function getPosts({ graphql, reporter }) {
+	const template = path.resolve(`src/templates/${templateSlug}.js`);
+
+	createPage({
+		path: slug,
+		component: template,
+		context: { ...context }
+	});
+};
+
+const getAllArtists = async ({ graphql, reporter }) => {
+	console.log(`getting all artists`);
+
 	const graphqlResult = await graphql(/* GraphQL */ `
-		query WpPosts {
-			# Query all WordPress blog posts sorted by date
-			allWpPost(sort: { fields: [date], order: DESC }) {
+		query allArtists {
+			# Query index pages from edition
+			allWpArtist {
 				edges {
-					post: node {
-						id
-						uri
+					artist: node {
+						slug
 						title
+						id
+						Edition {
+							year {
+								name
+							}
+						}
+						language {
+							slug
+						}
 					}
 				}
 			}
@@ -100,15 +175,132 @@ async function getPosts({ graphql, reporter }) {
 		return;
 	}
 
-	return graphqlResult.data.allWpPost.edges;
+	return graphqlResult.data.allWpArtist.edges;
+};
+
+const getAllEvents = async ({ graphql, reporter }) => {
+	console.log(`getting all events`);
+
+	const graphqlResult = await graphql(/* GraphQL */ `
+		query allEvents {
+			# Query index pages from edition
+			allWpEvent {
+				edges {
+					event: node {
+						slug
+						title
+						id
+						Edition {
+							year {
+								name
+							}
+						}
+						language {
+							slug
+						}
+					}
+				}
+			}
+		}
+	`);
+
+	if (graphqlResult.errors) {
+		reporter.panicOnBuild(
+			`There was an error loading your blog posts`,
+			graphqlResult.errors
+		);
+		return;
+	}
+
+	return graphqlResult.data.allWpEvent.edges;
+};
+
+
+async function getEditionInfo(year, { graphql, reporter }) {
+	console.log(`getting edition: ${year}`);
+	const graphqlResult = await graphql(/* GraphQL */ `
+		query editionSettings {
+			# Query index pages from edition
+			wpEdition${year}( slug: {regex: "/^index/"}, language: {slug: { eq: "en"}}) {
+				id
+				settings: editionSettings {
+					textColor
+					backgroundColor
+					testWebsite
+					liveWebsite
+					fieldGroupName
+				}
+				language {
+					slug
+				}
+				translations {
+					slug
+					id
+					language {
+						slug
+					}
+				}
+				slug
+				uri
+			}
+		}
+	`);
+
+	if (graphqlResult.errors) {
+		reporter.panicOnBuild(
+			`There was an error loading your blog posts`,
+			graphqlResult.errors
+		);
+		return;
+	}
+
+	return graphqlResult.data[`wpEdition${year}`];
 }
 
+async function getEditions({ graphql, reporter }) {
+	const graphqlResult = await graphql(/* GraphQL */ `
+		query editions {
+			# Query all WordPress blog posts sorted by date
+			allWpContentType(
+				filter: {
+					name: { regex: "/^edition-/" }
+					contentNodes: {
+						nodes: { elemMatch: { slug: { eq: "index" } } }
+					}
+				}
+			) {
+				edges {
+					edition: node {
+						name
+						contentNodes {
+							nodes {
+								id
+								slug
+								uri
+							}
+						}
+					}
+				}
+			}
+		}
+	`);
+
+	if (graphqlResult.errors) {
+		reporter.panicOnBuild(
+			`There was an error loading your blog posts`,
+			graphqlResult.errors
+		);
+		return;
+	}
+
+	return graphqlResult.data.allWpContentType.edges;
+}
 
 async function getPages({ graphql, reporter }) {
 	const graphqlResult = await graphql(/* GraphQL */ `
 		query WpPages {
 			# Query all WordPress pages
-			allWpPage {
+			  {
 				edges {
 					page: node {
 						id

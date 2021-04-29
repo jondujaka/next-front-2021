@@ -1,14 +1,12 @@
 import React from 'react';
 import {Link} from 'gatsby';
 
-const LangSwitcher = ({item}) =>{
+const LangSwitcher = ({link, text}) =>{
 
-	console.log(item)
-
-	let url = item.uri === `/home/` ? `/` : item.uri;
+	// let url = item.uri === `/home/` ? `/` : item.uri;
 
 	return (
-		<Link to={url}>Switch language</Link>
+		<Link to={link}>{text}</Link>
 	)
 }
 
