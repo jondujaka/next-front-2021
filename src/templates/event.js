@@ -10,11 +10,12 @@ const Events = ({ data: { event }, pageContext }) => {
 	let langTo = event.language.slug == `sk` ? `` : `/sk`;
 	return (
 		<Layout settings={settings}>
+			<Link to={`/${edition}${langTo}`}>Home</Link>
 			<h1>{event.title}</h1>
-			<LangSwitcher 
+			{event.translations.length ? <LangSwitcher 
 				link={`/${edition}${langTo}/event/${event.translations[0].slug}`}
 				text="Switch Language"
-			/>
+			/> : <a href="#" title="Translation not available yet">Switch Language</a> }
 		</Layout>
 	);
 };

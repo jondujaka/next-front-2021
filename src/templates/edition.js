@@ -9,6 +9,7 @@ const Edition = ({ data, pageContext }) => {
 	return (
 		<Layout settings={settings}>
 			<div>
+				<Link to={`/${langSlug}`}>Main website</Link>
 				<h1>
 					Edition {edition} - {lang}
 				</h1>

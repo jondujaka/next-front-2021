@@ -5,18 +5,21 @@ import withPreview from "../components/withPreview";
 import Layout from "../components/layout";
 import gql from 'graphql-tag';
 
-const Artist = ({ data: { artist }, pageContext }) => {
+const Artist = ({ data: { artist }, pageContext, preview }) => {
 	const { edition, settings } = pageContext;
 
 	let langTo = artist.language.slug == `sk` ? `` : `/sk`;
 	const { content } = artist.singlePostContent;
+
+	console.log(preview);
 	return (
 		<Layout settings={settings}>
+			<Link to={`/${edition}${langTo}`}>Home</Link>
 			<h1>{artist.title}</h1>
-			{/* <LangSwitcher
+			<LangSwitcher
 				link={`/${edition}${langTo}/artist/${artist.translations[0].slug}`}
 				text="Switch Language"
-			/> */}
+			/>
 
 			<div className="single-content">
 				{content.length && content.map(item => <RowWrapper content={item} />)}
@@ -54,7 +57,7 @@ const DirectionalRow = ({row}) => {
 		);
 	}
 }
-const Media = ({media}) => <div>{media}</div>;
+const Media = ({media}) => <div className="fake-media">{media}</div>;
 
 const Paragraph = ({content}) => <div className={`paragraph text-${content.big}`} dangerouslySetInnerHTML={{__html: content.paragraphContent}}/>;
 

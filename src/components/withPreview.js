@@ -6,7 +6,15 @@ const withPreview = (args = { preview: false }, props) => Component => {
 
 	console.log('IN HERE AT LEAST');
 	console.log(args);
+
 	const preview = props => {
+
+		let preview=false;
+
+		if (!preview) {
+			return <Component preview={false} {...props} />;
+		}
+
 		return (
 			<Query
 			query={args.preview}
@@ -16,7 +24,7 @@ const withPreview = (args = { preview: false }, props) => Component => {
 			}}
 			>
 				{({ data, loading, error }) => {
-					console.log(error);
+					
 				  if (loading) return <p>Loading preview...</p>;
 				  if (error) return <p>Error: ${error.message}</p>;
 	  
@@ -39,9 +47,7 @@ const withPreview = (args = { preview: false }, props) => Component => {
 	/**
 	 * If no preview param, return the component with the preview props as false.
 	 */
-	if (!preview) {
-		return <Component preview={false} {...props} />;
-	}
+	
 
 	
 
