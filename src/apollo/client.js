@@ -20,7 +20,7 @@ export const client = new ApolloClient({
 			};
 		}),
 		new HttpLink({
-			uri: "http://nextfestival.sk/main/graphql",
+			uri: "https://xenodochial-lovelace-1dbada.netlify.app",
 			credentials: "include"
 		})
 	])
