@@ -2,8 +2,6 @@ require('dotenv').config({
 	path: `.env.${process.env.NODE_ENV}`
 });
 
-console.log(process.env.WP_GRAPHQL_URL)
-
 module.exports = {
 	siteMetadata: {
 		title: `Next 2021`,

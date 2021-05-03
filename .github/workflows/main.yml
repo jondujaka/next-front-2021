@@ -22,6 +22,10 @@ jobs:
         run: npm install -g gatsby-cli@2.12.34
       
       - name: Build
+        env:
+            # incremental builds
+            # https://www.gatsbyjs.org/docs/page-build-optimizations-for-incremental-data-changes/
+            WP_GRAPHQL_URL: https://nextfestival.sk/main/graphql
         run: gatsby build
       
       - name: Verify build
