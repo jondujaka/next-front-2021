@@ -31,12 +31,12 @@ jobs:
       - name: Verify build
         run: ls -la public
 
-      - name: Sync files
-      uses: SamKirkland/FTP-Deploy-Action@4.0.0
-      with:
-        server: multiplace.org
-        username: jondujaka
-        password: ${{ secrets.FTP_PASSWORD }}
-        protocol: ftps
-        local-dir: ./public/
-        server-dir: ./nextfestival.sk/front/
+      - name: 📂 Sync files
+        uses: SamKirkland/FTP-Deploy-Action@4.0.0
+        with:
+          server: multiplace.org
+          username: jondujaka
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          local-dir: ./public/
+          server-dir: ./nextfestival.sk/front/
