@@ -31,7 +31,7 @@ jobs:
       - name: Verify build
         run: ls -la public
 
-      - name: 📂 Sync files
+      - name: Sync files
       uses: SamKirkland/FTP-Deploy-Action@4.0.0
       with:
         server: multiplace.org
