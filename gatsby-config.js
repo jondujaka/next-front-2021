@@ -1,4 +1,4 @@
-require('dotenv').config({
+require("dotenv").config({
 	path: `.env.${process.env.NODE_ENV}`
 });
 
@@ -27,10 +27,11 @@ module.exports = {
 		{
 			resolve: `gatsby-plugin-sass`,
 			options: {
-				postCssPlugins: [
-					require(`tailwindcss`),
-					require(`./tailwind.config.js`) // Optional: Load custom Tailwind CSS configuration
-				]
+				sassOptions: {
+					includePaths: [
+						require("path").resolve(__dirname, "node_modules")
+					]
+				}
 			}
 		},
 		`gatsby-transformer-sharp`,

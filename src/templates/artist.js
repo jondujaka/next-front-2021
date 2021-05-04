@@ -8,7 +8,7 @@ import gql from 'graphql-tag';
 const Artist = ({ data: { artist }, pageContext, preview }) => {
 	const { edition, settings } = pageContext;
 
-	let langTo = artist.language.slug == `sk` ? `` : `/sk`;
+	let langTo = artist.language.slug == `sk` ? `/sk` : ``;
 	const { content } = artist.singlePostContent;
 
 	console.log(preview);

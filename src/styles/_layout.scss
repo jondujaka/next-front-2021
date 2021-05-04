@@ -1,0 +1,32 @@
+html, body {
+	margin: 0;
+	padding: 0;
+}
+body {
+	background: #fff !important;
+	color: $primaryBlue
+}
+
+.container {
+	max-width: 160rem;
+	padding: 0;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.column > * {
+	flex-shrink: 0;
+}
+.column-100 {
+	flex: 0 0 100%;
+}
+.column-50 {
+	flex: 0 0 50%;
+}
+
+.d-flex{
+	display: flex;
+	> * {
+		flex-shrink: 0;
+	}
+}

@@ -1,7 +1,9 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
+@import "milligram/src/milligram.sass";
+@import "vars";
+@import "layout";
+@import "typography";
+@import "player";
+@import "news";
 /* CUSTOM FONT FACE EXAMPLE
 
 	@font-face {
@@ -10,7 +12,3 @@
 	}
 
 */
-
-body {
-	background: red;
-}

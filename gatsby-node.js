@@ -39,9 +39,9 @@ exports.createPages = async gatsbyUtilities => {
 
 		if (editionSettings.testWebsite) {
 			console.log(`building artists for: ${year}`);
-			const slug = `/${year}/${
+			const slug = `/${
 				lang && lang === `sk` ? `sk/` : ``
-			}artist/${artistInfo.artist.slug}`;
+			}${year}/artist/${artistInfo.artist.slug}`;
 			const template = `artist`;
 			const context = {
 				edition: year,
@@ -74,7 +74,7 @@ exports.createPages = async gatsbyUtilities => {
 
 		if (editionSettings.testWebsite) {
 			console.log(`building events for: ${year}`);
-			const slug = `/${year}/${lang && lang === `sk` ? `sk/` : ``}event/${
+			const slug = `/${lang && lang === `sk` ? `sk/` : ``}${year}/events/${
 				eventInfo.event.slug
 			}`;
 			const template = `event`;
@@ -143,7 +143,11 @@ const buildEdition = async (year, gatsbyUtilities) => {
 	if (editionInfo && editionInfo.settings.testWebsite) {
 		// Create the edition
 
-		editionsToBuild.push({ ...editionInfo.settings, year });
+		// Create an index of editions that should be built
+		if(!editionsToBuild.find(edition => edition.year === year)){
+			editionsToBuild.push({ ...editionInfo.settings, year });
+		}
+		
 
 		const editionIndexPromises = [];
 		console.log(`Enabled to be built: ${year}`);
@@ -169,7 +173,7 @@ const buildEdition = async (year, gatsbyUtilities) => {
 		if (skPage) {
 			editionIndexPromises.push(
 				createIndividualPage(
-					`/${year}/sk/`,
+					`/sk/${year}/`,
 					`edition`,
 					{
 						edition: `${year}`,

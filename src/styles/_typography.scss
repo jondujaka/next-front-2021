@@ -1,0 +1,41 @@
+@font-face {
+    font-family: 'Manege';
+    src: local('Manege Light'), local('Manege-Light'),
+        url('./type/Manege-Light.woff2') format('woff2'),
+        url('./type/Manege-Light.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Gramatika';
+    src: local('Gramatika Regular'), local('Gramatika-Regular'),
+        url('./type/Gramatika-Regular.woff2') format('woff2'),
+        url('./type/Gramatika-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+body {
+	font-family: 'Gramatika', sans-serif;
+}
+
+h1.main-title {
+	font-size: 35vw;
+	text-align: center;
+	color: $primaryBlue;
+	margin: 0;
+	padding: 0;
+	line-height: .8;
+}
+
+h2 {
+	font-size: 14rem;
+	font-family: 'Manege', sans-serif;
+}
+
+h3 {
+	font-size: 5rem;
+}

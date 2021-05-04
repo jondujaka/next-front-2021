@@ -9,13 +9,13 @@ const Edition = ({ data, pageContext }) => {
 	return (
 		<Layout settings={settings}>
 			<div>
-				<Link to={`/${langSlug}`}>Main website</Link>
+				<Link to={`/`}>Main website</Link>
 				<h1>
 					Edition {edition} - {lang}
 				</h1>
-				<Link to={`/${edition}${langSlug}`}>Switch language</Link>
+				<Link to={`${langSlug}/${edition}`}>Switch language</Link>
 			</div>
-			<br/>
+			<br />
 			<h3>All artists</h3>
 			<ul>
 				{data &&
@@ -23,13 +23,7 @@ const Edition = ({ data, pageContext }) => {
 						const { artist } = artistObj;
 						return (
 							<li key={`artist-${artist.id}`}>
-								<Link
-									to={`/${pageContext.edition}${getLangSlug(
-										artist.language
-									)}/artist/${artist.slug}`}
-								>
-									{artist.title}
-								</Link>
+								<Link to={artist.uri}>{artist.title}</Link>
 							</li>
 						);
 					})}
@@ -40,14 +34,8 @@ const Edition = ({ data, pageContext }) => {
 					data.allEvents.edges.map(eventObj => {
 						const { event } = eventObj;
 						return (
-							<li key={`event-${event.id}`}>
-								<Link
-									to={`/${pageContext.edition}${getLangSlug(
-										event.language
-									)}/event/${event.slug}`}
-								>
-									{event.title}
-								</Link>
+							<li key={`event-${lang}-${event.id}`}>
+								<Link to={event.uri}>{event.title}</Link>
 							</li>
 						);
 					})}
@@ -77,6 +65,7 @@ export const editionQuery = graphql`
 					slug
 					title
 					id
+					uri
 					language {
 						slug
 					}
@@ -94,6 +83,7 @@ export const editionQuery = graphql`
 					slug
 					title
 					id
+					uri
 					language {
 						slug
 					}
