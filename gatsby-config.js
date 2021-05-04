@@ -1,8 +1,9 @@
-require("dotenv").config({
-	path: `.env.${process.env.NODE_ENV}`
+require('dotenv').config({
+	path: `.env`
 });
 
 module.exports = {
+	pathPrefix: `/next-front-2021/public`,
 	siteMetadata: {
 		title: `Next 2021`,
 		description: `Next Festival 2021 Edition`,
@@ -45,7 +46,7 @@ module.exports = {
 				background_color: `#663399`,
 				theme_color: `#663399`,
 				display: `minimal-ui`,
-				icon: `src/images/gatsby-icon.png` // This path is relative to the root of the site.
+				icon: `${__dirname}/src/images/gatsby-icon.png` // This path is relative to the root of the site.
 			}
 		},
 		`gatsby-plugin-gatsby-cloud`
