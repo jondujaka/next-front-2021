@@ -3,6 +3,7 @@ require('dotenv').config({
 });
 
 module.exports = {
+	pathPrefix: `/next-front-2021/public`,
 	siteMetadata: {
 		title: `Next 2021`,
 		description: `Next Festival 2021 Edition`,
