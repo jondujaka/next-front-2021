@@ -19,15 +19,6 @@ const Home = ({ data: { page, news }, pageContext }) => {
 
 	const [isInView, setIsInView] = useState(true);
 
-
-	// const homeVideoRef = useRef(null);
-
-	// useEffect(() => {
-	// 	homeVideoRef.current.addEventListener('scroll', (ev) => {
-	// 		console.log(ev.target);
-	// 	})
-	// });
-
 	return (
 		<Layout>
 			{isInView && (
@@ -44,11 +35,11 @@ const Home = ({ data: { page, news }, pageContext }) => {
 				<h1 className="main-title">NEXT</h1>
 			</Row>
 
-			<Row>
+			{/* <Row>
 				{page.translations.length ? (
 					<Link to={langSlug}>Switch language - {isInView.toString()}</Link>
 				) : null}
-			</Row>
+			</Row> */}
 
 			<br />
 			<Row>
@@ -56,61 +47,65 @@ const Home = ({ data: { page, news }, pageContext }) => {
 				{allNews.map(newsItem => {
 					console.log(newsItem);
 					return (
-						<div
-							key={newsItem.node.id}
-							className="news-item column column-50"
-						>
-							<div className="fake-news-image"></div>
-							<div className="news-info">
-								<h3>Mar 17th 2021</h3>
-								<h3>{newsItem.node.title}</h3>
-							</div>
-						</div>
-					);
-				})}
-				{allNews.map(newsItem => {
-					console.log(newsItem);
-					return (
-						<div
-							key={`a-${newsItem.node.id}`}
-							className="news-item column column-50"
-						>
-							<div className="fake-news-image"></div>
-							<div className="news-info">
-								<h3>Mar 17th 2021</h3>
-								<h3>{newsItem.node.title}</h3>
-							</div>
-						</div>
-					);
-				})}
-				{allNews.map(newsItem => {
-					console.log(newsItem);
-					return (
-						<div
+						<Link
 							key={`b-${newsItem.node.id}`}
+							to={newsItem.node.uri}
 							className="news-item column column-50"
 						>
 							<div className="fake-news-image"></div>
 							<div className="news-info">
-								<h3>Mar 17th 2021</h3>
+								<h3>{newsItem.node.date}</h3>
 								<h3>{newsItem.node.title}</h3>
 							</div>
-						</div>
+						</Link>
 					);
 				})}
 				{allNews.map(newsItem => {
 					console.log(newsItem);
 					return (
-						<div
-							key={`a-${newsItem.node.id}`}
+						<Link
+							key={`b-${newsItem.node.id}`}
+							to={newsItem.node.uri}
 							className="news-item column column-50"
 						>
 							<div className="fake-news-image"></div>
 							<div className="news-info">
-								<h3>Mar 17th 2021</h3>
+								<h3>{newsItem.node.date}</h3>
 								<h3>{newsItem.node.title}</h3>
 							</div>
-						</div>
+						</Link>
+					);
+				})}
+				{allNews.map(newsItem => {
+					console.log(newsItem);
+					return (
+						<Link
+							key={`b-${newsItem.node.id}`}
+							to={newsItem.node.uri}
+							className="news-item column column-50"
+						>
+							<div className="fake-news-image"></div>
+							<div className="news-info">
+								<h3>{newsItem.node.date}</h3>
+								<h3>{newsItem.node.title}</h3>
+							</div>
+						</Link>
+					);
+				})}
+				{allNews.map(newsItem => {
+					console.log(newsItem);
+					return (
+						<Link
+							key={`b-${newsItem.node.id}`}
+							to={newsItem.node.uri}
+							className="news-item column column-50"
+						>
+							<div className="fake-news-image"></div>
+							<div className="news-info">
+								<h3>{newsItem.node.date}</h3>
+								<h3>{newsItem.node.title}</h3>
+							</div>
+						</Link>
 					);
 				})}
 			</Row>
@@ -204,6 +199,7 @@ export const pageQuery = graphql`
 		news: allWpNewsArticle(filter: { language: { slug: { eq: $lang } } }) {
 			edges {
 				node {
+					date(formatString: "MMM Do YYYY")
 					id
 					slug
 					uri

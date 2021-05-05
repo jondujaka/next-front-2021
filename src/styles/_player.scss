@@ -10,6 +10,14 @@
 	z-index: 999;
 	overflow-y: scroll;
 }
+
+.show-video {
+	display: block;
+}
+.hide-video {
+	display: none;
+
+}
 .media-wrapper {
 	height: 400vh;
 	margin-top: 20vh;

@@ -31,6 +31,16 @@ h1.main-title {
 	line-height: .8;
 }
 
+h1.single-title {
+	font-size: 14rem;
+	text-align: center;
+	font-family: 'Manege';
+	max-width: 75%;
+	margin: 0 auto 4rem auto;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
 h2 {
 	font-size: 14rem;
 	font-family: 'Manege', sans-serif;
@@ -38,4 +48,16 @@ h2 {
 
 h3 {
 	font-size: 5rem;
+}
+
+p {
+	font-size: 3.4rem;
+	line-height: 1.175;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.text-big p {
+	font-size: 5rem;
+	line-height: 1;
 }

@@ -13,6 +13,24 @@ const editionsToBuild = [];
 exports.createPages = async gatsbyUtilities => {
 	// const editions = await getEditions(gatsbyUtilities);
 
+
+	const allNews = await getAllNewsArticles(gatsbyUtilities);
+	const createNewsPromises = [];
+
+	allNews.map(articleInfo => {
+		console.log(articleInfo);
+		const slug = articleInfo.article.uri;
+		const template = `news-article`;
+		const context = {
+			id: articleInfo.article.id,
+		};
+		createNewsPromises.push(
+			createIndividualPage(slug, template, context, gatsbyUtilities)
+		);
+	});
+
+	Promise.all(createNewsPromises);
+
 	if (editions.length) {
 		const promises = [];
 		editions.forEach(edition => {
@@ -29,19 +47,12 @@ exports.createPages = async gatsbyUtilities => {
 
 	allArtists.map(artistInfo => {
 		const year = artistInfo.artist.Edition.year.name;
-		const lang = artistInfo.artist.language
-			? artistInfo.artist.language.slug
-			: null;
-
 		const editionSettings = editionsToBuild.find(
 			edition => edition.year == year
 		);
 
 		if (editionSettings.testWebsite) {
-			console.log(`building artists for: ${year}`);
-			const slug = `/${
-				lang && lang === `sk` ? `sk/` : ``
-			}${year}/artist/${artistInfo.artist.slug}`;
+			const slug = artistInfo.artist.uri;
 			const template = `artist`;
 			const context = {
 				edition: year,
@@ -54,7 +65,7 @@ exports.createPages = async gatsbyUtilities => {
 		}
 	});
 
-	await Promise.all(createArtistsPromises);
+	Promise.all(createArtistsPromises);
 
 	const allEvents = await getAllEvents(gatsbyUtilities);
 	const createEventPromises = [];
@@ -74,9 +85,7 @@ exports.createPages = async gatsbyUtilities => {
 
 		if (editionSettings.testWebsite) {
 			console.log(`building events for: ${year}`);
-			const slug = `/${lang && lang === `sk` ? `sk/` : ``}${year}/events/${
-				eventInfo.event.slug
-			}`;
+			const slug = eventInfo.event.uri;
 			const template = `event`;
 			const context = {
 				edition: year,
@@ -89,11 +98,11 @@ exports.createPages = async gatsbyUtilities => {
 		}
 	});
 
-	await Promise.all(createEventPromises);
+	Promise.all(createEventPromises);
 
 	const mainHome = await getMainHomePage(gatsbyUtilities);
 
-	await buildMainHome(mainHome, gatsbyUtilities);
+	buildMainHome(mainHome, gatsbyUtilities);
 };
 
 const buildMainHome = async (mainHome, gatsbyUtilities) => {
@@ -222,6 +231,7 @@ const getAllArtists = async ({ graphql, reporter }) => {
 						slug
 						title
 						id
+						uri
 						Edition {
 							year {
 								name
@@ -259,6 +269,7 @@ const getAllEvents = async ({ graphql, reporter }) => {
 						slug
 						title
 						id
+						uri
 						Edition {
 							year {
 								name
@@ -282,6 +293,39 @@ const getAllEvents = async ({ graphql, reporter }) => {
 	}
 
 	return graphqlResult.data.allWpEvent.edges;
+};
+
+const getAllNewsArticles = async ({ graphql, reporter }) => {
+	console.log(`getting all news`);
+
+	const graphqlResult = await graphql(/* GraphQL */ `
+		query allNews {
+			# Query index pages from edition
+			allWpNewsArticle {
+				edges {
+					article: node {
+						slug
+						title
+						id
+						uri
+						language {
+							slug
+						}
+					}
+				}
+			}
+		}
+	`);
+
+	if (graphqlResult.errors) {
+		reporter.panicOnBuild(
+			`There was an error loading your blog posts`,
+			graphqlResult.errors
+		);
+		return;
+	}
+
+	return graphqlResult.data.allWpNewsArticle.edges;
 };
 
 const getMainHomePage = async ({ graphql, reporter }) => {

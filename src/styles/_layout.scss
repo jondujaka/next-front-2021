@@ -8,20 +8,26 @@ body {
 }
 
 .container {
-	max-width: 160rem;
+	max-width: 190rem;
 	padding: 0;
 	display: flex;
 	flex-wrap: wrap;
+	justify-content: center;
+	margin: 45px auto;
 }
 
-.column > * {
-	flex-shrink: 0;
+.column {
+	margin: 0 25px;
+	> * {
+		flex-shrink: 0;
+	}
 }
+
 .column-100 {
-	flex: 0 0 100%;
+	flex: 0 0 calc(100% - 50px);
 }
 .column-50 {
-	flex: 0 0 50%;
+	flex: 0 0 calc(50% - 50px);
 }
 
 .d-flex{

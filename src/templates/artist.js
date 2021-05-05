@@ -4,6 +4,7 @@ import LangSwitcher from "../components/LangSwitcher";
 import withPreview from "../components/withPreview";
 import Layout from "../components/layout";
 import gql from 'graphql-tag';
+import Single from './single';
 
 const Artist = ({ data: { artist }, pageContext, preview }) => {
 	const { edition, settings } = pageContext;
@@ -21,9 +22,11 @@ const Artist = ({ data: { artist }, pageContext, preview }) => {
 				text="Switch Language"
 			/>
 
-			<div className="single-content">
+			{/* <Single content={artist} /> */}
+
+			{/* <div className="single-content">
 				{content.length && content.map(item => <RowWrapper content={item} />)}
-			</div>
+			</div> */}
 		</Layout>
 	);
 };
