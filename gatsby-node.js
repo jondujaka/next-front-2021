@@ -103,6 +103,8 @@ exports.createPages = async gatsbyUtilities => {
 	const mainHome = await getMainHomePage(gatsbyUtilities);
 
 	buildMainHome(mainHome, gatsbyUtilities);
+
+	buildNewsPage(gatsbyUtilities);
 };
 
 const buildMainHome = async (mainHome, gatsbyUtilities) => {
@@ -144,6 +146,35 @@ const buildMainHome = async (mainHome, gatsbyUtilities) => {
 	await Promise.all(homePromises);
 };
 
+const buildNewsPage = async (gatsbyUtilities) => {
+
+	const newsPagePromises = [];
+
+	newsPagePromises.push(
+		createIndividualPage(
+			`/news`,
+			`news-page`,
+			{
+				lang: `en`,
+				translation: { language: {slug: `/sk/news`}}
+			},
+			gatsbyUtilities
+		)
+	);
+	newsPagePromises.push(
+		createIndividualPage(
+			`/sk/news`,
+			`news-page`,
+			{
+				lang: `sk`,
+				translation: { language: {slug: `/news`}}
+			},
+			gatsbyUtilities
+		)
+	);
+	await Promise.all(newsPagePromises);
+
+}
 const buildEdition = async (year, gatsbyUtilities) => {
 	console.log(`start building edition: ${year}`);
 	let editionInfo = await getEditionInfo(year, gatsbyUtilities);
@@ -360,6 +391,40 @@ const getMainHomePage = async ({ graphql, reporter }) => {
 
 	return graphqlResult.data.wpPage;
 };
+
+const getNewsPage = async ({ graphql, reporter }) => {
+	const graphqlResult = await graphql(/* GraphQL */ `
+		query newsPage {
+			# Query index pages from edition
+			wpPage(slug: { eq: "news" }, language: { slug: { eq: "en" } }) {
+				id
+				language {
+					slug
+				}
+				translations {
+					slug
+					id
+					language {
+						slug
+					}
+				}
+				slug
+				uri
+			}
+		}
+	`);
+
+	if (graphqlResult.errors) {
+		reporter.panicOnBuild(
+			`There was an error loading your blog posts`,
+			graphqlResult.errors
+		);
+		return;
+	}
+
+	return graphqlResult.data.wpPage;
+};
+
 
 async function getEditionInfo(year, { graphql, reporter }) {
 	console.log(`getting edition: ${year}`);

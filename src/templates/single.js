@@ -4,7 +4,6 @@ import Media from '../components/media';
 
 const Single = ({ content }) => {
 	const rows = content.singlePostContent.content;
-	console.log(content);
 	return (
 		<div className="single-content">
 			<h1 className="single-title">{content.title}</h1>
@@ -21,7 +20,6 @@ const Single = ({ content }) => {
 export default Single;
 
 const DirectionWrapper = ({ content }) => {
-	console.log(content);
 	return (
 		<>
 			{content.direction ? (
@@ -47,7 +45,6 @@ const DirectionWrapper = ({ content }) => {
 
 const DirectionalRow = ({ row }) => {
 	if (row.direction === `media_text`) {
-		console.log(row);
 		return (
 			<>
 				{row.media && (

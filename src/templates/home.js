@@ -5,8 +5,9 @@ import Layout from "../components/layout";
 import CustomLink from "../components/customLink";
 import ReactPlayer from "react-player/youtube";
 import Row from "../components/row";
+import NewsBlock from "../components/newsBlock";
 import { InView } from "react-intersection-observer";
-import Edition from './edition';
+import Edition from "./edition";
 
 const Home = ({ data: { page, news }, pageContext }) => {
 	const { translations, language, mainHome } = { page };
@@ -24,7 +25,10 @@ const Home = ({ data: { page, news }, pageContext }) => {
 			{isInView && (
 				<section className="media-container">
 					<div className="media-wrapper">
-						<Media setIsInView={setIsInView} media={page.mainHome.videoLayer.media} />
+						<Media
+							setIsInView={setIsInView}
+							media={page.mainHome.videoLayer.media}
+						/>
 					</div>
 				</section>
 			)}
@@ -44,72 +48,26 @@ const Home = ({ data: { page, news }, pageContext }) => {
 			<br />
 			<Row>
 				<h2 className="column column-100">News</h2>
-				{allNews.map(newsItem => {
-					console.log(newsItem);
-					return (
-						<Link
-							key={`b-${newsItem.node.id}`}
-							to={newsItem.node.uri}
-							className="news-item column column-50"
-						>
-							<div className="fake-news-image"></div>
-							<div className="news-info">
-								<h3>{newsItem.node.date}</h3>
-								<h3>{newsItem.node.title}</h3>
-							</div>
-						</Link>
-					);
-				})}
-				{allNews.map(newsItem => {
-					console.log(newsItem);
-					return (
-						<Link
-							key={`b-${newsItem.node.id}`}
-							to={newsItem.node.uri}
-							className="news-item column column-50"
-						>
-							<div className="fake-news-image"></div>
-							<div className="news-info">
-								<h3>{newsItem.node.date}</h3>
-								<h3>{newsItem.node.title}</h3>
-							</div>
-						</Link>
-					);
-				})}
-				{allNews.map(newsItem => {
-					console.log(newsItem);
-					return (
-						<Link
-							key={`b-${newsItem.node.id}`}
-							to={newsItem.node.uri}
-							className="news-item column column-50"
-						>
-							<div className="fake-news-image"></div>
-							<div className="news-info">
-								<h3>{newsItem.node.date}</h3>
-								<h3>{newsItem.node.title}</h3>
-							</div>
-						</Link>
-					);
-				})}
-				{allNews.map(newsItem => {
-					console.log(newsItem);
-					return (
-						<Link
-							key={`b-${newsItem.node.id}`}
-							to={newsItem.node.uri}
-							className="news-item column column-50"
-						>
-							<div className="fake-news-image"></div>
-							<div className="news-info">
-								<h3>{newsItem.node.date}</h3>
-								<h3>{newsItem.node.title}</h3>
-							</div>
-						</Link>
-					);
-				})}
+				{allNews.map(newsItem => (
+					<NewsBlock key={`news-${newsItem.node.id}`} item={newsItem.node} />
+				))}
+				{allNews.map(newsItem => (
+					<NewsBlock key={`news1-${newsItem.node.id}`} item={newsItem.node} />
+				))}
+				{allNews.map(newsItem => (
+					<NewsBlock key={`news3-${newsItem.node.id}`} item={newsItem.node} />
+				))}
+				<div className="column column-100 text-center">
+					<Link className="big-button" to={`${langSlug}/news`}>See all News</Link>
+				</div>
 			</Row>
-			<Edition pageContext={{edition: `2021`, lang: `en`, translation: { language: { slug: `sk`}}}}/>
+			<Edition
+				pageContext={{
+					edition: `2021`,
+					lang: `en`,
+					translation: { language: { slug: `sk` } }
+				}}
+			/>
 		</Layout>
 	);
 };
@@ -196,7 +154,11 @@ export const pageQuery = graphql`
 			}
 		}
 
-		news: allWpNewsArticle(filter: { language: { slug: { eq: $lang } } }) {
+		news: allWpNewsArticle(
+			filter: { language: { slug: { eq: $lang } } }
+			limit: 10
+			sort: { order: DESC, fields: date }
+		) {
 			edges {
 				node {
 					date(formatString: "MMM Do YYYY")
@@ -206,6 +168,20 @@ export const pageQuery = graphql`
 					title
 					language {
 						slug
+					}
+					featuredImage {
+						node {
+							sizes
+							uri
+							description
+							caption
+							mediaDetails {
+								sizes {
+									name
+									sourceUrl
+								}
+							}
+						}
 					}
 				}
 			}

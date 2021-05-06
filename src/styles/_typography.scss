@@ -18,6 +18,18 @@
     font-display: swap;
 }
 
+
+a {
+	color: $primaryBlue;
+	&:visited {
+		color: inherit;
+	}
+}
+
+.big-button {
+	font-family: 'Manege', serif;
+	font-size: 5rem;
+}
 body {
 	font-family: 'Gramatika', sans-serif;
 }
@@ -43,11 +55,12 @@ h1.single-title {
 
 h2 {
 	font-size: 14rem;
-	font-family: 'Manege', sans-serif;
+	font-family: 'Manege', serif;
 }
 
 h3 {
 	font-size: 5rem;
+	line-height: .9;
 }
 
 p {
@@ -60,4 +73,8 @@ p {
 .text-big p {
 	font-size: 5rem;
 	line-height: 1;
+}
+
+.text-center {
+	text-align: center;
 }

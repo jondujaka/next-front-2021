@@ -1,0 +1,16 @@
+.social-footer {
+	border-top: 4px solid $primaryBlue;
+	border-bottom: 4px solid $primaryBlue;
+	margin-bottom: 30rem;
+}
+
+.social-links {
+	@extend .column-100;
+
+	a {
+		display: inline-block;
+		margin-right: 7.4rem;
+		font-size: 3.5rem;
+	}
+	
+}

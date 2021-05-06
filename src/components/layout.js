@@ -9,6 +9,8 @@ import * as React from "react";
 import PropTypes from "prop-types";
 import { useStaticQuery, graphql } from "gatsby";
 
+import SocialFooter from './socialFooter';
+
 import Header from "./header";
 import "../styles/global.scss";                                                                                                                                                                                                                                                   
 
@@ -30,6 +32,7 @@ const Layout = ({ children, settings }) => {
 				className="main-wrapper"
 			>
 				<main>{children}</main>
+				<SocialFooter/>
 				<footer
 					style={{
 						marginTop: `2rem`
