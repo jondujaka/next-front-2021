@@ -7,7 +7,7 @@ const Edition = ({ data, pageContext }) => {
 	const { edition, translation, lang, settings } = pageContext;
 	const langSlug = translation.language.slug === `en` ? `` : `/sk`;
 	return (
-		<Layout settings={settings}>
+		<div className="main-wrapper">
 			<div>
 				<Link to={`/`}>Main website</Link>
 				<h1>
@@ -40,7 +40,7 @@ const Edition = ({ data, pageContext }) => {
 						);
 					})}
 			</ul>
-		</Layout>
+		</div>
 	);
 };
 
