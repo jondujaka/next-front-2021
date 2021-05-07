@@ -13,7 +13,7 @@ const Home = ({ data: { page, news }, pageContext }) => {
 	const { translations, language, mainHome } = { page };
 	const { availableEditions } = pageContext;
 
-	const langSlug = page.language.slug == `en` ? `/sk` : `/`;
+	const langSlug = page.language.slug == `en` ? `/` : `/s`;
 
 	const allNews = news.edges;
 
@@ -56,7 +56,7 @@ const Home = ({ data: { page, news }, pageContext }) => {
 				{allNews.map(newsItem => (
 					<NewsBlock key={`news3-${newsItem.node.id}`} item={newsItem.node} />
 				))}
-				<div className="col col-12 text-center">
+				<div className="col col-12 text-center mt-5">
 					<Link className="big-button" to={`${langSlug}/news`}>See all News</Link>
 				</div>
 			</Row>
