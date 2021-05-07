@@ -1,23 +1,46 @@
-html, body {
+html,
+body {
 	margin: 0;
 	padding: 0;
 }
 body {
 	background: #fff !important;
-	color: $primaryBlue
+	color: $primaryBlue;
 }
 
-.container {
-	max-width: 190rem;
-	padding: 0;
+
+.row {
+	@include make-row();
+
+	> * {
+		@include make-col-ready();
+	}
+}
+
+@include make-grid-columns();
+
+.row, .row-full {
 	display: flex;
 	flex-wrap: wrap;
-	justify-content: center;
-	margin: 45px auto;
+	flex-direction: row;
+	padding: 0;
 }
 
-.column {
-	margin: 0 25px;
+.row {
+	width: 190rem;
+	max-width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.row-full {
+	max-width: 100%;
+}
+
+.col {
+	flex-shrink: 0;
+	max-width: 100%; // Prevent `.col-auto`, `.col` (& responsive variants) from breaking out the grid
+
 	> * {
 		flex-shrink: 0;
 	}
@@ -30,9 +53,103 @@ body {
 	flex: 0 0 calc(50% - 50px);
 }
 
-.d-flex{
+.d-flex {
 	display: flex;
 	> * {
 		flex-shrink: 0;
 	}
 }
+
+$utilities: () !default;
+
+$utilities: map-merge(
+  (
+	  // Margin utilities
+    // scss-docs-start utils-spacing
+    "margin": (
+      responsive: true,
+      property: margin,
+      class: m,
+      values: map-merge($spacers, (auto: auto))
+    ),
+    "margin-x": (
+      responsive: true,
+      property: margin-right margin-left,
+      class: mx,
+      values: map-merge($spacers, (auto: auto))
+    ),
+    "margin-y": (
+      responsive: true,
+      property: margin-top margin-bottom,
+      class: my,
+      values: map-merge($spacers, (auto: auto))
+    ),
+    "margin-top": (
+      responsive: true,
+      property: margin-top,
+      class: mt,
+      values: map-merge($spacers, (auto: auto))
+    ),
+    "margin-end": (
+      responsive: true,
+      property: margin-right,
+      class: me,
+      values: map-merge($spacers, (auto: auto))
+    ),
+    "margin-bottom": (
+      responsive: true,
+      property: margin-bottom,
+      class: mb,
+      values: map-merge($spacers, (auto: auto))
+    ),
+    "margin-start": (
+      responsive: true,
+      property: margin-left,
+      class: ms,
+      values: map-merge($spacers, (auto: auto))
+    ),// Padding utilities
+    "padding": (
+      responsive: true,
+      property: padding,
+      class: p,
+      values: $spacers
+    ),
+    "padding-x": (
+      responsive: true,
+      property: padding-right padding-left,
+      class: px,
+      values: $spacers
+    ),
+    "padding-y": (
+      responsive: true,
+      property: padding-top padding-bottom,
+      class: py,
+      values: $spacers
+    ),
+    "padding-top": (
+      responsive: true,
+      property: padding-top,
+      class: pt,
+      values: $spacers
+    ),
+    "padding-end": (
+      responsive: true,
+      property: padding-right,
+      class: pe,
+      values: $spacers
+    ),
+    "padding-bottom": (
+      responsive: true,
+      property: padding-bottom,
+      class: pb,
+      values: $spacers
+    ),
+    "padding-start": (
+      responsive: true,
+      property: padding-left,
+      class: ps,
+      values: $spacers
+    )
+  ),
+  $utilities
+);

@@ -1,7 +1,4 @@
 .news-image {
-	max-width: 475px;
-	margin-right: 20px;
-	float: left;
 
 	&:after {
 		content: "";
@@ -17,10 +14,8 @@
 }
 
 .news-item {
-	padding: 25px;
-	margin-bottom: 2rem;
-	// transition: all .1s ease-in-out;
-	width: 50%;
+	// padding: $grid-gutter-width $grid-gutter-width/2;
+
 	* {
 		color: $primaryBlue;
 		// transition: all .1s ease-in-out;

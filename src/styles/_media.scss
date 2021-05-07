@@ -3,6 +3,12 @@ figure {
 
 	figcaption p{
 		font-family: 'Manege', serif;
-		font-size: 3.4rem;
+		// font-size: 3.4rem;
 	}
+}
+
+.img-fluid {
+	width: 100%;
+	height: auto;
+	display: block;
 }

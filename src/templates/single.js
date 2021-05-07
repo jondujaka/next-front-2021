@@ -9,7 +9,7 @@ const Single = ({ content }) => {
 			<h1 className="single-title">{content.title}</h1>
 			{rows &&
 				rows.map(item => (
-					<Row>
+					<Row classes="my-md-4 my-lg-7">
 						<DirectionWrapper content={item} />
 					</Row>
 				))}
@@ -33,7 +33,7 @@ const DirectionWrapper = ({ content }) => {
 						<Media content={content} />
 					) : null}
 					{content.paragraph ? (
-						<div className="column column-50">
+						<div className="col mx-auto col-xl-10 col-12 col-xxl-6">
 							<Paragraph content={content.paragraph} />
 						</div>
 					) : null}
@@ -48,10 +48,10 @@ const DirectionalRow = ({ row }) => {
 		return (
 			<>
 				{row.media && (
-					<Media classes="column-50" content={row.media} />
+					<Media classes="col-xl-6 col-12" content={row.media} />
 				)}
 				{row.paragraph && (
-					<div className="column column-50">
+					<div className="col mx-auto col-12 col-xl-6">
 						<Paragraph content={row.paragraph} />
 					</div>
 				)}

@@ -12,7 +12,6 @@ import Edition from "./edition";
 const Home = ({ data: { page, news }, pageContext }) => {
 	const { translations, language, mainHome } = { page };
 	const { availableEditions } = pageContext;
-	console.log(news);
 
 	const langSlug = page.language.slug == `en` ? `/sk` : `/`;
 
@@ -23,7 +22,7 @@ const Home = ({ data: { page, news }, pageContext }) => {
 	return (
 		<Layout>
 			{isInView && (
-				<section className="media-container">
+				<section className="media-container no-scrollbar">
 					<div className="media-wrapper">
 						<Media
 							setIsInView={setIsInView}
@@ -47,7 +46,7 @@ const Home = ({ data: { page, news }, pageContext }) => {
 
 			<br />
 			<Row>
-				<h2 className="column column-100">News</h2>
+				<h2 className="col col-12">News</h2>
 				{allNews.map(newsItem => (
 					<NewsBlock key={`news-${newsItem.node.id}`} item={newsItem.node} />
 				))}
@@ -57,7 +56,7 @@ const Home = ({ data: { page, news }, pageContext }) => {
 				{allNews.map(newsItem => (
 					<NewsBlock key={`news3-${newsItem.node.id}`} item={newsItem.node} />
 				))}
-				<div className="column column-100 text-center">
+				<div className="col col-12 text-center">
 					<Link className="big-button" to={`${langSlug}/news`}>See all News</Link>
 				</div>
 			</Row>
@@ -74,7 +73,6 @@ const Home = ({ data: { page, news }, pageContext }) => {
 
 const HomeHeader = ({ items }) => {
 	return items.map(item => {
-		console.log(item);
 		if (item.item.link && item.item.link.url) {
 			return (
 				<CustomLink

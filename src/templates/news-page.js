@@ -9,7 +9,7 @@ const Events = ({ data, pageContext }) => {
 	return (
 		<Layout>
 			<Row>
-				<div className="column column-100">
+				<div className="col col-12">
 					<h2>News</h2>
 				</div>
 				{news.map(newsItem => (

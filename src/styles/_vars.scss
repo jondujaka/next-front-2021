@@ -1,1 +1,32 @@
+$variable-prefix: nxt- !default;
+
+$spacer: 1rem !default;
+$spacers: (
+	0: 0,
+	1: $spacer / 4,
+	2: $spacer / 2,
+	3: $spacer,
+	4: $spacer * 1.5,
+	5: $spacer * 3,
+	6: $spacer * 4.5,
+	7: $spacer * 6,
+	8: $spacer * 7.5,
+	9: $spacer * 9,
+	
+) !default;
+
+$grid-columns: 12 !default;
+$grid-gutter-width: 5rem !default;
+$grid-row-columns: 6 !default;
+$gutters: $spacers !default;
+
+$grid-breakpoints: (
+	xs: 0,
+	sm: 576px,
+	md: 768px,
+	lg: 992px,
+	xl: 1420px,
+	xxl: 1800px
+) !default;
+
 $primaryBlue: #4c45fa;
