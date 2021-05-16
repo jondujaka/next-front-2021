@@ -22,12 +22,15 @@ const Commissions = ({ data, pageContext }) => {
 				</div>
 			</Row>
 			<Row classes="mt-6">
-				{coms && fake.map(comItem => (
-					<CommissionBlock
-						key={`coms-${comItem.node.id}`}
-						item={comItem.node}
-					/>
-				))}
+				{coms &&
+					fake.map(comItem =>
+						comItem ? (
+							<CommissionBlock
+								key={`coms-${comItem.node.id}`}
+								item={comItem.node}
+							/>
+						) : null
+					)}
 			</Row>
 		</Layout>
 	);
