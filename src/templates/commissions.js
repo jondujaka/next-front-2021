@@ -22,7 +22,7 @@ const Commissions = ({ data, pageContext }) => {
 				</div>
 			</Row>
 			<Row classes="mt-6">
-				{fake.map(comItem => (
+				{coms && fake.map(comItem => (
 					<CommissionBlock
 						key={`coms-${comItem.node.id}`}
 						item={comItem.node}
