@@ -6,8 +6,17 @@ import Layout from "../components/layout";
 const Edition = ({ data, pageContext }) => {
 	const { edition, translation, lang, settings } = pageContext;
 	const langSlug = translation.language.slug === `en` ? `` : `/sk`;
+
+	let colorStyle;
+	if(settings){
+		colorStyle = {
+			color: settings.textColor,
+			backgroundColor: settings.backgroundColor
+		};
+	}
+	
 	return (
-		<div className="main-wrapper">
+		<Layout style={colorStyle} year={edition}>
 			<div>
 				<Link to={`/`}>Main website</Link>
 				<h1>
@@ -40,7 +49,7 @@ const Edition = ({ data, pageContext }) => {
 						);
 					})}
 			</ul>
-		</div>
+		</Layout>
 	);
 };
 
@@ -56,7 +65,7 @@ export const editionQuery = graphql`
 	) {
 		allArtists: allWpArtist(
 			filter: {
-				Edition: { year: { name: { eq: $edition } } }
+				editions: {nodes: {elemMatch: {slug: {eq: $edition } } } }
 				language: { slug: { eq: $lang } }
 			}
 		) {
@@ -74,7 +83,7 @@ export const editionQuery = graphql`
 		}
 		allEvents: allWpEvent(
 			filter: {
-				Edition: { year: { name: { eq: $edition } } }
+				editions: {nodes: {elemMatch: {slug: {eq: $edition } } } }
 				language: { slug: { eq: $lang } }
 			}
 		) {

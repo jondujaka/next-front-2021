@@ -1,5 +1,8 @@
 .news-image {
 
+	padding-right: 2.5rem;
+	padding-left: 0;
+	
 	&:after {
 		content: "";
 		z-index: 4;
@@ -13,8 +16,34 @@
 	}
 }
 
+.news-info {
+	.news-title {
+		margin-top: 1em;
+	}
+	h3 {
+		display: block;
+	}
+}
+.news-info {
+	padding: 0;
+}
+
 .news-item {
-	// padding: $grid-gutter-width $grid-gutter-width/2;
+	padding: 0;
+	@extend .p-3;
+	@extend .px-lg-4;
+	@extend .py-lg-4;
+
+	@include media-breakpoint-down(lg){
+		
+		.news-info {
+			font-size: 2rem;
+		}
+	}
+	
+}
+
+.commission-item, .news-item {
 
 	* {
 		color: $primaryBlue;
@@ -32,11 +61,35 @@
 	}
 }
 
-.news-info {
-	.news-title {
-		margin-top: 1em;
-	}
-	h3 {
-		display: block;
+.commission-image {
+	img {
+		border-radius: 50%;
 	}
 }
+
+
+.project-item {
+	border: 3px solid $primaryBlue;
+	border-radius: 4.2rem;
+	display: block;
+
+	&:hover {
+		background: $primaryBlue;
+		color: white !important;
+	}
+}
+.project-title {
+	font-family: 'Manege', serif;
+	font-size: 14rem;
+	letter-spacing: -.28rem;
+}
+
+.my-masonry-grid {
+	display: flex;
+	margin-left: -30px; /* gutter size offset */
+	width: auto;
+  }
+  .my-masonry-grid_column {
+	padding-left: 30px; /* gutter size */
+	background-clip: padding-box;
+  }

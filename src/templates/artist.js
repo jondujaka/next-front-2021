@@ -10,11 +10,18 @@ const Artist = ({ data: { artist }, pageContext, preview }) => {
 	const { edition, settings } = pageContext;
 
 	let langTo = artist.language.slug == `sk` ? `/sk` : ``;
-	const { content } = artist.singlePostContent;
+	// const { content } = artist.singlePostContent;
 
-	console.log(preview);
+	let colorStyle;
+	if(settings){
+		colorStyle = {
+			color: settings.textColor,
+			backgroundColor: settings.backgroundColor
+		};
+	}
+	
 	return (
-		<Layout settings={settings}>
+		<Layout style={colorStyle} year={edition}>
 			<Link to={`/${edition}${langTo}`}>Home</Link>
 			<h1>{artist.title}</h1>
 			<LangSwitcher
@@ -79,31 +86,6 @@ export const artistQuery = graphql`
 			translations {
 				slug
 				uri
-			}
-			singlePostContent {
-				content {
-					... on WpArtist_Singlepostcontent_Content_MediaText {
-						direction
-						fieldGroupName
-						paragraph {
-							paragraphContent
-							fieldGroupName
-							big
-						}
-					}
-					... on WpArtist_Singlepostcontent_Content_Images {
-						fieldGroupName
-						imageOrVideo
-					}
-					... on WpArtist_Singlepostcontent_Content_Text {
-						fieldGroupName
-						paragraph {
-							paragraphContent
-							fieldGroupName
-							big
-						}
-					}
-				}
 			}
 		}
 	}

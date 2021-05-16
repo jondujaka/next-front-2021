@@ -19,8 +19,11 @@
 }
 
 
+$sansFont: 'Gramatika', sans-serif;
+$serifFont: 'Manege', serif;
+
 a {
-	color: $primaryBlue;
+	color: inherit;
 	&:visited {
 		color: inherit;
 	}
@@ -34,16 +37,49 @@ body {
 	font-family: 'Gramatika', sans-serif;
 }
 
+.main-title-wrapper {
+	overflow: hidden;
+	display: flex;
+	justify-content: center;
+
+	@include media-breakpoint-down(md){
+		flex-wrap: wrap;
+		margin-bottom: 1rem;
+		> * {
+			flex-basis: 100%;
+		}
+	}
+}
 h1.main-title {
+	display: block;
 	z-index: -1;
 	position: relative;
-	font-size: 35vw;
+	font-size: 51.5vw;
+	width: auto;
 	text-align: center;
 	color: $primaryBlue;
 	margin: 0;
 	padding: 0;
-	line-height: .8;
+	line-height: .75;
+
+	@include media-breakpoint-up(md){
+		margin-top: -1.2vw;
+	}
+
+
+	@include media-breakpoint-down(md){
+		font-size: 111vw;
+		&:first-of-type {
+			margin-bottom: -5.7vw;
+		}
+		span {
+			display: block;
+		}
+	}
 }
+
+
+
 
 h1.single-title {
 	@include media-breakpoint-up(xl){
@@ -75,7 +111,11 @@ h3 {
 	@include media-breakpoint-up(xxl){
 		font-size: 5rem;
 	}
-	font-size: 3.5rem;
+	@include media-breakpoint-up(lg){
+		font-size: 3.5rem;
+	}
+	font-size: 3.2rem;
+	
 	
 	line-height: .9;
 }
@@ -110,4 +150,27 @@ p {
 
 .text-center {
 	text-align: center;
+}
+
+
+.hollow-link {
+	font-size: 7.3rem;
+	-webkit-text-stroke:1px $primaryBlue;
+	-webkit-text-fill-color:transparent;
+	line-height: 1;
+	cursor: pointer;
+
+	@include media-breakpoint-up(lg){
+		font-size: 11rem;
+	}
+
+	@include media-breakpoint-up(xl){
+		font-size: 14rem;
+	}
+
+	&:hover, &.active, .active & {
+		-webkit-text-fill-color: $primaryBlue;
+		-webkit-text-stroke:0px;
+	}
+	
 }

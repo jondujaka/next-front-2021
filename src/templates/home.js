@@ -13,7 +13,7 @@ const Home = ({ data: { page, news }, pageContext }) => {
 	const { translations, language, mainHome } = { page };
 	const { availableEditions } = pageContext;
 
-	const langSlug = page.language.slug == `en` ? `/` : `/s`;
+	const langSlug = page.language.slug == `en` ? `` : `/sk`;
 
 	const allNews = news.edges;
 
@@ -32,10 +32,18 @@ const Home = ({ data: { page, news }, pageContext }) => {
 				</section>
 			)}
 			<Row>
-				<HomeHeader items={page.mainHome.topLinks} />
+				<HomeHeader
+					classes="d-none d-md-block desktop col col-12"
+					items={page.mainHome.topLinks}
+				/>
 			</Row>
-			<Row fullWidth={true}>
-				<h1 className="main-title">NEXT</h1>
+			<Row classes="main-title-wrapper" fullWidth={true}>
+				<h1 className="main-title">NE</h1>
+				<HomeHeader
+					classes="d-md-none mobile"
+					items={page.mainHome.topLinks}
+				/>
+				<h1 className="main-title">XT</h1>
 			</Row>
 
 			{/* <Row>
@@ -48,16 +56,27 @@ const Home = ({ data: { page, news }, pageContext }) => {
 			<Row>
 				<h2 className="col col-12">News</h2>
 				{allNews.map(newsItem => (
-					<NewsBlock key={`news-${newsItem.node.id}`} item={newsItem.node} />
+					<NewsBlock
+						key={`news-${newsItem.node.id}`}
+						item={newsItem.node}
+					/>
 				))}
 				{allNews.map(newsItem => (
-					<NewsBlock key={`news1-${newsItem.node.id}`} item={newsItem.node} />
+					<NewsBlock
+						key={`news1-${newsItem.node.id}`}
+						item={newsItem.node}
+					/>
 				))}
 				{allNews.map(newsItem => (
-					<NewsBlock key={`news3-${newsItem.node.id}`} item={newsItem.node} />
+					<NewsBlock
+						key={`news3-${newsItem.node.id}`}
+						item={newsItem.node}
+					/>
 				))}
 				<div className="col col-12 text-center mt-5">
-					<Link className="big-button" to={`${langSlug}/news`}>See all News</Link>
+					<Link className="big-button" to={`${langSlug}/news`}>
+						See all News
+					</Link>
 				</div>
 			</Row>
 			<Edition
@@ -71,20 +90,26 @@ const Home = ({ data: { page, news }, pageContext }) => {
 	);
 };
 
-const HomeHeader = ({ items }) => {
-	return items.map(item => {
-		if (item.item.link && item.item.link.url) {
-			return (
-				<CustomLink
-					key={`link-${item.item.link.url}`}
-					link={item.item.link.url}
-				>
-					{item.item.text}
-				</CustomLink>
-			);
-		}
-		return <span key={`text-${item.item.text}`}>{item.item.text}</span>;
-	});
+const HomeHeader = ({ items, classes }) => {
+	return (
+		<div className={`top-header ${classes}`}>
+			{items.map(item => {
+				if (item.item.link && item.item.link.url) {
+					return (
+						<CustomLink
+							key={`link-${item.item.link.url}`}
+							link={item.item.link.url}
+						>
+							{item.item.text}
+						</CustomLink>
+					);
+				}
+				return (
+					<a href="#" key={`text-${item.item.text}`}>{item.item.text}</a>
+				);
+			})}
+		</div>
+	);
 };
 
 const Media = ({ media, setIsInView }) => {
@@ -102,6 +127,7 @@ const Media = ({ media, setIsInView }) => {
 					url={media.video}
 					width="100%"
 					height="100%"
+					playing
 				/>
 			</InView>
 		);

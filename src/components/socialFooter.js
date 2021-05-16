@@ -22,10 +22,10 @@ const SocialFooter = () => {
 	console.log(menuData);
 
 	return (
-		<div className="social-footer">
-			<div className="container">
+		<div className="social-footer mt-6">
+			<div className="row">
 				<div className="col col-12"><h2>Follow</h2></div>
-				<div className="social-links">
+				<div className="col col-12 social-links">
 					{menuItems.map(item => <a key={`social-${item.id}`} target="_blank" rel="noopener noreferrer" title={`Next - ${item.label}`} href={item.url}>{item.label}</a>)}
 				</div>
 			</div>

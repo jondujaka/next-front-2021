@@ -1,18 +1,25 @@
 import React from "react";
 import Row from "../components/row";
 import Media from '../components/media';
+import Paragraph from "../components/paragraph";
 
 const Single = ({ content }) => {
+
+	if(!content){
+		return ``;
+	}
 	const rows = content.singlePostContent.content;
 	return (
 		<div className="single-content">
 			<h1 className="single-title">{content.title}</h1>
-			{rows &&
-				rows.map(item => (
-					<Row classes="my-md-4 my-lg-7">
+			{rows ?
+				rows.map((item, i) => (
+					<Row key={`row-${i}`} classes="my-md-4 my-lg-7">
 						<DirectionWrapper content={item} />
 					</Row>
-				))}
+				))
+				: <h3>Nothing here yet</h3>
+			}
 		</div>
 	);
 };
@@ -34,7 +41,7 @@ const DirectionWrapper = ({ content }) => {
 					) : null}
 					{content.paragraph ? (
 						<div className="col mx-auto col-xl-10 col-12 col-xxl-6">
-							<Paragraph content={content.paragraph} />
+							<Paragraph big={content.paragraph.big} content={content.paragraph.paragraphContent} />
 						</div>
 					) : null}
 				</>
@@ -52,17 +59,10 @@ const DirectionalRow = ({ row }) => {
 				)}
 				{row.paragraph && (
 					<div className="col mx-auto col-12 col-xl-6">
-						<Paragraph content={row.paragraph} />
+						<Paragraph big={row.paragraph.big} content={row.paragraph.paragraphContent} />
 					</div>
 				)}
 			</>
 		);
 	}
 };
-
-const Paragraph = ({ content }) => (
-	<div
-		className={`paragraph text-${content.big}`}
-		dangerouslySetInnerHTML={{ __html: content.paragraphContent }}
-	/>
-);

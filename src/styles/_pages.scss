@@ -1,0 +1,48 @@
+// HOME PAGE
+
+.top-header {
+	display: flex;
+	overflow-x: hidden;
+
+	> * {
+		font-size: 1.8rem;
+	}
+	&.desktop {
+		> * {
+			padding: 1rem 0;
+			display: inline-block;
+			margin-right: 3.5rem;
+			font-size: 2.5rem;
+
+			@include media-breakpoint-up(xl){
+				font-size: 3.5rem;
+				margin-right: 5rem;
+			}
+		}
+	}
+	&.mobile {
+		flex-wrap: wrap;
+		margin-left: 1rem;
+		> * {
+			display: block;
+			flex-basis: 100%;
+		}
+	}
+}
+
+
+// ABOUT PAGE
+
+
+.about-nav {
+	@extend .sticky;
+	top: 4.5rem;
+}
+
+.about-title {
+	font-family: $sansFont;
+	font-size: 5rem;
+	background: white;
+	position: sticky;
+	top: 0;
+}

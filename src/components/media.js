@@ -1,9 +1,10 @@
 import React from 'react';
+import Image from './image';
 
 const Media = ({ content, classes }) => {
 	console.log(content);
 	if(content.images){
-		return content.images.map(image => <SingleMedia classes={`col-${12 / content.images.length}`} item={image} />)
+		return content.images.map((image, i) => <SingleMedia key={`media-${content.fieldGroupName}-${i}`} classes={`col-${12 / content.images.length}`} item={image} />)
 	} else {
 		return <SingleMedia classes={classes} item={content.image} />
 	}
@@ -13,10 +14,7 @@ const Media = ({ content, classes }) => {
 const SingleMedia = ({item, classes}) => {
 	return (
 		<div className={`col ${classes ? classes : ``}`}>
-			<figure>
-				<img srcSet={item.srcSet} className="fake-media" />
-				<figcaption dangerouslySetInnerHTML={{ __html: item.caption }} />
-			</figure>
+			<Image srcSet={item.srcSet} caption={item.caption} />
 		</div>
 	);
 }

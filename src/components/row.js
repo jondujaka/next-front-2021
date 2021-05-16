@@ -1,8 +1,9 @@
 import React from "react";
 
-const Row = ({ classes, children, fullWidth=false }) => {
+const Row = ({ id, classes, children, fullWidth=false }) => {
+	console.log(classes);
 	return children ? (
-		<section className={`${fullWidth ? `full-width` : `row`} ${classes ? classes : ``}`}>
+		<section id={id ? id : ``} className={`${fullWidth ? `full-width` : `row`} ${classes ? classes : ``}`}>
 			{children}
 		</section>
 	) : null;

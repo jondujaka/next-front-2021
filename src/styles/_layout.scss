@@ -149,7 +149,25 @@ $utilities: map-merge(
       property: padding-left,
       class: ps,
       values: $spacers
+    ),
+	"display": (
+      responsive: true,
+      print: true,
+      property: display,
+      class: d,
+      values: inline inline-block block grid table table-row table-cell flex inline-flex none
     )
   ),
   $utilities
 );
+
+
+ul li {
+	display: block;
+}
+
+.sticky {
+	top: 0;
+	position: sticky;
+	height: 100%;
+}
