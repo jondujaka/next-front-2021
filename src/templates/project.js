@@ -2,7 +2,7 @@ import React from "react";
 import { graphql, Link } from "gatsby";
 import LangSwitcher from "../components/LangSwitcher";
 import Layout from "../components/layout";
-import Row from "../components/Row";
+import Row from "../components/row";
 import Single from "./single";
 import ProjectsGrid from "../components/blockGrids/projectsGrid";
 
