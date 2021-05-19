@@ -2,13 +2,27 @@ import React from "react";
 import { graphql, Link } from "gatsby";
 import LangSwitcher from "../components/LangSwitcher";
 import Layout from "../components/layout";
+import Row from "../components/Row";
 import Single from "./single";
+import ProjectsGrid from "../components/blockGrids/projectsGrid";
 
 const Project = ({ data: { project }, pageContext }) => {
-	console.log(project);
+	console.log(pageContext);
+
+	let related = pageContext.related.map(project => {
+		let newObj = { node: {...project.project}};
+		return newObj;
+		
+	});
+
+	console.log(related);
 	return (
 		<Layout>
 			<Single content={project} />
+			<Row>
+				<div className="col col-12"><h2>More projects</h2></div>
+				<ProjectsGrid items={related} />
+			</Row>
 		</Layout>
 	);
 };

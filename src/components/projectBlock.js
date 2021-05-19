@@ -4,6 +4,12 @@ import { LoremIpsum } from 'react-lorem-ipsum';
 
 const ProjectBlock = ({ item }) => {
 
+	console.log(item);
+
+	if(!item){
+		return null;
+	}
+
 	return (
 		<Link
 			className="project-item py-5 px-2 mb-6"
@@ -14,7 +20,7 @@ const ProjectBlock = ({ item }) => {
 					<h3 className="project-title">{item.title}</h3>
 				</div>
 				<div>
-					<p>{item.projectDescription.shortDescription}</p>
+					<p>{item.projectDescription ? item.projectDescription.shortDescription : `Placeholder paragraph`}</p>
 				</div>
 				
 			</div>

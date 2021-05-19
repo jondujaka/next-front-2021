@@ -5,7 +5,7 @@ const CommissionBlock = ({ item }) => {
 	const image = item.featuredImage.node.mediaDetails.sizes.find(size => size.name === `big-thumbnail`);
 	return (
 		<Link
-			className="commission-item py-5 px-2 col-md-6 col-12 mb-6 col-xl-4"
+			className="commission-item py-5 px-2 col-6 mb-6 col-xl-4"
 			to={item.uri}
 		>
 			<div className="row">

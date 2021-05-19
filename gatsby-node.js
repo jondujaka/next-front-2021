@@ -19,9 +19,18 @@ const templateMap = {
 
 const fs = require(`fs`);
 
-exports.createPages = async gatsbyUtilities => {
-	// const editions = await getEditions(gatsbyUtilities);
+const getNrItems = (arr, limit, start=0) => {
+	let result =[];
+	for(let i = start; i++; i<limit){
+		result.push(arr[i]);
+	}
+	console.log(`NR ITEMS`);console.log(result);
+	return result;
+}
 
+
+const initEditions = async (gatsbyUtilities) => {
+	console.log(`init editions`)
 	if (editions.length) {
 		const promises = [];
 		editions.forEach(edition => {
@@ -30,11 +39,11 @@ exports.createPages = async gatsbyUtilities => {
 		// await createEditions({editions, gatsbyUtilities});
 		await Promise.all(promises);
 	}
+	return;
+}
 
-	console.log("done with getting edition settings, now main pages, artists, events, etc..");
-	
-	initMainPages(gatsbyUtilities);
-
+const initPostTypes = async (gatsbyUtilities) => {
+	console.log(`init post types`)
 	let articlesSettings = {
 		postType: `article`,
 		queryName: `allNews`,
@@ -48,7 +57,8 @@ exports.createPages = async gatsbyUtilities => {
 		const slug = articleInfo.article.uri;
 		const template = `news-article`;
 		const context = {
-			id: articleInfo.article.id
+			id: articleInfo.article.id,
+			related: allNews
 		};
 		createNewsPromises.push(
 			createIndividualPage(slug, template, context, gatsbyUtilities)
@@ -77,7 +87,8 @@ exports.createPages = async gatsbyUtilities => {
 			const context = {
 				edition: year,
 				id: artistInfo.artist.id,
-				settings: { ...editionSettings }
+				settings: { ...editionSettings },
+				related: getNrItems(allArtists, 6)
 			};
 			createArtistsPromises.push(
 				createIndividualPage(slug, template, context, gatsbyUtilities)
@@ -110,7 +121,8 @@ exports.createPages = async gatsbyUtilities => {
 			const context = {
 				edition: year,
 				id: eventInfo.event.id,
-				settings: { ...editionSettings }
+				settings: { ...editionSettings },
+				related: allEvents
 			};
 			createEventPromises.push(
 				createIndividualPage(slug, template, context, gatsbyUtilities)
@@ -132,7 +144,8 @@ exports.createPages = async gatsbyUtilities => {
 		const slug = projectInfo.project.uri;
 		const template = `project`;
 		const context = {
-			id: projectInfo.project.id
+			id: projectInfo.project.id,
+			related: allProjects
 		};
 		createProjectsPromises.push(
 			createIndividualPage(slug, template, context, gatsbyUtilities)
@@ -144,7 +157,18 @@ exports.createPages = async gatsbyUtilities => {
 		...createArtistsPromises,
 		...createEventPromises,
 		...createProjectsPromises
-	]);
+	]).then(() => console.log(`all post types built`));
+}
+
+exports.createPages = async gatsbyUtilities => {
+	// const editions = await getEditions(gatsbyUtilities);
+
+	await initEditions(gatsbyUtilities);
+	console.log("done with getting edition settings, now main pages, artists, events, etc..");
+	
+	initMainPages(gatsbyUtilities);
+	initPostTypes(gatsbyUtilities);
+	
 };
 
 
@@ -199,7 +223,7 @@ const buildEdition = async (year, gatsbyUtilities) => {
 			);
 		}
 
-		await Promise.all(editionIndexPromises);
+		await Promise.all(editionIndexPromises).then(() => `Edition build ${year}`);
 	}
 	return;
 };
@@ -246,6 +270,12 @@ const getPostType = async (settings, {graphql, reporter}) => {
 		}
 	`;
 
+	let projectsFragment = `
+		projectDescription {
+			shortDescription
+		}
+	`
+
 	let languagesFragment = `
 		language {
 			slug
@@ -262,6 +292,7 @@ const getPostType = async (settings, {graphql, reporter}) => {
 						title
 						id
 						uri
+						${settings.postType === `project` ? projectsFragment : ``}
 						${withEdition.includes(settings.postType) ? editionsFragment : ``}
 						${noLanguage.includes(settings.postType) ? `` : languagesFragment}
 					}
@@ -282,7 +313,7 @@ const getPostType = async (settings, {graphql, reporter}) => {
 
 }
 
-async function getEditionInfo(year, { graphql, reporter }) {
+const getEditionInfo = async (year, { graphql, reporter }) => {
 	console.log(`getting edition: ${year}`);
 	const graphqlResult = await graphql(/* GraphQL */ `
 		query editionSettings {
@@ -456,77 +487,4 @@ const initSingleMainPage = async(settings, gatsbyUtils) => {
 			gatsbyUtils
 		)
 	}
-}
-
-async function getEditions({ graphql, reporter }) {
-	const graphqlResult = await graphql(/* GraphQL */ `
-		query editions {
-			# Query all WordPress blog posts sorted by date
-			allWpContentType(
-				filter: {
-					name: { regex: "/^edition-/" }
-					contentNodes: {
-						nodes: { elemMatch: { slug: { eq: "index" } } }
-					}
-				}
-			) {
-				edges {
-					edition: node {
-						name
-						contentNodes {
-							nodes {
-								id
-								slug
-								uri
-							}
-						}
-					}
-				}
-			}
-		}
-	`);
-
-	if (graphqlResult.errors) {
-		reporter.panicOnBuild(
-			`There was an error loading your blog posts`,
-			graphqlResult.errors
-		);
-		return;
-	}
-
-	return graphqlResult.data.allWpContentType.edges;
-}
-
-async function getPages({ graphql, reporter }) {
-	const graphqlResult = await graphql(/* GraphQL */ `
-		query WpPages {
-			# Query all WordPress pages
-			  {
-				edges {
-					page: node {
-						id
-						uri
-						title
-						slug
-						language {
-							slug
-						}
-						translations {
-							slug
-						}
-					}
-				}
-			}
-		}
-	`);
-
-	if (graphqlResult.errors) {
-		reporter.panicOnBuild(
-			`There was an error loading your blog posts`,
-			graphqlResult.errors
-		);
-		return;
-	}
-
-	return graphqlResult.data.allWpPage.edges;
 }

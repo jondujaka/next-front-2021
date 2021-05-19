@@ -79,9 +79,25 @@
 	}
 }
 .project-title {
+	font-size: 6rem;
+
+	@include media-breakpoint-up(lg){
+		font-size: 14rem;
+	}
+	// @include media-breakpoint-up(xxl){
+	// 	font-size: 14rem;
+	// }
+	
 	font-family: 'Manege', serif;
-	font-size: 14rem;
 	letter-spacing: -.28rem;
+}
+
+.project-item p {
+	font-size: 1.7rem;
+
+	@include media-breakpoint-up(lg){
+		font-size: 2.7rem;
+	}
 }
 
 .my-masonry-grid {
