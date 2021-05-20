@@ -1,3 +1,40 @@
-.single-content {
+.single-content.separator {
 	border-bottom: 3px solid $primaryBlue;
 }
+
+.no-padding > {
+	.row .col {
+		padding-left: 0;
+		padding-right: 0;
+	}
+}
+
+.product-carousel {
+	@include media-breakpoint-up(lg){
+		position: sticky;
+		top: 4.5rem;
+		height: 100%;
+	}
+	margin-bottom: 4rem;
+}
+
+.product-subtitle {
+	font-family: $serifFont;
+	margin-top: -1rem;
+	font-size: 5rem;
+	margin-bottom: 4rem;
+	display: block;
+}
+
+.formats {
+	@extend .text-big;
+
+	span {
+		margin-right: 1rem;
+	}
+
+	.cart-button {
+		margin-left: 2rem;
+	}
+}
+

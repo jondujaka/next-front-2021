@@ -3,19 +3,20 @@ import Row from "../components/row";
 import Media from '../components/media';
 import Paragraph from "../components/paragraph";
 
-const Single = ({ content }) => {
+const Single = ({ content, direct }) => {
 
 	if(!content){
 		return ``;
 	}
+	console.log(content);
 	const rows = content.singlePostContent.content;
 	return (
-		<div className="single-content">
-			<h1 className="single-title">{content.title}</h1>
+		<div className={`single-content ${direct ? `no-padding` : `separator`}`}>
+			{content.title && <h1 className="single-title">{content.title}</h1> }
 			{rows ?
 				rows.map((item, i) => (
 					<Row key={`row-${i}`} classes="my-md-4 my-lg-7">
-						<DirectionWrapper content={item} />
+						<DirectionWrapper content={item} direct={direct} />
 					</Row>
 				))
 				: <h3>Nothing here yet</h3>
@@ -26,7 +27,7 @@ const Single = ({ content }) => {
 
 export default Single;
 
-const DirectionWrapper = ({ content }) => {
+const DirectionWrapper = ({ content, direct }) => {
 	return (
 		<>
 			{content.direction ? (
@@ -40,7 +41,7 @@ const DirectionWrapper = ({ content }) => {
 						<Media content={content} />
 					) : null}
 					{content.paragraph ? (
-						<div className="col mx-auto col-xl-10 col-12 col-xxl-6">
+						<div className={`col mx-auto ${direct ? `` : `col-xl-10 col-12 col-xxl-6`}`}>
 							<Paragraph big={content.paragraph.big} content={content.paragraph.paragraphContent} />
 						</div>
 					) : null}

@@ -15,22 +15,22 @@ const templateMap = {
 	index: `home`,
 	commissions: `commissions`,
 	projects: `projects`
-}
+};
 
 const fs = require(`fs`);
 
-const getNrItems = (arr, limit, start=0) => {
-	let result =[];
-	for(let i = start; i++; i<limit){
+const getNrItems = (arr, limit, start = 0) => {
+	let result = [];
+	for (let i = start; i++; i < limit) {
 		result.push(arr[i]);
 	}
-	console.log(`NR ITEMS`);console.log(result);
+	console.log(`NR ITEMS`);
+	console.log(result);
 	return result;
-}
+};
 
-
-const initEditions = async (gatsbyUtilities) => {
-	console.log(`init editions`)
+const initEditions = async gatsbyUtilities => {
+	console.log(`init editions`);
 	if (editions.length) {
 		const promises = [];
 		editions.forEach(edition => {
@@ -40,15 +40,36 @@ const initEditions = async (gatsbyUtilities) => {
 		await Promise.all(promises);
 	}
 	return;
+};
+
+const initProducts = async gatsbyUtilities => {
+	const allProducts = await getAllProducts(gatsbyUtilities);
+	const createProductsPromises = [];
+
+	allProducts.map(productInfo => {
+		const slug = `/products/${productInfo.product.slug}`;
+		const template = `product`;
+		const context = {
+			id: productInfo.product.id,
+			related: allProducts
+		};
+
+		createProductsPromises.push(
+			createIndividualPage(slug, template, context, gatsbyUtilities)
+		);
+	});
+
+	Promise.all(createProductsPromises).then(() => console.log(`all products built`));
+
 }
 
-const initPostTypes = async (gatsbyUtilities) => {
-	console.log(`init post types`)
+const initPostTypes = async gatsbyUtilities => {
+	console.log(`init post types`);
 	let articlesSettings = {
 		postType: `article`,
 		queryName: `allNews`,
 		gqlName: `allWpNewsArticle`
-	}
+	};
 
 	const allNews = await getPostType(articlesSettings, gatsbyUtilities);
 	const createNewsPromises = [];
@@ -96,13 +117,11 @@ const initPostTypes = async (gatsbyUtilities) => {
 		}
 	});
 
-	
-
 	let eventSettings = {
 		postType: `event`,
 		queryName: `allEvents`,
 		gqlName: `allWpEvent`
-	}
+	};
 	const allEvents = await getPostType(eventSettings, gatsbyUtilities);
 	const createEventPromises = [];
 
@@ -130,17 +149,15 @@ const initPostTypes = async (gatsbyUtilities) => {
 		}
 	});
 
-	
 	let projectsSettings = {
 		postType: `project`,
 		queryName: `allProjects`,
 		gqlName: `allWpProject`
-	}
+	};
 	const allProjects = await getPostType(projectsSettings, gatsbyUtilities);
 	const createProjectsPromises = [];
 
 	allProjects.map(projectInfo => {
-
 		const slug = projectInfo.project.uri;
 		const template = `project`;
 		const context = {
@@ -158,19 +175,20 @@ const initPostTypes = async (gatsbyUtilities) => {
 		...createEventPromises,
 		...createProjectsPromises
 	]).then(() => console.log(`all post types built`));
-}
+};
 
 exports.createPages = async gatsbyUtilities => {
 	// const editions = await getEditions(gatsbyUtilities);
 
 	await initEditions(gatsbyUtilities);
-	console.log("done with getting edition settings, now main pages, artists, events, etc..");
-	
+	console.log(
+		"done with getting edition settings, now main pages, artists, events, etc.."
+	);
+
 	initMainPages(gatsbyUtilities);
 	initPostTypes(gatsbyUtilities);
-	
+	initProducts(gatsbyUtilities);
 };
-
 
 const buildEdition = async (year, gatsbyUtilities) => {
 	// console.log(`start building edition: ${year}`);
@@ -223,7 +241,9 @@ const buildEdition = async (year, gatsbyUtilities) => {
 			);
 		}
 
-		await Promise.all(editionIndexPromises).then(() => `Edition build ${year}`);
+		await Promise.all(editionIndexPromises).then(
+			() => `Edition build ${year}`
+		);
 	}
 	return;
 };
@@ -238,7 +258,7 @@ const createIndividualPage = async (
 
 	const template = path.resolve(`src/templates/${templateSlug}.js`);
 
-	if(fs.existsSync(template)){
+	if (fs.existsSync(template)) {
 		console.log(`building page: ${slug}`);
 		createPage({
 			path: slug,
@@ -248,20 +268,42 @@ const createIndividualPage = async (
 	} else {
 		console.warn(`Template doesn't exist: ${templateSlug}`);
 	}
-
-	
 };
 
-const getPostType = async (settings, {graphql, reporter}) => {
+const getAllProducts = async ({ graphql, reporter }) => {
+	const gqlResult = await graphql(/* GraphQL */ `
+		query allProductsQuery {
+			allWpProduct {
+				edges {
+					product: node {
+						name
+						slug
+						id
+					}
+				}
+			}
+		}
+	`);
+
+	console.log(`getting products`);
+	console.log(`----`);console.log(gqlResult);console.log(`----`);
+
+	if (gqlResult.errors) {
+		reporter.panicOnBuild(
+			`There was an error loading your blog posts`,
+			gqlResult.errors
+		);
+		return;
+	}
+
+	return gqlResult.data.allWpProduct.edges;
+};
+
+const getPostType = async (settings, { graphql, reporter }) => {
 	console.log(`getting all posts of type: ${settings.postType}`);
 
-	const withEdition = [
-		`artist`,
-		`event`
-	];
-	const noLanguage = [
-		`project`
-	]
+	const withEdition = [`artist`, `event`];
+	const noLanguage = [`project`];
 	let editionsFragment = `
 		editions {
 			nodes {
@@ -274,7 +316,7 @@ const getPostType = async (settings, {graphql, reporter}) => {
 		projectDescription {
 			shortDescription
 		}
-	`
+	`;
 
 	let languagesFragment = `
 		language {
@@ -310,8 +352,7 @@ const getPostType = async (settings, {graphql, reporter}) => {
 	}
 
 	return graphqlResult.data[settings.gqlName].edges;
-
-}
+};
 
 const getEditionInfo = async (year, { graphql, reporter }) => {
 	console.log(`getting edition: ${year}`);
@@ -352,16 +393,16 @@ const getEditionInfo = async (year, { graphql, reporter }) => {
 	}
 
 	return graphqlResult.data[`wpEdition${year}`];
-}
+};
 
-const initMainPages = async(gatsbyUtils) => {
+const initMainPages = async gatsbyUtils => {
 	const mainPagesPromises = [];
 
 	let queries = [
 		{
 			queryName: `mainHomePage`,
 			type: `wpPage`,
-			slug: `index`,
+			slug: `index`
 		},
 		{
 			queryName: `mainAboutPage`,
@@ -385,10 +426,14 @@ const initMainPages = async(gatsbyUtils) => {
 		}
 	];
 
-	queries.map(query => mainPagesPromises.push(initSingleMainPage(query, gatsbyUtils)));
+	queries.map(query =>
+		mainPagesPromises.push(initSingleMainPage(query, gatsbyUtils))
+	);
 
-	Promise.all(mainPagesPromises).then(val => console.log(`all main pages finished`))
-}
+	Promise.all(mainPagesPromises).then(val =>
+		console.log(`all main pages finished`)
+	);
+};
 
 const getSpecificPage = async (settings, { graphql, reporter }) => {
 	const graphqlResult = await graphql(/* GraphQL */ `
@@ -426,14 +471,13 @@ const getSpecificPage = async (settings, { graphql, reporter }) => {
 	return graphqlResult.data[`${settings.type}`];
 };
 
-const initSingleMainPage = async(settings, gatsbyUtils) => {
-	
+const initSingleMainPage = async (settings, gatsbyUtils) => {
 	const pageData = await getSpecificPage(settings, gatsbyUtils);
 
-	if(!pageData){
+	if (!pageData) {
 		return;
 	}
-	
+
 	let slug = pageData.slug;
 	let templateSlug = templateMap[pageData.slug];
 
@@ -441,50 +485,43 @@ const initSingleMainPage = async(settings, gatsbyUtils) => {
 	let skUri;
 
 	// Rewrite url for home pages
-	if(slug === `index`){
+	if (slug === `index`) {
 		uri = `/`;
-		skUri = `/sk`
+		skUri = `/sk`;
 	}
 
 	let contextEn = {
 		id: pageData.id,
-		lang: `en`,
-	}
-
-
-	if(slug === `index`){
-		contextEn.availableEditions = editionsToBuild;
+		lang: `en`
 	};
 
-	createIndividualPage(
-		uri,
-		templateSlug,
-		{... contextEn},
-		gatsbyUtils
-	);
+	if (slug === `index`) {
+		contextEn.availableEditions = editionsToBuild;
+	}
 
+	createIndividualPage(uri, templateSlug, { ...contextEn }, gatsbyUtils);
 
 	// SK Version (if it exists)
-	if(pageData.translations.length){
+	if (pageData.translations.length) {
 		let skData = pageData.translations[0];
 		let contextSk = {
 			id: skData.id,
 			lang: `sk`
 		};
 
-		if(slug === `index`){
+		if (slug === `index`) {
 			contextSk.availableEditions = editionsToBuild;
 		}
 
-		if(!skUri){
+		if (!skUri) {
 			skUri = skData.uri;
 		}
 
 		createIndividualPage(
 			skUri,
 			templateSlug,
-			{... contextSk},
+			{ ...contextSk },
 			gatsbyUtils
-		)
+		);
 	}
-}
+};

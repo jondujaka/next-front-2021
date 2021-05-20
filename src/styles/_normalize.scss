@@ -193,7 +193,7 @@ button,
 [type="button"], // 1
 [type="reset"],
 [type="submit"] {
-  -webkit-appearance: button; // 2
+  -webkit-appearance: none; // 2
 }
 
 // Remove inner border and padding from Firefox, but don't restore the outline like Normalize.
@@ -329,4 +329,14 @@ progress {
 
 [hidden] {
   display: none !important;
+}
+
+
+
+// CUSTOM
+
+button {
+	background: inherit;
+	border: none;
+	font-weight: normal;
 }
