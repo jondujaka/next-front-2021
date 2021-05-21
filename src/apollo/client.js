@@ -12,7 +12,8 @@ const url = process.env.WP_GRAPHQL_URL;
 
 const httpLink = new HttpLink({
 	uri: `https://nextfestival.sk/content/graphql`,
-	fetch
+	fetch,
+	credentials: 'include'
 });
 
 

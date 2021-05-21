@@ -5,6 +5,8 @@
 	"version": "0.1.0",
 	"author": "Kyle Mathews <mathews.kyle@gmail.com>",
 	"dependencies": {
+		"@stripe/react-stripe-js": "^1.4.1",
+		"@stripe/stripe-js": "^1.15.0",
 		"apollo-boost": "^0.4.9",
 		"apollo-cache-inmemory": "^1.6.6",
 		"apollo-client": "^2.6.10",

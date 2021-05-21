@@ -14,6 +14,7 @@ const defaultState = {
 const AppContext = createContext(defaultState);
 
 const AppProvider = ({ children }) => {
+	
 	const [cart, setCart] = useState(defaultState.cart);
 
 	return (

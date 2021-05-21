@@ -9,7 +9,7 @@ const withPreview = (args = { preview: false }, props) => Component => {
 
 	const preview = props => {
 
-		let preview=false;
+		let preview=true;
 
 		if (!preview) {
 			return <Component preview={false} {...props} />;
