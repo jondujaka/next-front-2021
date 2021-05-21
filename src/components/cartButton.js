@@ -3,7 +3,7 @@ import React from "react";
 import { useMutation, gql } from "@apollo/client";
 import { useAppState } from "./context";
 
-const CartButton = ({ text, id, classes = "" }) => {
+const CartButton = ({ text, productId, classes = "" }) => {
 	const { setCart } = useAppState();
 
 	const [addToCart, { loading }] = useMutation(ADD_TO_CART, {
@@ -19,7 +19,7 @@ const CartButton = ({ text, id, classes = "" }) => {
 	function handleAddToCart() {
 		addToCart({
 			variables: {
-				input: { id, quantity: 1, clientMutationId: "123" }
+				input: { productId, quantity: 1, clientMutationId: "123" }
 			}
 		});
 	}

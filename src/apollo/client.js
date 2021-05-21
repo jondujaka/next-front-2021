@@ -9,8 +9,9 @@ import {
 
 const url = process.env.WP_GRAPHQL_URL;
 
+
 const httpLink = new HttpLink({
-	uri: url,
+	uri: `https://nextfestival.sk/content/graphql`,
 	fetch
 });
 
@@ -38,7 +39,7 @@ export const wooSessionMiddleware = new ApolloLink((operation, forward) => {
 				"woocommerce-session": `Session ${session}`
 			}
 		}));
-	}
+	};
 
 	return forward(operation);
 });

@@ -32,7 +32,7 @@ const Product = ({ data, pageContext }) => {
 									<span>
 										{format.attributes.nodes[0].value}
 									</span>
-									<CartButton id={format.databaseId} callBack={() => addToCart(format.price)} classes="ml-4" text="Add to cart" />
+									<CartButton productId={format.databaseId} callBack={() => addToCart(format.price)} classes="ml-4" text="Add to cart" />
 								</div>
 							);
 						})}
