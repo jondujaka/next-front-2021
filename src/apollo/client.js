@@ -14,6 +14,7 @@ const httpLink = new HttpLink({
 	fetch
 });
 
+
 /**
  * Session handler - if we have a session token in localStorage, add it to the GraphQL request as a Session header.
  *
