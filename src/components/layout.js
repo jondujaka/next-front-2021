@@ -34,6 +34,7 @@ const Layout = ({ children, settings, year, style={color: `#000`, backgroundColo
 				className={`main-wrapper ${year ? `edition-${year}` : `no-edition`}`}
 				style={year ? style : {}}
 			>
+			<Header />
 				<main>{children}</main>
 				<SocialFooter/>
 				<footer

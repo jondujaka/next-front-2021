@@ -6,10 +6,15 @@
 
 // You can delete this file if you're not using it
 
-import React from 'react';
-import { ApolloProvider } from 'react-apollo';
-import { client } from './src/apollo/client';
+import React from "react";
+import { ApolloProvider } from "@apollo/client";
+import { client } from "./src/apollo/client";
+import { AppProvider } from "./src/components/context";
 
-export const wrapRootElement = ({ element }) => (
-  <ApolloProvider client={client}>{element}</ApolloProvider>
-);
+export function wrapRootElement({ element }) {
+	return (
+		<ApolloProvider client={client}>
+			<AppProvider>{element}</AppProvider>
+		</ApolloProvider>
+	);
+}

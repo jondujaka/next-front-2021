@@ -13,6 +13,7 @@ const Product = ({ data, pageContext }) => {
 	const addToCart = (price) => {
 		console.log(`Add to cart ${price}`);
 	}
+	
 	return (
 		<Layout>
 			<Row classes="mt-6">
@@ -31,7 +32,7 @@ const Product = ({ data, pageContext }) => {
 									<span>
 										{format.attributes.nodes[0].value}
 									</span>
-									<CartButton callBack={() => addToCart(format.price)} classes="ml-4" text="Add to cart" />
+									<CartButton id={format.databaseId} callBack={() => addToCart(format.price)} classes="ml-4" text="Add to cart" />
 								</div>
 							);
 						})}
@@ -58,6 +59,7 @@ export const productQuery = graphql`
 			... on WpVariableProduct {
 				id
 				name
+				databaseId
 				variations {
 					nodes {
 						name
@@ -66,6 +68,7 @@ export const productQuery = graphql`
 						type
 						nodeType
 						downloadable
+						databaseId
 						attributes {
 							nodes {
 								name

@@ -1,7 +1,64 @@
 import React from "react";
 
-const CartButton = ({ text, callBack, classes="" }) => {
-	return <button onClick={() => callBack()} className={`cart-button ${classes}`}>{text}</button>;
+import { useMutation, gql } from "@apollo/client";
+import { useAppState } from "./context";
+
+const CartButton = ({ text, id, classes = "" }) => {
+	const { setCart } = useAppState();
+
+	const [addToCart, { loading }] = useMutation(ADD_TO_CART, {
+		onCompleted: ({ addToCart }) => {
+			console.log("ITEM ADDED TO CART");
+			setCart(addToCart.cart);
+		},
+		onError: () => {
+			console.log("ERROR");
+		}
+	});
+
+	function handleAddToCart() {
+		addToCart({
+			variables: {
+				input: { id, quantity: 1, clientMutationId: "123" }
+			}
+		});
+	}
+
+	return (
+		<button
+			onClick={() => handleAddToCart()}
+			className={`cart-button ${classes}`}
+		>
+			{text}
+		</button>
+	);
 };
+
+const ADD_TO_CART = gql`
+	mutation ATC($input: AddToCartInput!) {
+		addToCart(input: $input) {
+			cart {
+				subtotal
+				total
+				shippingTotal
+				contents {
+					itemCount
+					nodes {
+						product {
+							node {
+								name
+								sku
+								databaseId
+								... on SimpleProduct {
+									price
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+`;
 
 export default CartButton;
