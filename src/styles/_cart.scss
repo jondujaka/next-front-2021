@@ -1,0 +1,27 @@
+.cart-item {
+	display: flex;
+
+	figure {
+		max-width: 370px;
+	}
+}
+
+.cart-item-info {
+	display: flex;
+	flex-direction: column;
+	margin-left: 2rem;
+	h3 {
+		font-family: $serifFont;
+		font-size: 5rem;
+	}
+	.quantity, .price span {
+		display: block;
+		font-size: 3.4rem
+	}
+
+	.price {
+		margin-top: auto;
+		margin-bottom: 0;
+	}
+
+}

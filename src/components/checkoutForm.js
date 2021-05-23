@@ -42,7 +42,7 @@ const CheckoutForm = () => {
 							city: `New York`,
 							state: `NY`,
 							postcode: `12345`,
-							email: `george@vandaleyindustries.com`
+							email: `jdujaka@gmail.com`
 						},
 						metaData: [
 							{
@@ -121,6 +121,14 @@ const CHECKOUT = gql`
 				databaseId
 				orderNumber
 				total
+				downloadableItems {
+					edges {
+						node {
+							name
+							url
+						}
+					}
+				}
 				lineItems {
 					nodes {
 						product {

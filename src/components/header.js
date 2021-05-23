@@ -7,9 +7,24 @@ const Header = ({ siteTitle }) => {
 	const { cart } = useAppState();
 	console.log(cart);
 	return (
-		<div>
-			<header>Header</header>
-			<span>{cart ? cart.contents.itemCount : ``}</span>
+		<div className="header-wrapper">
+			<h4>Next</h4>
+			<nav className="main-nav">
+				<ul>
+					<li>
+						<Link to="/">News</Link>
+						<Link to="/">About</Link>
+						<Link to="/">Festival '21</Link>
+						<Link to="/">Commissions</Link>
+						<Link to="/">Projects</Link>
+						<Link to="/">Records</Link>
+						<Link to="/">Archive</Link>
+						<Link to="/">Shop</Link>
+						{cart ? <Link to="/cart" className="cart-header">Cart - {cart.contents.itemCount}</Link> : ``}
+						<Link to="/" className="lang-swither">SK</Link>
+					</li>
+				</ul>
+			</nav>
 		</div>
 	);
 };

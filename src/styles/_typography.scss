@@ -176,6 +176,13 @@ p {
 	
 }
 
+.hollow {
+	-webkit-text-stroke:1px $primaryBlue;
+	-webkit-text-fill-color:transparent;
+
+	font-size: 14rem;
+}
+
 
 .cart-button {
 	border: 3px solid $primaryBlue;

@@ -2,7 +2,9 @@ import { useAppState } from "../components/context";
 import Layout from "../components/Layout";
 import React, { useEffect } from "react";
 import { gql, useLazyQuery, useMutation } from "@apollo/client";
+import Row from "../components/row";
 import { Link } from "gatsby";
+import CartItem from "../components/cart/cartItem";
 
 const Cart = () => {
 	const { cart, setCart } = useAppState();
@@ -32,69 +34,59 @@ const Cart = () => {
 		maybeGetCart();
 	}, [cart, maybeGetCart]);
 
-	if (loading) {
-		return (
-			<Layout>
-				<span>Loading cart...</span>
-			</Layout>
-		);
-	}
+	const CartContent = ({}) => {
+		if (loading) {
+			return <span>Loading cart...</span>;
+		}
 
-	if (loadingMutation) {
-		return (
-			<Layout>
-				<span>Updating cart...</span>
-			</Layout>
-		);
-	}
+		if (loadingMutation) {
+			return <span>Updating cart...</span>;
+		}
 
-	if (!cart) {
-		return (
-			<Layout>
-				<span>Empty cart</span>
-			</Layout>
-		);
-	}
+		if (!cart) {
+			return <span>Empty cart</span>;
+		}
 
-	if (cart?.contents.itemCount === 0) {
+		if (cart?.contents.itemCount === 0) {
+			return <span>Empty cart</span>;
+		}
+
 		return (
-			<Layout>
-				<span>Empty cart</span>
-			</Layout>
+			<>
+				{cart?.contents.nodes.map((item, i) => {
+					return <CartItem item={item} key={item.key} />;
+				})}
+			</>
 		);
-	}
+	};
 
 	return (
 		<Layout>
-			<h1>Cart</h1>
-			<h2>Items</h2>
-			{cart?.contents.nodes.map((item, i) => {
-				const { node } = item.product;
-				return <div key={`item-${node.databaseId}-${i}`}>{node.name}</div>;
-			})}
-			<div my={6}>
-				<h3>Summary</h3>
-				<div>Subtotal: {cart.subtotal}</div>
-				<div>Shipping: {cart.shippingTotal}</div>
-				<div>Total: {cart.total}</div>
-			</div>
-			<div>
-				<Link to="/checkout">Checkout</Link>
-				<button
-					onClick={() =>
-						removeAllItems({
-							variables: {
-								input: {
-									clientMutationId: `1234`,
-									all: true
-								}
-							}
-						})
-					}
-				>
-					Remove all
-				</button>
-			</div>
+			<Row classes="mt-6">
+				<div className="col-12 d-none d-lg-block col-lg-6 col-xl-6 about-nav">
+					<ul>
+						<li className="active">
+							<Link to="/cart" className="hollow-link">
+								Cart Summary
+							</Link>
+						</li>
+						<li>
+							<Link to="/checkout" className="hollow-link">
+								Checkout
+							</Link>
+						</li>
+					</ul>
+				</div>
+				<div className="col col-12 col-lg-6">
+					<CartContent />
+					<div className="checkout-btn">
+						<h4>Subtotal {cart.subtotal}</h4>
+						<h4>Shipping {cart.shippingTotal}</h4>
+						<h4>TOTAL {cart.total}</h4>
+					</div>
+					<Link to="/checkout">Checkout</Link>
+				</div>
+			</Row>
 		</Layout>
 	);
 };
@@ -137,14 +129,31 @@ const CART = gql`
 				itemCount
 				nodes {
 					quantity
-					key
 					product {
 						node {
 							name
 							sku
 							databaseId
-							... on SimpleProduct {
-								price
+							featuredImage {
+								node {
+									srcSet
+								}
+							}
+							... on VariableProduct {
+								productInfo {
+									subtitle
+								}
+							}
+						}
+					}
+					variation {
+						node {
+							price
+							attributes {
+								nodes {
+									value
+									name
+								}
 							}
 						}
 					}

@@ -8,7 +8,11 @@ const CartButton = ({ text, productId, classes = "" }) => {
 
 	const [addToCart, { loading }] = useMutation(ADD_TO_CART, {
 		onCompleted: ({ addToCart }) => {
-			console.log("ITEM ADDED TO CART");
+			let parsedCartItems;
+
+			addToCart.cart.contents.nodes.map(product => {
+				console.log(product);
+			});
 			setCart(addToCart.cart);
 		},
 		onError: () => {
@@ -44,13 +48,32 @@ const ADD_TO_CART = gql`
 				contents {
 					itemCount
 					nodes {
+						quantity
 						product {
 							node {
 								name
 								sku
 								databaseId
-								... on SimpleProduct {
-									price
+								... on VariableProduct {
+									featuredImage {
+										node {
+											srcSet
+										}
+									}
+									productInfo {
+										subtitle
+									}
+								}
+							}
+						}
+						variation {
+							node {
+								price
+								attributes {
+									nodes {
+										value
+										name
+									}
 								}
 							}
 						}
