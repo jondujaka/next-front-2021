@@ -4,8 +4,6 @@ import queryString from "query-string";
 
 const withPreview = (args = { preview: false }, props) => Component => {
 
-	console.log('IN HERE AT LEAST');
-	console.log(args);
 
 	const preview = props => {
 

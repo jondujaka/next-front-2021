@@ -2,7 +2,7 @@ import React from "react";
 import { graphql, Link } from "gatsby";
 import Layout from "../components/layout";
 import Row from "../components/row";
-import CommissionBlock from "../components/commissionBlock";
+import CommissionsGrid from "../components/blockGrids/commissionsGrid";
 import Masonry from "react-masonry-css";
 
 const Commissions = ({ data, pageContext }) => {
@@ -11,7 +11,7 @@ const Commissions = ({ data, pageContext }) => {
 	let fake = [];
 
 	for (let i = 0; i < 20; i++) {
-		fake.push(coms[0]);
+		fake.push(coms[1]);
 	}
 
 	return (
@@ -21,16 +21,8 @@ const Commissions = ({ data, pageContext }) => {
 					<h2>Commissions</h2>
 				</div>
 			</Row>
-			<Row classes="mt-6">
-				{coms &&
-					fake.map(comItem =>
-						comItem ? (
-							<CommissionBlock
-								key={`coms-${comItem.node.id}`}
-								item={comItem.node}
-							/>
-						) : null
-					)}
+			<Row classes="mt-6 justify-content-center">
+				{coms && <CommissionsGrid items={fake} />}
 			</Row>
 		</Layout>
 	);

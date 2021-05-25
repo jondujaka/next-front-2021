@@ -24,9 +24,14 @@ $serifFont: 'Manege', serif;
 
 a {
 	color: inherit;
+
 	&:visited {
 		color: inherit;
 	}
+}
+
+a.active {
+	text-decoration: underline;
 }
 
 .big-button {
@@ -197,4 +202,8 @@ p {
 		background: $primaryBlue;
 		border-color: $primaryBlue;
 	}
+}
+
+hr {
+	border-top: 3px solid;
 }

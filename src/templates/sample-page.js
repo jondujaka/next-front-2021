@@ -3,7 +3,6 @@ import { graphql, Link } from "gatsby"
 
 const SamplePage = ({ data: { page } }) => {
 
-	console.log(page);
   return (
 
 	  <div>

@@ -8,11 +8,6 @@ const CartButton = ({ text, productId, classes = "" }) => {
 
 	const [addToCart, { loading }] = useMutation(ADD_TO_CART, {
 		onCompleted: ({ addToCart }) => {
-			let parsedCartItems;
-
-			addToCart.cart.contents.nodes.map(product => {
-				console.log(product);
-			});
 			setCart(addToCart.cart);
 		},
 		onError: () => {

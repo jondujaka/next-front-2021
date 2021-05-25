@@ -5,22 +5,21 @@ import { useAppState } from "./context";
 
 const Header = ({ siteTitle }) => {
 	const { cart } = useAppState();
-	console.log(cart);
 	return (
 		<div className="header-wrapper">
 			<h4>Next</h4>
 			<nav className="main-nav">
 				<ul>
 					<li>
-						<Link to="/">News</Link>
-						<Link to="/">About</Link>
-						<Link to="/">Festival '21</Link>
-						<Link to="/">Commissions</Link>
-						<Link to="/">Projects</Link>
-						<Link to="/">Records</Link>
-						<Link to="/">Archive</Link>
-						<Link to="/">Shop</Link>
-						{cart ? <Link to="/cart" className="cart-header">Cart - {cart.contents.itemCount}</Link> : ``}
+						<Link to="/news/" partiallyActive activeClassName="active">News</Link>
+						<Link to="/about/" partiallyActive activeClassName="active">About</Link>
+						<Link to="/2021/" partiallyActive activeClassName="active">Festival '21</Link>
+						<Link to="/commissions/" partiallyActive activeClassName="active">Commissions</Link>
+						<Link to="/projects/" partiallyActive activeClassName="active">Projects</Link>
+						<Link to="/records" partiallyActive activeClassName="active">Records</Link>
+						<Link to="/archive/" partiallyActive activeClassName="active">Archive</Link>
+						<Link to="/shop/" partiallyActive activeClassName="active">Shop</Link>
+						{cart ? <Link to="/cart/" className="cart-header" partiallyActive activeClassName="active">Cart - {cart.contents.itemCount}</Link> : ``}
 						<Link to="/" className="lang-swither">SK</Link>
 					</li>
 				</ul>

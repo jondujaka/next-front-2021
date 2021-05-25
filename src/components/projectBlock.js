@@ -4,8 +4,6 @@ import { LoremIpsum } from 'react-lorem-ipsum';
 
 const ProjectBlock = ({ item }) => {
 
-	console.log(item);
-
 	if(!item){
 		return null;
 	}

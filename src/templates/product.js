@@ -10,10 +10,6 @@ const Product = ({ data, pageContext }) => {
 	const product = data.product;
 	const carouselItems = product.productInfo.images;
 
-	const addToCart = (price) => {
-		console.log(`Add to cart ${price}`);
-	}
-	
 	return (
 		<Layout>
 			<Row classes="mt-6">
@@ -25,14 +21,13 @@ const Product = ({ data, pageContext }) => {
 					<h3 className="product-subtitle">{product.productInfo.subtitle}</h3>
 					<div className="formats">
 						{product.variations.nodes.map(format => {
-							console.log(format);
 							return (
 								<div key={`format-${format.price}`} className="format mb-4">
 									{format.price && <span>{format.price}</span>}
 									<span>
 										{format.attributes.nodes[0].value}
 									</span>
-									<CartButton productId={format.databaseId} callBack={() => addToCart(format.price)} classes="ml-4" text="Add to cart" />
+									<CartButton productId={format.databaseId} classes="ml-4" text="Add to cart" />
 								</div>
 							);
 						})}

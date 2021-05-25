@@ -7,7 +7,7 @@ import {
 	from
 } from "@apollo/client";
 
-const url = process.env.WP_GRAPHQL_URL;
+// const url = process.env.WP_GRAPHQL_URL;
 
 
 const httpLink = new HttpLink({

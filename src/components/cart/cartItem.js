@@ -3,7 +3,7 @@ import { Link } from "gatsby";
 import Image from "../image";
 
 const CartItem = ({ item }) => {
-	console.log(item);
+	
 	const productInfo = item.product.node;
 	const varInfo = item.variation.node;
 

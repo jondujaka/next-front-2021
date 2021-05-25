@@ -47,7 +47,7 @@ const initProducts = async gatsbyUtilities => {
 	const createProductsPromises = [];
 
 	allProducts.map(productInfo => {
-		const slug = `/products/${productInfo.product.slug}`;
+		const slug = `/products/${productInfo.product.slug}/`;
 		const template = `product`;
 		const context = {
 			id: productInfo.product.id,
@@ -59,9 +59,10 @@ const initProducts = async gatsbyUtilities => {
 		);
 	});
 
-	Promise.all(createProductsPromises).then(() => console.log(`all products built`));
-
-}
+	Promise.all(createProductsPromises).then(() =>
+		console.log(`all products built`)
+	);
+};
 
 const initPostTypes = async gatsbyUtilities => {
 	console.log(`init post types`);
@@ -169,11 +170,35 @@ const initPostTypes = async gatsbyUtilities => {
 		);
 	});
 
+	let commissionsSettings = {
+		postType: `commission`,
+		queryName: `allCommissions`,
+		gqlName: `allWpCommission`
+	};
+	const allCommissions = await getPostType(
+		commissionsSettings,
+		gatsbyUtilities
+	);
+	const createCommissionsPromises = [];
+
+	allCommissions.map(commissionsInfo => {
+		const slug = commissionsInfo.commission.uri;
+		const template = `commission`;
+		const context = {
+			id: commissionsInfo.commission.id,
+			related: allCommissions
+		};
+		createCommissionsPromises.push(
+			createIndividualPage(slug, template, context, gatsbyUtilities)
+		);
+	});
+
 	Promise.all([
 		...createNewsPromises,
 		...createArtistsPromises,
 		...createEventPromises,
-		...createProjectsPromises
+		...createProjectsPromises,
+		...createCommissionsPromises
 	]).then(() => console.log(`all post types built`));
 };
 
@@ -212,7 +237,7 @@ const buildEdition = async (year, gatsbyUtilities) => {
 		}
 		editionIndexPromises.push(
 			createIndividualPage(
-				`/${year}`,
+				`/${year}/`,
 				`edition`,
 				{
 					edition: `${year}`,
@@ -286,7 +311,9 @@ const getAllProducts = async ({ graphql, reporter }) => {
 	`);
 
 	console.log(`getting products`);
-	console.log(`----`);console.log(gqlResult);console.log(`----`);
+	console.log(`----`);
+	console.log(gqlResult);
+	console.log(`----`);
 
 	if (gqlResult.errors) {
 		reporter.panicOnBuild(
@@ -324,6 +351,23 @@ const getPostType = async (settings, { graphql, reporter }) => {
 		}
 	`;
 
+	let commissionsFragment = `
+		featuredImage {
+			node {
+				sizes
+				uri
+				description
+				caption
+				mediaDetails {
+					sizes {
+						name
+						sourceUrl
+					}
+				}
+			}
+		}
+	`;
+
 	const graphqlResult = await graphql(/* GraphQL */ `
 		query ${settings.queryName} {
 			# Query index pages from edition
@@ -335,6 +379,7 @@ const getPostType = async (settings, { graphql, reporter }) => {
 						id
 						uri
 						${settings.postType === `project` ? projectsFragment : ``}
+						${settings.postType === `commission` ? commissionsFragment : ``}
 						${withEdition.includes(settings.postType) ? editionsFragment : ``}
 						${noLanguage.includes(settings.postType) ? `` : languagesFragment}
 					}
@@ -487,7 +532,7 @@ const initSingleMainPage = async (settings, gatsbyUtils) => {
 	// Rewrite url for home pages
 	if (slug === `index`) {
 		uri = `/`;
-		skUri = `/sk`;
+		skUri = `/sk/`;
 	}
 
 	let contextEn = {

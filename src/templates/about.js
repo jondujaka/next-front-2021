@@ -41,14 +41,12 @@ const About = ({ data, pageContext }) => {
 };
 
 const AboutSection = ({content}) => {
-	return content.map(item => {
+	return content.map((item, i) => {
 		if(item.textContent){
-			return <Paragraph big={item.big} content={item.textContent} />
+			return <Paragraph key={`paragraph-about-${i}`} big={item.big} content={item.textContent} />
 		}
 		if(item.image){
-			console.log(item);
-			console.log("image")
-			return <ImageEl srcSet={item.image.srcSet} caption={item.image.caption} />
+			return <ImageEl key={`img-about-${i}`} srcSet={item.image.srcSet} caption={item.image.caption} />
 		}
 	})
 }
