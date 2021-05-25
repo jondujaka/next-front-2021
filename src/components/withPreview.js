@@ -9,31 +9,13 @@ const withPreview = (args = { preview: false }, props) => Component => {
 
 	const preview = props => {
 
-		let preview=true;
+		let preview=false;
 
 		if (!preview) {
 			return <Component preview={false} {...props} />;
 		}
 
-		return (
-			<Query
-			query={args.preview}
-			variables={{
-			  postid: `454`,
-			  'wp_token': `72b626b874` ,
-			}}
-			>
-				{({ data, loading, error }) => {
-					
-				  if (loading) return <p>Loading preview...</p>;
-				  if (error) return <p>Error: ${error.message}</p>;
-	  
-				  return (
-					<h2>Test</h2>
-				  )
-				}}
-			</Query>
-		  )
+return ``;
 	};
 
 	// console.log(props.location)
