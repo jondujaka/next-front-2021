@@ -79,11 +79,15 @@ const Cart = () => {
 				</div>
 				<div className="col col-12 col-lg-6">
 					<CartContent />
-					<div className="checkout-btn">
-						<h4>Subtotal {cart.subtotal}</h4>
-						<h4>Shipping {cart.shippingTotal}</h4>
-						<h4>TOTAL {cart.total}</h4>
-					</div>
+					{cart ? (
+						<div className="checkout-btn">
+							<h4>Subtotal {cart.subtotal}</h4>
+							<h4>Shipping {cart.shippingTotal}</h4>
+							<h4>TOTAL {cart.total}</h4>
+						</div>
+					) : (
+						``
+					)}
 					<Link to="/checkout">Checkout</Link>
 				</div>
 			</Row>
