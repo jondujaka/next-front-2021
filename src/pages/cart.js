@@ -1,5 +1,5 @@
 import { useAppState } from "../components/context";
-import Layout from "../components/Layout";
+import Layout from "../components/layout";
 import React, { useEffect } from "react";
 import { gql, useLazyQuery, useMutation } from "@apollo/client";
 import Row from "../components/row";
