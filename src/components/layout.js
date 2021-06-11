@@ -14,7 +14,7 @@ import SocialFooter from './socialFooter';
 import Header from "./header";
 import "../styles/global.scss";                                                                                                                                                                                                                                                   
 
-const Layout = ({ children, settings, year, style={color: `#000`, backgroundColor: `#FFF`} }) => {
+const Layout = ({ children, settings, year, style={color: `#000`, backgroundColor: `#FFF`, borderColor: `#000`}, noFooter }) => {
 	const data = useStaticQuery(graphql`
 		query SiteTitleQuery {
 			site {
@@ -25,17 +25,21 @@ const Layout = ({ children, settings, year, style={color: `#000`, backgroundColo
 		}
 	`);
 
-	console.log(year);
+	let parsedStyle = {
+		...style,
+		borderColor: style.color
+	}
 
 	return (
 		<>
 			{/* <Header siteTitle={data.site.siteMetadata?.title || `Title`} /> */}
 			<div
 				className={`main-wrapper ${year ? `edition-${year}` : `no-edition`}`}
-				style={year ? style : {}}
+				style={year ? parsedStyle : {}}
 			>
+			<Header />
 				<main>{children}</main>
-				<SocialFooter/>
+				{noFooter ? `` : <SocialFooter/>}
 				<footer
 					style={{
 						marginTop: `2rem`

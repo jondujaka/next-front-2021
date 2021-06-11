@@ -13,6 +13,10 @@ const Home = ({ data: { page, news }, pageContext }) => {
 	const { translations, language, mainHome } = { page };
 	const { availableEditions } = pageContext;
 
+	const latestEdition = availableEditions.reduce((prev, current) => {
+		return (prev.year > current.year) ? prev : current;
+	});
+
 	const langSlug = page.language.slug == `en` ? `` : `/sk`;
 
 	const allNews = news.edges;
@@ -81,10 +85,15 @@ const Home = ({ data: { page, news }, pageContext }) => {
 			</Row>
 			<Edition
 				pageContext={{
-					edition: `2021`,
+					edition: latestEdition.year,
 					lang: `en`,
 					translation: { language: { slug: `sk` } }
 				}}
+				style ={{
+					color: latestEdition.textColor,
+					backgroundColor: latestEdition.backgroundColor
+				}}
+				noFooter={true}
 			/>
 		</Layout>
 	);

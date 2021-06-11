@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "gatsby";
 
 const CommissionBlock = ({ item }) => {
-	const image = item.featuredImage.node.mediaDetails.sizes.find(size => size.name === `big-thumbnail`);
+	const image = item.featuredImage?.node.mediaDetails.sizes.find(size => size.name === `big-thumbnail`);
 	return (
 		<Link
 			className="commission-item py-5 px-2 col-6 mb-6 col-xl-4"

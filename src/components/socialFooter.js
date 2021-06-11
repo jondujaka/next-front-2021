@@ -19,8 +19,6 @@ const SocialFooter = () => {
 
 	const menuItems = menuData.wpMenu.menuItems.nodes;
 
-	console.log(menuData);
-
 	return (
 		<div className="social-footer mt-6">
 			<div className="row">

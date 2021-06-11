@@ -3,26 +3,29 @@ import { graphql, Link } from "gatsby";
 import LangSwitcher from "../components/LangSwitcher";
 import Layout from "../components/layout";
 
-const Edition = ({ data, pageContext }) => {
+const Edition = ({ data, pageContext, noFooter, style }) => {
 	const { edition, translation, lang, settings } = pageContext;
-	const langSlug = translation.language.slug === `en` ? `` : `/sk`;
 
 	let colorStyle;
-	if(settings){
+
+
+	if (settings) {
 		colorStyle = {
 			color: settings.textColor,
 			backgroundColor: settings.backgroundColor
 		};
+	} else if (style) {
+		colorStyle = { ...style };
 	}
-	
+
 	return (
-		<Layout style={colorStyle} year={edition}>
+		<Layout style={colorStyle} noFooter={noFooter} year={edition}>
 			<div>
 				<Link to={`/`}>Main website</Link>
 				<h1>
 					Edition {edition} - {lang}
 				</h1>
-				<Link to={`${langSlug}/${edition}`}>Switch language</Link>
+				{/* <Link to={`${langSlug}/${edition}`}>Switch language</Link> */}
 			</div>
 			<br />
 			<h3>All artists</h3>
@@ -65,7 +68,7 @@ export const editionQuery = graphql`
 	) {
 		allArtists: allWpArtist(
 			filter: {
-				editions: {nodes: {elemMatch: {slug: {eq: $edition } } } }
+				editions: { nodes: { elemMatch: { slug: { eq: $edition } } } }
 				language: { slug: { eq: $lang } }
 			}
 		) {
@@ -83,7 +86,7 @@ export const editionQuery = graphql`
 		}
 		allEvents: allWpEvent(
 			filter: {
-				editions: {nodes: {elemMatch: {slug: {eq: $edition } } } }
+				editions: { nodes: { elemMatch: { slug: { eq: $edition } } } }
 				language: { slug: { eq: $lang } }
 			}
 		) {

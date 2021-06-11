@@ -1,6 +1,6 @@
 .social-footer {
-	border-top: 4px solid $primaryBlue;
-	border-bottom: 4px solid $primaryBlue;
+	border-top: 3px solid;
+	border-bottom: 3px solid;
 	margin-bottom: 30rem;
 }
 
@@ -13,4 +13,66 @@
 		font-size: 3.5rem;
 	}
 	
+}
+
+
+.header-wrapper {
+	position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    border-top: 3px solid $primaryBlue;
+    justify-content: space-around;
+	padding: 1.25rem 2rem;
+	background: white;
+
+	* {
+		font-size: 3.5rem;
+		text-transform: uppercase;
+		color: $primaryBlue;
+	}
+
+	h4 {
+		margin: 0;
+	}
+}
+
+.main-nav {
+	flex-grow: 1;
+    display: flex;
+    justify-content: flex-end;
+
+
+	ul, li {
+		margin: 0;
+    	padding: 0;
+	}
+
+	a {
+		padding: 1rem;
+		margin: 0 .4rem;
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+}
+
+.lang-swither, .cart-header {
+	border: 3px solid $primaryBlue;
+
+	&:hover {
+		text-decoration: none !important;
+		color: white;
+		background: $primaryBlue;
+	}
+}
+
+.cart-header {
+	border-radius: 3.5rem;
+}
+
+.lang-swither {
+	border-radius: 50%;
 }

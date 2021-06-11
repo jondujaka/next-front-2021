@@ -1,35 +1,32 @@
 import * as React from "react";
 import PropTypes from "prop-types";
 import { Link } from "gatsby";
+import { useAppState } from "./context";
 
-const Header = ({ siteTitle }) => (
-	<header
-		style={{
-			background: `rebeccapurple`,
-			marginBottom: `1.45rem`
-		}}
-	>
-		<div
-			style={{
-				margin: `0 auto`,
-				maxWidth: 960,
-				padding: `1.45rem 1.0875rem`
-			}}
-		>
-			<h1 style={{ margin: 0 }}>
-				<Link
-					to="/"
-					style={{
-						color: `white`,
-						textDecoration: `none`
-					}}
-				>
-					{siteTitle}
-				</Link>
-			</h1>
+const Header = ({ siteTitle }) => {
+	const { cart } = useAppState();
+	return (
+		<div className="header-wrapper">
+			<h4>Next</h4>
+			<nav className="main-nav">
+				<ul>
+					<li>
+						<Link to="/news/" partiallyActive activeClassName="active">News</Link>
+						<Link to="/about/" partiallyActive activeClassName="active">About</Link>
+						<Link to="/2021/" partiallyActive activeClassName="active">Festival '21</Link>
+						<Link to="/commissions/" partiallyActive activeClassName="active">Commissions</Link>
+						<Link to="/projects/" partiallyActive activeClassName="active">Projects</Link>
+						<Link to="/records" partiallyActive activeClassName="active">Records</Link>
+						<Link to="/archive/" partiallyActive activeClassName="active">Archive</Link>
+						<Link to="/shop/" partiallyActive activeClassName="active">Shop</Link>
+						{cart ? <Link to="/cart/" className="cart-header" partiallyActive activeClassName="active">Cart - {cart.contents.itemCount}</Link> : ``}
+						<Link to="/" className="lang-swither">SK</Link>
+					</li>
+				</ul>
+			</nav>
 		</div>
-	</header>
-);
+	);
+};
 
 Header.propTypes = {
 	siteTitle: PropTypes.string

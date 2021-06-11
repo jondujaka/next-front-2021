@@ -8,7 +8,6 @@ const Single = ({ content, direct }) => {
 	if(!content){
 		return ``;
 	}
-	console.log(content);
 	const rows = content.singlePostContent.content;
 	return (
 		<div className={`single-content ${direct ? `no-padding` : `separator`}`}>

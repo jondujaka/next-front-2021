@@ -4,8 +4,6 @@ import queryString from "query-string";
 
 const withPreview = (args = { preview: false }, props) => Component => {
 
-	console.log('IN HERE AT LEAST');
-	console.log(args);
 
 	const preview = props => {
 
@@ -15,25 +13,7 @@ const withPreview = (args = { preview: false }, props) => Component => {
 			return <Component preview={false} {...props} />;
 		}
 
-		return (
-			<Query
-			query={args.preview}
-			variables={{
-			  postid: `454`,
-			  'wp_token': `72b626b874` ,
-			}}
-			>
-				{({ data, loading, error }) => {
-					
-				  if (loading) return <p>Loading preview...</p>;
-				  if (error) return <p>Error: ${error.message}</p>;
-	  
-				  return (
-					<h2>Test</h2>
-				  )
-				}}
-			</Query>
-		  )
+return ``;
 	};
 
 	// console.log(props.location)

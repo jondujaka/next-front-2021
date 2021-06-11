@@ -2,7 +2,6 @@ import React from 'react';
 import Image from './image';
 
 const Media = ({ content, classes }) => {
-	console.log(content);
 	if(content.images){
 		return content.images.map((image, i) => <SingleMedia key={`media-${content.fieldGroupName}-${i}`} classes={`col-${12 / content.images.length}`} item={image} />)
 	} else {

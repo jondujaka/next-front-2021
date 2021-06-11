@@ -3,15 +3,17 @@ import { graphql, Link } from "gatsby";
 import LangSwitcher from "../components/LangSwitcher";
 import Layout from "../components/layout";
 import Single from "./single";
+import Separator from "../components/separator";
 
 const Events = ({ data: { event }, pageContext }) => {
-	console.log(pageContext);
+
 	const {settings, edition } = pageContext;
 
 	let langTo = event.language.slug == `sk` ? `` : `/sk`;
 	return (
 		<Layout settings={settings}>
 			<Single content={event} />
+			<Separator/>
 		</Layout>
 	);
 };
