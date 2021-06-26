@@ -271,12 +271,19 @@ const buildEdition = async (year, gatsbyUtilities) => {
 	];
 
 	console.log(`init edition ${year}`);
-	if (editionInfo && editionInfo.settings.testWebsite) {
+	console.log(editionInfo);
+	if (
+		editionInfo.editionData &&
+		editionInfo.editionData.settings.testWebsite
+	) {
 		// Create the edition
 
 		// Create an index of editions that should be built
 		if (!editionsToBuild.find(edition => edition.year === year)) {
-			editionsToBuild.push({ ...editionInfo.settings, year });
+			editionsToBuild.push({
+				...editionInfo.editionData.settings,
+				year
+			});
 		}
 
 		console.log(`building edition ${year}`);
@@ -286,8 +293,8 @@ const buildEdition = async (year, gatsbyUtilities) => {
 		console.log(`Enabled to be built: ${year}`);
 
 		let skPage;
-		if (editionInfo.translations.length) {
-			skPage = editionInfo.translations[0];
+		if (editionInfo.editionData.translations.length) {
+			skPage = editionInfo.editionData.translations[0];
 		}
 		editionPages.forEach(page =>
 			editionPagesPromises.push(
@@ -299,7 +306,8 @@ const buildEdition = async (year, gatsbyUtilities) => {
 						slug: page.slug,
 						querySlug: `/^${page.slug}/`,
 						queryType: `/${year}$/`,
-						settings: { ...editionInfo.settings }
+						settings: { ...editionInfo.editionData.settings },
+						menu: { ...editionInfo.menu }
 					},
 					gatsbyUtilities
 				)
@@ -311,11 +319,12 @@ const buildEdition = async (year, gatsbyUtilities) => {
 				`edition`,
 				{
 					edition: `${year}`,
-					id: editionInfo.id,
+					id: editionInfo.editionData.id,
 					lang: `en`,
 					translation: skPage ? skPage : {},
-					content: { ...editionInfo.editionContent },
-					settings: { ...editionInfo.settings }
+					content: { ...editionInfo.editionData.editionContent },
+					settings: { ...editionInfo.editionData.settings },
+					menu: { ...editionInfo.menu }
 				},
 				gatsbyUtilities
 			)
@@ -330,8 +339,8 @@ const buildEdition = async (year, gatsbyUtilities) => {
 						id: skPage.id,
 						lang: `sk`,
 						translation: { language: { slug: `en` } },
-						content: { ...editionInfo.editionContent },
-						settings: { ...editionInfo.settings }
+						content: { ...editionInfo.editionData.editionContent },
+						settings: { ...editionInfo.editionData.settings }
 					},
 					gatsbyUtilities
 				)
@@ -530,6 +539,23 @@ const getEditionInfo = async (year, { graphql, reporter }) => {
 						... on WpEdition${year}_Editioncontent_Content_WorkshopsSection {
 							fieldGroupName
 							title
+							workshops {
+								... on WpWorkshop {
+									id
+									uri
+									title
+									featuredImage {
+										node {
+											mediaDetails {
+												sizes {
+													sourceUrl
+													name
+												}
+											}
+										}
+									}
+								}
+							}
 						}
 						... on WpEdition${year}_Editioncontent_Content_Link {
 							fieldGroupName
@@ -591,6 +617,16 @@ const getEditionInfo = async (year, { graphql, reporter }) => {
 				slug
 				uri
 			}
+			wpMenu(slug: { eq: "edition-${year}" }) {
+				name
+				slug
+				menuItems {
+					nodes {
+						url
+						label
+					}
+				}
+			}
 		}
 	`);
 
@@ -602,7 +638,10 @@ const getEditionInfo = async (year, { graphql, reporter }) => {
 		return;
 	}
 
-	return graphqlResult.data[`wpEdition${year}`];
+	return {
+		editionData: graphqlResult.data[`wpEdition${year}`],
+		menu: graphqlResult.data.wpMenu
+	};
 };
 
 const initMainPages = async gatsbyUtils => {

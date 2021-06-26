@@ -10,7 +10,7 @@ import SimpleContent from "../components/simpleContent";
 import EventInfo from "../components/eventInfo";
 
 const Artist = ({ data: { artist }, pageContext, preview }) => {
-	const { lang, settings, eventsList } = pageContext;
+	const { lang, settings, eventsList, menu } = pageContext;
 	const year = pageContext.year || 2021;
 
 	const content = artist.artistEventContent;

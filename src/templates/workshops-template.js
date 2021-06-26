@@ -4,8 +4,8 @@ import Layout from "../components/layout";
 import Row from "../components/row";
 import ArtistsGrid from "../components/blockGrids/artistsGrid";
 
-const ArtistsTemplate = ({ data, pageContext }) => {
-	const artistsList = data.artists.edges;
+const WorkshopsTemplate = ({ data, pageContext }) => {
+	const workshopsList = data.workshops.edges;
 	const { settings, edition, menu } = pageContext;
 	console.log(data);
 
@@ -20,35 +20,27 @@ const ArtistsTemplate = ({ data, pageContext }) => {
 		>
 			<Row>
 				<div className="col col-12">
-					<h2>Artists</h2>
+					<h2>Workshops</h2>
 				</div>
 			</Row>
 			<Row classes="mt-6 justify-content-center">
-				{artistsList && <ArtistsGrid items={artistsList} />}
+				{workshopsList && <ArtistsGrid items={workshopsList} />}
 			</Row>
 		</Layout>
 	);
 };
 
-export default ArtistsTemplate;
+export default WorkshopsTemplate;
 
-export const artistsQuery = graphql`
-	query artistsPage($edition: String!) {
-		artists: allWpArtist(
-			sort: { order: DESC, fields: date }
-			filter: {
-				editions: { nodes: { elemMatch: { slug: { eq: $edition } } } }
-			}
-		) {
+export const workshopsQuery = graphql`
+	query workshopsPage {
+		workShops: allWpWorkshop(sort: { order: DESC, fields: date }) {
 			edges {
 				node {
 					id
 					slug
 					uri
 					title
-					language {
-						slug
-					}
 					featuredImage {
 						node {
 							sizes

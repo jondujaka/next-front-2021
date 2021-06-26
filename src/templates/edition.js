@@ -10,7 +10,7 @@ import Carousel from "../components/carousel";
 import ArtistsGrid from "../components/blockGrids/ArtistsGrid";
 
 const Edition = ({ data, pageContext, noFooter, style }) => {
-	const { edition, translation, lang, settings, content } = pageContext;
+	const { edition, translation, lang, settings, content, menu } = pageContext;
 
 	console.log(pageContext);
 	let colorStyle;
@@ -30,7 +30,12 @@ const Edition = ({ data, pageContext, noFooter, style }) => {
 	console.log(endDate);
 
 	return (
-		<Layout style={colorStyle} noFooter={noFooter} year={edition}>
+		<Layout
+			style={colorStyle}
+			noFooter={noFooter}
+			year={edition}
+			editionHeader={menu}
+		>
 			<Row classes="edition-title">
 				<div className="col-12">
 					<h1>{content.topText.firstTilte}</h1>
@@ -104,6 +109,19 @@ const editionRow = (section, i) => {
 				<ArtistsGrid items={section.artists} seeAll />
 				<div className="col-12 text-center">
 					<CustomLink link="/artists">See all artists</CustomLink>
+				</div>
+			</>
+		);
+	}
+	if (type.endsWith(`WorkshopsSection`)) {
+		return (
+			<>
+				<div className="col-12">
+					<h1>{section.title}</h1>
+				</div>
+				<ArtistsGrid items={section.workshops} seeAll />
+				<div className="col-12 text-center">
+					<CustomLink link="/workshops">See all workshops</CustomLink>
 				</div>
 			</>
 		);

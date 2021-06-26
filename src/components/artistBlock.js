@@ -2,7 +2,12 @@ import React from "react";
 import { Link } from "gatsby";
 
 const ArtistBlock = ({ item, style }) => {
-	console.log(item);
+	if (!item) {
+		return ``;
+	}
+	if (item.node) {
+		item = item.node;
+	}
 	let image = item.featuredImage?.node.mediaDetails.sizes.find(
 		size => size.name === `big-thumbnail`
 	);

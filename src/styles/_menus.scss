@@ -10,6 +10,7 @@ footer {
 	height: 30rem;
 	margin: 0;
 	background: white;
+	color: $primaryBlue;
 }
 
 .social-links {
@@ -22,21 +23,33 @@ footer {
 	}
 }
 
-.header-wrapper {
+.menu-padding {
+	padding-top: 110px;
+}
+
+.header-wrapper,
+.edition-menu-wrapper {
 	z-index: 9;
 	position: fixed;
-    bottom: 0;
-    left: 0;
+	left: 0;
     width: 100%;
     display: flex;
     align-items: center;
+	padding: 1.25rem 2rem;
+}
+.edition-menu-wrapper {
+	border-bottom: 3px solid;
+	top: 0;
+}
+.header-wrapper {
+    bottom: 0;
+	background: white;
     border-top: 3px solid $primaryBlue;
     justify-content: space-around;
-	padding: 1.25rem 2rem;
-	background: white;
+	
 
 	* {
-		font-size: 3.5rem;
+		font-size: 2.5rem;
 		text-transform: uppercase;
 		color: $primaryBlue;
 	}
@@ -64,6 +77,27 @@ footer {
 			text-decoration: underline;
 		}
 	}
+}
+
+.edition-nav {
+	ul, li {
+		margin: 0;
+		padding: 0;
+	}
+	a {
+		font-size: 2.5rem;
+		padding: 1rem;
+		margin: 0 .4rem;
+
+		&:first-of-type {
+			padding-left: 0;
+			margin-left: 0;
+		}
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+		
 }
 
 .lang-swither, .cart-header {

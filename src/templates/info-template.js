@@ -9,7 +9,7 @@ import ImageEl from "../components/image";
 import Scrollspy from "react-scrollspy";
 
 const Info = ({ data, pageContext }) => {
-	const { settings, edition } = pageContext;
+	const { settings, edition, menu } = pageContext;
 	const sections = data.wpContentNode.about.section;
 
 	let scrollSpyItems =
@@ -22,6 +22,7 @@ const Info = ({ data, pageContext }) => {
 				backgroundColor: settings.backgroundColor
 			}}
 			year={edition}
+			editionHeader={menu}
 		>
 			<div className="row">
 				<div className="col-12 d-none d-lg-block col-lg-5 col-xl-6 about-nav">

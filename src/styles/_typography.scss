@@ -65,7 +65,7 @@ body {
 }
 
 .edition-title h1 {
-	font-size: 14rem;
+	font-size: 	9rem;
 	line-height: .875;
 	margin: 0;
 }
@@ -102,7 +102,7 @@ h1.main-title {
 
 h1.single-title {
 	@include media-breakpoint-up(xl){
-		font-size: 14rem;
+		font-size: 9rem;
 		max-width: 90%;
 	}
 	@include media-breakpoint-up(xxl){
@@ -119,7 +119,7 @@ h1.single-title {
 }
 
 h2 {
-	font-size: 14rem;
+	font-size: 9rem;
 	font-family: 'Manege', serif;
 	line-height: 1;
 }
@@ -172,7 +172,7 @@ p {
 	text-align: center;
 }
 
-a:hover, a:focus {
+a:hover, a:focus	 {
 	color: inherit;
 }
 

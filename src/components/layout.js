@@ -12,6 +12,7 @@ import { useStaticQuery, graphql } from "gatsby";
 import SocialFooter from "./socialFooter";
 
 import Header from "./header";
+import EditionMenu from "./editionMenu";
 import "../styles/global.scss";
 
 const Layout = ({
@@ -20,7 +21,7 @@ const Layout = ({
 	year,
 	style = { color: `#000`, backgroundColor: `#FFF`, borderColor: `#000` },
 	noFooter,
-	editionHeader = []
+	editionHeader = {}
 }) => {
 	const data = useStaticQuery(graphql`
 		query SiteTitleQuery {
@@ -42,12 +43,17 @@ const Layout = ({
 			{/* <Header siteTitle={data.site.siteMetadata?.title || `Title`} /> */}
 			<div
 				className={`main-wrapper ${
-					year ? `edition-${year}` : `no-edition`
+					year ? `edition-${year} menu-padding` : `no-edition`
 				}`}
 				style={year ? parsedStyle : {}}
 			>
 				<Header />
-				{/* {editionHeader.length && <EditionHeader />} */}
+				{editionHeader.menuItems && (
+					<EditionMenu
+						items={editionHeader.menuItems}
+						bg={style.backgroundColor}
+					/>
+				)}
 				<main>{children}</main>
 				{noFooter ? `` : <SocialFooter />}
 				<footer>© {new Date().getFullYear()}, Copyright</footer>
