@@ -138,8 +138,6 @@ const initPostTypes = async gatsbyUtilities => {
 		);
 
 		const eventsList = allEvents.flatMap(eventInfo => {
-			console.log("-----");
-			console.log(artistInfo.artist.id);
 			if (eventInfo.event.eventInfo) {
 				console.log(eventInfo.event.eventInfo.artists);
 			}
@@ -147,7 +145,6 @@ const initPostTypes = async gatsbyUtilities => {
 				eventInfo.event.eventInfo &&
 				eventInfo.event.eventInfo.artists &&
 				eventInfo.event.eventInfo.artists.some(artist => {
-					console.log(artist);
 					return artist.id === artistInfo.artist.id;
 				})
 			) {
@@ -271,7 +268,6 @@ const buildEdition = async (year, gatsbyUtilities) => {
 	];
 
 	console.log(`init edition ${year}`);
-	console.log(editionInfo);
 	if (
 		editionInfo.editionData &&
 		editionInfo.editionData.settings.testWebsite
@@ -393,9 +389,6 @@ const getAllProducts = async ({ graphql, reporter }) => {
 	`);
 
 	console.log(`getting products`);
-	console.log(`----`);
-	console.log(gqlResult);
-	console.log(`----`);
 
 	if (gqlResult.errors) {
 		reporter.panicOnBuild(
@@ -713,9 +706,6 @@ const getSpecificPage = async (settings, { graphql, reporter }) => {
 		);
 		return;
 	}
-
-	console.log(settings.slug);
-	console.log(graphqlResult);
 
 	return graphqlResult.data[`${settings.type}`];
 };

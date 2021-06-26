@@ -3,6 +3,9 @@ import { Link } from "gatsby";
 import { format, localeFormat } from "light-date";
 
 const EventInfo = ({ event, showDetails = false }) => {
+	if (!event.eventInfo || !event.eventInfo.dates) {
+		return ``;
+	}
 	return (
 		<div>
 			{event.eventInfo.dates.map((date, i) => (

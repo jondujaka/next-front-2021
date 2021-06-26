@@ -10,6 +10,10 @@ import Scrollspy from "react-scrollspy";
 
 const Info = ({ data, pageContext }) => {
 	const { settings, edition, menu } = pageContext;
+
+	if (!data.wpContentNode) {
+		return <h1>No data</h1>;
+	}
 	const sections = data.wpContentNode.about.section;
 
 	let scrollSpyItems =

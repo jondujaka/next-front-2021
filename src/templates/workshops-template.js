@@ -5,6 +5,9 @@ import Row from "../components/row";
 import ArtistsGrid from "../components/blockGrids/artistsGrid";
 
 const WorkshopsTemplate = ({ data, pageContext }) => {
+	if (!data.workshops) {
+		return <h1>No workshops yet</h1>;
+	}
 	const workshopsList = data.workshops.edges;
 	const { settings, edition, menu } = pageContext;
 	console.log(data);

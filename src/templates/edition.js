@@ -51,13 +51,14 @@ const Edition = ({ data, pageContext, noFooter, style }) => {
 				</div>
 			</Row>
 
-			{content.content.map((section, i) => {
-				return (
-					<Row classes="my-6" key={`section-edition-${i}`}>
-						{editionRow(section, i)}
-					</Row>
-				);
-			})}
+			{content.content &&
+				content.content.map((section, i) => {
+					return (
+						<Row classes="my-6" key={`section-edition-${i}`}>
+							{editionRow(section, i)}
+						</Row>
+					);
+				})}
 		</Layout>
 	);
 };

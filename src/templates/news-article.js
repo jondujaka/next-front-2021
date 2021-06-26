@@ -21,7 +21,6 @@ export const eventQuery = graphql`
 	) {
 		# selecting the current post by id
 		article: wpNewsArticle(id: { eq: $id }) {
-			id
 			title
 			language {
 				slug

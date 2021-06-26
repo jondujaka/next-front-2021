@@ -24,32 +24,39 @@ const Events = ({ data: { event }, pageContext }) => {
 					<h1>{event.title}</h1>
 				</div>
 				<div className="col-12 d-none d-lg-block col-lg-5 col-xl-6 about-nav">
-					{content.images.length > 1 ? (
-						<Carousel
-							items={content.images}
-							style={{ color: settings.textColor }}
-						/>
-					) : (
-						<Image srcSet={content.images[0].srcSet} />
+					{content.images && (
+						<>
+							{content.images.length > 1 ? (
+								<Carousel
+									items={content.images}
+									style={{ color: settings.textColor }}
+								/>
+							) : (
+								<Image srcSet={content.images[0].srcSet} />
+							)}
+						</>
 					)}
 				</div>
 				<div className="col-12 col-lg-7 col-xl-6">
 					<EventInfo event={event} showDetails />
-					{content.content.map(section => (
-						<SimpleContent
-							section={section}
-							key={section.fieldGroupName}
-						/>
-					))}
-					{content.content.map(section => (
-						<SimpleContent
-							section={section}
-							key={section.fieldGroupName}
-						/>
-					))}
-					{info.artists.map(artist => (
-						<ArtistBlock artist={artist} key={artist.id} />
-					))}
+					{content.content &&
+						content.content.map(section => (
+							<SimpleContent
+								section={section}
+								key={section.fieldGroupName}
+							/>
+						))}
+					{content.content &&
+						content.content.map(section => (
+							<SimpleContent
+								section={section}
+								key={section.fieldGroupName}
+							/>
+						))}
+					{info.artists &&
+						info.artists.map(artist => (
+							<ArtistBlock artist={artist} key={artist.id} />
+						))}
 				</div>
 			</Row>
 		</Layout>
