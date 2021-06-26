@@ -1,7 +1,7 @@
 import React from "react";
 import { graphql, Link } from "gatsby";
 import Layout from "../components/layout";
-import Row from "../components/Row";
+import Row from "../components/row";
 import Image from "../components/image";
 import Carousel from "../components/carousel";
 import SimpleContent from "../components/simpleContent";

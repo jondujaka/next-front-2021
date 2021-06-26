@@ -1,5 +1,5 @@
 import React from "react";
-import ArtistBlock from "../ArtistBlock";
+import ArtistBlock from "../artistBlock";
 
 const ArtistsGrid = ({ items, style }) => {
 	return (

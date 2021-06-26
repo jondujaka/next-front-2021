@@ -7,7 +7,7 @@ import Image from "../components/image";
 import Paragraph from "../components/paragraph";
 import CustomLink from "../components/customLink";
 import Carousel from "../components/carousel";
-import ArtistsGrid from "../components/blockGrids/ArtistsGrid";
+import ArtistsGrid from "../components/blockGrids/artistsGrid";
 
 const Edition = ({ data, pageContext, noFooter, style }) => {
 	const { edition, translation, lang, settings, content, menu } = pageContext;
