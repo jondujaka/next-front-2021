@@ -1,75 +1,82 @@
 import React from "react";
 import { graphql, Link } from "gatsby";
 import LangSwitcher from "../components/LangSwitcher";
-import withPreview from "../components/withPreview";
 import Layout from "../components/layout";
-import gql from 'graphql-tag';
-import Single from './single';
+import gql from "graphql-tag";
+import Row from "../components/Row";
+import Image from "../components/image";
+import Carousel from "../components/carousel";
+import SimpleContent from "../components/simpleContent";
+import EventInfo from "../components/eventInfo";
 
 const Artist = ({ data: { artist }, pageContext, preview }) => {
-	const { edition, settings } = pageContext;
+	const { lang, settings, eventsList } = pageContext;
+	const year = pageContext.year || 2021;
 
-	let langTo = artist.language.slug == `sk` ? `/sk` : ``;
+	const content = artist.artistEventContent;
+
+	// let langTo = artist.language.slug == `sk` ? `/sk` : ``;
 	// const { content } = artist.singlePostContent;
 
-	let colorStyle;
-	if(settings){
-		colorStyle = {
-			color: settings.textColor,
-			backgroundColor: settings.backgroundColor
-		};
-	}
-	
+	// let colorStyle;
+	// if (settings) {
+	// 	colorStyle = {
+	// 		color: settings.textColor,
+	// 		backgroundColor: settings.backgroundColor
+	// 	};
+	// }
+
 	return (
-		<Layout style={colorStyle} year={edition}>
-			<Link to={`/${edition}${langTo}`}>Home</Link>
-			<h1>{artist.title}</h1>
-			<LangSwitcher
-				link={`/${edition}${langTo}/artist/${artist.translations[0].slug}`}
-				text="Switch Language"
-			/>
-
-			{/* <Single content={artist} /> */}
-
-			{/* <div className="single-content">
-				{content.length && content.map(item => <RowWrapper content={item} />)}
-			</div> */}
+		<Layout
+			style={{
+				color: settings.textColor,
+				backgroundColor: settings.backgroundColor
+			}}
+			year={year}
+		>
+			{!content.content ? (
+				<h1>No content yet</h1>
+			) : (
+				<Row>
+					<div className="col-12 text-center">
+						<h1>{artist.title}</h1>
+					</div>
+					<div className="col-12 d-none d-lg-block col-lg-5 col-xl-6 about-nav">
+						{content.images && (
+							<>
+								{content.images.length > 1 ? (
+									<Carousel
+										items={content.images}
+										style={{ color: settings.textColor }}
+									/>
+								) : (
+									<Image srcSet={content.images[0].srcSet} />
+								)}
+							</>
+						)}
+					</div>
+					<div className="col-12 col-lg-7 col-xl-6">
+						{eventsList.map((event, i) => (
+							<EventInfo event={event} key={`even	t-${i}`} />
+						))}
+						{content.content.map(section => (
+							<SimpleContent
+								section={section}
+								key={section.fieldGroupName}
+							/>
+						))}
+						{content.content.map(section => (
+							<SimpleContent
+								section={section}
+								key={section.fieldGroupName}
+							/>
+						))}
+					</div>
+				</Row>
+			)}
 		</Layout>
 	);
 };
-
-
-const RowWrapper = ({ content }) => {
-	return (
-		<div className="row">
-			
-			{content.direction ? <DirectionalRow row={content} /> : <Row row={content} /> }
-		</div>
-	);
-};
-
-const Row = ({ row }) => {
-	return (
-		<>
-			{row.media ? <Media media="Fake media here" /> : null}
-			{row.paragraph ? <Paragraph content={row.paragraph} /> : null }
-		</>
-	);
-};
-
-const DirectionalRow = ({row}) => {
-	if(row.direction === `media_text`){
-		return (
-			<>
-				<Media media="Fake media here" />
-				<Paragraph content={row.paragraph} />
-			</>
-		);
-	}
-}
-const Media = ({media}) => <div className="fake-media">{media}</div>;
-
-const Paragraph = ({content}) => <div className={`paragraph text-${content.big}`} dangerouslySetInnerHTML={{__html: content.paragraphContent}}/>;
 
 export const artistQuery = graphql`
 	query artistById(
@@ -87,18 +94,35 @@ export const artistQuery = graphql`
 				slug
 				uri
 			}
+			artistEventContent {
+				images {
+					srcSet
+				}
+				content {
+					... on WpArtist_Artisteventcontent_Content_Media {
+						fieldGroupName
+						imageOrVideo
+						video
+						image {
+							srcSet
+						}
+					}
+					... on WpArtist_Artisteventcontent_Content_Text {
+						fieldGroupName
+						text
+					}
+				}
+			}
 		}
 	}
 `;
 
-
 const PREVIEW_QUERY = gql`
-  query getPreview($id: Int!) {
-    wpArtist(id:{eq: $id}) {
-      title
-    }
-  }
+	query getPreview($id: Int!) {
+		wpArtist(id: { eq: $id }) {
+			title
+		}
+	}
 `;
 
-
-export default withPreview({ preview: PREVIEW_QUERY })(Artist);
+export default Artist;

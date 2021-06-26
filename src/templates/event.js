@@ -1,24 +1,71 @@
 import React from "react";
 import { graphql, Link } from "gatsby";
-import LangSwitcher from "../components/LangSwitcher";
 import Layout from "../components/layout";
-import Single from "./single";
-import Separator from "../components/separator";
+import Row from "../components/Row";
+import Image from "../components/image";
+import Carousel from "../components/carousel";
+import SimpleContent from "../components/simpleContent";
+import EventInfo from "../components/eventInfo";
 
 const Events = ({ data: { event }, pageContext }) => {
-
-	const {settings, edition } = pageContext;
-
-	let langTo = event.language.slug == `sk` ? `` : `/sk`;
+	const { lang, settings, eventsList } = pageContext;
+	const content = event.artistEventContent;
+	const info = event.eventInfo;
 	return (
-		<Layout settings={settings}>
-			<Single content={event} />
-			<Separator/>
+		<Layout
+			style={{
+				color: settings.textColor,
+				backgroundColor: settings.backgroundColor
+			}}
+			year={2021}
+		>
+			<Row>
+				<div className="col-12 text-center">
+					<h1>{event.title}</h1>
+				</div>
+				<div className="col-12 d-none d-lg-block col-lg-5 col-xl-6 about-nav">
+					{content.images.length > 1 ? (
+						<Carousel
+							items={content.images}
+							style={{ color: settings.textColor }}
+						/>
+					) : (
+						<Image srcSet={content.images[0].srcSet} />
+					)}
+				</div>
+				<div className="col-12 col-lg-7 col-xl-6">
+					<EventInfo event={event} showDetails />
+					{content.content.map(section => (
+						<SimpleContent
+							section={section}
+							key={section.fieldGroupName}
+						/>
+					))}
+					{content.content.map(section => (
+						<SimpleContent
+							section={section}
+							key={section.fieldGroupName}
+						/>
+					))}
+					{info.artists.map(artist => (
+						<ArtistBlock artist={artist} key={artist.id} />
+					))}
+				</div>
+			</Row>
 		</Layout>
 	);
 };
 
 export default Events;
+
+const ArtistBlock = ({ artist }) => {
+	return (
+		<Link to={artist.uri} className="col-8 mt-7 d-block">
+			<h3>{artist.title}</h3>
+			<Image srcSet={artist.featuredImage.node.srcSet} />
+		</Link>
+	);
+};
 
 export const eventQuery = graphql`
 	query eventById(
@@ -36,29 +83,47 @@ export const eventQuery = graphql`
 				slug
 				uri
 			}
-			singlePostContent {
+			artistEventContent {
+				images {
+					srcSet
+				}
 				content {
-					... on WpEvent_Singlepostcontent_Content_MediaText {
-						direction
-						fieldGroupName
-						paragraph {
-							paragraphContent
-							fieldGroupName
-							big
-						}
-					}
-					... on WpEvent_Singlepostcontent_Content_Images {
+					... on WpEvent_Artisteventcontent_Content_Media {
 						fieldGroupName
 						imageOrVideo
-					}
-					... on WpEvent_Singlepostcontent_Content_Text {
-						fieldGroupName
-						paragraph {
-							paragraphContent
-							fieldGroupName
-							big
+						video
+						image {
+							srcSet
 						}
 					}
+					... on WpEvent_Artisteventcontent_Content_Text {
+						fieldGroupName
+						text
+					}
+				}
+			}
+			eventInfo {
+				capacity
+				artists {
+					... on WpArtist {
+						id
+						uri
+						title
+						featuredImage {
+							node {
+								srcSet
+							}
+						}
+					}
+				}
+				format
+				fieldGroupName
+				price
+				venues
+				dates {
+					startTime
+					endTime
+					date
 				}
 			}
 		}

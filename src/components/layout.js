@@ -9,12 +9,19 @@ import * as React from "react";
 import PropTypes from "prop-types";
 import { useStaticQuery, graphql } from "gatsby";
 
-import SocialFooter from './socialFooter';
+import SocialFooter from "./socialFooter";
 
 import Header from "./header";
-import "../styles/global.scss";                                                                                                                                                                                                                                                   
+import "../styles/global.scss";
 
-const Layout = ({ children, settings, year, style={color: `#000`, backgroundColor: `#FFF`, borderColor: `#000`}, noFooter }) => {
+const Layout = ({
+	children,
+	settings,
+	year,
+	style = { color: `#000`, backgroundColor: `#FFF`, borderColor: `#000` },
+	noFooter,
+	editionHeader = []
+}) => {
 	const data = useStaticQuery(graphql`
 		query SiteTitleQuery {
 			site {
@@ -28,25 +35,22 @@ const Layout = ({ children, settings, year, style={color: `#000`, backgroundColo
 	let parsedStyle = {
 		...style,
 		borderColor: style.color
-	}
+	};
 
 	return (
 		<>
 			{/* <Header siteTitle={data.site.siteMetadata?.title || `Title`} /> */}
 			<div
-				className={`main-wrapper ${year ? `edition-${year}` : `no-edition`}`}
+				className={`main-wrapper ${
+					year ? `edition-${year}` : `no-edition`
+				}`}
 				style={year ? parsedStyle : {}}
 			>
-			<Header />
+				<Header />
+				{/* {editionHeader.length && <EditionHeader />} */}
 				<main>{children}</main>
-				{noFooter ? `` : <SocialFooter/>}
-				<footer
-					style={{
-						marginTop: `2rem`
-					}}
-				>
-					© {new Date().getFullYear()}, Copyright
-				</footer>
+				{noFooter ? `` : <SocialFooter />}
+				<footer>© {new Date().getFullYear()}, Copyright</footer>
 			</div>
 		</>
 	);

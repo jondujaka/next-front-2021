@@ -28,8 +28,16 @@ a {
 	&:visited {
 		color: inherit;
 	}
+	&:hover {
+		opacity: .7 !important;
+	}
 }
-
+.text-underline {
+	text-decoration: underline	;
+}
+.text-uppercase {
+	text-transform: uppercase;
+}
 a.active {
 	text-decoration: underline;
 }
@@ -54,6 +62,12 @@ body {
 			flex-basis: 100%;
 		}
 	}
+}
+
+.edition-title h1 {
+	font-size: 14rem;
+	line-height: .875;
+	margin: 0;
 }
 h1.main-title {
 	display: block;
@@ -158,10 +172,14 @@ p {
 	text-align: center;
 }
 
+a:hover, a:focus {
+	color: inherit;
+}
+
 
 .hollow-link {
 	font-size: 7.3rem;
-	-webkit-text-stroke:1px $primaryBlue;
+	-webkit-text-stroke:1px;
 	-webkit-text-fill-color:transparent;
 	line-height: 1;
 	cursor: pointer;
@@ -175,7 +193,7 @@ p {
 	}
 
 	&:hover, &.active, .active & {
-		-webkit-text-fill-color: $primaryBlue;
+		-webkit-text-fill-color: inherit;
 		-webkit-text-stroke:0px;
 	}
 	

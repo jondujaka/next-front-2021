@@ -29,6 +29,7 @@
 		"gatsby-transformer-sharp": "^3.0.0",
 		"gql": "^1.1.2",
 		"isomorphic-fetch": "^3.0.0",
+		"light-date": "^1.2.0",
 		"milligram": "^1.4.1",
 		"prop-types": "^15.7.2",
 		"query-string": "^7.0.0",

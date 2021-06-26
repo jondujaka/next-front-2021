@@ -13,9 +13,9 @@ const Home = ({ data: { page, news }, pageContext }) => {
 	const { translations, language, mainHome } = { page };
 	const { availableEditions } = pageContext;
 
-	const latestEdition = availableEditions.reduce((prev, current) => {
-		return (prev.year > current.year) ? prev : current;
-	});
+	// const latestEdition = availableEditions?.reduce((prev, current) => {
+	// 	return prev.year > current.year ? prev : current;
+	// });
 
 	const langSlug = page.language.slug == `en` ? `` : `/sk`;
 
@@ -83,18 +83,18 @@ const Home = ({ data: { page, news }, pageContext }) => {
 					</Link>
 				</div>
 			</Row>
-			<Edition
+			{/* <Edition
 				pageContext={{
 					edition: latestEdition.year,
 					lang: `en`,
 					translation: { language: { slug: `sk` } }
 				}}
-				style ={{
+				style={{
 					color: latestEdition.textColor,
 					backgroundColor: latestEdition.backgroundColor
 				}}
 				noFooter={true}
-			/>
+			/> */}
 		</Layout>
 	);
 };
@@ -114,7 +114,9 @@ const HomeHeader = ({ items, classes }) => {
 					);
 				}
 				return (
-					<a href="#" key={`text-${item.item.text}`}>{item.item.text}</a>
+					<a href="#" key={`text-${item.item.text}`}>
+						{item.item.text}
+					</a>
 				);
 			})}
 		</div>
@@ -154,7 +156,6 @@ export const pageQuery = graphql`
 		# selecting the current page by id
 		page: wpPage(id: { eq: $id }) {
 			id
-			content
 			title
 			language {
 				slug

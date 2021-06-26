@@ -109,3 +109,15 @@
 	padding-left: 30px; /* gutter size */
 	background-clip: padding-box;
   }
+
+
+
+.artist-item {
+	.artist-info {
+		justify-content: flex-start;
+	}
+	.artist-title {
+		font-size: 5rem;
+		text-align: left;
+	}
+}

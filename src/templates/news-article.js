@@ -30,41 +30,39 @@ export const eventQuery = graphql`
 				slug
 				uri
 			}
-			singlePostContent {
+			singleContent {
 				content {
-					... on WpNewsArticle_Singlepostcontent_Content_MediaText {
-						direction
+					... on WpNewsArticle_Singlecontent_Content_MediaText {
 						fieldGroupName
+						direction
 						paragraph {
-							paragraphContent
-							fieldGroupName
 							big
+							fieldGroupName
+							paragraphContent
 						}
 						media {
 							image {
-								caption
 								srcSet
+								caption
 							}
-							imageOrVideo
+							fieldGroupName
 							video
+							imageOrVideo
 						}
 					}
-					... on WpNewsArticle_Singlepostcontent_Content_Images {
+					... on WpNewsArticle_Singlecontent_Content_Media {
 						fieldGroupName
-						images {
-							caption
-							srcSet
-						}
 						imageOrVideo
 						video
-					}
-					... on WpNewsArticle_Singlepostcontent_Content_Text {
-						fieldGroupName
-						paragraph {
-							paragraphContent
-							fieldGroupName
-							big
+						images {
+							srcSet
+							caption
 						}
+					}
+					... on WpNewsArticle_Singlecontent_Content_Text {
+						big
+						fieldGroupName
+						paragraphContent
 					}
 				}
 			}

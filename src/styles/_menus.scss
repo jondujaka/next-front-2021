@@ -1,7 +1,15 @@
 .social-footer {
 	border-top: 3px solid;
-	border-bottom: 3px solid;
-	margin-bottom: 30rem;
+	border-bottom: 3px solid;	
+	border-color: $primaryBlue;
+	color: $primaryBlue;
+	background: white;
+}
+
+footer {
+	height: 30rem;
+	margin: 0;
+	background: white;
 }
 
 .social-links {
@@ -12,11 +20,10 @@
 		margin-right: 7.4rem;
 		font-size: 3.5rem;
 	}
-	
 }
 
-
 .header-wrapper {
+	z-index: 9;
 	position: fixed;
     bottom: 0;
     left: 0;

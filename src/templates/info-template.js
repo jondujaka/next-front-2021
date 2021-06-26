@@ -8,15 +8,22 @@ import Paragraph from "../components/paragraph";
 import ImageEl from "../components/image";
 import Scrollspy from "react-scrollspy";
 
-const About = ({ data, pageContext }) => {
-	const sections = data.wpPage.about.section;
+const Info = ({ data, pageContext }) => {
+	const { settings, edition } = pageContext;
+	const sections = data.wpContentNode.about.section;
 
 	let scrollSpyItems =
 		sections && sections.map(section => section.title.toLowerCase());
 
 	return (
-		<Layout>
-			<div className="row mt-6">
+		<Layout
+			style={{
+				color: settings.textColor,
+				backgroundColor: settings.backgroundColor
+			}}
+			year={edition}
+		>
+			<div className="row">
 				<div className="col-12 d-none d-lg-block col-lg-5 col-xl-6 about-nav">
 					{scrollSpyItems && (
 						<Scrollspy
@@ -76,44 +83,43 @@ const AboutSection = ({ content }) => {
 		}
 	});
 };
-export default About;
+export default Info;
 
-export const aboutQuery = graphql`
-	query aboutPage(
+export const infoQuery = graphql`
+	query infoPage(
 		# these variables are passed in via createPage.pageContext in gatsby-node.js
-		$id: String
+		$queryType: String
 	) {
-		wpPage(id: { eq: $id }) {
-			about {
-				section {
-					title
+		wpContentNode(
+			slug: { regex: "/^info/" }
+			nodeType: { regex: $queryType }
+		) {
+			id
+			... on WpEdition2022 {
+				title
+			}
+			... on WpEdition2021 {
+				id
+				title
+				about {
 					fieldGroupName
-					content {
-						... on WpPage_About_section_Content_Text {
-							big
-							fieldGroupName
-							textContent
-						}
-						... on WpPage_About_section_Content_Media {
-							fieldGroupName
-							image {
-								caption
-								srcSet
+					section {
+						content {
+							... on WpEdition2021_About_section_Content_Partners {
+								fieldGroupName
+							}
+							... on WpEdition2021_About_section_Content_Media {
+								fieldGroupName
+							}
+							... on WpEdition2021_About_section_Content_Text {
+								big
+								fieldGroupName
+								textContent
 							}
 						}
-						... on WpPage_About_section_Content_Partners {
-							fieldGroupName
-							partnerImages {
-								sizes
-							}
-						}
+						title
 					}
 				}
-			}
-			uri
-			title
-			translations {
-				slug
 			}
 		}
 	}

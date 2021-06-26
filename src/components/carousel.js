@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { useEmblaCarousel } from "embla-carousel/react";
 
-const Carousel = ({ items }) => {
+const Carousel = ({ items, style }) => {
 	const [emblaRef, emblaApi] = useEmblaCarousel();
 
 	const [slideStatus, setSlideStatus] = useState(0);
@@ -47,15 +47,38 @@ const Carousel = ({ items }) => {
 			<div className="carousel-nav">
 				{items.map((item, i) => {
 					return (
-						<button
+						<Button
 							key={`slide-button-${i}`}
-							onClick={() => toggleSlide(i)}
-							className={slideStatus === i ? `active` : ``}
-						></button>
+							toggleSlide={() => toggleSlide(i)}
+							style={style}
+							active={slideStatus === i}
+						/>
 					);
 				})}
 			</div>
 		</div>
+	);
+};
+
+const Button = ({ style, active, toggleSlide }) => {
+	const [hover, setHover] = useState(false);
+
+	return (
+		<button
+			onClick={() => toggleSlide()}
+			onMouseEnter={() => setHover(true)}
+			onMouseLeave={() => setHover(false)}
+			style={
+				style
+					? {
+							borderColor: style.color,
+							background:
+								hover || active ? style.color : "transparent"
+					  }
+					: {}
+			}
+			className={active ? `active` : ``}
+		></button>
 	);
 };
 

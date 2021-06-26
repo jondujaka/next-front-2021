@@ -87,37 +87,6 @@ const initPostTypes = async gatsbyUtilities => {
 		);
 	});
 
-	let artistSettings = {
-		postType: `artist`,
-		queryName: `allArtists`,
-		gqlName: `allWpArtist`
-	};
-	const allArtists = await getPostType(artistSettings, gatsbyUtilities);
-	const createArtistsPromises = [];
-
-	allArtists.map(artistInfo => {
-		const year = artistInfo.artist.editions.nodes.reduce((a, b) =>
-			Math.max(parseInt(a.slug), parseInt(b.slug))
-		);
-		const editionSettings = editionsToBuild.find(
-			edition => edition.year == year.slug
-		);
-
-		if (editionSettings.testWebsite) {
-			const slug = artistInfo.artist.uri;
-			const template = `artist`;
-			const context = {
-				edition: year,
-				id: artistInfo.artist.id,
-				settings: { ...editionSettings },
-				related: getNrItems(allArtists, 6)
-			};
-			createArtistsPromises.push(
-				createIndividualPage(slug, template, context, gatsbyUtilities)
-			);
-		}
-	});
-
 	let eventSettings = {
 		postType: `event`,
 		queryName: `allEvents`,
@@ -125,16 +94,17 @@ const initPostTypes = async gatsbyUtilities => {
 	};
 	const allEvents = await getPostType(eventSettings, gatsbyUtilities);
 	const createEventPromises = [];
-
 	allEvents.map(eventInfo => {
-		const year = eventInfo.event.editions.nodes.reduce((a, b) =>
-			Math.max(parseInt(a.slug), parseInt(b.slug))
-		);
+		const year = eventInfo.event.editions.nodes.length
+			? eventInfo.event.editions.nodes.reduce((a, b) =>
+					Math.max(parseInt(a.slug), parseInt(b.slug))
+			  )
+			: 2021;
 		const editionSettings = editionsToBuild.find(
 			edition => edition.year == year.slug
 		);
 
-		if (editionSettings.testWebsite) {
+		if (true) {
 			console.log(`building events for: ${year.slug}`);
 			const slug = eventInfo.event.uri;
 			const template = `event`;
@@ -145,6 +115,62 @@ const initPostTypes = async gatsbyUtilities => {
 				related: allEvents
 			};
 			createEventPromises.push(
+				createIndividualPage(slug, template, context, gatsbyUtilities)
+			);
+		}
+	});
+
+	let artistSettings = {
+		postType: `artist`,
+		queryName: `allArtists`,
+		gqlName: `allWpArtist`
+	};
+	const allArtists = await getPostType(artistSettings, gatsbyUtilities);
+	const createArtistsPromises = [];
+	allArtists.map(artistInfo => {
+		const year = artistInfo.artist.editions.nodes.length
+			? artistInfo.artist.editions.nodes.reduce((a, b) =>
+					Math.max(parseInt(a.slug), parseInt(b.slug))
+			  )
+			: 2021;
+		const editionSettings = editionsToBuild.find(
+			edition => edition.year == year.slug
+		);
+
+		const eventsList = allEvents.flatMap(eventInfo => {
+			console.log("-----");
+			console.log(artistInfo.artist.id);
+			if (eventInfo.event.eventInfo) {
+				console.log(eventInfo.event.eventInfo.artists);
+			}
+			if (
+				eventInfo.event.eventInfo &&
+				eventInfo.event.eventInfo.artists &&
+				eventInfo.event.eventInfo.artists.some(artist => {
+					console.log(artist);
+					return artist.id === artistInfo.artist.id;
+				})
+			) {
+				return {
+					title: eventInfo.event.title,
+					url: eventInfo.event.uri,
+					eventInfo: eventInfo.event.eventInfo
+				};
+			} else {
+				return [];
+			}
+		});
+
+		if (true) {
+			const slug = artistInfo.artist.uri;
+			const template = `artist`;
+			const context = {
+				edition: year,
+				id: artistInfo.artist.id,
+				settings: editionSettings ? { ...editionSettings } : {},
+				eventsList
+			};
+			createArtistsPromises.push(
 				createIndividualPage(slug, template, context, gatsbyUtilities)
 			);
 		}
@@ -181,21 +207,21 @@ const initPostTypes = async gatsbyUtilities => {
 	);
 	const createCommissionsPromises = [];
 
-	allCommissions.map(commissionsInfo => {
-		const slug = commissionsInfo.commission.uri;
-		const template = `commission`;
-		const context = {
-			id: commissionsInfo.commission.id,
-			related: allCommissions
-		};
-		createCommissionsPromises.push(
-			createIndividualPage(slug, template, context, gatsbyUtilities)
-		);
-	});
+	allCommissions.length &&
+		allCommissions.map(commissionsInfo => {
+			const slug = commissionsInfo.commission.uri;
+			const template = `commission`;
+			const context = {
+				id: commissionsInfo.commission.id,
+				related: allCommissions
+			};
+			createCommissionsPromises.push(
+				createIndividualPage(slug, template, context, gatsbyUtilities)
+			);
+		});
 
 	Promise.all([
 		...createNewsPromises,
-		...createArtistsPromises,
 		...createEventPromises,
 		...createProjectsPromises,
 		...createCommissionsPromises
@@ -212,7 +238,7 @@ exports.createPages = async gatsbyUtilities => {
 
 	initMainPages(gatsbyUtilities);
 	initPostTypes(gatsbyUtilities);
-	initProducts(gatsbyUtilities);
+	// initProducts(gatsbyUtilities);
 };
 
 const buildEdition = async (year, gatsbyUtilities) => {
@@ -220,6 +246,31 @@ const buildEdition = async (year, gatsbyUtilities) => {
 	let editionInfo = await getEditionInfo(year, gatsbyUtilities);
 	// console.log(editionInfo);
 
+	const editionPages = [
+		{
+			slug: `programme`,
+			template: `programme-template`,
+			query: ``
+		},
+		{
+			slug: `artists`,
+			template: `artists-template`
+		},
+		{
+			slug: `info`,
+			template: `info-template`
+		},
+		{
+			slug: `tickets`,
+			template: `tickets-template`
+		},
+		{
+			slug: `workshops`,
+			template: `workshops-template`
+		}
+	];
+
+	console.log(`init edition ${year}`);
 	if (editionInfo && editionInfo.settings.testWebsite) {
 		// Create the edition
 
@@ -228,13 +279,32 @@ const buildEdition = async (year, gatsbyUtilities) => {
 			editionsToBuild.push({ ...editionInfo.settings, year });
 		}
 
+		console.log(`building edition ${year}`);
+
 		const editionIndexPromises = [];
+		const editionPagesPromises = [];
 		console.log(`Enabled to be built: ${year}`);
 
 		let skPage;
 		if (editionInfo.translations.length) {
 			skPage = editionInfo.translations[0];
 		}
+		editionPages.forEach(page =>
+			editionPagesPromises.push(
+				createIndividualPage(
+					`/${year}/${page.slug}`,
+					page.template,
+					{
+						edition: `${year}`,
+						slug: page.slug,
+						querySlug: `/^${page.slug}/`,
+						queryType: `/${year}$/`,
+						settings: { ...editionInfo.settings }
+					},
+					gatsbyUtilities
+				)
+			)
+		);
 		editionIndexPromises.push(
 			createIndividualPage(
 				`/${year}/`,
@@ -244,6 +314,7 @@ const buildEdition = async (year, gatsbyUtilities) => {
 					id: editionInfo.id,
 					lang: `en`,
 					translation: skPage ? skPage : {},
+					content: { ...editionInfo.editionContent },
 					settings: { ...editionInfo.settings }
 				},
 				gatsbyUtilities
@@ -259,6 +330,7 @@ const buildEdition = async (year, gatsbyUtilities) => {
 						id: skPage.id,
 						lang: `sk`,
 						translation: { language: { slug: `en` } },
+						content: { ...editionInfo.editionContent },
 						settings: { ...editionInfo.settings }
 					},
 					gatsbyUtilities
@@ -266,9 +338,10 @@ const buildEdition = async (year, gatsbyUtilities) => {
 			);
 		}
 
-		await Promise.all(editionIndexPromises).then(
-			() => `Edition build ${year}`
-		);
+		await Promise.all([
+			...editionIndexPromises,
+			...editionPagesPromises
+		]).then(() => `Edition build ${year}`);
 	}
 	return;
 };
@@ -368,6 +441,29 @@ const getPostType = async (settings, { graphql, reporter }) => {
 		}
 	`;
 
+	let eventsFragment = `
+		eventInfo {
+			artists {
+				... on WpArtist {
+				  	id
+				}
+			}
+			dates {
+				startTime
+				endTime
+				date
+			}
+		}
+	`;
+
+	let editionYearFragment = `
+		editions {
+			nodes {
+				slug
+			}
+		}
+	`;
+
 	const graphqlResult = await graphql(/* GraphQL */ `
 		query ${settings.queryName} {
 			# Query index pages from edition
@@ -382,6 +478,13 @@ const getPostType = async (settings, { graphql, reporter }) => {
 						${settings.postType === `commission` ? commissionsFragment : ``}
 						${withEdition.includes(settings.postType) ? editionsFragment : ``}
 						${noLanguage.includes(settings.postType) ? `` : languagesFragment}
+						${
+							settings.postType === `artist` ||
+							settings.postType === `event`
+								? editionYearFragment
+								: ``
+						}
+						${settings.postType === `event` ? eventsFragment : ``}
 					}
 				}
 			}
@@ -412,6 +515,68 @@ const getEditionInfo = async (year, { graphql, reporter }) => {
 					testWebsite
 					liveWebsite
 					fieldGroupName
+				}
+				
+				editionContent {
+					topText {
+						secondTitle
+						firstTilte
+						editionDate {
+						startDate
+						endDate
+						}
+					}
+					content {
+						... on WpEdition${year}_Editioncontent_Content_WorkshopsSection {
+							fieldGroupName
+							title
+						}
+						... on WpEdition${year}_Editioncontent_Content_Link {
+							fieldGroupName
+							textOrButton
+							link {
+								title
+								url
+							}
+						}
+						... on WpEdition${year}_Editioncontent_Content_Paragraph {
+							fieldGroupName
+							text
+						}
+						... on WpEdition${year}_Editioncontent_Content_Title {
+							fieldGroupName
+							text
+						}
+						... on WpEdition${year}_Editioncontent_Content_Media {
+							fieldGroupName
+							mediaType
+							video
+							images {
+								srcSet
+							}
+						}
+						... on WpEdition${year}_Editioncontent_Content_ArtistsSection {
+							fieldGroupName
+							title
+							artists {
+								... on WpArtist {
+									id
+									uri
+									title
+									featuredImage {
+										node {
+											mediaDetails {
+												sizes {
+													sourceUrl
+													name
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
 				}
 				language {
 					slug

@@ -8,19 +8,19 @@ import Single from "./single";
 import ProjectsGrid from "../components/blockGrids/projectsGrid";
 
 const Project = ({ data: { project }, pageContext }) => {
-
 	let related = pageContext.related.map(project => {
-		let newObj = { node: {...project.project}};
+		let newObj = { node: { ...project.project } };
 		return newObj;
-		
 	});
 
 	return (
 		<Layout>
 			<Single content={project} />
-			<Separator/>
+			<Separator />
 			<Row>
-				<div className="col col-12"><h2>More projects</h2></div>
+				<div className="col col-12">
+					<h2>More projects</h2>
+				</div>
 				<ProjectsGrid items={related} />
 			</Row>
 		</Layout>
@@ -38,44 +38,41 @@ export const ProjectData = graphql`
 		project: wpProject(id: { eq: $id }) {
 			id
 			title
-			singlePostContent {
-				content {
-					... on WpProject_Singlepostcontent_Content_MediaText {
-						direction
-						fieldGroupName
-						paragraph {
-							paragraphContent
-							fieldGroupName
-							big
-						}
-						media {
-							image {
-								caption
-								srcSet
-							}
-							imageOrVideo
-							video
-						}
-					}
-					... on WpProject_Singlepostcontent_Content_Images {
-						fieldGroupName
-						images {
-							caption
-							srcSet
-						}
-						imageOrVideo
-						video
-					}
-					... on WpProject_Singlepostcontent_Content_Text {
-						fieldGroupName
-						paragraph {
-							paragraphContent
-							fieldGroupName
-							big
-						}
-					}
-				}
-			}
+			# singlePostContent {
+			# 	content {
+			# 		... on WpProject_Singlecontent_Content_MediaText {
+			# 			direction
+			# 			fieldGroupName
+			# 			paragraph {
+			# 				paragraphContent
+			# 				fieldGroupName
+			# 				big
+			# 			}
+			# 			media {
+			# 				image {
+			# 					caption
+			# 					srcSet
+			# 				}
+			# 				imageOrVideo
+			# 				video
+			# 			}
+			# 		}
+			# 		... on WpProject_Singlecontent_Content_Media {
+			# 			fieldGroupName
+			# 			images {
+			# 				caption
+			# 				srcSet
+			# 			}
+			# 			imageOrVideo
+			# 			video
+			# 		}
+			# 		... on WpProject_Singlecontent_Content_Text {
+			# 			fieldGroupName
+			# 			paragraphContent
+			# 			big
+			# 		}
+			# 	}
+			# }
 		}
 	}
 `;

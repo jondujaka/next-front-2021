@@ -18,23 +18,33 @@ const Product = ({ data, pageContext }) => {
 				</div>
 				<div className="col col-12 col-lg-6">
 					<h2>{product.name}</h2>
-					<h3 className="product-subtitle">{product.productInfo.subtitle}</h3>
+					<h3 className="product-subtitle">
+						{product.productInfo.subtitle}
+					</h3>
 					<div className="formats">
 						{product.variations.nodes.map(format => {
 							return (
-								<div key={`format-${format.price}`} className="format mb-4">
-									{format.price && <span>{format.price}</span>}
+								<div
+									key={`format-${format.price}`}
+									className="format mb-4"
+								>
+									{format.price && (
+										<span>{format.price}</span>
+									)}
 									<span>
 										{format.attributes.nodes[0].value}
 									</span>
-									<CartButton productId={format.databaseId} classes="ml-4" text="Add to cart" />
+									<CartButton
+										productId={format.databaseId}
+										classes="ml-4"
+										text="Add to cart"
+									/>
 								</div>
 							);
 						})}
 					</div>
-					<Single content={product} direct={true}/>
+					<Single content={product} direct={true} />
 				</div>
-
 			</Row>
 		</Layout>
 	);
@@ -73,44 +83,44 @@ export const productQuery = graphql`
 					}
 				}
 			}
-			singlePostContent {
-				content {
-					... on WpProduct_Singlepostcontent_Content_MediaText {
-						direction
-						fieldGroupName
-						paragraph {
-							paragraphContent
-							fieldGroupName
-							big
-						}
-						media {
-							image {
-								caption
-								srcSet
-							}
-							imageOrVideo
-							video
-						}
-					}
-					... on WpProduct_Singlepostcontent_Content_Images {
-						fieldGroupName
-						images {
-							caption
-							srcSet
-						}
-						imageOrVideo
-						video
-					}
-					... on WpProduct_Singlepostcontent_Content_Text {
-						fieldGroupName
-						paragraph {
-							paragraphContent
-							fieldGroupName
-							big
-						}
-					}
-				}
-			}
+			# singlePostContent {
+			# 	content {
+			# 		... on WpProduct_Singlecontent_Content_MediaText {
+			# 			direction
+			# 			fieldGroupName
+			# 			paragraph {
+			# 				paragraphContent
+			# 				fieldGroupName
+			# 				big
+			# 			}
+			# 			media {
+			# 				image {
+			# 					caption
+			# 					srcSet
+			# 				}
+			# 				imageOrVideo
+			# 				video
+			# 			}
+			# 		}
+			# 		... on WpProduct_Singlecontent_Content_Images {
+			# 			fieldGroupName
+			# 			images {
+			# 				caption
+			# 				srcSet
+			# 			}
+			# 			imageOrVideo
+			# 			video
+			# 		}
+			# 		... on WpProduct_Singlecontent_Content_Text {
+			# 			fieldGroupName
+			# 			paragraph {
+			# 				paragraphContent
+			# 				fieldGroupName
+			# 				big
+			# 			}
+			# 		}
+			# 	}
+			# }
 			... on WpVariableProduct {
 				id
 				name

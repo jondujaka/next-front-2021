@@ -1,25 +1,31 @@
 import React from "react";
 import Row from "../components/row";
-import Media from '../components/media';
+import Media from "../components/media";
 import Paragraph from "../components/paragraph";
 
 const Single = ({ content, direct }) => {
-
-	if(!content){
+	console.log(content);
+	if (!content) {
 		return ``;
 	}
-	const rows = content.singlePostContent.content;
+	if (!content.singleContent) {
+		return ``;
+	}
+	const rows = content.singleContent.content;
 	return (
-		<div className={`single-content ${direct ? `no-padding` : `separator`}`}>
-			{content.title && <h1 className="single-title">{content.title}</h1> }
-			{rows ?
+		<div
+			className={`single-content ${direct ? `no-padding` : `separator`}`}
+		>
+			{content.title && <h1 className="single-title">{content.title}</h1>}
+			{rows ? (
 				rows.map((item, i) => (
 					<Row key={`row-${i}`} classes="my-md-4 my-lg-7">
 						<DirectionWrapper content={item} direct={direct} />
 					</Row>
 				))
-				: <h3>Nothing here yet</h3>
-			}
+			) : (
+				<h3>Nothing here yet</h3>
+			)}
 		</div>
 	);
 };
@@ -33,15 +39,18 @@ const DirectionWrapper = ({ content, direct }) => {
 				<DirectionalRow row={content} />
 			) : (
 				<>
-					{content.media ? (
-						<Media content={content.media} />
-					) : null}
-					{content.images ? (
-						<Media content={content} />
-					) : null}
+					{content.media ? <Media content={content.media} /> : null}
+					{content.images ? <Media content={content} /> : null}
 					{content.paragraph ? (
-						<div className={`col mx-auto ${direct ? `` : `col-xl-10 col-12 col-xxl-6`}`}>
-							<Paragraph big={content.paragraph.big} content={content.paragraph.paragraphContent} />
+						<div
+							className={`col mx-auto ${
+								direct ? `` : `col-xl-10 col-12 col-xxl-6`
+							}`}
+						>
+							<Paragraph
+								big={content.paragraph.big}
+								content={content.paragraph.paragraphContent}
+							/>
 						</div>
 					) : null}
 				</>
@@ -51,7 +60,7 @@ const DirectionWrapper = ({ content, direct }) => {
 };
 
 const DirectionalRow = ({ row }) => {
-	if (row.direction === `media_text`) {
+	if (row.direction[0] === `media_text`) {
 		return (
 			<>
 				{row.media && (
@@ -59,7 +68,10 @@ const DirectionalRow = ({ row }) => {
 				)}
 				{row.paragraph && (
 					<div className="col mx-auto col-12 col-xl-6">
-						<Paragraph big={row.paragraph.big} content={row.paragraph.paragraphContent} />
+						<Paragraph
+							big={row.paragraph.big}
+							content={row.paragraph.paragraphContent}
+						/>
 					</div>
 				)}
 			</>
