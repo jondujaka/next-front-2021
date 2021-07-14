@@ -33,6 +33,7 @@ footer {
 	position: fixed;
 	left: 0;
     width: 100%;
+	height: $headerHeight;
     display: flex;
     align-items: center;
 	padding: 1.25rem 2rem;
@@ -49,7 +50,7 @@ footer {
 	
 
 	* {
-		font-size: 2.5rem;
+		@extend .text-body-small;
 		text-transform: uppercase;
 		color: $primaryBlue;
 	}
@@ -85,7 +86,7 @@ footer {
 		padding: 0;
 	}
 	a {
-		font-size: 2.5rem;
+		@extend .text-body-small;
 		padding: 1rem;
 		margin: 0 .4rem;
 

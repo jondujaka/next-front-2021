@@ -138,9 +138,6 @@ const initPostTypes = async gatsbyUtilities => {
 		);
 
 		const eventsList = allEvents.flatMap(eventInfo => {
-			if (eventInfo.event.eventInfo) {
-				console.log(eventInfo.event.eventInfo.artists);
-			}
 			if (
 				eventInfo.event.eventInfo &&
 				eventInfo.event.eventInfo.artists &&
@@ -162,7 +159,7 @@ const initPostTypes = async gatsbyUtilities => {
 			const slug = artistInfo.artist.uri;
 			const template = `artist`;
 			const context = {
-				edition: year,
+				year: year.slug,
 				id: artistInfo.artist.id,
 				settings: editionSettings ? { ...editionSettings } : {},
 				eventsList
@@ -217,11 +214,44 @@ const initPostTypes = async gatsbyUtilities => {
 			);
 		});
 
+	let workshopSettings = {
+		postType: `workshop`,
+		queryName: `allWorkshops`,
+		gqlName: `allWpWorkshop`
+	};
+	const allWorkshops = await getPostType(workshopSettings, gatsbyUtilities);
+	const createWorkshopsPromises = [];
+
+	allWorkshops.length &&
+		allWorkshops.map(workshopInfo => {
+			const year = workshopInfo.workshop.editions.nodes.length
+				? workshopInfo.workshop.editions.nodes.reduce((a, b) =>
+						Math.max(parseInt(a.slug), parseInt(b.slug))
+				  )
+				: 2021;
+
+			const editionSettings = editionsToBuild.find(
+				edition => edition.year == year.slug
+			);
+
+			const slug = workshopInfo.workshop.uri;
+			const template = `workshop`;
+			const context = {
+				year: year.slug,
+				id: workshopInfo.workshop.id,
+				settings: editionSettings ? { ...editionSettings } : {}
+			};
+			createWorkshopsPromises.push(
+				createIndividualPage(slug, template, context, gatsbyUtilities)
+			);
+		});
+
 	Promise.all([
 		...createNewsPromises,
 		...createEventPromises,
 		...createProjectsPromises,
-		...createCommissionsPromises
+		...createCommissionsPromises,
+		...createWorkshopsPromises
 	]).then(() => console.log(`all post types built`));
 };
 
@@ -246,8 +276,7 @@ const buildEdition = async (year, gatsbyUtilities) => {
 	const editionPages = [
 		{
 			slug: `programme`,
-			template: `programme-template`,
-			query: ``
+			template: `programme-template`
 		},
 		{
 			slug: `artists`,
@@ -278,6 +307,7 @@ const buildEdition = async (year, gatsbyUtilities) => {
 		if (!editionsToBuild.find(edition => edition.year === year)) {
 			editionsToBuild.push({
 				...editionInfo.editionData.settings,
+				menu: editionInfo.menu,
 				year
 			});
 		}
@@ -404,7 +434,7 @@ const getAllProducts = async ({ graphql, reporter }) => {
 const getPostType = async (settings, { graphql, reporter }) => {
 	console.log(`getting all posts of type: ${settings.postType}`);
 
-	const withEdition = [`artist`, `event`];
+	const withEdition = [`artist`, `event`, `workshop`];
 	const noLanguage = [`project`];
 	let editionsFragment = `
 		editions {
@@ -458,14 +488,6 @@ const getPostType = async (settings, { graphql, reporter }) => {
 		}
 	`;
 
-	let editionYearFragment = `
-		editions {
-			nodes {
-				slug
-			}
-		}
-	`;
-
 	const graphqlResult = await graphql(/* GraphQL */ `
 		query ${settings.queryName} {
 			# Query index pages from edition
@@ -480,12 +502,6 @@ const getPostType = async (settings, { graphql, reporter }) => {
 						${settings.postType === `commission` ? commissionsFragment : ``}
 						${withEdition.includes(settings.postType) ? editionsFragment : ``}
 						${noLanguage.includes(settings.postType) ? `` : languagesFragment}
-						${
-							settings.postType === `artist` ||
-							settings.postType === `event`
-								? editionYearFragment
-								: ``
-						}
 						${settings.postType === `event` ? eventsFragment : ``}
 					}
 				}

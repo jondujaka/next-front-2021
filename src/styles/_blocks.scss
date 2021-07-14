@@ -117,7 +117,7 @@
 		justify-content: flex-start;
 	}
 	.artist-title {
-		font-size: 5rem;
+		@extend .text-body;
 		text-align: left;
 	}
 }

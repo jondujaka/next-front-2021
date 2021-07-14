@@ -1,21 +1,35 @@
 import React from "react";
 import { Link } from "gatsby";
 import { format, localeFormat } from "light-date";
+import ExternalIcon from "./externalIcon";
 
 const EventInfo = ({ event, showDetails = false }) => {
 	if (!event.eventInfo || !event.eventInfo.dates) {
 		return ``;
 	}
+	const venue = event.eventInfo.venues
+		? event.eventInfo.venues[0]
+		: {
+				venueInfo: {
+					mapsLink: `https://maps.google.com`,
+					color: `red`,
+				},
+				title: `Fake venue`
+		  };
 	return (
-		<div>
+		<div className="mb-6">
 			{event.eventInfo.dates.map((date, i) => (
 				<EventDates link={event.url} key={`date-${i}`} date={date} />
 			))}
-			<h3>
-				<Link to="/" className="text-underline">
-					Venue 2
-				</Link>
-			</h3>
+			<a
+				target="_blank"
+				rel="noreferrer noopener"
+				href={venue.venueInfo.mapsLink}
+				style={{ color: venue.venueInfo.color }}
+				className="big text-underline with-icon"
+			>
+				{venue.title} <ExternalIcon width={35} color={venue.venueInfo.color}/>
+			</a>
 			{showDetails && <EventDetails info={event.eventInfo} />}
 		</div>
 	);
@@ -26,11 +40,13 @@ export default EventInfo;
 const EventDetails = ({ info }) => {
 	const { format, price, capacity } = info;
 	return (
-		<>
-			{format && <h3>Format: {format}</h3>}
-			{capacity && <h3>Capacity: {capacity}</h3>}
-			{price && <h3>Price: {price}</h3>}
-		</>
+		<div className="mt-6">
+			{format && <span className="big d-block">Format: {format}</span>}
+			{capacity && (
+				<span className="big d-block">Capacity: {capacity}</span>
+			)}
+			{price && <span className="big d-block">Price: {price}</span>}
+		</div>
 	);
 };
 
@@ -40,12 +56,19 @@ const EventDates = ({ date, link }) => {
 	const day = localeFormat(dateobj, "{EEE}");
 	const month = localeFormat(dateobj, "{MMM}");
 	const formatedDate = format(dateobj, "{dd}");
-	return (
-		<h3>
-			<Link to={link} className="d-block mb-3">
+
+	if (link) {
+		return (
+			<Link to={link ? link : "/"} className="big d-block">
 				<span className="text-uppercase">{day}</span> {formatedDate}{" "}
 				{month} {date.startTime} - {date.endTime} CET
 			</Link>
-		</h3>
+		);
+	}
+	return (
+		<span className="big d-block">
+			<span className="text-uppercase">{day}</span> {formatedDate} {month}{" "}
+			{date.startTime} - {date.endTime} CET
+		</span>
 	);
 };

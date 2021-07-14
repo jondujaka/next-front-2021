@@ -12,7 +12,7 @@ const SimpleContent = ({ section }) => {
 		if (section.imageOrVideo === `video`) {
 			return (
 				<ReactPlayer
-					className="inline-player mb-5"
+					className="inline-player my-5"
 					url={section.video}
 					width="100%"
 					playing={false}

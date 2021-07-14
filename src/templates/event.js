@@ -17,10 +17,11 @@ const Events = ({ data: { event }, pageContext }) => {
 				color: settings.textColor,
 				backgroundColor: settings.backgroundColor
 			}}
+			editionHeader={settings.menu}
 			year={2021}
 		>
 			<Row>
-				<div className="col-12 text-center">
+				<div className="col-12 text-center my-3">
 					<h1>{event.title}</h1>
 				</div>
 				<div className="col-12 d-none d-lg-block col-lg-5 col-xl-6 about-nav">
@@ -68,7 +69,7 @@ export default Events;
 const ArtistBlock = ({ artist }) => {
 	return (
 		<Link to={artist.uri} className="col-8 mt-7 d-block">
-			<h3>{artist.title}</h3>
+			<h3 className="big">{artist.title}</h3>
 			<Image srcSet={artist.featuredImage.node.srcSet} />
 		</Link>
 	);
@@ -126,7 +127,16 @@ export const eventQuery = graphql`
 				format
 				fieldGroupName
 				price
-				venues
+				venues {
+					... on WpVenue {
+						id
+						venueInfo {
+							color
+							mapsLink
+						}
+						title
+					}
+				}
 				dates {
 					startTime
 					endTime

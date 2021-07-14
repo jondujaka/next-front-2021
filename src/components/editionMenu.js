@@ -13,7 +13,7 @@ const EditionMenu = ({ items, bg }) => {
 								<Link
 									key={`item-${item.url}`}
 									to={parseUrl(item.url)}
-									activeClassName="active"
+									getProps={isActive(item.url)}
 								>
 									{item.label}
 								</Link>
@@ -23,6 +23,32 @@ const EditionMenu = ({ items, bg }) => {
 			</nav>
 		</div>
 	);
+};
+
+const isActive = url => ({ isCurrent, isPartiallyCurrent, location }) => {
+	console.log(location.pathname);
+
+	const activeClassName = { className: `active` };
+
+	if (isCurrent) {
+		return activeClassName;
+	}
+
+	if (isPartiallyCurrent && url.endsWith("/index/")) {
+		if (location.pathname) return;
+	}
+
+	if (url.endsWith("/programme/") && location.pathname.includes("/events/")) {
+		return activeClassName;
+	}
+
+	if (url.endsWith("/artists/") && location.pathname.includes("/artist/")) {
+		return activeClassName;
+	}
+
+	if (isCurrent || isPartiallyCurrent) {
+		return activeClassName;
+	}
 };
 
 const parseUrl = url => {

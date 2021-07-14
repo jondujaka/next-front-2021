@@ -22,15 +22,79 @@
 $sansFont: 'Gramatika', sans-serif;
 $serifFont: 'Manege', serif;
 
+@media screen and (min-width: 1440px){
+	.text-xxxl {
+		font-size: 76px;
+	}
+	.text-body {
+		font-size: 38px;
+	}
+	.text-body-small {
+		font-size: 21px;
+	}
+	.text-small {
+		font-size: 15px;
+	}
+}
+
+@media screen and (min-width: 1600px){
+	.text-xxxl {
+		font-size: 100px;
+		line-height: .875;
+	}
+	.text-body {
+		font-size: 48px;
+	}
+	.text-body-small {
+		font-size: 25px;
+	}
+	.text-small {
+		font-size: 15px;
+	}
+}
+
+@media screen and (min-width: 1920px) {
+	.text-xxxl {
+		font-size: 140px;
+		line-height: .875;
+	}
+	.text-body {
+		font-size: 50px;
+		line-height: 0.9;
+	}
+	.text-body-small {
+		line-height: 1;
+		font-size: 35px;
+	}
+	.text-small {
+		font-size: 25px;
+	}
+}
+
+h1 {
+	@extend .text-xxxl;
+	margin: 0;
+}
+
 a {
 	color: inherit;
 
 	&:visited {
 		color: inherit;
 	}
-	&:hover {
-		opacity: .7 !important;
+
+	&.with-icon {
+		display: flex;
+		svg {
+			margin-left: 5px;
+			text-decoration: underline;
+		}
 	}
+
+}
+
+p > a {
+	text-decoration: underline;
 }
 .text-underline {
 	text-decoration: underline	;
@@ -64,11 +128,6 @@ body {
 	}
 }
 
-.edition-title h1 {
-	font-size: 	9rem;
-	line-height: .875;
-	margin: 0;
-}
 h1.main-title {
 	display: block;
 	z-index: -1;
@@ -144,28 +203,33 @@ p {
 	line-height: 1.175;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+	margin: 0;
 }
 
-p {
-	@include media-breakpoint-up(xl){
-		font-size: 3rem;
+.paragraph {
+
+	h1, h2, h3, h4, h5 {
+		@extend .text-body;
 	}
-	@include media-breakpoint-up(xxl){
-		font-size: 3.4rem;
-	}
-	font-size: 2.75rem;
-	// line-height: 1;
+}
+
+p, a {
+	@extend .text-body-small;
+}
+.big {
+	@extend .text-body;
+}
+
+.info-content p {
+	margin-bottom: 1.5em;
+}
+
+.text-big p {
+	margin-bottom: .875em;
 }
 
 .text-big, .text-big p {
-	@include media-breakpoint-up(xl){
-		font-size: 4.5rem;
-	}
-	@include media-breakpoint-up(xxl){
-		font-size: 5rem;
-	}
-	font-size: 3.3rem;
-	line-height: 1;
+	@extend .text-body;
 }
 
 .text-center {
@@ -178,19 +242,11 @@ a:hover, a:focus	 {
 
 
 .hollow-link {
-	font-size: 7.3rem;
+	@extend .text-xxxl;
 	-webkit-text-stroke:1px;
 	-webkit-text-fill-color:transparent;
 	line-height: 1;
 	cursor: pointer;
-
-	@include media-breakpoint-up(lg){
-		font-size: 11rem;
-	}
-
-	@include media-breakpoint-up(xl){
-		font-size: 14rem;
-	}
 
 	&:hover, &.active, .active & {
 		-webkit-text-fill-color: inherit;

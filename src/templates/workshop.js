@@ -9,10 +9,10 @@ import Carousel from "../components/carousel";
 import SimpleContent from "../components/simpleContent";
 import EventInfo from "../components/eventInfo";
 
-const Artist = ({ data: { artist }, pageContext, preview }) => {
+const Workshop = ({ data: { workshop }, pageContext, preview }) => {
 	const { lang, year, settings, eventsList, menu } = pageContext;
 
-	const content = artist.artistEventContent;
+	const content = workshop.artistEventContent;
 
 	// let langTo = artist.language.slug == `sk` ? `/sk` : ``;
 	// const { content } = artist.singlePostContent;
@@ -38,8 +38,8 @@ const Artist = ({ data: { artist }, pageContext, preview }) => {
 				<h1>No content yet</h1>
 			) : (
 				<Row>
-					<div className="col-12 my-6 text-center">
-						<h1>{artist.title}</h1>
+					<div className="col-12 text-center">
+						<h1>{workshop.title}</h1>
 					</div>
 					<div className="col-12 d-none d-lg-block col-lg-5 col-xl-6 about-nav">
 						{content.images && (
@@ -56,9 +56,7 @@ const Artist = ({ data: { artist }, pageContext, preview }) => {
 						)}
 					</div>
 					<div className="col-12 col-lg-7 col-xl-6">
-						{eventsList.map((event, i) => (
-							<EventInfo event={event} key={`even	t-${i}`} />
-						))}
+						<EventInfo event={workshop} showDetails />	
 						{content.content.map(section => (
 							<SimpleContent
 								section={section}
@@ -78,28 +76,21 @@ const Artist = ({ data: { artist }, pageContext, preview }) => {
 	);
 };
 
-export const artistQuery = graphql`
-	query artistById(
+export const workshopQuery = graphql`
+	query workshopById(
 		# these variables are passed in via createPage.pageContext in gatsby-node.js
 		$id: String!
 	) {
 		# selecting the current post by id
-		artist: wpArtist(id: { eq: $id }) {
+		workshop: wpWorkshop(id: { eq: $id }) {
 			id
 			title
-			language {
-				slug
-			}
-			translations {
-				slug
-				uri
-			}
 			artistEventContent {
 				images {
 					srcSet
 				}
 				content {
-					... on WpArtist_Artisteventcontent_Content_Media {
+					... on WpWorkshop_Artisteventcontent_Content_Media {
 						fieldGroupName
 						imageOrVideo
 						video
@@ -107,10 +98,44 @@ export const artistQuery = graphql`
 							srcSet
 						}
 					}
-					... on WpArtist_Artisteventcontent_Content_Text {
+					... on WpWorkshop_Artisteventcontent_Content_Text {
 						fieldGroupName
 						text
 					}
+				}
+			}
+			
+			eventInfo {
+				capacity
+				artists {
+					... on WpArtist {
+						id
+						uri
+						title
+						featuredImage {
+							node {
+								srcSet
+							}
+						}
+					}
+				}
+				format
+				fieldGroupName
+				price
+				venues {
+					... on WpVenue {
+						id
+						venueInfo {
+							color
+							mapsLink
+						}
+						title
+					}
+				}
+				dates {
+					startTime
+					endTime
+					date
 				}
 			}
 		}
@@ -118,4 +143,4 @@ export const artistQuery = graphql`
 `;
 
 
-export default Artist;
+export default Workshop;

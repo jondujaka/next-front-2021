@@ -20,10 +20,10 @@ const ArtistsTemplate = ({ data, pageContext }) => {
 		>
 			<Row>
 				<div className="col col-12">
-					<h2>Artists</h2>
+					<h1>Artists</h1>
 				</div>
 			</Row>
-			<Row classes="mt-6 justify-content-center">
+			<Row classes="mt-6 justify-content-start">
 				{artistsList && <ArtistsGrid items={artistsList} />}
 			</Row>
 		</Layout>

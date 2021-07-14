@@ -5,9 +5,9 @@ import Row from "../components/row";
 import ArtistsGrid from "../components/blockGrids/artistsGrid";
 
 const WorkshopsTemplate = ({ data, pageContext }) => {
-	if (!data.workshops) {
-		return <h1>No workshops yet</h1>;
-	}
+	// if (!data.workshops) {
+	// 	return <h1>No workshops yet</h1>;
+	// }
 	const workshopsList = data.workshops.edges;
 	const { settings, edition, menu } = pageContext;
 	console.log(data);
@@ -23,7 +23,7 @@ const WorkshopsTemplate = ({ data, pageContext }) => {
 		>
 			<Row>
 				<div className="col col-12">
-					<h2>Workshops</h2>
+					<h1>Workshops</h1>
 				</div>
 			</Row>
 			<Row classes="mt-6 justify-content-center">
@@ -37,7 +37,7 @@ export default WorkshopsTemplate;
 
 export const workshopsQuery = graphql`
 	query workshopsPage {
-		workShops: allWpWorkshop(sort: { order: DESC, fields: date }) {
+		workshops: allWpWorkshop(sort: { order: DESC, fields: date }) {
 			edges {
 				node {
 					id

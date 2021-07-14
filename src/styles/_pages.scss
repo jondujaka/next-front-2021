@@ -36,7 +36,12 @@
 
 .about-nav {
 	@extend .sticky;
-	top: 6rem;
+	top: calc(#{$headerHeight} + 3rem);
+
+	ul {
+		margin: 0;
+		padding: 0;
+	}
 }
 
 .about-title {

@@ -4,7 +4,7 @@ const Paragraph = ({ big, content }) => {
 
 	return (
 		<div
-			className={`paragraph text-${big}`}
+			className={`paragraph ${big ? `text-big` : `` }`}
 			dangerouslySetInnerHTML={{ __html: content }}
 		/>
 	);

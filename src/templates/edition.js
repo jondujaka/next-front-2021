@@ -12,7 +12,6 @@ import ArtistsGrid from "../components/blockGrids/artistsGrid";
 const Edition = ({ data, pageContext, noFooter, style }) => {
 	const { edition, translation, lang, settings, content, menu } = pageContext;
 
-	console.log(pageContext);
 	let colorStyle;
 
 	if (settings) {
@@ -26,8 +25,6 @@ const Edition = ({ data, pageContext, noFooter, style }) => {
 
 	const startDate = new Date(content.topText.editionDate.startDate);
 	const endDate = new Date(content.topText.editionDate.endDate);
-
-	console.log(endDate);
 
 	return (
 		<Layout
@@ -80,7 +77,7 @@ const editionRow = (section, i) => {
 	if (type.endsWith(`Title`)) {
 		return (
 			<div className="col-12">
-				<h1 key={`${type}-${i}`}>{section.text}</h1>
+				<h1 className="edition-content-title" key={`${type}-${i}`}>{section.text}</h1>
 			</div>
 		);
 	}
