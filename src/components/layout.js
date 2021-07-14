@@ -48,7 +48,7 @@ const Layout = ({
 				style={year ? parsedStyle : {}}
 			>
 				<Header />
-				{editionHeader.menuItems && (
+				{editionHeader && editionHeader.menuItems && (
 					<EditionMenu
 						items={editionHeader.menuItems}
 						bg={style.backgroundColor}
