@@ -34,7 +34,7 @@ const isActive = url => ({ isCurrent, isPartiallyCurrent, location }) => {
 		return activeClassName;
 	}
 
-	if (isPartiallyCurrent && url.endsWith("/index/")) {
+	if (isPartiallyCurrent && (url.endsWith("/index/") || url.endsWith("/index"))) {
 		if (location.pathname) return;
 	}
 
