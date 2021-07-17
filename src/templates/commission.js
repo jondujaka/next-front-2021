@@ -22,6 +22,18 @@ const Commission = ({ data: { commission }, pageContext }) => {
 
 	return (
 		<Layout>
+			<Row>
+				<div className="col col-12 mt-5 mb-6">
+					<h2 className="festival-page-title">
+						Commissions > {commission.title}
+					</h2>
+				</div>
+				<div className="col col-12 mt-5 mb-6">
+					<h1 className="text-center festival-single-title">
+						{commission.title}
+					</h1>
+				</div>
+			</Row>
 			<Single content={commission} />
 			<Separator />
 			<Row classes="justify-content-center">
@@ -41,48 +53,30 @@ export const ProjectData = graphql`
 		# these variables are passed in via createPage.pageContext in gatsby-node.js
 		$id: String!
 	) {
-		# selecting the current post by id
 		commission: wpCommission(id: { eq: $id }) {
 			id
 			title
-			# singlePostContent {
-			# content {
-			# 	... on WpCommission_Singlecontent_Content_MediaText {
-			# 		direction
-			# 		fieldGroupName
-			# 		paragraph {
-			# 			paragraphContent
-			# 			fieldGroupName
-			# 			big
-			# 		}
-			# 		media {
-			# 			image {
-			# 				caption
-			# 				srcSet
-			# 			}
-			# 			imageOrVideo
-			# 			video
-			# 		}
-			# 	}
-			# 	... on WpCommission_Singlecontent_Content_Images {
-			# 		fieldGroupName
-			# 		images {
-			# 			caption
-			# 			srcSet
-			# 		}
-			# 		imageOrVideo
-			# 		video
-			# 	}
-			# 	... on WpCommission_Singlecontent_Content_Text {
-			# 		fieldGroupName
-			# 		paragraph {
-			# 			paragraphContent
-			# 			fieldGroupName
-			# 			big
-			# 		}
-			# 	}
-			# }
-			# }
+			singlePostContent {
+				content {
+					... on WpCommission_Singlepostcontent_Content_Text {
+						fieldGroupName
+						paragraph {
+							big
+							paragraphContent
+							fieldGroupName
+						}
+					}
+					... on WpCommission_Singlepostcontent_Content_Images {
+						fieldGroupName
+						imageOrVideo
+						video
+						images {
+							srcSet
+						}
+					}
+				}
+				fieldGroupName
+			}
 		}
 	}
 `;

@@ -62,9 +62,10 @@
 }
 
 .commission-image {
-	img {
-		border-radius: 50%;
-	}
+	width: 100%;
+    padding-bottom: 100%;
+    position: relative;
+	border-radius: 50%;
 }
 
 
@@ -120,4 +121,22 @@
 		@extend .text-body;
 		text-align: left;
 	}
+
+	.col {
+		padding: 0 9px;
+	}
+
+	@media (min-width: 1280px){
+		.col {
+			padding: 0 20px;
+		}
+	}
+	
+}
+
+
+.ticket-block {
+	border: 3px solid;
+	border-radius: 42px;
+	display: block;
 }

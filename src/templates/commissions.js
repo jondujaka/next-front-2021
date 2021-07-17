@@ -17,11 +17,11 @@ const Commissions = ({ data, pageContext }) => {
 	return (
 		<Layout>
 			<Row>
-				<div className="col col-12">
-					<h2>Commissions</h2>
+				<div className="col col-12 mt-5 mb-6">
+					<h2 className="festival-page-title">Commissions</h2>
 				</div>
 			</Row>
-			<Row classes="mt-6 justify-content-center">
+			<Row classes="justify-content-center">
 				{coms && <CommissionsGrid items={fake} />}
 			</Row>
 		</Layout>

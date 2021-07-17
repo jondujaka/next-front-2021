@@ -31,12 +31,26 @@
 }
 
 
+// EDITION PAGE
+
+.edition-title {
+	padding-top: 1.5rem;
+	h1 {
+		@extend .normal-line-height;
+	}
+
+	> div:not(:first-of-type) h1{
+		margin-top: -.15em;
+	}
+}
+
+
 // ABOUT PAGE
 
 
 .about-nav {
 	@extend .sticky;
-	top: calc(#{$headerHeight} + 3rem);
+	top: calc(#{$headerHeight} + 1.5rem);
 
 	ul {
 		margin: 0;
@@ -47,7 +61,6 @@
 .about-title {
 	font-family: $sansFont;
 	font-size: 5rem;
-	background: white;
 	position: sticky;
 	top: 0;
 }

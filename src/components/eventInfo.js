@@ -28,7 +28,7 @@ const EventInfo = ({ event, showDetails = false }) => {
 				style={{ color: venue.venueInfo.color }}
 				className="big text-underline with-icon"
 			>
-				{venue.title} <ExternalIcon width={35} color={venue.venueInfo.color}/>
+				{venue.title}
 			</a>
 			{showDetails && <EventDetails info={event.eventInfo} />}
 		</div>
@@ -40,7 +40,7 @@ export default EventInfo;
 const EventDetails = ({ info }) => {
 	const { format, price, capacity } = info;
 	return (
-		<div className="mt-6">
+		<div className="mt-2 mt-lg-4 mt-xxl-6">
 			{format && <span className="big d-block">Format: {format}</span>}
 			{capacity && (
 				<span className="big d-block">Capacity: {capacity}</span>

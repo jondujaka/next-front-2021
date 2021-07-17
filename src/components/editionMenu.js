@@ -27,6 +27,8 @@ const EditionMenu = ({ items, bg }) => {
 
 const isActive = url => ({ isCurrent, isPartiallyCurrent, location }) => {
 	console.log(location.pathname);
+	console.log(isCurrent);
+	console.log(isPartiallyCurrent);
 
 	const activeClassName = { className: `active` };
 
@@ -35,7 +37,10 @@ const isActive = url => ({ isCurrent, isPartiallyCurrent, location }) => {
 	}
 
 	if (isPartiallyCurrent && (url.endsWith("/index/") || url.endsWith("/index"))) {
-		if (location.pathname) return;
+		if(location.pathname.length === 6){
+			return activeClassName;
+		}
+		return null;
 	}
 
 	if (url.endsWith("/programme/") && location.pathname.includes("/events/")) {

@@ -58,7 +58,7 @@ const Home = ({ data: { page, news }, pageContext }) => {
 
 			<br />
 			<Row>
-				<h2 className="col col-12">News</h2>
+				<h1 className="col col-12">News</h1>
 				{allNews.map(newsItem => (
 					<NewsBlock
 						key={`news-${newsItem.node.id}`}
@@ -108,6 +108,7 @@ const HomeHeader = ({ items, classes }) => {
 						<CustomLink
 							key={`link-${item.item.link.url}`}
 							link={item.item.link.url}
+							withArrow
 						>
 							{item.item.text}
 						</CustomLink>

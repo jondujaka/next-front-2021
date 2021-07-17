@@ -22,7 +22,7 @@ const SocialFooter = () => {
 	return (
 		<div className="social-footer mt-6">
 			<div className="row">
-				<div className="col col-12"><h2>Follow</h2></div>
+				<div className="col col-12"><h1>Follow</h1></div>
 				<div className="col col-12 social-links">
 					{menuItems.map(item => <a key={`social-${item.id}`} target="_blank" rel="noopener noreferrer" title={`Next - ${item.label}`} href={item.url}>{item.label}</a>)}
 				</div>

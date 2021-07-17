@@ -38,10 +38,10 @@ const Workshop = ({ data: { workshop }, pageContext, preview }) => {
 				<h1>No content yet</h1>
 			) : (
 				<Row>
-					<div className="col-12 text-center">
+					<div className="col-12 text-center mt-4 mb-lg-6 mb-4">
 						<h1>{workshop.title}</h1>
 					</div>
-					<div className="col-12 d-none d-lg-block col-lg-5 col-xl-6 about-nav">
+					<div className="col-12 make-first col-xl-6 about-nav mb-6">
 						{content.images && (
 							<>
 								{content.images.length > 1 ? (
@@ -55,7 +55,7 @@ const Workshop = ({ data: { workshop }, pageContext, preview }) => {
 							</>
 						)}
 					</div>
-					<div className="col-12 col-lg-7 col-xl-6">
+					<div className="col-12 col-xl-6">
 						<EventInfo event={workshop} showDetails />	
 						{content.content.map(section => (
 							<SimpleContent

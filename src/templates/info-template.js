@@ -29,7 +29,7 @@ const Info = ({ data, pageContext }) => {
 			editionHeader={menu}
 		>
 			<div className="row">
-				<div className="col-12 d-none d-lg-block col-lg-5 col-xl-6 about-nav">
+				<div className="col col-12 d-none d-md-block col-md-4 d-md-block col-xl-6 about-nav">
 					{scrollSpyItems && (
 						<Scrollspy
 							items={scrollSpyItems}
@@ -46,19 +46,19 @@ const Info = ({ data, pageContext }) => {
 						</Scrollspy>
 					)}
 				</div>
-				<div className="col-12 col-lg-7 col-xl-6 info-content">
+				<div className="col col-12 col-md-8 col-xl-6 info-content mt-5">
 					{sections &&
 						sections.map(section => (
-							<Row
-								classes="mb-5 pt-4"
+							<div
+								className="mb-5 pt-4"
 								id={section.title.toLowerCase()}
 								key={`about-section-${section.title}`}
 							>
-								<h2 className="d-lg-none d-block about-title">
+								<h2 className="d-md-none d-block about-title">
 									{section.title}
 								</h2>
 								<AboutSection content={section.content} />
-							</Row>
+							</div>
 						))}
 				</div>
 			</div>

@@ -51,8 +51,8 @@ const Edition = ({ data, pageContext, noFooter, style }) => {
 			{content.content &&
 				content.content.map((section, i) => {
 					return (
-						<Row classes="my-6" key={`section-edition-${i}`}>
-							{editionRow(section, i)}
+						<Row classes="my-6" alignEnd={section.fieldGroupName.endsWith(`Section`)} key={`section-edition-${i}`}>
+							{editionRow(section, i, edition)}
 						</Row>
 					);
 				})}
@@ -60,7 +60,7 @@ const Edition = ({ data, pageContext, noFooter, style }) => {
 	);
 };
 
-const editionRow = (section, i) => {
+const editionRow = (section, i, year) => {
 	const type = section.fieldGroupName;
 	if (type.endsWith(`Media`)) {
 		console.log(section.images);
@@ -83,7 +83,7 @@ const editionRow = (section, i) => {
 	}
 	if (type.endsWith(`Paragraph`)) {
 		return (
-			<div className="col-6 mx-auto">
+			<div className="col col-12 col-md-10 col-lg-8 col-xl-6 mx-auto my-4">
 				<Paragraph key={`${type}-${i}`} content={section.text} big />
 			</div>
 		);
@@ -105,8 +105,8 @@ const editionRow = (section, i) => {
 					<h1>{section.title}</h1>
 				</div>
 				<ArtistsGrid items={section.artists} seeAll />
-				<div className="col-12 text-center">
-					<CustomLink link="/artists">See all artists</CustomLink>
+				<div className="col-12 text-center mb-6 mt-5">
+					<CustomLink link={`/${year}/artists`}>See all artists</CustomLink>
 				</div>
 			</>
 		);
@@ -118,8 +118,8 @@ const editionRow = (section, i) => {
 					<h1>{section.title}</h1>
 				</div>
 				<ArtistsGrid items={section.workshops} seeAll />
-				<div className="col-12 text-center">
-					<CustomLink link="/workshops">See all workshops</CustomLink>
+				<div className="col-12 text-center mt-5">
+					<CustomLink link={`/${year}/workshops`}>See all workshops</CustomLink>
 				</div>
 			</>
 		);

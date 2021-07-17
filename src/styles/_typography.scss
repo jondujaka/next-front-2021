@@ -22,18 +22,64 @@
 $sansFont: 'Gramatika', sans-serif;
 $serifFont: 'Manege', serif;
 
+
+.festival-web {
+	h1, .serif-title {
+		font-family: $serifFont;
+	}
+}
+
+.edition-web {
+	h1, h2, h3, h4, h5 {
+		font-family: $sansFont;
+	}
+}
+
+
+.text-xxxl {
+	font-size: 50px;
+}
+
+.text-body-small {
+	font-size: 17px;
+}
+.text-small {
+	font-size: 17px;
+}
+
+.text-body {
+	font-size: 20px;
+	line-height: 1;
+}
+
+@media screen and (min-width: 768px){
+	.text-xxxl {
+		font-size: 62px;
+	}
+	.text-body-small {
+		font-size: 24px;
+	}
+	.text-body {
+		font-size: 28px;
+	}
+}
+
+@media screen and (min-width: 960px){
+	.text-xxxl {
+		font-size: 68px;
+	}
+	.text-body {
+		font-size: 34px;
+	}
+}
+
 @media screen and (min-width: 1440px){
 	.text-xxxl {
 		font-size: 76px;
 	}
 	.text-body {
 		font-size: 38px;
-	}
-	.text-body-small {
-		font-size: 21px;
-	}
-	.text-small {
-		font-size: 15px;
+		line-height: 1.1;
 	}
 }
 
@@ -44,12 +90,13 @@ $serifFont: 'Manege', serif;
 	}
 	.text-body {
 		font-size: 48px;
+		line-height: 0.9;
 	}
 	.text-body-small {
 		font-size: 25px;
 	}
 	.text-small {
-		font-size: 15px;
+		font-size: 21px;
 	}
 }
 
@@ -60,7 +107,6 @@ $serifFont: 'Manege', serif;
 	}
 	.text-body {
 		font-size: 50px;
-		line-height: 0.9;
 	}
 	.text-body-small {
 		line-height: 1;
@@ -74,6 +120,11 @@ $serifFont: 'Manege', serif;
 h1 {
 	@extend .text-xxxl;
 	margin: 0;
+}
+
+.festival-page-title {
+	@extend .text-body;
+	font-family: $serifFont;
 }
 
 a {
@@ -91,6 +142,10 @@ a {
 		}
 	}
 
+}
+
+.normal-line-height {
+	line-height: initial;
 }
 
 p > a {
@@ -129,6 +184,7 @@ body {
 }
 
 h1.main-title {
+	font-family: $sansFont;
 	display: block;
 	z-index: -1;
 	position: relative;
@@ -179,7 +235,6 @@ h1.single-title {
 
 h2 {
 	font-size: 9rem;
-	font-family: 'Manege', serif;
 	line-height: 1;
 }
 
@@ -243,9 +298,9 @@ a:hover, a:focus	 {
 
 .hollow-link {
 	@extend .text-xxxl;
+	@extend .normal-line-height;
 	-webkit-text-stroke:1px;
 	-webkit-text-fill-color:transparent;
-	line-height: 1;
 	cursor: pointer;
 
 	&:hover, &.active, .active & {
