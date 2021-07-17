@@ -12,8 +12,13 @@
 }
 
 .carousel-container {
-	width: 685px;
-	max-width: 100%;
+
+	width: 100%;
+
+	@media (min-width: 1420px){
+		width: 685px;
+		max-width: 100%;
+	}
 }
 
 .carousel-nav{

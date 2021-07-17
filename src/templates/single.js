@@ -11,7 +11,7 @@ const Single = ({ content, direct }) => {
 	if (!content.singleContent) {
 		return ``;
 	}
-	const rows = content.singleContent.content;
+	const rows = content.singleContent ? content.singleContent.content : content.singlePostContent.content;
 	return (
 		<div
 			className={`single-content ${direct ? `no-padding` : `separator`}`}

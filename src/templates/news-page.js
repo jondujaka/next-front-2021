@@ -9,8 +9,8 @@ const Events = ({ data, pageContext }) => {
 	return (
 		<Layout>
 			<Row>
-				<div className="col col-12">
-					<h2>News</h2>
+				<div className="col col-12 mt-5 mb-6">
+					<h2 className="festival-page-title">News</h2>
 				</div>
 				{news.map(newsItem => (
 					<NewsBlock key={`news-${newsItem.node.id}`} item={newsItem.node} />

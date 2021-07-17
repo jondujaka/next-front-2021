@@ -10,8 +10,10 @@ const Projects = ({ data, pageContext }) => {
 	return (
 		<Layout>
 			<Row classes="mt-6">
-				<div className="col-12">
-					<h2>Projects</h2>
+			<div className="col col-12 mt-5 mb-6">
+					<h2 className="festival-page-title">
+						Projects
+					</h2>
 				</div>
 				<ProjectsGrid items={projects} />
 			</Row>

@@ -18,8 +18,10 @@ const Project = ({ data: { project }, pageContext }) => {
 			<Single content={project} />
 			<Separator />
 			<Row>
-				<div className="col col-12">
-					<h2>More projects</h2>
+			<div className="col col-12 mt-5 mb-6">
+					<h1>
+						More projects
+					</h1>
 				</div>
 				<ProjectsGrid items={related} />
 			</Row>

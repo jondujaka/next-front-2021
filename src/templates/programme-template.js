@@ -50,8 +50,8 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 			year={edition}
 		>
 			<Row>
-				<div className="col col-12">
-					<h1>Programme</h1>
+				<div className="col col-12 px-0">
+					<h1 className="normal-line-height fw-title border-bottom-thick">Programme</h1>
 				</div>
 				{allDays &&
 					Object.keys(allDays).map(key => (
@@ -68,8 +68,8 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 
 const Day = ({ day, bgColor }) => {
 	return (
-		<div id={day.slug} className="col col-12 day-wrapper">
-			<h5 className="day-title" style={{ background: bgColor }}>
+		<div id={day.slug} className="col col-12 day-wrapper px-0">
+			<h5 className="day-title fw-title" style={{ background: bgColor }}>
 				{day.name}
 			</h5>
 			<div className="schedule-items-wrapper">

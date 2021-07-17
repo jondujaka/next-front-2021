@@ -7,7 +7,7 @@ const Header = ({ siteTitle }) => {
 	const { cart } = useAppState();
 	return (
 		<div className="header-wrapper">
-			<h4>Next</h4>
+			<Link to="/" activeClassName="active">Next</Link>
 			<nav className="main-nav">
 				<ul>
 					<li>

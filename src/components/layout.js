@@ -43,7 +43,7 @@ const Layout = ({
 			{/* <Header siteTitle={data.site.siteMetadata?.title || `Title`} /> */}
 			<div
 				className={`main-wrapper ${
-					year ? `edition-${year} menu-padding` : `no-edition`
+					year ? `edition-${year} menu-padding edition-web` : `no-edition festival-web`
 				}`}
 				style={year ? parsedStyle : {}}
 			>

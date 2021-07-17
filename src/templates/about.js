@@ -17,6 +17,9 @@ const About = ({ data, pageContext }) => {
 	return (
 		<Layout>
 			<div className="row mt-6">
+				<div className="col col-12 mt-5 mb-6">
+					<h2 className="festival-page-title">About</h2>
+				</div>
 				<div className="col-12 d-none d-lg-block col-lg-5 col-xl-6 about-nav">
 					{scrollSpyItems && (
 						<Scrollspy
