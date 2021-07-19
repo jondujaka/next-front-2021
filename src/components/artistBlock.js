@@ -22,12 +22,12 @@ const ArtistBlock = ({ item, style, colors }) => {
 		return ``;
 	}
 
-	const styles = `
+	const styles = colors ? `
 		.artist-item .row:hover {
 			color: ${colors.backgroundColor};
 			background: ${colors.textColor};
 		}
-	`;
+	` : ``;
 	return Style.it(styles,
 		<Link className="artist-item px-2 px-md-4 col-6 col-lg-4 mb-5" to={item.uri}>
 			<div className="row p-1 p-md-3 ">

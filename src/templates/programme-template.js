@@ -15,12 +15,12 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 	const allDays = {};
 
 
-	const styles = `
+	const styles = colors ? `
 		.schedule-item:hover {
 			color: ${settings.backgroundColor};
 			background: ${settings.textColor};
 		}
-	`;
+	` : ``;
 
 	allEvents.forEach(event => {
 		const { eventInfo } = event.node;
@@ -98,7 +98,7 @@ const ScheduleItem = ({ item, colors }) => {
 	let time = `${item.date.startTime} - ${item.date.endTime}`;
 	const venue = item.eventInfo.venues ? item.eventInfo.venues[0] : null;
 	const online = true;
-	const styles = `
+	const styles = colors ? `
 		.schedule-item:hover,
 		.watch-link:hover {
 			color: ${colors.backgroundColor};
@@ -112,7 +112,7 @@ const ScheduleItem = ({ item, colors }) => {
 			background: ${colors.backgroundColor};
 			color: ${colors.textColor};
 		}
-	`;
+	` : ``;
 	return Style.it(styles,
 		<Link to={item.uri} className="schedule-item">
 			<span className="item-time">{time}</span>

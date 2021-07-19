@@ -58,12 +58,12 @@ const TicketsTemplate = ({ pageContext }) => {
 };
 
 const TicketItem = ({ ticket, colors }) => {
-	const styles = `
+	const styles = colors ? `
 		.ticket-block:hover {
 			color: ${colors.backgroundColor};
 			background: ${colors.textColor};
 		}
-	`;
+	` : ``;
 	return Style.it(
 		styles,
 		<div className="col col-12 col-lg-6 mb-6">

@@ -64,12 +64,12 @@ const Events = ({ data: { event }, pageContext }) => {
 export default Events;
 
 const ArtistBlock = ({ artist, colors }) => {
-	const style= `
+	const style=  colors ? `
 		.event-artist:hover {
 			color: ${colors.backgroundColor} !important;
 			background: ${colors.textColor} !important;
 		}
-	`
+	`: ``;
 	return Style.it(style,
 		<Link to={artist.uri} className="padding-hack event-artist col-8 mt-7 d-block">
 			<h3 className="big">{artist.title}</h3>
