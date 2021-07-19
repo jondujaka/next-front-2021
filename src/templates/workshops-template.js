@@ -22,8 +22,10 @@ const WorkshopsTemplate = ({ data, pageContext }) => {
 			year={edition}
 		>
 			<Row>
-			<div className="col col-12 px-0">
-					<h1 className="normal-line-height fw-title border-bottom-thick">Workshops</h1>
+				<div className="col col-12 px-0">
+					<h1 className="normal-line-height fw-title border-bottom-thick">
+						Workshops
+					</h1>
 				</div>
 			</Row>
 			<Row classes="mt-6 justify-content-center">
@@ -37,13 +39,23 @@ export default WorkshopsTemplate;
 
 export const workshopsQuery = graphql`
 	query workshopsPage {
-		workshops: allWpWorkshop(sort: { order: DESC, fields: date }) {
+		workshops: allWpEvent(
+			filter: {
+				formats: { nodes: { elemMatch: { slug: { eq: "workshop" } } } }
+			}
+			sort: { order: DESC, fields: date }
+		) {
 			edges {
 				node {
 					id
 					slug
 					uri
 					title
+					formats {
+						nodes {
+							slug
+						}
+					}
 					featuredImage {
 						node {
 							sizes

@@ -18,13 +18,15 @@ const ArtistsTemplate = ({ data, pageContext }) => {
 			editionHeader={menu}
 			year={edition}
 		>
-			<Row>
+			<Row fullWidth>
 				<div className="col col-12 px-0">
-					<h1 className="normal-line-height fw-title border-bottom-thick">Artists</h1>
+					<h1 className="normal-line-height fw-title border-bottom-thick">
+						Artists
+					</h1>
 				</div>
 			</Row>
 			<Row classes="mt-6 justify-content-start">
-				{artistsList && <ArtistsGrid items={artistsList} />}
+				{artistsList && <ArtistsGrid colors={settings} items={artistsList} />}
 			</Row>
 		</Layout>
 	);

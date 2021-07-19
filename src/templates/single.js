@@ -4,7 +4,6 @@ import Media from "../components/media";
 import Paragraph from "../components/paragraph";
 
 const Single = ({ content, direct }) => {
-	console.log(content);
 	if (!content) {
 		return ``;
 	}
@@ -19,7 +18,7 @@ const Single = ({ content, direct }) => {
 			{content.title && <h1 className="single-title">{content.title}</h1>}
 			{rows ? (
 				rows.map((item, i) => (
-					<Row key={`row-${i}`} classes="my-md-4 my-lg-7">
+					<Row key={`row-${i}`} classes="my-md-4 my-5 my-lg-7">
 						<DirectionWrapper content={item} direct={direct} />
 					</Row>
 				))
@@ -50,6 +49,19 @@ const DirectionWrapper = ({ content, direct }) => {
 							<Paragraph
 								big={content.paragraph.big}
 								content={content.paragraph.paragraphContent}
+							/>
+						</div>
+					) : null}
+
+					{content.paragraphContent ? (
+						<div
+							className={`col mx-auto ${
+								direct ? `` : `col-xl-10 col-12 col-xxl-6`
+							}`}
+						>
+							<Paragraph
+								big={content.big}
+								content={content.paragraphContent}
 							/>
 						</div>
 					) : null}

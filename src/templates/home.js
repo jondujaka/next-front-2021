@@ -13,9 +13,9 @@ const Home = ({ data: { page, news }, pageContext }) => {
 	const { translations, language, mainHome } = { page };
 	const { availableEditions } = pageContext;
 
-	// const latestEdition = availableEditions?.reduce((prev, current) => {
-	// 	return prev.year > current.year ? prev : current;
-	// });
+	const latestEdition = availableEditions?.reduce((prev, current) => {
+		return prev.year > current.year ? prev : current;
+	});
 
 	const langSlug = page.language.slug == `en` ? `` : `/sk`;
 
@@ -83,7 +83,7 @@ const Home = ({ data: { page, news }, pageContext }) => {
 					</Link>
 				</div>
 			</Row>
-			{/* <Edition
+			<Edition
 				pageContext={{
 					edition: latestEdition.year,
 					lang: `en`,
@@ -94,7 +94,7 @@ const Home = ({ data: { page, news }, pageContext }) => {
 					backgroundColor: latestEdition.backgroundColor
 				}}
 				noFooter={true}
-			/> */}
+			/>
 		</Layout>
 	);
 };

@@ -23,8 +23,14 @@ const SocialFooter = () => {
 		<div className="social-footer mt-6">
 			<div className="row">
 				<div className="col col-12"><h1>Follow</h1></div>
-				<div className="col col-12 social-links">
-					{menuItems.map(item => <a key={`social-${item.id}`} target="_blank" rel="noopener noreferrer" title={`Next - ${item.label}`} href={item.url}>{item.label}</a>)}
+				<div className="social-links social-one">
+					{menuItems.map((item, i) => i<2 && <a key={`social-${item.id}`} target="_blank" rel="noopener noreferrer" title={`Next - ${item.label}`} href={item.url}>{item.label}</a>)}
+				</div>
+				<div className="social-links social-two">
+					{menuItems.map((item, i) => i>2 && i < 5 && <a key={`social-${item.id}`} target="_blank" rel="noopener noreferrer" title={`Next - ${item.label}`} href={item.url}>{item.label}</a>)}
+				</div>
+				<div className="social-links social-three">
+					{menuItems.map((item, i) => i>4 && <a key={`social-${item.id}`} target="_blank" rel="noopener noreferrer" title={`Next - ${item.label}`} href={item.url}>{item.label}</a>)}
 				</div>
 			</div>
 		</div>

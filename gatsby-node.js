@@ -214,44 +214,11 @@ const initPostTypes = async gatsbyUtilities => {
 			);
 		});
 
-	let workshopSettings = {
-		postType: `workshop`,
-		queryName: `allWorkshops`,
-		gqlName: `allWpWorkshop`
-	};
-	const allWorkshops = await getPostType(workshopSettings, gatsbyUtilities);
-	const createWorkshopsPromises = [];
-
-	allWorkshops.length &&
-		allWorkshops.map(workshopInfo => {
-			const year = workshopInfo.workshop.editions.nodes.length
-				? workshopInfo.workshop.editions.nodes.reduce((a, b) =>
-						Math.max(parseInt(a.slug), parseInt(b.slug))
-				  )
-				: 2021;
-
-			const editionSettings = editionsToBuild.find(
-				edition => edition.year == year.slug
-			);
-
-			const slug = workshopInfo.workshop.uri;
-			const template = `workshop`;
-			const context = {
-				year: year.slug,
-				id: workshopInfo.workshop.id,
-				settings: editionSettings ? { ...editionSettings } : {}
-			};
-			createWorkshopsPromises.push(
-				createIndividualPage(slug, template, context, gatsbyUtilities)
-			);
-		});
-
 	Promise.all([
 		...createNewsPromises,
 		...createEventPromises,
 		...createProjectsPromises,
-		...createCommissionsPromises,
-		...createWorkshopsPromises
+		...createCommissionsPromises
 	]).then(() => console.log(`all post types built`));
 };
 
@@ -545,27 +512,6 @@ const getEditionInfo = async (year, { graphql, reporter }) => {
 						}
 					}
 					content {
-						... on WpEdition${year}_Editioncontent_Content_WorkshopsSection {
-							fieldGroupName
-							title
-							workshops {
-								... on WpWorkshop {
-									id
-									uri
-									title
-									featuredImage {
-										node {
-											mediaDetails {
-												sizes {
-													sourceUrl
-													name
-												}
-											}
-										}
-									}
-								}
-							}
-						}
 						... on WpEdition${year}_Editioncontent_Content_Link {
 							fieldGroupName
 							textOrButton

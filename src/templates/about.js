@@ -37,7 +37,7 @@ const About = ({ data, pageContext }) => {
 						</Scrollspy>
 					)}
 				</div>
-				<div className="col-12 col-lg-7 col-xl-6">
+				<div className="col-12 col-lg-7 col-xl-6 about-content">
 					{sections &&
 						sections.map(section => (
 							<Row

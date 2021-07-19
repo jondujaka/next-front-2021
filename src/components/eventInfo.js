@@ -11,8 +11,7 @@ const EventInfo = ({ event, showDetails = false }) => {
 		? event.eventInfo.venues[0]
 		: {
 				venueInfo: {
-					mapsLink: `https://maps.google.com`,
-					color: `red`,
+					mapsLink: `https://www.google.com/maps/place/World+Fashion+Centre/@52.3577347,4.8531381,14z/data=!4m5!3m4!1s0x47c5e218eb7d69d7:0x794faa28d5d5ef!8m2!3d52.3546016!4d4.8409488`
 				},
 				title: `Fake venue`
 		  };
@@ -25,8 +24,7 @@ const EventInfo = ({ event, showDetails = false }) => {
 				target="_blank"
 				rel="noreferrer noopener"
 				href={venue.venueInfo.mapsLink}
-				style={{ color: venue.venueInfo.color }}
-				className="big text-underline with-icon"
+				className="big with-icon"
 			>
 				{venue.title}
 			</a>
@@ -45,14 +43,17 @@ const EventDetails = ({ info }) => {
 			{capacity && (
 				<span className="big d-block">Capacity: {capacity}</span>
 			)}
-			{price && <span className="big d-block">Price: {price}</span>}
+			{price && (
+				<span className="big d-block">
+					Registration fee: {price} EUR
+				</span>
+			)}
 		</div>
 	);
 };
 
 const EventDates = ({ date, link }) => {
 	const dateobj = new Date(date.date);
-	console.log(dateobj);
 	const day = localeFormat(dateobj, "{EEE}");
 	const month = localeFormat(dateobj, "{MMM}");
 	const formatedDate = format(dateobj, "{dd}");

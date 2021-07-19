@@ -7,6 +7,7 @@
 	padding: 4rem 0;
 	h1 {
 		margin-bottom: .2em;
+		font-family: $serifFont
 	}
 }
 
@@ -18,13 +19,35 @@ footer {
 }
 
 .social-links {
-	@extend .column-100;
-
+	width: 100%;
+	margin-top: 2rem;
 	a {
+		width: 200px;
 		display: inline-block;
-		margin-right: 7.4rem;
-		font-size: 3.5rem;
+
+		@extend .text-body-small;
 	}
+
+	@media (min-width: 992px){
+		margin-top: 0;
+		width: auto;
+		&.social-one {
+			padding-right: 0;
+		}
+		&.social-two {
+			padding-right: 0;
+			padding-left: 0;
+		}
+		&.social-three {
+			padding-left: 0;
+		}
+		a {
+			margin-right: 7.4rem;
+			width: auto;
+		}
+
+	}
+
 }
 
 .menu-padding {
@@ -52,11 +75,15 @@ footer {
     border-top: 3px solid $primaryBlue;
     justify-content: space-around;
 	
-
-	* {
+	a {
 		@extend .text-body-small;
 		text-transform: uppercase;
-		color: $primaryBlue;
+		color: $primaryBlue !important;
+		
+
+		&:hover {
+			text-decoration: underline;
+		}
 	}
 
 	h4 {
@@ -69,19 +96,16 @@ footer {
     display: flex;
     justify-content: flex-end;
 
+	a {
+		padding: 1rem;
+	}
 
 	ul, li {
 		margin: 0;
     	padding: 0;
 	}
 
-	a {
-		padding: 1rem;
-		margin: 0 .4rem;
-		&:hover {
-			text-decoration: underline;
-		}
-	}
+	
 }
 
 .edition-nav {
@@ -92,7 +116,6 @@ footer {
 	a {
 		@extend .text-body-small;
 		padding: 1rem;
-		margin: 0 .4rem;
 
 		&:first-of-type {
 			padding-left: 0;

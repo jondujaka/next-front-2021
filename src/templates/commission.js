@@ -25,21 +25,14 @@ const Commission = ({ data: { commission }, pageContext }) => {
 			<Row>
 				<div className="col col-12 mt-5 mb-6">
 					<h2 className="festival-page-title">
-						Commissions > {commission.title}
+						<Link className="inherit" to="/commissions">Commissions</Link> > {commission.title}
 					</h2>
-				</div>
-				<div className="col col-12 mt-5 mb-6">
-					<h1 className="text-center festival-single-title">
-						{commission.title}
-					</h1>
 				</div>
 			</Row>
 			<Single content={commission} />
 			<Separator />
 			<Row classes="justify-content-center">
-				<div className="col col-12">
-					<h2>More commissions</h2>
-				</div>
+				<div class="col col-12 mt-5 mb-6"><h1>More commissions</h1></div>
 				<CommissionsGrid items={fake} />
 			</Row>
 		</Layout>
@@ -56,26 +49,34 @@ export const ProjectData = graphql`
 		commission: wpCommission(id: { eq: $id }) {
 			id
 			title
-			singlePostContent {
+			singleContent {
 				content {
-					... on WpCommission_Singlepostcontent_Content_Text {
+					... on WpCommission_Singlecontent_Content_Text {
+						big
 						fieldGroupName
-						paragraph {
-							big
-							paragraphContent
-							fieldGroupName
-						}
+						paragraphContent
 					}
-					... on WpCommission_Singlepostcontent_Content_Images {
+					... on WpCommission_Singlecontent_Content_Media {
 						fieldGroupName
 						imageOrVideo
-						video
 						images {
+							caption
 							srcSet
+						}
+						video
+					}
+					... on WpCommission_Singlecontent_Content_MediaText {
+						fieldGroupName
+						media {
+							imageOrVideo
+							video
+							image {
+								caption
+								srcSet
+							}
 						}
 					}
 				}
-				fieldGroupName
 			}
 		}
 	}

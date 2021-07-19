@@ -50,7 +50,7 @@ const Info = ({ data, pageContext }) => {
 					{sections &&
 						sections.map(section => (
 							<div
-								className="mb-5 pt-4"
+								className="mb-5"
 								id={section.title.toLowerCase()}
 								key={`about-section-${section.title}`}
 							>

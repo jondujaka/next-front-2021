@@ -1,58 +1,81 @@
 @font-face {
-    font-family: 'Manege';
-    src: local('Manege Light'), local('Manege-Light'),
-        url('./type/Manege-Light.woff2') format('woff2'),
-        url('./type/Manege-Light.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
+	font-family: "Manege";
+	src: local("Manege Light"), local("Manege-Light"),
+		url("./type/Manege-Light.woff2") format("woff2"),
+		url("./type/Manege-Light.woff") format("woff");
+	font-weight: normal;
+	font-style: normal;
+	font-display: swap;
 }
 
 @font-face {
-    font-family: 'Gramatika';
-    src: local('Gramatika Regular'), local('Gramatika-Regular'),
-        url('./type/Gramatika-Regular.woff2') format('woff2'),
-        url('./type/Gramatika-Regular.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
+	font-family: "Gramatika";
+	src: local("Gramatika Regular"), local("Gramatika-Regular"),
+		url("./type/Gramatika-Regular.woff2") format("woff2"),
+		url("./type/Gramatika-Regular.woff") format("woff");
+	font-weight: normal;
+	font-style: normal;
+	font-display: swap;
+}
+
+$sansFont: "Gramatika", sans-serif;
+$serifFont: "Manege", serif;
+
+* {
+	-webkit-font-smoothing: antialiased !important;
 }
 
 
-$sansFont: 'Gramatika', sans-serif;
-$serifFont: 'Manege', serif;
-
-
 .festival-web {
-	h1, .serif-title {
+	h1,
+	.serif-title {
 		font-family: $serifFont;
 	}
 }
 
 .edition-web {
-	h1, h2, h3, h4, h5 {
+	h1,
+	h2,
+	h3,
+	h4,
+	h5 {
 		font-family: $sansFont;
 	}
 }
-
+h1 {
+	line-height: .95;
+}
+h2,
+h3,
+h4,
+h5,
+h6 {
+	letter-spacing: unset;
+}
 
 .text-xxxl {
 	font-size: 50px;
 }
 
+.text-body {
+	line-height: 0.9;
+	letter-spacing: 0.02em;
+}
+
 .text-body-small {
-	font-size: 17px;
+	font-size: 20px;
+	letter-spacing: 0.02em;
+	line-height: .9;
 }
 .text-small {
 	font-size: 17px;
 }
 
 .text-body {
-	font-size: 20px;
+	font-size: 24px;
 	line-height: 1;
 }
-
-@media screen and (min-width: 768px){
+@media screen and (min-width: 768px) {
 	.text-xxxl {
 		font-size: 62px;
 	}
@@ -64,46 +87,40 @@ $serifFont: 'Manege', serif;
 	}
 }
 
-@media screen and (min-width: 960px){
+@media screen and (min-width: 960px) {
 	.text-xxxl {
-		font-size: 68px;
+		font-size: 90px;
 	}
 	.text-body {
 		font-size: 34px;
 	}
 }
 
-@media screen and (min-width: 1440px){
+@media screen and (min-width: 1280px) {
 	.text-xxxl {
-		font-size: 76px;
+		font-size: 120px;
 	}
 	.text-body {
 		font-size: 38px;
-		line-height: 1.1;
+	}
+	.text-body-small {
+		font-size: 28px;
+	}
+	.text-small {
+		font-size: 26px;
 	}
 }
 
-@media screen and (min-width: 1600px){
-	.text-xxxl {
-		font-size: 100px;
-		line-height: .875;
-	}
+@media screen and (min-width: 1600px) {
 	.text-body {
 		font-size: 48px;
-		line-height: 0.9;
-	}
-	.text-body-small {
-		font-size: 25px;
-	}
-	.text-small {
-		font-size: 21px;
 	}
 }
 
 @media screen and (min-width: 1920px) {
 	.text-xxxl {
 		font-size: 140px;
-		line-height: .875;
+		line-height: 0.875;
 	}
 	.text-body {
 		font-size: 50px;
@@ -112,9 +129,10 @@ $serifFont: 'Manege', serif;
 		line-height: 1;
 		font-size: 35px;
 	}
-	.text-small {
-		font-size: 25px;
-	}
+}
+
+.small {
+	@extend .text-small;
 }
 
 h1 {
@@ -125,10 +143,20 @@ h1 {
 .festival-page-title {
 	@extend .text-body;
 	font-family: $serifFont;
+
+	a {
+		font-size: inherit;
+		&:hover {
+			border-bottom: 2px solid;
+		}
+	}
 }
 
 a {
 	color: inherit;
+
+	text-underline-offset: 2px;
+    text-decoration-thickness: 2px;
 
 	&:visited {
 		color: inherit;
@@ -142,6 +170,11 @@ a {
 		}
 	}
 
+	&.with-underline {
+		&:hover {
+			text-decoration: underline;
+		}
+	}
 }
 
 .normal-line-height {
@@ -149,24 +182,28 @@ a {
 }
 
 p > a {
-	text-decoration: underline;
+	text-decoration-line: underline;
+}
+
+a:hover {
+	text-decoration-line: underline;
 }
 .text-underline {
-	text-decoration: underline	;
+	text-decoration-line: underline;
 }
 .text-uppercase {
 	text-transform: uppercase;
 }
 a.active {
-	text-decoration: underline;
+	text-decoration-line: underline;
 }
 
 .big-button {
-	font-family: 'Manege', serif;
+	font-family: "Manege", serif;
 	font-size: 5rem;
 }
 body {
-	font-family: 'Gramatika', sans-serif;
+	font-family: "Gramatika", sans-serif;
 }
 
 .main-title-wrapper {
@@ -174,7 +211,7 @@ body {
 	display: flex;
 	justify-content: center;
 
-	@include media-breakpoint-down(md){
+	@include media-breakpoint-down(md) {
 		flex-wrap: wrap;
 		margin-bottom: 1rem;
 		> * {
@@ -194,14 +231,13 @@ h1.main-title {
 	color: $primaryBlue;
 	margin: 0;
 	padding: 0;
-	line-height: .75;
+	line-height: 0.75;
 
-	@include media-breakpoint-up(md){
+	@include media-breakpoint-up(md) {
 		margin-top: -1.2vw;
 	}
 
-
-	@include media-breakpoint-down(md){
+	@include media-breakpoint-down(md) {
 		font-size: 111vw;
 		&:first-of-type {
 			margin-bottom: -5.7vw;
@@ -212,22 +248,18 @@ h1.main-title {
 	}
 }
 
-
-
-
 h1.single-title {
-	@include media-breakpoint-up(xl){
-		font-size: 9rem;
+	@include media-breakpoint-up(xl) {
+		// font-size: 9rem;
 		max-width: 90%;
 	}
-	@include media-breakpoint-up(xxl){
+	@include media-breakpoint-up(xxl) {
 		max-width: 75%;
-		font-size: 11rem;
+		// font-size: 11rem;
 	}
-	font-size: 6rem;
 	text-align: center;
-	font-family: 'Manege';
-	
+	font-family: "Manege";
+
 	margin: 0 auto 4rem auto;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
@@ -239,19 +271,18 @@ h2 {
 }
 
 h3 {
-	@include media-breakpoint-up(xl){
+	@include media-breakpoint-up(xl) {
 		font-size: 4.5rem;
 	}
-	@include media-breakpoint-up(xxl){
+	@include media-breakpoint-up(xxl) {
 		font-size: 5rem;
 	}
-	@include media-breakpoint-up(lg){
+	@include media-breakpoint-up(lg) {
 		font-size: 3.5rem;
 	}
 	font-size: 3.2rem;
-	
-	
-	line-height: .9;
+
+	line-height: 0.9;
 }
 
 p {
@@ -262,28 +293,36 @@ p {
 }
 
 .paragraph {
-
-	h1, h2, h3, h4, h5 {
+	h1,
+	h2,
+	h3,
+	h4,
+	h5 {
 		@extend .text-body;
+	}
+
+	a {
+		font-size: inherit;
+	}
+
+	p:not(:first-of-type) {
+		margin-top: 3rem;
 	}
 }
 
-p, a {
+p{
 	@extend .text-body-small;
 }
 .big {
 	@extend .text-body;
 }
 
-.info-content p {
-	margin-bottom: 1.5em;
-}
-
 .text-big p {
-	margin-bottom: .875em;
+	margin-bottom: 0.875em;
 }
 
-.text-big, .text-big p {
+.text-big,
+.text-big p {
 	@extend .text-body;
 }
 
@@ -291,32 +330,33 @@ p, a {
 	text-align: center;
 }
 
-a:hover, a:focus	 {
+a:hover,
+a:focus {
 	color: inherit;
 }
 
-
 .hollow-link {
 	@extend .text-xxxl;
-	@extend .normal-line-height;
-	-webkit-text-stroke:1px;
-	-webkit-text-fill-color:transparent;
+	line-height: .845;
+	-webkit-text-stroke: 1px;
+	-webkit-text-fill-color: transparent;
 	cursor: pointer;
 
-	&:hover, &.active, .active & {
+	&:hover,
+	&.active,
+	.active & {
 		-webkit-text-fill-color: inherit;
-		-webkit-text-stroke:0px;
+		-webkit-text-stroke: 0px;
+		text-decoration: none;
 	}
-	
 }
 
 .hollow {
-	-webkit-text-stroke:1px $primaryBlue;
-	-webkit-text-fill-color:transparent;
+	-webkit-text-stroke: 1px $primaryBlue;
+	-webkit-text-fill-color: transparent;
 
 	font-size: 14rem;
 }
-
 
 .cart-button {
 	border: 3px solid $primaryBlue;

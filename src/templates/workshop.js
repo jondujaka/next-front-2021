@@ -10,7 +10,7 @@ import SimpleContent from "../components/simpleContent";
 import EventInfo from "../components/eventInfo";
 
 const Workshop = ({ data: { workshop }, pageContext, preview }) => {
-	const { lang, year, settings, eventsList, menu } = pageContext;
+	// const { lang, year, settings, eventsList, menu } = pageContext;
 
 	const content = workshop.artistEventContent;
 
@@ -27,14 +27,9 @@ const Workshop = ({ data: { workshop }, pageContext, preview }) => {
 
 	return (
 		<Layout
-			style={{
-				color: settings.textColor,
-				backgroundColor: settings.backgroundColor
-			}}
-			editionHeader={settings.menu}
-			year={year}
+			
 		>
-			{!content.content ? (
+			{!content && !content.content ? (
 				<h1>No content yet</h1>
 			) : (
 				<Row>
@@ -42,7 +37,7 @@ const Workshop = ({ data: { workshop }, pageContext, preview }) => {
 						<h1>{workshop.title}</h1>
 					</div>
 					<div className="col-12 make-first col-xl-6 about-nav mb-6">
-						{content.images && (
+						{/* {content.images && (
 							<>
 								{content.images.length > 1 ? (
 									<Carousel
@@ -53,10 +48,10 @@ const Workshop = ({ data: { workshop }, pageContext, preview }) => {
 									<Image srcSet={content.images[0].srcSet} />
 								)}
 							</>
-						)}
+						)} */}
 					</div>
-					<div className="col-12 col-xl-6">
-						<EventInfo event={workshop} showDetails />	
+					{/* <div className="col-12 col-xl-6">
+						{workshop.eventInfo.dates.length && <EventInfo event={workshop} showDetails /> }
 						{content.content.map(section => (
 							<SimpleContent
 								section={section}
@@ -69,7 +64,7 @@ const Workshop = ({ data: { workshop }, pageContext, preview }) => {
 								key={section.fieldGroupName}
 							/>
 						))}
-					</div>
+					</div> */}
 				</Row>
 			)}
 		</Layout>
@@ -82,65 +77,11 @@ export const workshopQuery = graphql`
 		$id: String!
 	) {
 		# selecting the current post by id
-		workshop: wpWorkshop(id: { eq: $id }) {
+		workshop: wpEvent(id: { eq: $id }) {
 			id
 			title
-			artistEventContent {
-				images {
-					srcSet
-				}
-				content {
-					... on WpWorkshop_Artisteventcontent_Content_Media {
-						fieldGroupName
-						imageOrVideo
-						video
-						image {
-							srcSet
-						}
-					}
-					... on WpWorkshop_Artisteventcontent_Content_Text {
-						fieldGroupName
-						text
-					}
-				}
-			}
-			
-			eventInfo {
-				capacity
-				artists {
-					... on WpArtist {
-						id
-						uri
-						title
-						featuredImage {
-							node {
-								srcSet
-							}
-						}
-					}
-				}
-				format
-				fieldGroupName
-				price
-				venues {
-					... on WpVenue {
-						id
-						venueInfo {
-							color
-							mapsLink
-						}
-						title
-					}
-				}
-				dates {
-					startTime
-					endTime
-					date
-				}
-			}
 		}
 	}
 `;
-
 
 export default Workshop;

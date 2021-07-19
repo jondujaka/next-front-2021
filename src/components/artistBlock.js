@@ -1,7 +1,8 @@
 import React from "react";
 import { Link } from "gatsby";
+import Style from 'style-it';
 
-const ArtistBlock = ({ item, style }) => {
+const ArtistBlock = ({ item, style, colors }) => {
 	if (!item) {
 		return ``;
 	}
@@ -20,9 +21,16 @@ const ArtistBlock = ({ item, style }) => {
 	if (!item.uri) {
 		return ``;
 	}
-	return (
-		<Link className="artist-item py-5 px-2 col-6 col-xl-4" to={item.uri}>
-			<div className="row">
+
+	const styles = `
+		.artist-item .row:hover {
+			color: ${colors.backgroundColor};
+			background: ${colors.textColor};
+		}
+	`;
+	return Style.it(styles,
+		<Link className="artist-item px-2 px-md-4 col-6 col-lg-4 mb-5" to={item.uri}>
+			<div className="row p-1 p-md-3 ">
 				<div className="artist-info col col-12 text-center">
 					<h3 className="artist-title">{item.title}</h3>
 				</div>

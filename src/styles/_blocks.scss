@@ -61,6 +61,15 @@
 	}
 }
 
+.commission-item .row {
+	height: 100%;
+}
+
+.commission-image-wrapper {
+	margin-bottom: 0;
+	margin-top: auto;
+}
+
 .commission-image {
 	width: 100%;
     padding-bottom: 100%;
@@ -77,6 +86,7 @@
 	&:hover {
 		background: $primaryBlue;
 		color: white !important;
+		text-decoration: none;
 	}
 }
 .project-title {
@@ -119,19 +129,47 @@
 	}
 	.artist-title {
 		@extend .text-body;
+		@extend .mb-3;
+		@extend .mb-lg-4;
 		text-align: left;
 	}
 
 	.col {
-		padding: 0 9px;
+		padding: 1rem;
 	}
 
 	@media (min-width: 1280px){
 		.col {
-			padding: 0 20px;
+			padding: 2rem;
+		}
+		.artist-info {
+			padding-bottom: 0;
+			padding-top: calc(2rem - 10px);
+		}
+		.artist-image {
+			padding-top: 0;
 		}
 	}
+	.artist-info {
+		padding-bottom: 0;
+	}
+	.artist-image {
+		padding-top: 0;
+	}
 	
+}
+
+.see-all-link {
+	display: inline-block;
+	border: 1px solid;
+	border-radius: 30px;
+	padding: 0.15em 0.7em;
+
+	font-size: 20px;
+
+	&:hover {
+		text-decoration: none !important;
+	}
 }
 
 
@@ -139,4 +177,13 @@
 	border: 3px solid;
 	border-radius: 42px;
 	display: block;
+
+	&:hover {
+		text-decoration: none;
+	}
+}
+
+.padding-hack {
+	padding: 3rem;
+	transform: translateX(-3rem);
 }

@@ -1,31 +1,23 @@
 .day-title {
-	font-size: 2.5rem;
+	@extend .text-body;
 	margin-bottom: 0;
 	position: sticky;
 	top: $headerHeight;
 	border-bottom: 1px solid;
 
-	&:not(:first-of-type){
+	&:not(:first-of-type) {
 		border-top: 1px solid;
 	}
-	
 }
 
 .fw-title {
-	padding: 1.5rem calc(var(--nxt-gutter-x) / 2);
+	padding: 1.5rem 2rem;
 	margin: 0;
 }
 
-@media (min-width: 1900px) {
-	.day-title, .fw-title {
-		margin: 0 calc(var(--nxt-gutter-x) / 2);
-		padding: 1.5rem 0;
-	}
-}
-
-@media (max-width: 960px){
+@media (max-width: 992px) {
 	.item-time {
-		max-width: 50%;
+		max-width: 30% !important;
 	}
 	.schedule-item {
 		flex-wrap: wrap;
@@ -34,18 +26,16 @@
 		width: 100%;
 		order: 2;
 	}
-
 }
 
 .schedule-items-wrapper {
 	padding-left: calc(var(--nxt-gutter-x) / 2);
 	padding-right: calc(var(--nxt-gutter-x) / 2);
 
-	&:not(:last-of-type){
+	&:not(:last-of-type) {
 		border-bottom: 1px solid;
 	}
 }
-
 
 .schedule-item {
 	@extend .text-body-small;
@@ -56,45 +46,60 @@
 	align-items: flex-start;
 	padding: 13px 17px;
 	margin: 2.2rem 0;
-	box-shadow: 0 0 1px #000;
+
+	&:hover {
+		text-decoration: none;
+	}
+
+	@media (max-width: 992px){
+		font-size: 24px;
+	}
 
 	&:first-of-type {
 		margin-top: 2rem;
 	}
-	
 
 	.item-time {
 		@extend .text-small;
-		width: 260px;
+		min-width: 18%;
+		max-width: 18%;
 	}
 
+	@media (min-width: 992px) {
+		.item-location {
+			min-width: 22%;
+		}
+	}
 	.item-location {
-		
 		margin-left: auto;
 		margin-right: 0;
 		text-align: right;
+		max-width: 70%;
 
 		.venue-info {
+			line-height: 0.9;
 			display: block;
+
+			@extend .mb-3;
+
 			&:hover {
 				text-decoration: underline;
 			}
 		}
 
-		.venue-info, .watch-link {
+		.venue-info,
+		.watch-link {
 			@extend .text-small;
 		}
+	}
+}
 
-		.watch-link {
-			display: inline-block;
-			border: 1px solid;
-			border-radius: 10px;
-			padding: 4px 6px;
-			&:hover {
-				background: #e4e4e4;
-			}
-		}
-
-		
+.watch-link {
+	display: inline-block;
+	border: 1px solid;
+	border-radius: 30px;
+	padding: 6px 10px;
+	&:hover {
+		background: #fff;
 	}
 }

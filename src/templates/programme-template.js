@@ -4,6 +4,7 @@ import Layout from "../components/layout";
 import Row from "../components/row";
 import MapPin from "../components/mapPin";
 import { format, localeFormat } from "light-date";
+import Style from 'style-it';
 
 const ProgrammeTemplate = ({ data, pageContext }) => {
 	// const artistsList = data.artists.edges;
@@ -12,6 +13,14 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 
 	const allEvents = data.events.edges;
 	const allDays = {};
+
+
+	const styles = `
+		.schedule-item:hover {
+			color: ${settings.backgroundColor};
+			background: ${settings.textColor};
+		}
+	`;
 
 	allEvents.forEach(event => {
 		const { eventInfo } = event.node;
@@ -40,7 +49,7 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 		});
 	});
 
-	return (
+	return Style.it(styles,
 		<Layout
 			style={{
 				color: settings.textColor,
@@ -49,16 +58,20 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 			editionHeader={menu}
 			year={edition}
 		>
-			<Row>
+			<Row fullWidth>
 				<div className="col col-12 px-0">
-					<h1 className="normal-line-height fw-title border-bottom-thick">Programme</h1>
+					<h1 className="normal-line-height fw-title border-bottom-thick">
+						Programme
+					</h1>
 				</div>
+			</Row>
+			<Row>
 				{allDays &&
 					Object.keys(allDays).map(key => (
 						<Day
 							day={allDays[key]}
 							key={key}
-							bgColor={settings.backgroundColor}
+							colors={settings}
 						/>
 					))}
 			</Row>
@@ -66,31 +79,44 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 	);
 };
 
-const Day = ({ day, bgColor }) => {
+const Day = ({ day, colors }) => {
 	return (
 		<div id={day.slug} className="col col-12 day-wrapper px-0">
-			<h5 className="day-title fw-title" style={{ background: bgColor }}>
+			<h5 className="day-title fw-title" style={{ background: colors.backgroundColor }}>
 				{day.name}
 			</h5>
 			<div className="schedule-items-wrapper">
 				{day.items.map(item => (
-					<ScheduleItem key={item.slug} item={item} />
+					<ScheduleItem key={item.slug} item={item} colors={colors} />
 				))}
 			</div>
 		</div>
 	);
 };
 
-const ScheduleItem = ({ item }) => {
+const ScheduleItem = ({ item, colors }) => {
 	let time = `${item.date.startTime} - ${item.date.endTime}`;
 	const venue = item.eventInfo.venues ? item.eventInfo.venues[0] : null;
 	const online = true;
-	return (
+	const styles = `
+		.schedule-item:hover,
+		.watch-link:hover {
+			color: ${colors.backgroundColor};
+			background: ${colors.textColor};
+		}
+		.watch-link:hover {
+			color: ${colors.backgroundColor} !important;
+			background: ${colors.textColor} !important;
+		}
+		.schedule-item:hover .watch-link {
+			background: ${colors.backgroundColor};
+			color: ${colors.textColor};
+		}
+	`;
+	return Style.it(styles,
 		<Link to={item.uri} className="schedule-item">
 			<span className="item-time">{time}</span>
-			<span className="item-info">
-				{item.title}
-			</span>
+			<span className="item-info mt-5 mt-lg-0">{item.title}</span>
 			<div className="item-location">
 				{venue && (
 					<a
@@ -153,6 +179,9 @@ export const scheduleItemsQuery = graphql`
 							startTime
 							endTime
 						}
+						format {
+							slug
+						}
 						venues {
 							... on WpVenue {
 								id
@@ -161,34 +190,6 @@ export const scheduleItemsQuery = graphql`
 									mapsLink
 								}
 								title
-							}
-						}
-					}
-				}
-			}
-		}
-		workshops: allWpWorkshop(
-			sort: { order: DESC, fields: date }
-			filter: {
-				editions: { nodes: { elemMatch: { slug: { eq: $edition } } } }
-			}
-		) {
-			edges {
-				node {
-					id
-					slug
-					uri
-					featuredImage {
-						node {
-							sizes
-							uri
-							description
-							caption
-							mediaDetails {
-								sizes {
-									name
-									sourceUrl
-								}
 							}
 						}
 					}

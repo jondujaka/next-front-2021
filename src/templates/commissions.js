@@ -8,12 +8,6 @@ import Masonry from "react-masonry-css";
 const Commissions = ({ data, pageContext }) => {
 	const coms = data.commissions.edges;
 
-	let fake = [];
-
-	for (let i = 0; i < 20; i++) {
-		fake.push(coms[1]);
-	}
-
 	return (
 		<Layout>
 			<Row>
@@ -22,7 +16,7 @@ const Commissions = ({ data, pageContext }) => {
 				</div>
 			</Row>
 			<Row classes="justify-content-center">
-				{coms && <CommissionsGrid items={fake} />}
+				{coms && <CommissionsGrid items={coms} />}
 			</Row>
 		</Layout>
 	);

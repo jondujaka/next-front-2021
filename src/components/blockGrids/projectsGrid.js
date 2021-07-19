@@ -5,7 +5,7 @@ import ProjectBlock from "../projectBlock";
 const projectsGrid = ({ items }) => {
 	const breakpointColumnsObj = {
 		default: 2,
-		860: 1
+		1140: 1
 	};
 	
 

@@ -14,7 +14,7 @@
 			margin-right: 3.5rem;
 			font-size: 2.5rem;
 
-			@include media-breakpoint-up(xl){
+			@include media-breakpoint-up(xl) {
 				font-size: 3.5rem;
 				margin-right: 5rem;
 			}
@@ -30,7 +30,6 @@
 	}
 }
 
-
 // EDITION PAGE
 
 .edition-title {
@@ -39,14 +38,12 @@
 		@extend .normal-line-height;
 	}
 
-	> div:not(:first-of-type) h1{
-		margin-top: -.15em;
+	> div:not(:first-of-type) h1 {
+		margin-top: -0.15em;
 	}
 }
 
-
-// ABOUT PAGE
-
+// ABOUT & INFO PAGE
 
 .about-nav {
 	@extend .sticky;
@@ -55,6 +52,10 @@
 	ul {
 		margin: 0;
 		padding: 0;
+
+		li {
+			margin: 0;
+		}
 	}
 }
 
@@ -63,4 +64,34 @@
 	font-size: 5rem;
 	position: sticky;
 	top: 0;
+}
+
+.info-content p {
+	margin-bottom: 1.5em;
+}
+
+
+.about-content {
+	p, figure {
+		margin-bottom: 1.5em;
+	}
+}
+
+@media (min-width: 992px) {
+	.info-content {
+		transform: translateY(calc(#{$headerHeight} * -1 - 30px));
+		> div {
+			padding-top: calc(#{$headerHeight} + 30px);
+		}
+	}
+}
+
+
+// SINGLE PAGES 
+@media (min-width: 992px){
+	.sticky-carousel {
+		height: 100%;
+		position: sticky;
+		top: calc(#{$headerHeight} + 1.5rem);
+	}
 }

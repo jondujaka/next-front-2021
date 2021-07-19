@@ -16,7 +16,7 @@ const CommissionBlock = ({ item }) => {
 	}
 	return (
 		<Link
-			className="commission-item py-5 px-2 col-6 mb-6 col-xl-4"
+			className="commission-item py-5 px-2 col-6 mb-6 col-lg-4"
 			to={item.uri}
 		>
 			<div className="row">

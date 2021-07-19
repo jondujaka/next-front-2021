@@ -1,8 +1,8 @@
 import React from 'react';
 
-const HollowLink = ({text, link}) => {
+const HollowLink = React.forwardRef(({text, link}, ref) => {
 	return (
-		<a className="hollow-link" href={link}>{text}</a>
+		<a className="hollow-link" ref={ref} href={link}>{text}</a>
 	)
-}
+})
 export default HollowLink;

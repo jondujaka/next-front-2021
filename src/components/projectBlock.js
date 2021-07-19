@@ -15,7 +15,7 @@ const ProjectBlock = ({ item }) => {
 		>
 			<div className="row">
 				<div className="project-info col col-12">
-					<h3 className="project-title">{item.title}</h3>
+					<h1>{item.title}</h1>
 				</div>
 				<div>
 					<p>{item.projectDescription ? item.projectDescription.shortDescription : `Placeholder paragraph`}</p>

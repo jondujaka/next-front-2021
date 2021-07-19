@@ -50,20 +50,23 @@ const Edition = ({ data, pageContext, noFooter, style }) => {
 
 			{content.content &&
 				content.content.map((section, i) => {
-					return (
-						<Row classes="my-6" alignEnd={section.fieldGroupName.endsWith(`Section`)} key={`section-edition-${i}`}>
-							{editionRow(section, i, edition)}
-						</Row>
-					);
-				})}
+					if (section.fieldGroupName) {
+						return (
+							<Row classes="my-4 my-md-5" key={`section-edition-${i}`}>
+								{editionRow(section, i, edition, settings)}
+							</Row>
+						);
+					}
+				})
+			}
 		</Layout>
 	);
 };
 
-const editionRow = (section, i, year) => {
+const editionRow = (section, i, year, colors) => {
 	const type = section.fieldGroupName;
 	if (type.endsWith(`Media`)) {
-		console.log(section.images);
+		
 		return section.images.length > 1 ? (
 			<div className="col-12">
 				<Carousel key={`${type}-${i}`} items={section.images} />
@@ -77,23 +80,27 @@ const editionRow = (section, i, year) => {
 	if (type.endsWith(`Title`)) {
 		return (
 			<div className="col-12">
-				<h1 className="edition-content-title" key={`${type}-${i}`}>{section.text}</h1>
+				<h1 className="edition-content-title" key={`${type}-${i}`}>
+					{section.text}
+				</h1>
 			</div>
 		);
 	}
 	if (type.endsWith(`Paragraph`)) {
 		return (
-			<div className="col col-12 col-md-10 col-lg-8 col-xl-6 mx-auto my-4">
+			<div className="col col-12 col-md-10 col-lg-8 col-xl-6 mx-auto">
 				<Paragraph key={`${type}-${i}`} content={section.text} big />
 			</div>
 		);
 	}
 	if (type.endsWith(`Link`)) {
 		return (
-			<div className="col-12 text-center">
-				<CustomLink link={section.link.url} key={`${type}-${i}`}>
-					{section.link.title}
-				</CustomLink>
+			<div className="col-12 text-center mb-6">
+				<div className="block-link-wrapper">
+					<CustomLink colors={colors} classes="see-all-link" link={section.link.url} key={`${type}-${i}`}>
+						{section.link.title}
+					</CustomLink>
+				</div>
 			</div>
 		);
 	}
@@ -104,22 +111,13 @@ const editionRow = (section, i, year) => {
 				<div className="col-12">
 					<h1>{section.title}</h1>
 				</div>
-				<ArtistsGrid items={section.artists} seeAll />
-				<div className="col-12 text-center mb-6 mt-5">
-					<CustomLink link={`/${year}/artists`}>See all artists</CustomLink>
-				</div>
-			</>
-		);
-	}
-	if (type.endsWith(`WorkshopsSection`)) {
-		return (
-			<>
-				<div className="col-12">
-					<h1>{section.title}</h1>
-				</div>
-				<ArtistsGrid items={section.workshops} seeAll />
-				<div className="col-12 text-center mt-5">
-					<CustomLink link={`/${year}/workshops`}>See all workshops</CustomLink>
+				<ArtistsGrid colors={colors} items={section.artists}  seeAll />
+				<div className="d-flex col-4 mx-auto justify-content-center align-items-center text-center mb-6">
+					<div className="block-link-wrapper">
+						<CustomLink classes="see-all-link" colors={colors} link={`/${year}/artists`}>
+							See all artists
+						</CustomLink>
+					</div>
 				</div>
 			</>
 		);

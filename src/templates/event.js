@@ -6,10 +6,11 @@ import Image from "../components/image";
 import Carousel from "../components/carousel";
 import SimpleContent from "../components/simpleContent";
 import EventInfo from "../components/eventInfo";
+import Style from 'style-it';
 
 const Events = ({ data: { event }, pageContext }) => {
 	const { lang, settings, eventsList } = pageContext;
-	const content = event.artistEventContent;
+	const content = event.content;
 	const info = event.eventInfo;
 	return (
 		<Layout
@@ -21,10 +22,10 @@ const Events = ({ data: { event }, pageContext }) => {
 			year={2021}
 		>
 			<Row>
-				<div className="col-12 text-center my-3">
+				<div className="col-12 text-center mt-45 mb-6">
 					<h1>{event.title}</h1>
 				</div>
-				<div className="col-12 d-none d-lg-block col-lg-5 col-xl-6 about-nav">
+				<div className="col-12 col-lg-6 about-nav">
 					{content.images && (
 						<>
 							{content.images.length > 1 ? (
@@ -38,25 +39,21 @@ const Events = ({ data: { event }, pageContext }) => {
 						</>
 					)}
 				</div>
-				<div className="col-12 col-lg-7 col-xl-6">
-					<EventInfo event={event} showDetails />
-					{content.content &&
+				<div className="col-12 col-lg-6 sticky-carousel">
+					{event.eventInfo.dates.length && <EventInfo event={event} showDetails /> }
+					{content.content ? (
 						content.content.map(section => (
 							<SimpleContent
 								section={section}
 								key={section.fieldGroupName}
 							/>
-						))}
-					{content.content &&
-						content.content.map(section => (
-							<SimpleContent
-								section={section}
-								key={section.fieldGroupName}
-							/>
-						))}
+						))
+					) : (
+						<h1>No content yet</h1>
+					)}
 					{info.artists &&
 						info.artists.map(artist => (
-							<ArtistBlock artist={artist} key={artist.id} />
+							<ArtistBlock colors={settings} artist={artist} key={artist.id} />
 						))}
 				</div>
 			</Row>
@@ -66,9 +63,15 @@ const Events = ({ data: { event }, pageContext }) => {
 
 export default Events;
 
-const ArtistBlock = ({ artist }) => {
-	return (
-		<Link to={artist.uri} className="col-8 mt-7 d-block">
+const ArtistBlock = ({ artist, colors }) => {
+	const style= `
+		.event-artist:hover {
+			color: ${colors.backgroundColor} !important;
+			background: ${colors.textColor} !important;
+		}
+	`
+	return Style.it(style,
+		<Link to={artist.uri} className="padding-hack event-artist col-8 mt-7 d-block">
 			<h3 className="big">{artist.title}</h3>
 			<Image srcSet={artist.featuredImage.node.srcSet} />
 		</Link>
@@ -91,7 +94,7 @@ export const eventQuery = graphql`
 				slug
 				uri
 			}
-			artistEventContent {
+			content: artistEventContent {
 				images {
 					srcSet
 				}
@@ -124,7 +127,9 @@ export const eventQuery = graphql`
 						}
 					}
 				}
-				format
+				format {
+					slug
+				}
 				fieldGroupName
 				price
 				venues {

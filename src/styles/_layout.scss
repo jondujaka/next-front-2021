@@ -8,6 +8,10 @@ body {
 	color: $primaryBlue;
 }
 
+* {
+	box-sizing: border-box;
+}
+
 .row {
 	@include make-row();
 

@@ -26,9 +26,6 @@ const EditionMenu = ({ items, bg }) => {
 };
 
 const isActive = url => ({ isCurrent, isPartiallyCurrent, location }) => {
-	console.log(location.pathname);
-	console.log(isCurrent);
-	console.log(isPartiallyCurrent);
 
 	const activeClassName = { className: `active` };
 
