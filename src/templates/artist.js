@@ -1,5 +1,6 @@
 import React from "react";
 import { graphql, Link } from "gatsby";
+import withPreview from '../components/withPreview';
 import LangSwitcher from "../components/LangSwitcher";
 import Layout from "../components/layout";
 import gql from "graphql-tag";
@@ -14,16 +15,11 @@ const Artist = ({ data: { artist }, pageContext, preview }) => {
 
 	const content = artist.artistEventContent;
 
-	// let langTo = artist.language.slug == `sk` ? `/sk` : ``;
-	// const { content } = artist.singlePostContent;
+	if(preview){
+		console.log(`preview`);
 
-	// let colorStyle;
-	// if (settings) {
-	// 	colorStyle = {
-	// 		color: settings.textColor,
-	// 		backgroundColor: settings.backgroundColor
-	// 	};
-	// }
+		return <h1>Preview</h1>
+	}
 
 	return (
 		<Layout
@@ -87,6 +83,7 @@ export const artistQuery = graphql`
 		artist: wpArtist(id: { eq: $id }) {
 			id
 			title
+			databaseId
 			language {
 				slug
 			}
@@ -117,5 +114,21 @@ export const artistQuery = graphql`
 	}
 `;
 
+const PREVIEW_QUERY = gql`
+  query getPreview($id: Int!) {
+    wpArtist(id: { eq: $id}) {
+      title
+	  id
+      revisions {
+        nodes {
+          id
+          title
+          content
+        }
+      }
+    }
+  }
+`;
 
-export default Artist;
+export default withPreview({ preview: PREVIEW_QUERY })(Artist);
+

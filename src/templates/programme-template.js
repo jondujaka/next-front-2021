@@ -15,7 +15,7 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 	const allDays = {};
 
 
-	const styles = colors ? `
+	const styles = settings ? `
 		.schedule-item:hover {
 			color: ${settings.backgroundColor};
 			background: ${settings.textColor};
