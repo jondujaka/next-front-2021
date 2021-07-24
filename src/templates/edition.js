@@ -23,9 +23,15 @@ const Edition = ({ data, pageContext, noFooter, style }) => {
 		colorStyle = { ...style };
 	}
 
+	if(!content && !content.topText){
+		return <h1>Please fill in all the required fields!</h1>
+	}
+
+
 	const startDate = new Date(content.topText.editionDate.startDate);
 	const endDate = new Date(content.topText.editionDate.endDate);
 
+	
 	return (
 		<Layout
 			style={colorStyle}
