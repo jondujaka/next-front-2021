@@ -39,7 +39,7 @@ const EventDetails = ({ info }) => {
 	const { format, price, capacity } = info;
 	return (
 		<div className="mt-2 mt-lg-4 mt-xxl-6">
-			{format.slug && <span className="big d-block">Format: {format.name}</span>}
+			{format?.slug && <span className="big d-block">Format: {format.name}</span>}
 			{capacity && (
 				<span className="big d-block">Capacity: {capacity}</span>
 			)}
