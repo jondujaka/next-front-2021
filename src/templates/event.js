@@ -49,7 +49,7 @@ const Events = ({ data: { event }, pageContext }) => {
 							/>
 						))
 					) : (
-						<h1>No content yet</h1>
+						<h2>No content yet</h2>
 					)}
 					{info.artists &&
 						info.artists.map(artist => (
@@ -129,6 +129,7 @@ export const eventQuery = graphql`
 				}
 				format {
 					slug
+					name
 				}
 				fieldGroupName
 				price

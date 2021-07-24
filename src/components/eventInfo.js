@@ -24,7 +24,7 @@ const EventInfo = ({ event, showDetails = false }) => {
 				target="_blank"
 				rel="noreferrer noopener"
 				href={venue.venueInfo.mapsLink}
-				className="big with-icon"
+				className="big with-icon with-underline"
 			>
 				{venue.title}
 			</a>
@@ -39,15 +39,13 @@ const EventDetails = ({ info }) => {
 	const { format, price, capacity } = info;
 	return (
 		<div className="mt-2 mt-lg-4 mt-xxl-6">
-			{format && <span className="big d-block">Format: {format}</span>}
+			{format.slug && <span className="big d-block">Format: {format.name}</span>}
 			{capacity && (
 				<span className="big d-block">Capacity: {capacity}</span>
 			)}
-			{price && (
-				<span className="big d-block">
-					Registration fee: {price} EUR
-				</span>
-			)}
+			<span className="big d-block">
+				Registration fee: {price ? `${price} EUR}` : `Free`}
+			</span>
 		</div>
 	);
 };
