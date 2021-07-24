@@ -9,7 +9,6 @@ import Style from 'style-it';
 const ProgrammeTemplate = ({ data, pageContext }) => {
 	// const artistsList = data.artists.edges;
 	const { settings, edition, menu } = pageContext;
-	console.log(data);
 
 	const allEvents = data.events.edges;
 	const allDays = {};

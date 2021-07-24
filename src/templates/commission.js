@@ -16,7 +16,6 @@ const Commission = ({ data: { commission }, pageContext }) => {
 	let fake = [];
 
 	for (let i = 0; i < 5; i++) {
-		console.log(i % 2);
 		fake.push(related[i % 2]);
 	}
 

@@ -2,7 +2,6 @@ import LazyLoadImage from "react-lazy-load-image-component";
 import React from "react";
 
 const ImageEl = ({ srcSet, caption }) => {
-	console.log(srcSet);
 
 	if (!srcSet) return null;
 

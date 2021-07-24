@@ -10,17 +10,10 @@ import Carousel from "../components/carousel";
 import SimpleContent from "../components/simpleContent";
 import EventInfo from "../components/eventInfo";
 
-const Artist = ({ data: { artist }, pageContext, preview }) => {
+const Artist = ({ data: { artist }, pageContext }) => {
 	const { lang, year, settings, eventsList, menu } = pageContext;
 
 	const content = artist.artistEventContent;
-
-	if(preview){
-		console.log(`preview`);
-
-		return <h1>Preview</h1>
-	}
-
 	return (
 		<Layout
 			style={{
@@ -114,21 +107,5 @@ export const artistQuery = graphql`
 	}
 `;
 
-const PREVIEW_QUERY = gql`
-  query getPreview($id: Int!) {
-    wpArtist(id: { eq: $id}) {
-      title
-	  id
-      revisions {
-        nodes {
-          id
-          title
-          content
-        }
-      }
-    }
-  }
-`;
-
-export default withPreview({ preview: PREVIEW_QUERY })(Artist);
+export default Artist;
 

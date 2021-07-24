@@ -10,7 +10,6 @@ const WorkshopsTemplate = ({ data, pageContext }) => {
 	// }
 	const workshopsList = data.workshops.edges;
 	const { settings, edition, menu } = pageContext;
-	console.log(data);
 
 	return (
 		<Layout

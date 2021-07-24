@@ -7,7 +7,6 @@ import ArtistsGrid from "../components/blockGrids/artistsGrid";
 const ArtistsTemplate = ({ data, pageContext }) => {
 	const artistsList = data.artists.edges;
 	const { settings, edition, menu } = pageContext;
-	console.log(data);
 
 	return (
 		<Layout

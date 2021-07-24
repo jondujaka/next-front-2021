@@ -23,7 +23,7 @@ const Edition = ({ data, pageContext, noFooter, style }) => {
 		colorStyle = { ...style };
 	}
 
-	if(!content && !content.topText){
+	if(!content || (content && !content.topText)){
 		return <h1>Please fill in all the required fields!</h1>
 	}
 
