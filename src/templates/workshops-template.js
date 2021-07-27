@@ -20,15 +20,15 @@ const WorkshopsTemplate = ({ data, pageContext }) => {
 			editionHeader={menu}
 			year={edition}
 		>
-			<Row>
+			<Row fullWidth>
 				<div className="col col-12 px-0">
 					<h1 className="normal-line-height fw-title border-bottom-thick">
 						Workshops
 					</h1>
 				</div>
 			</Row>
-			<Row classes="mt-6 justify-content-center">
-				{workshopsList && <ArtistsGrid items={workshopsList} />}
+			<Row classes="mt-6 justify-content-start">
+				{workshopsList && <ArtistsGrid colors={settings} items={workshopsList} />}
 			</Row>
 		</Layout>
 	);

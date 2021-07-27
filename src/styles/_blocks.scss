@@ -124,6 +124,12 @@
 
 
 .artist-item {
+
+	&:hover {
+		* {
+			text-decoration: none;
+		}
+	}
 	.artist-info {
 		justify-content: flex-start;
 	}
@@ -186,4 +192,73 @@
 .padding-hack {
 	padding: 3rem;
 	transform: translateX(-3rem);
+}
+
+
+// BLOCK FILTER
+
+.filter-wrapper {
+	display: flex;
+	justify-content: flex-start;
+
+	padding: 1.5rem 2rem;
+
+	.Dropdown-root {
+		margin-right: 6rem;
+	}
+
+	.Dropdown-control {
+		@extend .text-body;
+		cursor: pointer;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+
+	.Dropdown-option {
+		word-break: unset;
+    	white-space: nowrap;
+		color: inherit;
+		@extend .text-body-small;
+
+
+		&:hover, &.is-selected {
+			background: black;
+			color: white;
+		}
+	}
+	.Dropdown-menu {
+		height: auto;
+		width: auto;
+		min-width: calc(100% + 24px);
+		background: white;
+		border: 1px solid;
+		top: calc(100% + 8px);
+		max-height: 30vh;
+		// border-radius: 15px;
+	}
+	.Dropdown-control {
+		position: relative;
+		padding: 0;
+    	padding-right: 2.3rem;
+		overflow: visible;
+		background-color: transparent;
+		border: none;
+		margin: 0;
+		color: inherit;
+	}
+
+	.is-open .Dropdown-arrow {
+		border-width: 0 9px 13px;
+		border-bottom-color: inherit;
+	}
+
+	.Dropdown-arrow {
+		border-top-color: inherit;
+		border-width: 13px 9px 0;
+		right: 0;
+    	top: 13px;
+	}
+	
 }

@@ -13,7 +13,7 @@ const Home = ({ data: { page, news }, pageContext }) => {
 	const { translations, language, mainHome } = { page };
 	const { availableEditions } = pageContext;
 
-	const latestEdition = availableEditions?.reduce((prev, current) => {
+	const latestEdition = availableEditions.length && availableEditions.reduce((prev, current) => {
 		return prev.year > current.year ? prev : current;
 	});
 

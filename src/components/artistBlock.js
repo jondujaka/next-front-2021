@@ -1,22 +1,22 @@
 import React from "react";
 import { Link } from "gatsby";
 import Style from 'style-it';
+import ImageEl from './image';
 
 const ArtistBlock = ({ item, style, colors }) => {
 	if (!item) {
 		return ``;
 	}
+	console.log(item);
 	if (item.node) {
 		item = item.node;
 	}
-	let image = item.featuredImage?.node.mediaDetails.sizes.find(
+	let image = item.featuredImage?.node.mediaDetails?.sizes.find(
 		size => size.name === `big-thumbnail`
 	);
 
 	if (!image) {
-		image = item.featuredImage?.node.mediaDetails.sizes.find(
-			size => size.name === `thumbnail`
-		);
+		image = item.featuredImage.node.srcSet
 	}
 	if (!item.uri) {
 		return ``;
@@ -36,8 +36,10 @@ const ArtistBlock = ({ item, style, colors }) => {
 				</div>
 				<div className="artist-image col col-12">
 					{image && (
-						<img className="img-fluid" srcSet={image.sourceUrl} />
+						<ImageEl srcSet={image} />
+						
 					)}
+					
 				</div>
 			</div>
 		</Link>

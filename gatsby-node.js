@@ -7,7 +7,7 @@
 // You can delete this file if you're not using it
 
 const path = require(`path`);
-const editions = [2021, 2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030];
+const editions = [2021];
 const editionsToBuild = [];
 const templateMap = {
 	news: `news-page`,
@@ -73,8 +73,8 @@ const initPostTypes = async gatsbyUtilities => {
 	};
 
 	const allNews = await getPostType(articlesSettings, gatsbyUtilities);
-	const createNewsPromises = [];
 
+	const createNewsPromises = [];
 	allNews.map(articleInfo => {
 		const slug = articleInfo.article.uri;
 		const template = `news-article`;
@@ -263,15 +263,18 @@ const buildEdition = async (year, gatsbyUtilities) => {
 		}
 	];
 
-	console.log(`init edition ${year}`);
+	console.log(editionInfo);
+
 	if (
+		editionInfo &&
 		editionInfo.editionData &&
-		editionInfo.editionData.settings.testWebsite
+		editionInfo.editionData.settings
 	) {
 		// Create the edition
 
 		// Create an index of editions that should be built
 		if (!editionsToBuild.find(edition => edition.year === year)) {
+			console.log(`building edition ${year}`);
 			editionsToBuild.push({
 				...editionInfo.editionData.settings,
 				menu: editionInfo.menu,
@@ -286,7 +289,10 @@ const buildEdition = async (year, gatsbyUtilities) => {
 		console.log(`Enabled to be built: ${year}`);
 
 		let skPage;
-		if (editionInfo.editionData.translations.length) {
+		if (
+			editionInfo.editionData.translations &&
+			editionInfo.editionData.translations.length
+		) {
 			skPage = editionInfo.editionData.translations[0];
 		}
 		editionPages.forEach(page =>
@@ -501,74 +507,65 @@ const getEditionInfo = async (year, { graphql, reporter }) => {
 					liveWebsite
 					fieldGroupName
 				}
-				
 				editionContent {
-					topText {
-						secondTitle
-						firstTilte
-						editionDate {
-						startDate
-						endDate
-						}
-					}
+					fieldGroupName
 					content {
-						... on WpEdition${year}_Editioncontent_Content_Link {
-							fieldGroupName
-							textOrButton
-							link {
-								title
-								url
-							}
-						}
-						... on WpEdition${year}_Editioncontent_Content_Paragraph {
-							fieldGroupName
-							text
-						}
-						... on WpEdition${year}_Editioncontent_Content_Title {
-							fieldGroupName
-							text
-						}
-						... on WpEdition${year}_Editioncontent_Content_Media {
-							fieldGroupName
-							mediaType
-							video
-							images {
-								srcSet
-							}
-						}
-						... on WpEdition${year}_Editioncontent_Content_ArtistsSection {
-							fieldGroupName
+					  ... on WpEdition2021_Editioncontent_Content_WorkshopsSection {
+						fieldGroupName
+						title
+					  }
+					  ... on WpEdition2021_Editioncontent_Content_ArtistsSection {
+						fieldGroupName
+						title
+						artists {
+						  ... on WpArtist {
+							id
+							uri
 							title
-							artists {
-								... on WpArtist {
-									id
-									uri
-									title
-									featuredImage {
-										node {
-											mediaDetails {
-												sizes {
-													sourceUrl
-													name
-												}
-											}
-										}
-									}
-								}
+							featuredImage {
+							  node {
+								srcSet
+							  }
 							}
+						  }
 						}
+					  }
+					  ... on WpEdition2021_Editioncontent_Content_Link {
+						fieldGroupName
+						textOrButton
+						link {
+						  url
+						  title
+						}
+					  }
+					  ... on WpEdition2021_Editioncontent_Content_Paragraph {
+						fieldGroupName
+						text
+					  }
+					  ... on WpEdition2021_Editioncontent_Content_Title {
+						fieldGroupName
+						text
+					  }
+					  ... on WpEdition2021_Editioncontent_Content_Media {
+						fieldGroupName
+						mediaType
+						images {
+						  srcSet
+						}
+						video
+					  }
 					}
-				}
-				language {
-					slug
-				}
-				translations {
-					slug
-					id
-					language {
-						slug
+					topText {
+					  firstTilte
+					  secondTitle
+					  fieldGroupName
+					  editionDate {
+						fieldGroupName
+						endDate
+						startDate
+					  }
 					}
-				}
+				  }
 				slug
 				uri
 			}

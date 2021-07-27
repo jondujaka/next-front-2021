@@ -1,54 +1,126 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { graphql, Link } from "gatsby";
 import Layout from "../components/layout";
 import Row from "../components/row";
 import MapPin from "../components/mapPin";
+import Filter from "../components/filter";
 import { format, localeFormat } from "light-date";
-import Style from 'style-it';
+import Style from "style-it";
 
 const ProgrammeTemplate = ({ data, pageContext }) => {
 	// const artistsList = data.artists.edges;
 	const { settings, edition, menu } = pageContext;
 
-	const allEvents = data.events.edges;
-	const allDays = {};
+	const initEvents = data.events.edges;
+	const [allDays, setAllDays] = useState([]);
 
+	const [allEvents, setAllEvents] = useState(initEvents);
 
-	const styles = settings ? `
+	const [dayFilter, setDayFilter] = useState("all");
+	const venueFilter = useRef("all");
+	const formatFilter = useRef("all");
+
+	const [dayFilterItems, setDayFilterItems] = useState([]);
+
+	const styles = settings
+		? `
 		.schedule-item:hover {
 			color: ${settings.backgroundColor};
 			background: ${settings.textColor};
 		}
-	` : ``;
+	`
+		: ``;
 
-	allEvents.forEach(event => {
-		const { eventInfo } = event.node;
-		if (!eventInfo.dates) {
-			return;
+	const filterEvents = (slug, type) => {
+		console.log(slug);
+
+		if (type === `day`) {
+			setDayFilter(slug);
 		}
-		eventInfo.dates.forEach(date => {
-			let dateSlug = date.date;
+		if (type === `venue`) {
+			venueFilter.current = slug;
+		}
+		if (type === `format`) {
+			formatFilter.current = slug;
+		}
 
-			if (!allDays.hasOwnProperty(dateSlug)) {
-				const dateobj = new Date(date.date);
-				const dayName = localeFormat(dateobj, "{EEE}");
-				const monthName = localeFormat(dateobj, "{MMM}");
-				const dayNr = format(dateobj, `{dd}`);
-				allDays[dateSlug] = {
-					name: `${dayName} ${dayNr} ${monthName}`,
-					slug: dateSlug,
-					items: []
-				};
-			}
-			let simplifiedEvent = {
-				...event.node,
-				date: eventInfo.dates.find(date => date.date === dateSlug)
-			};
-			allDays[dateSlug].items.push(simplifiedEvent);
+		let newEvents = initEvents.filter(eventObj => {
+			const eventInfo = eventObj.node.eventInfo;
+
+			let venueMatch =
+			eventInfo.venues &&
+				(venueFilter.current === "all" ||
+					eventInfo.venues.find(
+						venue => venue.slug === venueFilter.current
+					));
+
+			let formatMatch =
+				eventInfo.format &&
+				(formatFilter.current === "all" ||
+					eventInfo.format.slug === formatFilter.current);
+
+			if (!eventInfo.venues && venueFilter.current === `all`) venueMatch = true;
+			if (!eventInfo.format && formatFilter.current === `all`) formatMatch = true;
+
+			return venueMatch && formatMatch;
 		});
-	});
 
-	return Style.it(styles,
+		setAllEvents(newEvents);
+	};
+
+	const setUpDays = () => {
+		console.log("asd");
+		let dayFilters = [{
+			label: "All Days",
+			value: "all"
+		}];
+		const allDaysInit = {};
+		allEvents.forEach(event => {
+			console.log("creating days again?");
+			const { eventInfo } = event.node;
+			if (!eventInfo.dates) {
+				return;
+			}
+
+			eventInfo.dates.forEach(date => {
+				let dateSlug = date.date;
+
+				if (!allDaysInit.hasOwnProperty(dateSlug)) {
+					const dateobj = new Date(date.date);
+					const dayName = localeFormat(dateobj, "{EEE}");
+					const monthName = localeFormat(dateobj, "{MMM}");
+					const dayNr = format(dateobj, `{dd}`);
+
+					const dayTitle = `${dayName} ${dayNr} ${monthName}`;
+					allDaysInit[dateSlug] = {
+						name: dayTitle,
+						slug: dateSlug,
+						items: []
+					};
+
+					dayFilters.push({
+						value: dateSlug,
+						label: dayTitle
+					});
+				}
+
+				let simplifiedEvent = {
+					...event.node,
+					date: eventInfo.dates.find(date => date.date === dateSlug)
+				};
+				allDaysInit[dateSlug].items.push(simplifiedEvent);
+			});
+		});
+		setDayFilterItems(dayFilters);
+		setAllDays(allDaysInit);
+	};
+
+	useEffect(() => {
+		setUpDays();
+	}, [allEvents]);
+
+	return Style.it(
+		styles,
 		<Layout
 			style={{
 				color: settings.textColor,
@@ -57,22 +129,31 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 			editionHeader={menu}
 			year={edition}
 		>
-			<Row fullWidth>
+			<Row fullWidth classes="border-bottom-thick">
 				<div className="col col-12 px-0">
-					<h1 className="normal-line-height fw-title border-bottom-thick">
-						Programme
-					</h1>
+					<h1 className="normal-line-height fw-title">Programme</h1>
+				</div>
+				<div className="col col-12">
+					<Filter
+						dayItems={dayFilterItems}
+						handleClick={filterEvents}
+					/>
 				</div>
 			</Row>
 			<Row>
 				{allDays &&
-					Object.keys(allDays).map(key => (
-						<Day
-							day={allDays[key]}
-							key={key}
-							colors={settings}
-						/>
-					))}
+					Object.keys(allDays).length ? Object.keys(allDays).map(key => {
+						if (key === dayFilter || dayFilter === "all") {
+							return (
+								<Day
+									day={allDays[key]}
+									key={key}
+									colors={settings}
+								/>
+							);
+						}
+					}) : <div className="col col-12 mt-7"><h3>Sorry, there are no events with the selected filters.</h3></div>
+				}
 			</Row>
 		</Layout>
 	);
@@ -81,7 +162,10 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 const Day = ({ day, colors }) => {
 	return (
 		<div id={day.slug} className="col col-12 day-wrapper px-0">
-			<h5 className="day-title fw-title" style={{ background: colors.backgroundColor }}>
+			<h5
+				className="day-title fw-title"
+				style={{ background: colors.backgroundColor }}
+			>
 				{day.name}
 			</h5>
 			<div className="schedule-items-wrapper">
@@ -97,7 +181,8 @@ const ScheduleItem = ({ item, colors }) => {
 	let time = `${item.date.startTime} - ${item.date.endTime}`;
 	const venue = item.eventInfo.venues ? item.eventInfo.venues[0] : null;
 	const online = true;
-	const styles = colors ? `
+	const styles = colors
+		? `
 		.schedule-item:hover,
 		.watch-link:hover {
 			color: ${colors.backgroundColor};
@@ -111,8 +196,10 @@ const ScheduleItem = ({ item, colors }) => {
 			background: ${colors.backgroundColor};
 			color: ${colors.textColor};
 		}
-	` : ``;
-	return Style.it(styles,
+	`
+		: ``;
+	return Style.it(
+		styles,
 		<Link to={item.uri} className="schedule-item">
 			<span className="item-time">{time}</span>
 			<span className="item-info mt-5 mt-lg-0">{item.title}</span>
@@ -184,6 +271,7 @@ export const scheduleItemsQuery = graphql`
 						venues {
 							... on WpVenue {
 								id
+								slug
 								venueInfo {
 									color
 									mapsLink
