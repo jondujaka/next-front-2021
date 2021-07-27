@@ -16,7 +16,7 @@ const ArtistBlock = ({ item, style, colors }) => {
 	);
 
 	if (!image) {
-		image = item.featuredImage.node.srcSet
+		image = item.featuredImage && item.featuredImage.node.srcSet
 	}
 	if (!item.uri) {
 		return ``;
