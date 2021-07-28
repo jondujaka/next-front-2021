@@ -92,6 +92,7 @@ const WorkshopsTemplate = ({ data, pageContext }) => {
 			editionHeader={menu}
 			skMenu={skMenu}
 			year={edition}
+			pageName={isSk ? `Workshopy` : `Workshops`}
 		>
 			<Row fullWidth classes="border-bottom-thick">
 				<div className="col col-12 px-0">

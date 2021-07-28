@@ -46,6 +46,7 @@ const Edition = ({ data, pageContext, noFooter, style }) => {
 			translationSlug={translationSlug}
 			editionHeader={menu}
 			skMenu={skMenu}
+			pageName="index"
 		>
 			<Row classes="edition-title">
 				<h1>{content.topText.firstTilte}</h1>

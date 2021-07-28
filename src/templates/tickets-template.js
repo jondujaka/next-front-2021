@@ -50,6 +50,8 @@ const TicketsTemplate = ({ pageContext }) => {
 			editionHeader={menu}
 			skMenu={skMenu}
 			year={edition}
+			pageName={isSk ? `Lístky` : `Tickets`}
+			
 		>
 			<Row>
 				<div className="col col-12 px-0">

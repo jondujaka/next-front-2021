@@ -43,6 +43,7 @@ const Info = ({ data, pageContext }) => {
 			year={edition}
 			editionHeader={menu}
 			skMenu={skMenu}
+			pageName="Info"
 		>
 			<div className="row">
 				<div className="col col-12 d-none d-md-block col-md-4 d-md-block col-xl-6 about-nav">

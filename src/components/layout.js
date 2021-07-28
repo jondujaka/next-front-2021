@@ -26,7 +26,8 @@ const Layout = ({
 		menuItems: []
 	},
 	translationSlug,
-	isSk
+	isSk,
+	pageName=``
 }) => {
 	const data = useStaticQuery(graphql`
 		query SiteTitleQuery {
@@ -60,6 +61,7 @@ const Layout = ({
 						bg={style.backgroundColor}
 						translationSlug={translationSlug}
 						isSk={isSk}
+						pageName={pageName}
 					/>
 				)}
 				<main>{children}</main>

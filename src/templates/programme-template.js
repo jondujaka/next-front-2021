@@ -135,6 +135,7 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 			translationSlug={translationSlug}
 			isSk={isSk}
 			year={edition}
+			pageName={isSk ? `Program` : `Programme`}
 		>
 			<Row fullWidth classes="border-bottom-thick">
 				<div className="col col-12 px-0">

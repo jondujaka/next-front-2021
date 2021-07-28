@@ -208,69 +208,85 @@
 // BLOCK FILTER
 
 .filter-wrapper {
+	
 	display: flex;
 	justify-content: flex-start;
-
-	padding: 1.5rem 2rem;
+	margin: 1.5rem 2rem;
 
 	.Dropdown-root {
-		margin-right: 6rem;
+		margin-right: 5vw;
 	}
 
 	.Dropdown-control {
 		@extend .text-body;
-		cursor: pointer;
-
-		&:hover {
-			text-decoration-line: underline;
-    		text-decoration-thickness: 3px;
-			text-underline-offset: 2px;
-		}
-	}
-
-	.Dropdown-option {
-		word-break: unset;
-    	white-space: nowrap;
-		color: inherit;
-		@extend .text-body-small;
-
-
-		&:hover, &.is-selected {
-			background: black;
-			color: white;
-		}
-	}
-	.Dropdown-menu {
-		height: auto;
-		width: auto;
-		min-width: calc(100% + 24px);
-		background: white;
-		border: 1px solid;
-		top: calc(100% + 8px);
-		max-height: 30vh;
-		// border-radius: 15px;
-	}
-	.Dropdown-control {
-		position: relative;
-		padding: 0;
-    	padding-right: 2.3rem;
-		overflow: visible;
-		background-color: transparent;
-		border: none;
-		margin: 0;
-		color: inherit;
-	}
-
-	.is-open .Dropdown-arrow {
-		border-width: 0 9px 13px;
-		border-bottom-color: inherit;
 	}
 
 	.Dropdown-arrow {
-		border-top-color: inherit;
-		border-width: .3em .2em 0;
-		right: 0;
 		top: 0.4em;
 	}
+}
+
+.Dropdown-control {
 	
+	cursor: pointer;
+
+	&:hover {
+		text-decoration-line: underline;
+		text-decoration-thickness: 2px;
+		text-underline-offset: 2px;
+	}
+}
+
+.Dropdown-option {
+	word-break: unset;
+	white-space: nowrap;
+	color: inherit;
+	@extend .text-body-small;
+	padding: 12px 16px;
+
+	&:hover, &.is-selected {
+		background: black;
+		color: white;
+	}
+
+	
+}
+
+@media (max-width: 480px){
+	.filter-wrapper .Dropdown-control {
+		font-size: 22px;
+	}
+}
+
+
+.Dropdown-menu {
+	height: auto;
+	width: auto;
+	min-width: calc(100% + 24px);
+	background: white;
+	border: 1px solid;
+	top: calc(100% + 8px);
+	max-height: 30vh;
+	// border-radius: 15px;
+}
+.Dropdown-control {
+	position: relative;
+	padding: 0;
+	padding-right: 2.3rem;
+	overflow: visible;
+	background-color: transparent;
+	border: none;
+	margin: 0;
+	color: inherit;
+}
+
+.is-open .Dropdown-arrow {
+	border-width: 0 .2em .3em;
+	border-bottom-color: inherit;
+}
+
+.Dropdown-arrow {
+	border-top-color: inherit;
+	border-width: .3em .2em 0;
+	right: 0;
 }

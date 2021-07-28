@@ -140,6 +140,7 @@ const ArtistsTemplate = ({ data, pageContext }) => {
 			isSk={isSk}
 			translationSlug={translationSlug}
 			year={edition}
+			pageName={isSk ? `Umelci` : `Artists`}
 		>
 			<Row fullWidth classes="border-bottom-thick">
 				<div className="col col-12 px-0">
