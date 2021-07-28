@@ -3,7 +3,7 @@ import { useStaticQuery, graphql } from "gatsby";
 import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
 
-const Filter = ({ data, handleClick, dayItems }) => {
+const Filter = ({ data, handleClick, dayItems, noFormats }) => {
 	const internalHandleClick = (slug, type) => {
 		handleClick(slug, type);
 	};
@@ -62,7 +62,7 @@ const Filter = ({ data, handleClick, dayItems }) => {
 					placeholder="All Venues"
 				/>
 			)}
-			{formatItems && (
+			{formatItems && !noFormats && (
 				<Dropdown
 					options={formatItems}
 					onChange={e => internalHandleClick(e.value, `format`)}

@@ -9,10 +9,12 @@ import Style from "style-it";
 
 const ProgrammeTemplate = ({ data, pageContext }) => {
 	// const artistsList = data.artists.edges;
-	const { settings, edition, menu } = pageContext;
+	const { settings, edition, menu, lang, skMenu } = pageContext;
 
 	const initEvents = data.events.edges;
 	const [allDays, setAllDays] = useState([]);
+
+	const [initLoad, isInitLoad] = useState(true);
 
 	const [allEvents, setAllEvents] = useState(initEvents);
 
@@ -46,26 +48,24 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 
 		let newEvents = initEvents.filter(eventObj => {
 			const eventInfo = eventObj.node.eventInfo;
-
 			let venueMatch =
-			eventInfo.venues &&
+				eventInfo.venue &&
 				(venueFilter.current === "all" ||
-					eventInfo.venues.find(
-						venue => venue.slug === venueFilter.current
-					));
+				eventInfo.venue.slug === venueFilter.current);
 
 			let formatMatch =
 				eventInfo.format &&
 				(formatFilter.current === "all" ||
 					eventInfo.format.slug === formatFilter.current);
 
-			if (!eventInfo.venues && venueFilter.current === `all`) venueMatch = true;
+			if (!eventInfo.venue && venueFilter.current === `all`) venueMatch = true;
 			if (!eventInfo.format && formatFilter.current === `all`) formatMatch = true;
 
 			return venueMatch && formatMatch;
 		});
 
 		setAllEvents(newEvents);
+		isInitLoad(false);
 	};
 
 	const setUpDays = () => {
@@ -119,6 +119,10 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 		setUpDays();
 	}, [allEvents]);
 
+	const isSk = lang !== `en`;
+	const langSlug = lang ===`en` ? `sk/` : ``;
+	const translationSlug = `/${langSlug}${edition}/programme`;
+
 	return Style.it(
 		styles,
 		<Layout
@@ -127,11 +131,14 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 				backgroundColor: settings.backgroundColor
 			}}
 			editionHeader={menu}
+			skMenu={skMenu}
+			translationSlug={translationSlug}
+			isSk={isSk}
 			year={edition}
 		>
 			<Row fullWidth classes="border-bottom-thick">
 				<div className="col col-12 px-0">
-					<h1 className="normal-line-height fw-title">Programme</h1>
+					<h1 className="normal-line-height fw-title">{isSk ? `Program` : `Programme`}</h1>
 				</div>
 				<div className="col col-12">
 					<Filter
@@ -152,7 +159,7 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 								/>
 							);
 						}
-					}) : <div className="col col-12 mt-7"><h3>Sorry, there are no events with the selected filters.</h3></div>
+					}) : <div className="col col-12 mt-7"><h3>{initLoad ? `Loading the programme...` : `Sorry, there are no events with the selected filters.`}</h3></div>
 				}
 			</Row>
 		</Layout>
@@ -178,8 +185,8 @@ const Day = ({ day, colors }) => {
 };
 
 const ScheduleItem = ({ item, colors }) => {
-	let time = `${item.date.startTime} - ${item.date.endTime}`;
-	const venue = item.eventInfo.venues ? item.eventInfo.venues[0] : null;
+	let time = `${item.date.starttime} - ${item.date.endtime}`;
+	const venue = item.eventInfo.venue ? item.eventInfo.venue : null;
 	const online = true;
 	const styles = colors
 		? `
@@ -232,11 +239,12 @@ const ScheduleItem = ({ item, colors }) => {
 export default ProgrammeTemplate;
 
 export const scheduleItemsQuery = graphql`
-	query allEvents($edition: String!) {
+	query allEvents($edition: String!, $lang: String!) {
 		events: allWpEvent(
 			sort: { order: DESC, fields: date }
 			filter: {
 				editions: { nodes: { elemMatch: { slug: { eq: $edition } } } }
+				language: {slug: {eq: $lang}}
 			}
 		) {
 			edges {
@@ -262,13 +270,13 @@ export const scheduleItemsQuery = graphql`
 					eventInfo {
 						dates {
 							date
-							startTime
-							endTime
+							starttime
+							endtime
 						}
 						format {
 							slug
 						}
-						venues {
+						venue {
 							... on WpVenue {
 								id
 								slug

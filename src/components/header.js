@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Link } from "gatsby";
 import { useAppState } from "./context";
 
-const Header = ({ siteTitle }) => {
+const Header = ({ siteTitle, noLang }) => {
 	const { cart } = useAppState();
 	return (
 		<div className="header-wrapper">
@@ -20,7 +20,7 @@ const Header = ({ siteTitle }) => {
 						<Link to="/archive/" partiallyActive activeClassName="active">Archive</Link>
 						<Link to="/shop/" partiallyActive activeClassName="active">Shop</Link>
 						{cart ? <Link to="/cart/" className="cart-header" partiallyActive activeClassName="active">Cart - {cart.contents.itemCount}</Link> : ``}
-						<Link to="/" className="lang-swither">SK</Link>
+						{!noLang && <Link to="/" className="lang-switcher">SK</Link>}
 					</li>
 				</ul>
 			</nav>

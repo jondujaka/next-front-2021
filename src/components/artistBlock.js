@@ -4,6 +4,7 @@ import Style from 'style-it';
 import ImageEl from './image';
 
 const ArtistBlock = ({ item, style, colors }) => {
+
 	if (!item) {
 		return ``;
 	}
@@ -36,7 +37,7 @@ const ArtistBlock = ({ item, style, colors }) => {
 				</div>
 				<div className="artist-image col col-12">
 					{image && (
-						<ImageEl srcSet={image} />
+						<img srcSet={image} />
 						
 					)}
 					

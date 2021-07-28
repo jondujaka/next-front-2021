@@ -2,6 +2,12 @@
 
 	padding-right: 2.5rem;
 	padding-left: 0;
+	aspect-ratio: 3/2;
+
+	img {
+		height: 100%;
+		object-fit: cover;
+	}
 	
 	&:after {
 		content: "";
@@ -126,9 +132,7 @@
 .artist-item {
 
 	&:hover {
-		* {
-			text-decoration: none;
-		}
+		text-decoration: none;
 	}
 	.artist-info {
 		justify-content: flex-start;
@@ -161,6 +165,12 @@
 	}
 	.artist-image {
 		padding-top: 0;
+		aspect-ratio: 3 / 2;
+
+		img {
+			height: 100%;
+			object-fit: cover;
+		}
 	}
 	
 }
@@ -212,7 +222,9 @@
 		cursor: pointer;
 
 		&:hover {
-			text-decoration: underline;
+			text-decoration-line: underline;
+    		text-decoration-thickness: 3px;
+			text-underline-offset: 2px;
 		}
 	}
 
@@ -256,9 +268,9 @@
 
 	.Dropdown-arrow {
 		border-top-color: inherit;
-		border-width: 13px 9px 0;
+		border-width: .3em .2em 0;
 		right: 0;
-    	top: 13px;
+		top: 0.4em;
 	}
 	
 }

@@ -1,25 +1,27 @@
 import React from "react";
 import { Link } from "gatsby";
 
-const EditionMenu = ({ items, bg }) => {
+const EditionMenu = ({ items, bg, isSk = false, translationSlug, skMenu }) => {
 	const navItems = items.nodes;
+	const skNavItems = skMenu.nodes;
 	return (
 		<div className="edition-menu-wrapper" style={{ background: bg }}>
 			<nav className="edition-nav">
 				<ul>
 					<li>
 						{navItems.length &&
-							navItems.map(item => (
+							navItems.map((item, i) => (
 								<Link
 									key={`item-${item.url}`}
-									to={parseUrl(item.url)}
+									to={parseUrl(isSk, item.url)}
 									getProps={isActive(item.url)}
 								>
-									{item.label}
+									{isSk && skNavItems ? skNavItems[i].label : item.label}
 								</Link>
 							))}
 					</li>
 				</ul>
+				{translationSlug && <Link className="lang-switcher" to={translationSlug}>{isSk ? `EN` : `SK`}</Link>}
 			</nav>
 		</div>
 	);
@@ -53,11 +55,18 @@ const isActive = url => ({ isCurrent, isPartiallyCurrent, location }) => {
 	}
 };
 
-const parseUrl = url => {
+const parseUrl = (isSk, url) => {
+	let parsedUrl;
 	if (url.endsWith(`/index/`)) {
-		return url.substring(0, url.indexOf(`/index/`));
+		parsedUrl = url.substring(0, url.indexOf(`/index/`));
+	} else {
+		parsedUrl = url;
 	}
-	return url;
+
+	if(isSk){
+		parsedUrl = `/sk${parsedUrl}`;
+	}
+	return parsedUrl;
 };
 
 export default EditionMenu;

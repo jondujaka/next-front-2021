@@ -1,6 +1,6 @@
 import React from "react";
 import { graphql, Link } from "gatsby";
-import withPreview from '../components/withPreview';
+import withPreview from "../components/withPreview";
 import LangSwitcher from "../components/LangSwitcher";
 import Layout from "../components/layout";
 import gql from "graphql-tag";
@@ -9,11 +9,47 @@ import Image from "../components/image";
 import Carousel from "../components/carousel";
 import SimpleContent from "../components/simpleContent";
 import EventInfo from "../components/eventInfo";
+import { node } from "prop-types";
+import { parse } from "query-string";
 
-const Artist = ({ data: { artist }, pageContext }) => {
-	const { lang, year, settings, eventsList, menu } = pageContext;
+const Artist = ({ data: { artist, events }, pageContext }) => {
+	const { lang, year, settings, menu } = pageContext;
 
 	const content = artist.artistEventContent;
+	const isSk = lang && lang !== `en`;
+
+	const eventsList = events.edges.filter(event => {
+		console.log(event);
+		return (
+			event.node.eventInfo.artists &&
+			event.node.eventInfo.artists.some(
+				eventArtist => eventArtist.id === artist.translations[0].id
+			)
+		);
+	});
+	
+	const parsedEvents = eventsList.map(ev => {
+		if(isSk) {
+			return {
+				...ev.node,
+				url: ev.node.translations.length ? `/${lang}/${year}/events/${ev.node.translations[0].slug}` : ev.node.uri
+			}
+		} else {
+			return {
+				...ev.node,
+				url: ev.node.uri
+			}
+		}
+	});
+
+	console.log(parsedEvents)
+	
+
+	let translationSlug;
+	if(artist.translations.length){
+		translationSlug = artist.translations[0].uri;
+	}
+
 	return (
 		<Layout
 			style={{
@@ -21,13 +57,16 @@ const Artist = ({ data: { artist }, pageContext }) => {
 				backgroundColor: settings.backgroundColor
 			}}
 			editionHeader={settings.menu}
+			skMenu={settings.skMenu}
+			isSk={isSk}
+			translationSlug={translationSlug}
 			year={year}
 		>
-			{!content.content ? (
+			{!content ? (
 				<h1>No content yet</h1>
 			) : (
 				<Row>
-				<div className="col-12 text-center mt-4 mb-lg-6 mb-4">
+					<div className="col-12 text-center mt-4 mb-lg-6 mb-4">
 						<h1>{artist.title}</h1>
 					</div>
 					<div className="col-12 make-first col-lg-6 sticky-carousel mb-6">
@@ -45,21 +84,16 @@ const Artist = ({ data: { artist }, pageContext }) => {
 						)}
 					</div>
 					<div className="col-12 col-lg-6">
-						{eventsList.map((event, i) => (
-							<EventInfo event={event} key={`even	t-${i}`} />
+						{parsedEvents.map((event, i) => (
+							<EventInfo event={event} key={`event-${i}`} />
 						))}
-						{content.content.map(section => (
+						
+						{content.content ? content.content.map(section => (
 							<SimpleContent
 								section={section}
 								key={section.fieldGroupName}
 							/>
-						))}
-						{content.content.map(section => (
-							<SimpleContent
-								section={section}
-								key={section.fieldGroupName}
-							/>
-						))}
+						)) : <p>No content yet</p>}
 					</div>
 				</Row>
 			)}
@@ -81,6 +115,7 @@ export const artistQuery = graphql`
 				slug
 			}
 			translations {
+				id
 				slug
 				uri
 			}
@@ -104,8 +139,42 @@ export const artistQuery = graphql`
 				}
 			}
 		}
+		events: allWpEvent(filter: {language: { slug: { eq: "en" }}}) {
+			edges {
+				node {
+					id
+					translations {
+						slug
+					}
+					eventInfo {
+						artists {
+							... on WpArtist {
+								id
+								slug
+							}
+						}
+						venue {
+							... on WpVenue {
+								uri
+								title
+								slug
+								venueInfo {
+									mapsLink
+								}
+							}
+						}
+						dates {
+							starttime
+							endtime
+							date
+						}
+					}
+					slug
+					uri
+				}
+			}
+		}
 	}
 `;
 
 export default Artist;
-

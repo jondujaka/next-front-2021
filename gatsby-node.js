@@ -104,15 +104,32 @@ const initPostTypes = async gatsbyUtilities => {
 			edition => edition.year == year.slug
 		);
 
-		if (true) {
-			console.log(`building events for: ${year.slug}`);
+		{
+			console.log(`building events for: ${year.slug}, english`);
 			const slug = eventInfo.event.uri;
 			const template = `event`;
 			const context = {
 				edition: year,
 				id: eventInfo.event.id,
 				settings: { ...editionSettings },
-				related: allEvents
+				related: allEvents,
+				lang: `en`
+			};
+			createEventPromises.push(
+				createIndividualPage(slug, template, context, gatsbyUtilities)
+			);
+		}
+
+		if (eventInfo.event.translations.length) {
+			console.log(`building events for: ${year.slug}, slovak`);
+			const slug = `/sk/${year.slug}/events/${eventInfo.event.translations[0].slug}`;
+			const template = `event`;
+			const context = {
+				edition: year,
+				id: eventInfo.event.translations[0].id,
+				settings: { ...editionSettings },
+				related: allEvents,
+				lang: `sk`
 			};
 			createEventPromises.push(
 				createIndividualPage(slug, template, context, gatsbyUtilities)
@@ -155,7 +172,7 @@ const initPostTypes = async gatsbyUtilities => {
 			}
 		});
 
-		if (true) {
+		{
 			const slug = artistInfo.artist.uri;
 			const template = `artist`;
 			const context = {
@@ -163,6 +180,22 @@ const initPostTypes = async gatsbyUtilities => {
 				id: artistInfo.artist.id,
 				settings: editionSettings ? { ...editionSettings } : {},
 				eventsList
+			};
+			createArtistsPromises.push(
+				createIndividualPage(slug, template, context, gatsbyUtilities)
+			);
+		}
+
+		if (artistInfo.artist.translations.length) {
+			const translation = artistInfo.artist.translations[0];
+			const slug = translation.uri;
+			const template = `artist`;
+			const context = {
+				year: year.slug,
+				id: translation.id,
+				settings: editionSettings ? { ...editionSettings } : {},
+				eventsList,
+				lang: `sk`
 			};
 			createArtistsPromises.push(
 				createIndividualPage(slug, template, context, gatsbyUtilities)
@@ -278,6 +311,7 @@ const buildEdition = async (year, gatsbyUtilities) => {
 			editionsToBuild.push({
 				...editionInfo.editionData.settings,
 				menu: editionInfo.menu,
+				skMenu: editionInfo.skMenu,
 				year
 			});
 		}
@@ -295,7 +329,7 @@ const buildEdition = async (year, gatsbyUtilities) => {
 		) {
 			skPage = editionInfo.editionData.translations[0];
 		}
-		editionPages.forEach(page =>
+		editionPages.forEach(page => {
 			editionPagesPromises.push(
 				createIndividualPage(
 					`/${year}/${page.slug}`,
@@ -306,12 +340,32 @@ const buildEdition = async (year, gatsbyUtilities) => {
 						querySlug: `/^${page.slug}/`,
 						queryType: `/${year}$/`,
 						settings: { ...editionInfo.editionData.settings },
-						menu: { ...editionInfo.menu }
+						menu: { ...editionInfo.menu },
+						lang: "en"
 					},
 					gatsbyUtilities
 				)
-			)
-		);
+			);
+
+			editionPagesPromises.push(
+				createIndividualPage(
+					`/sk/${year}/${page.slug}`,
+					page.template,
+					{
+						edition: `${year}`,
+						slug: `/sk/${page.slug}`,
+						querySlug: `/^${page.slug}/`,
+						queryType: `/${year}$/`,
+						settings: { ...editionInfo.editionData.settings },
+						menu: { ...editionInfo.menu },
+						skMenu: { ...editionInfo.skMenu },
+						lang: "sk"
+					},
+					gatsbyUtilities
+				)
+			);
+		});
+
 		editionIndexPromises.push(
 			createIndividualPage(
 				`/${year}/`,
@@ -339,7 +393,9 @@ const buildEdition = async (year, gatsbyUtilities) => {
 						lang: `sk`,
 						translation: { language: { slug: `en` } },
 						content: { ...editionInfo.editionData.editionContent },
-						settings: { ...editionInfo.editionData.settings }
+						settings: { ...editionInfo.editionData.settings },
+						menu: { ...editionInfo.menu },
+						skMenu: { ...editionInfo.skMenu }
 					},
 					gatsbyUtilities
 				)
@@ -453,9 +509,19 @@ const getPostType = async (settings, { graphql, reporter }) => {
 				  	id
 				}
 			}
+			venue {
+				... on WpVenue {
+				  uri
+				  title
+				  slug
+				  venueInfo {
+					mapsLink
+				  }
+				}
+			  }
 			dates {
-				startTime
-				endTime
+				starttime
+				endtime
 				date
 			}
 		}
@@ -464,13 +530,18 @@ const getPostType = async (settings, { graphql, reporter }) => {
 	const graphqlResult = await graphql(/* GraphQL */ `
 		query ${settings.queryName} {
 			# Query index pages from edition
-			${settings.gqlName} {
+			${settings.gqlName}(filter: {language: {slug: {eq: "en"}}}) {
 				edges {
 					${settings.postType}: node {
 						slug
 						title
 						id
 						uri
+						translations {
+							slug
+							id
+							uri
+						}
 						${settings.postType === `project` ? projectsFragment : ``}
 						${settings.postType === `commission` ? commissionsFragment : ``}
 						${withEdition.includes(settings.postType) ? editionsFragment : ``}
@@ -507,13 +578,29 @@ const getEditionInfo = async (year, { graphql, reporter }) => {
 					liveWebsite
 					fieldGroupName
 				}
+				translations {
+					slug
+					id
+				}
 				editionContent {
 					fieldGroupName
 					content {
-					  ... on WpEdition2021_Editioncontent_Content_WorkshopsSection {
-						fieldGroupName
-						title
-					  }
+						... on WpEdition2021_Editioncontent_Content_WorkshopsSection {
+							fieldGroupName
+							title
+							workshops {
+							  ... on WpEvent {
+								id
+								uri
+							title
+							featuredImage {
+							  node {
+								srcSet
+							  }
+							}
+							  }
+							}
+						  }
 					  ... on WpEdition2021_Editioncontent_Content_ArtistsSection {
 						fieldGroupName
 						title
@@ -579,6 +666,16 @@ const getEditionInfo = async (year, { graphql, reporter }) => {
 					}
 				}
 			}
+			skMenu: wpMenu(slug: { eq: "sk-edition-${year}" }) {
+				name
+				slug
+				menuItems {
+					nodes {
+						url
+						label
+					}
+				}
+			}
 		}
 	`);
 
@@ -592,7 +689,8 @@ const getEditionInfo = async (year, { graphql, reporter }) => {
 
 	return {
 		editionData: graphqlResult.data[`wpEdition${year}`],
-		menu: graphqlResult.data.wpMenu
+		menu: graphqlResult.data.wpMenu,
+		skMenu: graphqlResult.data.skMenu
 	};
 };
 

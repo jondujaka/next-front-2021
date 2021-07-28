@@ -9,24 +9,40 @@ import ImageEl from "../components/image";
 import Scrollspy from "react-scrollspy";
 
 const Info = ({ data, pageContext }) => {
-	const { settings, edition, menu } = pageContext;
+	const { settings, edition, menu, lang, skMenu } = pageContext;
 
-	if (!data.wpContentNode) {
-		return <h1>No data</h1>;
-	}
-	const sections = data.wpContentNode.about.section;
+	// if (!data.wpContentNode) {
+	// 	return <h1>No data</h1>;
+	// }
+	const infoPages = data.allWpContentNode.edges;
+	const isSk = lang !== `en`;
+	const langSlug = lang === `en` ? `sk/` : ``;
+	const translationSlug = `/${langSlug}${edition}/info`;
+
+	console.log(lang);
+	console.log(infoPages);
+
+	const translatedContent = infoPages.find(page => page.node.language.slug === lang);
+
+	console.log(translatedContent)
+
+	const sections = translatedContent.node.about.section;
+
+	console.log(sections)
 
 	let scrollSpyItems =
 		sections && sections.map(section => section.title.toLowerCase());
-
 	return (
 		<Layout
 			style={{
 				color: settings.textColor,
 				backgroundColor: settings.backgroundColor
 			}}
+			isSk={isSk}
+			translationSlug={translationSlug}
 			year={edition}
 			editionHeader={menu}
+			skMenu={skMenu}
 		>
 			<div className="row">
 				<div className="col col-12 d-none d-md-block col-md-4 d-md-block col-xl-6 about-nav">
@@ -95,34 +111,43 @@ export const infoQuery = graphql`
 		# these variables are passed in via createPage.pageContext in gatsby-node.js
 		$queryType: String
 	) {
-		wpContentNode(
-			slug: { regex: "/^info/" }
-			nodeType: { regex: $queryType }
-		) {
-			id
-			... on WpEdition2022 {
-				title
+		allWpContentNode(
+			filter: {
+				slug: { regex: "/^info/" }
+				nodeType: { regex: $queryType }
 			}
-			... on WpEdition2021 {
-				id
-				title
-				about {
-					fieldGroupName
-					section {
-						content {
-							... on WpEdition2021_About_section_Content_Partners {
-								fieldGroupName
-							}
-							... on WpEdition2021_About_section_Content_Media {
-								fieldGroupName
-							}
-							... on WpEdition2021_About_section_Content_Text {
-								big
-								fieldGroupName
-								textContent
+		) {
+			edges {
+				node {
+					id
+					... on WpEdition2022 {
+						title
+					}
+					... on WpEdition2021 {
+						id
+						title
+						language {
+							slug
+						}
+						about {
+							fieldGroupName
+							section {
+								content {
+									... on WpEdition2021_About_section_Content_Partners {
+										fieldGroupName
+									}
+									... on WpEdition2021_About_section_Content_Media {
+										fieldGroupName
+									}
+									... on WpEdition2021_About_section_Content_Text {
+										big
+										fieldGroupName
+										textContent
+									}
+								}
+								title
 							}
 						}
-						title
 					}
 				}
 			}

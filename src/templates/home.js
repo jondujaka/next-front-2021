@@ -13,9 +13,11 @@ const Home = ({ data: { page, news }, pageContext }) => {
 	const { translations, language, mainHome } = { page };
 	const { availableEditions } = pageContext;
 
-	const latestEdition = availableEditions.length && availableEditions.reduce((prev, current) => {
-		return prev.year > current.year ? prev : current;
-	});
+	const latestEdition =
+		availableEditions.length &&
+		availableEditions.reduce((prev, current) => {
+			return prev.year > current.year ? prev : current;
+		});
 
 	const langSlug = page.language.slug == `en` ? `` : `/sk`;
 
@@ -65,18 +67,6 @@ const Home = ({ data: { page, news }, pageContext }) => {
 						item={newsItem.node}
 					/>
 				))}
-				{allNews.map(newsItem => (
-					<NewsBlock
-						key={`news1-${newsItem.node.id}`}
-						item={newsItem.node}
-					/>
-				))}
-				{allNews.map(newsItem => (
-					<NewsBlock
-						key={`news3-${newsItem.node.id}`}
-						item={newsItem.node}
-					/>
-				))}
 				<div className="col col-12 text-center mt-5">
 					<Link className="big-button" to={`${langSlug}/news`}>
 						See all News
@@ -105,17 +95,16 @@ const HomeHeader = ({ items, classes }) => {
 			{items.map(item => {
 				if (item.item.link && item.item.link.url) {
 					return (
-						<CustomLink
+						<Link
 							key={`link-${item.item.link.url}`}
-							link={item.item.link.url}
-							withArrow
+							to={item.item.link.url}
 						>
-							{item.item.text}
-						</CustomLink>
+							{item.item.text} ⟶
+						</Link>
 					);
 				}
 				return (
-					<a href="#" key={`text-${item.item.text}`}>
+					<a href="google.com" key={`text-${item.item.text}`}>
 						{item.item.text}
 					</a>
 				);

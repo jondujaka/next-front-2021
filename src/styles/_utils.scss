@@ -123,3 +123,11 @@
 .mt-45 {
 	margin-top: 2.2rem;
 }
+
+figure {
+	aspect-ratio: 3/2;
+	img {
+		height: 100%;
+		object-fit: cover;
+	}
+}

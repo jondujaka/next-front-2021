@@ -10,7 +10,7 @@ import Carousel from "../components/carousel";
 import ArtistsGrid from "../components/blockGrids/artistsGrid";
 
 const Edition = ({ data, pageContext, noFooter, style }) => {
-	const { edition, translation, lang, settings, content, menu } = pageContext;
+	const { edition, translation, lang, settings, content, menu, skMenu } = pageContext;
 
 	let colorStyle;
 
@@ -30,12 +30,22 @@ const Edition = ({ data, pageContext, noFooter, style }) => {
 	const startDate = new Date(content.topText.editionDate.startDate);
 	const endDate = new Date(content.topText.editionDate.endDate);
 
+
+	
+	const isSk = lang !== `en`;
+	const langSlug = lang ===`en` ? `sk/` : ``;
+	const translationSlug = `/${langSlug}${edition}`;
+
+
 	return (
 		<Layout
 			style={colorStyle}
 			noFooter={noFooter}
 			year={edition}
+			isSk={isSk}
+			translationSlug={translationSlug}
 			editionHeader={menu}
+			skMenu={skMenu}
 		>
 			<Row classes="edition-title">
 				<h1>{content.topText.firstTilte}</h1>
@@ -54,7 +64,7 @@ const Edition = ({ data, pageContext, noFooter, style }) => {
 								classes="my-4 my-md-5"
 								key={`section-edition-${i}`}
 							>
-								{editionRow(section, i, edition, settings)}
+								{editionRow(isSk, section, i, edition, settings)}
 							</Row>
 						);
 					}
@@ -63,7 +73,7 @@ const Edition = ({ data, pageContext, noFooter, style }) => {
 	);
 };
 
-const editionRow = (section, i, year, colors) => {
+const editionRow = (isSk, section, i, year, colors) => {
 	const type = section.fieldGroupName;
 	if (type.endsWith(`Media`)) {
 		return section.images.length > 1 ? (
@@ -121,7 +131,7 @@ const editionRow = (section, i, year, colors) => {
 						<CustomLink
 							classes="see-all-link"
 							colors={colors}
-							link={`/${year}/artists`}
+							link={getLink(isSk, year, `/artists`)}
 						>
 							See all artists
 						</CustomLink>
@@ -130,6 +140,36 @@ const editionRow = (section, i, year, colors) => {
 			</>
 		);
 	}
+
+	if (type.endsWith(`WorkshopsSection`)) {
+		return (
+			<>
+				<div className="col-12">
+					<h1>{section.title}</h1>
+				</div>
+				<ArtistsGrid colors={colors} items={section.workshops} seeAll />
+				<div className="d-flex col-4 mx-auto justify-content-center align-items-center text-center mb-6">
+					<div className="block-link-wrapper">
+						<CustomLink
+							classes="see-all-link"
+							colors={colors}
+							link={getLink(isSk, year, `/workshops`)}
+						>
+							See all workshops
+						</CustomLink>
+					</div>
+				</div>
+			</>
+		);
+	}
 };
+
+const getLink = (isSk, year, link) => {
+	if(isSk){
+		return `/sk/${year}${link}`
+	} else {
+		return `/${year}${link}`
+	}
+}
 
 export default Edition;

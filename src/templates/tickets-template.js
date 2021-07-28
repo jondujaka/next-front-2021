@@ -5,7 +5,9 @@ import Row from "../components/row";
 import Style from "style-it";
 
 const TicketsTemplate = ({ pageContext }) => {
-	const { settings, edition, menu } = pageContext;
+	const { settings, edition, menu, lang, skMenu } = pageContext;
+
+	
 	const ticketList = [
 		{
 			title: "7-Day Ticket 2021",
@@ -33,18 +35,25 @@ const TicketsTemplate = ({ pageContext }) => {
 		}
 	];
 
+	const isSk = lang !== `en`;
+	const langSlug = lang ===`en` ? `sk/` : ``;
+	const translationSlug = `/${langSlug}${edition}/tickets`;
+
 	return (
 		<Layout
 			style={{
 				color: settings.textColor,
 				backgroundColor: settings.backgroundColor
 			}}
+			isSk={isSk}
+			translationSlug={translationSlug}
 			editionHeader={menu}
+			skMenu={skMenu}
 			year={edition}
 		>
 			<Row>
 				<div className="col col-12 px-0">
-					<h1 className="normal-line-height fw-title">Tickets</h1>
+					<h1 className="normal-line-height fw-title">{isSk ? `Lístky` : `Tickets`}</h1>
 				</div>
 			</Row>
 			<Row classes="justify-content-start">

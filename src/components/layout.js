@@ -21,7 +21,12 @@ const Layout = ({
 	year,
 	style = { color: `#000`, backgroundColor: `#FFF`, borderColor: `#000` },
 	noFooter,
-	editionHeader = {}
+	editionHeader = {},
+	skMenu = {
+		menuItems: []
+	},
+	translationSlug,
+	isSk
 }) => {
 	const data = useStaticQuery(graphql`
 		query SiteTitleQuery {
@@ -47,11 +52,14 @@ const Layout = ({
 				}`}
 				style={year ? parsedStyle : {}}
 			>
-				<Header />
+				<Header noLang={editionHeader.menuItems || false}/>
 				{editionHeader && editionHeader.menuItems && (
 					<EditionMenu
 						items={editionHeader.menuItems}
+						skMenu={skMenu.menuItems}
 						bg={style.backgroundColor}
+						translationSlug={translationSlug}
+						isSk={isSk}
 					/>
 				)}
 				<main>{children}</main>
@@ -63,7 +71,9 @@ const Layout = ({
 };
 
 Layout.propTypes = {
-	children: PropTypes.node.isRequired
+	children: PropTypes.node.isRequired,
+	translationSlug: PropTypes.string,
+	isSk: PropTypes.bool
 };
 
 export default Layout;

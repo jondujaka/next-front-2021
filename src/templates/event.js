@@ -6,41 +6,61 @@ import Image from "../components/image";
 import Carousel from "../components/carousel";
 import SimpleContent from "../components/simpleContent";
 import EventInfo from "../components/eventInfo";
-import Style from 'style-it';
+import Style from "style-it";
 
 const Events = ({ data: { event }, pageContext }) => {
 	const { lang, settings, eventsList } = pageContext;
 	const content = event.content;
 	const info = event.eventInfo;
+
+	const isSk = lang !== `en`;
+
+	let translationSlug;
+	if (event.translations.length) {
+		translationSlug = event.translations[0].uri;
+	}
+
+	let parsedArtists = isSk ? info.artists.map(artist => ({
+		...artist,
+		uri: artist.translations.length ? artist.translations[0].uri : artist.uri
+	})) : info.artists;
+
 	return (
 		<Layout
 			style={{
 				color: settings.textColor,
 				backgroundColor: settings.backgroundColor
 			}}
+			isSk={isSk}
+			translationSlug={translationSlug}
 			editionHeader={settings.menu}
+			skMenu={settings.skMenu}
 			year={2021}
 		>
 			<Row>
 				<div className="col-12 text-center mt-45 mb-6">
 					<h1>{event.title}</h1>
 				</div>
-				<div className="col-12 col-lg-6 about-nav">
-					{content.images && (
-						<>
-							{content.images.length > 1 ? (
-								<Carousel
-									items={content.images}
-									style={{ color: settings.textColor }}
-								/>
-							) : (
-								<Image srcSet={content.images[0].srcSet} />
-							)}
-						</>
-					)}
-				</div>
+
+				<div className="col-12 make-first col-lg-6 sticky-carousel mb-6">
+						{content.images && (
+							<>
+								{content.images.length > 1 ? (
+									<Carousel
+										items={content.images}
+										style={{ color: settings.textColor }}
+									/>
+								) : (
+									<Image srcSet={content.images[0].srcSet} />
+								)}
+							</>
+						)}
+					</div>
+
 				<div className="col-12 col-lg-6 sticky-carousel">
-					{event.eventInfo.dates && event.eventInfo.dates.length && <EventInfo event={event} showDetails /> }
+					{event.eventInfo.dates && event.eventInfo.dates.length && (
+						<EventInfo event={event} showDetails />
+					)}
 					{content.content ? (
 						content.content.map(section => (
 							<SimpleContent
@@ -51,9 +71,13 @@ const Events = ({ data: { event }, pageContext }) => {
 					) : (
 						<h2>No content yet</h2>
 					)}
-					{info.artists &&
-						info.artists.map(artist => (
-							<ArtistBlock colors={settings} artist={artist} key={artist.id} />
+					{parsedArtists &&
+						parsedArtists.map(artist => (
+							<ArtistBlock
+								colors={settings}
+								artist={artist}
+								key={artist.id}
+							/>
 						))}
 				</div>
 			</Row>
@@ -64,14 +88,20 @@ const Events = ({ data: { event }, pageContext }) => {
 export default Events;
 
 const ArtistBlock = ({ artist, colors }) => {
-	const style=  colors ? `
+	const style = colors
+		? `
 		.event-artist:hover {
 			color: ${colors.backgroundColor} !important;
 			background: ${colors.textColor} !important;
 		}
-	`: ``;
-	return Style.it(style,
-		<Link to={artist.uri} className="padding-hack event-artist col-8 mt-7 d-block">
+	`
+		: ``;
+	return Style.it(
+		style,
+		<Link
+			to={artist.uri}
+			className="padding-hack event-artist col-8 mt-7 d-block"
+		>
 			<h3 className="big">{artist.title}</h3>
 			<Image srcSet={artist.featuredImage.node.srcSet} />
 		</Link>
@@ -120,6 +150,10 @@ export const eventQuery = graphql`
 						id
 						uri
 						title
+						translations {
+							slug
+							uri
+						}
 						featuredImage {
 							node {
 								srcSet
@@ -133,7 +167,7 @@ export const eventQuery = graphql`
 				}
 				fieldGroupName
 				price
-				venues {
+				venue {
 					... on WpVenue {
 						id
 						venueInfo {
@@ -144,8 +178,8 @@ export const eventQuery = graphql`
 					}
 				}
 				dates {
-					startTime
-					endTime
+					starttime
+					endtime
 					date
 				}
 			}
