@@ -9,8 +9,8 @@ import CustomLink from "../components/customLink";
 import Carousel from "../components/carousel";
 import ArtistsGrid from "../components/blockGrids/artistsGrid";
 
-const Edition = ({ data, pageContext, noFooter, style }) => {
-	const { edition, translation, lang, settings, content, menu, skMenu } = pageContext;
+const Edition = ({ data, pageContext, embeded, style }) => {
+	const { edition, year, translation, lang, settings, content, menu, skMenu } = pageContext;
 
 	let colorStyle;
 
@@ -23,12 +23,20 @@ const Edition = ({ data, pageContext, noFooter, style }) => {
 		colorStyle = { ...style };
 	}
 
-	if (!content || (content && !content.topText)) {
-		return <h1>Please fill in all the required fields!</h1>;
-	}
+	console.log(content);
 
-	const startDate = new Date(content.topText.editionDate.startDate);
-	const endDate = new Date(content.topText.editionDate.endDate);
+	// if (!content || (content && !content.topText)) {
+	// 	return <h1>Please fill in all the required fields!</h1>;
+	// }
+
+	const parsedContent = content.editionContent ? content.editionContent : content;
+
+
+	console.log(parsedContent);
+
+
+	const startDate = new Date(parsedContent.topText.editionDate.startDate);
+	const endDate = new Date(parsedContent.topText.editionDate.endDate);
 
 
 	
@@ -37,11 +45,13 @@ const Edition = ({ data, pageContext, noFooter, style }) => {
 	const translationSlug = `/${langSlug}${edition}`;
 
 
+
 	return (
 		<Layout
+		 	key="layout-edition"
 			style={colorStyle}
-			noFooter={noFooter}
-			year={edition}
+			embeded={embeded}
+			year={edition || year}
 			isSk={isSk}
 			translationSlug={translationSlug}
 			editionHeader={menu}
@@ -49,16 +59,16 @@ const Edition = ({ data, pageContext, noFooter, style }) => {
 			pageName="index"
 		>
 			<Row classes="edition-title">
-				<h1>{content.topText.firstTilte}</h1>
-				<h1>{content.topText.secondTitle}</h1>
+				<h1>{parsedContent.topText.firstTilte}</h1>
+				<h1>{parsedContent.topText.secondTitle}</h1>
 				<h1>
 					{format(startDate, "{dd}.{MM}")} -{" "}
 					{format(endDate, "{dd}.{MM} {yyyy}")}
 				</h1>
 			</Row>
 
-			{content.content &&
-				content.content.map((section, i) => {
+			{parsedContent.content &&
+				parsedContent.content.map((section, i) => {
 					if (section.fieldGroupName) {
 						return (
 							<Row

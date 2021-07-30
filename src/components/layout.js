@@ -20,7 +20,7 @@ const Layout = ({
 	settings,
 	year,
 	style = { color: `#000`, backgroundColor: `#FFF`, borderColor: `#000` },
-	noFooter,
+	embeded,
 	editionHeader = {},
 	skMenu = {
 		menuItems: []
@@ -53,7 +53,7 @@ const Layout = ({
 				}`}
 				style={year ? parsedStyle : {}}
 			>
-				<Header noLang={editionHeader.menuItems || false}/>
+				{!embeded && <Header noLang={editionHeader.menuItems || false} isSk={isSk} translationSlug={translationSlug}/> }
 				{editionHeader && editionHeader.menuItems && (
 					<EditionMenu
 						items={editionHeader.menuItems}
@@ -62,10 +62,11 @@ const Layout = ({
 						translationSlug={translationSlug}
 						isSk={isSk}
 						pageName={pageName}
+						sticky={embeded}
 					/>
 				)}
 				<main>{children}</main>
-				{noFooter ? `` : <SocialFooter />}
+				{embeded ? `` : <SocialFooter />}
 				<footer>© {new Date().getFullYear()}, Copyright</footer>
 			</div>
 		</>

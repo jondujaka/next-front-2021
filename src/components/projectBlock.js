@@ -14,7 +14,7 @@ const ProjectBlock = ({ item }) => {
 			to={item.uri}
 		>
 			<div className="row">
-				<div className="project-info col col-12">
+				<div className="project-info mb-4 col col-12">
 					<h1>{item.title}</h1>
 				</div>
 				<div>

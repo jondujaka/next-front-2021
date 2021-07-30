@@ -58,6 +58,7 @@ const ADD_TO_CART = gql`
 									productInfo {
 										subtitle
 									}
+									uri
 								}
 							}
 						}

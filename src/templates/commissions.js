@@ -8,11 +8,15 @@ import Masonry from "react-masonry-css";
 const Commissions = ({ data, pageContext }) => {
 	const coms = data.commissions.edges;
 
+	const langSlug = pageContext.lang ===`en` ? `sk/` : ``;
+	const isSk = pageContext.lang !== `en`;
+	const translationSlug = `/${langSlug}commissions`;
+
 	return (
-		<Layout>
+		<Layout isSk={isSk} translationSlug={translationSlug}>
 			<Row>
 				<div className="col col-12 mt-5 mb-6">
-					<h2 className="festival-page-title">Commissions</h2>
+					<h2 className="festival-page-title">{data.page.title}</h2>
 				</div>
 			</Row>
 			<Row classes="justify-content-center">
@@ -27,6 +31,7 @@ export default Commissions;
 export const commissionsQuery = graphql`
 	query commissionsPage(
 		# these variables are passed in via createPage.pageContext in gatsby-node.js
+		$id: String,
 		$lang: String!
 	) {
 		commissions: allWpCommission(
@@ -59,6 +64,12 @@ export const commissionsQuery = graphql`
 					}
 				}
 			}
+		}
+		page: wpPage(
+			id: { eq: $id}
+		) {
+			id
+			title
 		}
 	}
 `;

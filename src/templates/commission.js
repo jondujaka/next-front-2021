@@ -8,10 +8,10 @@ import CommissionsGrid from "../components/blockGrids/commissionsGrid";
 import Single from "./single";
 
 const Commission = ({ data: { commission }, pageContext }) => {
-	let related = pageContext.related.map(commission => {
+	let related = pageContext.related ? pageContext.related.map(commission => {
 		let newObj = { node: { ...commission.commission } };
 		return newObj;
-	});
+	}) : [];
 
 	let fake = [];
 
@@ -19,21 +19,38 @@ const Commission = ({ data: { commission }, pageContext }) => {
 		fake.push(related[i % 2]);
 	}
 
+	const langSlug = pageContext.lang === `en` ? `sk/` : ``;
+	const isSk = pageContext.lang === `sk`;
+	const translationSlug = commission.translations.length
+		? commission.translations[0].url
+		: null;
+
 	return (
-		<Layout>
+		<Layout translationSlug={translationSlug} isSk={isSk}>
 			<Row>
 				<div className="col col-12 mt-5 mb-6">
 					<h2 className="festival-page-title">
-						<Link className="inherit" to="/commissions">Commissions</Link> > {commission.title}
+						<Link className="inherit" to="/commissions">
+							Commissions
+						</Link>
+						{` > ${commission.title}`}
 					</h2>
 				</div>
 			</Row>
 			<Single content={commission} />
-			<Separator />
-			<Row classes="justify-content-center">
-				<div class="col col-12 mt-5 mb-6"><h1>More commissions</h1></div>
-				<CommissionsGrid items={fake} />
-			</Row>
+			{related.length ? (
+				<>
+					<Separator />
+					<Row classes="justify-content-center">
+						<div class="col col-12 mt-5 mb-6">
+							<h1>More commissions</h1>
+						</div>
+						<CommissionsGrid items={fake} />
+					</Row>
+				</>
+			) : (
+				``
+			)}
 		</Layout>
 	);
 };
@@ -48,6 +65,9 @@ export const ProjectData = graphql`
 		commission: wpCommission(id: { eq: $id }) {
 			id
 			title
+			translations {
+				uri
+			}
 			singleContent {
 				content {
 					... on WpCommission_Singlecontent_Content_Text {

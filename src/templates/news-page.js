@@ -6,20 +6,19 @@ import NewsBlock from "../components/newsBlock";
 
 const Events = ({ data, pageContext }) => {
 	const news = data.news.edges;
+
+	const langSlug = pageContext.lang ===`en` ? `sk/` : ``;
+	const isSk = pageContext.lang !== `en`;
+	const translationSlug = `/${langSlug}news`;
+
 	return (
-		<Layout>
+		<Layout translationSlug={translationSlug} isSk={isSk}>
 			<Row>
 				<div className="col col-12 mt-5 mb-6">
-					<h2 className="festival-page-title">News</h2>
+					<h2 className="festival-page-title">{pageContext.title}</h2>
 				</div>
 				{news.map(newsItem => (
 					<NewsBlock key={`news-${newsItem.node.id}`} item={newsItem.node} />
-				))}
-				{news.map(newsItem => (
-					<NewsBlock key={`news1-${newsItem.node.id}`} item={newsItem.node} />
-				))}
-				{news.map(newsItem => (
-					<NewsBlock key={`news3-${newsItem.node.id}`} item={newsItem.node} />
 				))}
 			</Row>
 		</Layout>
@@ -49,16 +48,7 @@ export const eventQuery = graphql`
 					}
 					featuredImage {
 						node {
-							sizes
-							uri
-							description
-							caption
-							mediaDetails {
-								sizes {
-									name
-									sourceUrl
-								}
-							}
+							srcSet
 						}
 					}
 				}

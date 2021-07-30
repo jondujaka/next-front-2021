@@ -3,7 +3,7 @@ import { Link } from "gatsby";
 import Style from 'style-it';
 import ImageEl from './image';
 
-const ArtistBlock = ({ item, style, colors }) => {
+const ArtistBlock = ({ item, style, colors={backgroundColor: `FFF`, textColor: `#4c45fa`} }) => {
 
 	if (!item) {
 		return ``;
@@ -33,7 +33,8 @@ const ArtistBlock = ({ item, style, colors }) => {
 		<Link className="artist-item px-2 px-md-4 col-6 col-lg-4 mb-5" to={item.uri}>
 			<div className="row p-1 p-md-3 ">
 				<div className="artist-info col col-12 text-center">
-					<h3 className="artist-title">{item.title}</h3>
+					<h3 className="artist-title">{item.title || item.name}</h3>
+					{item.productInfo?.subtitle && <h3 className="artist-title">{item.productInfo.subtitle}</h3>}
 				</div>
 				<div className="artist-image col col-12">
 					{image && (

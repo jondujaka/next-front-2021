@@ -54,7 +54,7 @@ const Cart = () => {
 		return (
 			<>
 				{cart?.contents.nodes.map((item, i) => {
-					return <CartItem item={item} key={item.key} />;
+					return <CartItem item={item} key={item.product.node.databaseId} />;
 				})}
 			</>
 		);
@@ -80,7 +80,7 @@ const Cart = () => {
 				<div className="col col-12 col-lg-6">
 					<CartContent />
 					{cart ? (
-						<div className="checkout-btn">
+						<div className="checkout-info">
 							<h4>Subtotal {cart.subtotal}</h4>
 							<h4>Shipping {cart.shippingTotal}</h4>
 							<h4>TOTAL {cart.total}</h4>
@@ -88,7 +88,7 @@ const Cart = () => {
 					) : (
 						``
 					)}
-					<Link to="/checkout">Checkout</Link>
+					<Link className="checkout-btn" to="/checkout">Checkout</Link>
 				</div>
 			</Row>
 		</Layout>

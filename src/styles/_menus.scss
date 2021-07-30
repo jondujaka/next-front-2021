@@ -54,8 +54,6 @@ footer {
 
 .header-wrapper,
 .edition-menu-wrapper {
-	z-index: 9;
-	position: fixed;
 	left: 0;
 	width: 100%;
 	height: $headerHeight;
@@ -66,12 +64,18 @@ footer {
 .edition-menu-wrapper {
 	border-bottom: 3px solid;
 	top: 0;
+	z-index: 7;
+	&.position-sticky {
+		margin-top: -$headerHeight;
+	}
 }
 .header-wrapper {
+	z-index: 9;
 	bottom: 0;
 	background: white;
 	border-top: 3px solid $primaryBlue;
 	justify-content: space-around;
+	position: fixed;
 
 	a {
 		@extend .text-body-small;
@@ -87,6 +91,13 @@ footer {
 	h4 {
 		margin: 0;
 	}
+}
+.position-fixed {
+	position: fixed;
+}
+.position-sticky {
+	position: sticky;
+	top: 0;
 }
 
 .main-nav {
@@ -161,7 +172,7 @@ footer {
 	.cart-header {
 		border: 2px solid $primaryBlue;
 
-		&:hover {
+		&:hover, &.active {
 			text-decoration: none !important;
 			color: white;
 			background: $primaryBlue;

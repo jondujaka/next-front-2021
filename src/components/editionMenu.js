@@ -3,7 +3,7 @@ import { Link, navigate } from "gatsby";
 import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
 
-const EditionMenu = ({ items, bg, isSk = false, translationSlug, skMenu, pageName }) => {
+const EditionMenu = ({ items, bg, isSk = false, translationSlug, skMenu, pageName, sticky }) => {
 	const navItems = items.nodes;
 	const skNavItems = skMenu.nodes;
 	const menuItems = navItems
@@ -23,12 +23,11 @@ const EditionMenu = ({ items, bg, isSk = false, translationSlug, skMenu, pageNam
 		.filter(item => item && item.label !== pageName);
 
 	const internalHandleClick = item => {
-		console.log(item.value);
 		navigate(item.value);
 	};
 
 	return (
-		<div className="edition-menu-wrapper" style={{ background: bg }}>
+		<div className={`edition-menu-wrapper ${sticky ? `position-sticky` : `position-fixed`}`} style={{ background: bg }}>
 			<nav className="edition-nav">
 				<ul className="desktop-edition-menu">
 					<li>
@@ -67,7 +66,7 @@ const EditionMenu = ({ items, bg, isSk = false, translationSlug, skMenu, pageNam
 					/>
 				</div>
 
-				{translationSlug && (
+				{translationSlug && !sticky && (
 					<Link className="lang-switcher" to={translationSlug}>
 						{isSk ? `EN` : `SK`}
 					</Link>
@@ -78,7 +77,6 @@ const EditionMenu = ({ items, bg, isSk = false, translationSlug, skMenu, pageNam
 };
 
 const isActive = url => ({ isCurrent, isPartiallyCurrent, location }) => {
-	console.log(location);
 
 	const activeClassName = { className: `active` };
 
@@ -110,13 +108,14 @@ const isActive = url => ({ isCurrent, isPartiallyCurrent, location }) => {
 };
 
 const parseUrl = (isSk, url) => {
-	let parsedUrl;
-	if (url.endsWith(`/index/`)) {
-		parsedUrl = url.substring(0, url.indexOf(`/index/`));
-	} else {
-		parsedUrl = url;
+	let parsedUrl = url;
+	if(url.endsWith(`/`)){
+		parsedUrl = url.substring(0, url.length-1);
 	}
-
+	if (parsedUrl.endsWith(`/index`)) {
+		parsedUrl = url.substring(0, url.indexOf(`/index`));
+	}
+	
 	if (isSk) {
 		parsedUrl = `/sk${parsedUrl}`;
 	}

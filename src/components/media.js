@@ -6,7 +6,7 @@ const Media = ({ content, classes }) => {
 		return content.images.map((image, i) => (
 			<SingleMedia
 				key={`media-${content.fieldGroupName}-${i}`}
-				classes={`col-${12 / content.images.length}`}
+				classes={`col-12 mb-5 col-lg-${12 / content.images.length}`}
 				item={image}
 			/>
 		));

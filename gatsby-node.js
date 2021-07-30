@@ -14,7 +14,8 @@ const templateMap = {
 	about: `about`,
 	index: `home`,
 	commissions: `commissions`,
-	projects: `projects`
+	projects: `projects`,
+	shop: `shop`
 };
 
 const fs = require(`fs`);
@@ -47,11 +48,12 @@ const initProducts = async gatsbyUtilities => {
 	const createProductsPromises = [];
 
 	allProducts.map(productInfo => {
-		const slug = `/products/${productInfo.product.slug}/`;
+		const slug = `/product/${productInfo.product.slug}/`;
 		const template = `product`;
 		const context = {
 			id: productInfo.product.id,
-			related: allProducts
+			related: allProducts,
+			lang: `en`
 		};
 
 		createProductsPromises.push(
@@ -66,6 +68,9 @@ const initProducts = async gatsbyUtilities => {
 
 const initPostTypes = async gatsbyUtilities => {
 	console.log(`init post types`);
+
+	initProducts(gatsbyUtilities);
+
 	let articlesSettings = {
 		postType: `article`,
 		queryName: `allNews`,
@@ -80,11 +85,26 @@ const initPostTypes = async gatsbyUtilities => {
 		const template = `news-article`;
 		const context = {
 			id: articleInfo.article.id,
-			related: allNews
+			related: allNews,
+			lang: `en`
 		};
 		createNewsPromises.push(
 			createIndividualPage(slug, template, context, gatsbyUtilities)
 		);
+
+
+		if (articleInfo.article.translations.length) {
+			console.log(`building news, slovak`);
+			const slug = `/sk/news/${articleInfo.article.translations[0].slug}`;
+			const template = `news-article`;
+			const context = {
+				id: articleInfo.article.translations[0].id,
+				lang: `sk`
+			};
+			createNewsPromises.push(
+				createIndividualPage(slug, template, context, gatsbyUtilities)
+			);
+		}
 	});
 
 	let eventSettings = {
@@ -221,6 +241,19 @@ const initPostTypes = async gatsbyUtilities => {
 		createProjectsPromises.push(
 			createIndividualPage(slug, template, context, gatsbyUtilities)
 		);
+
+		if (projectInfo.project.translations.length) {
+			console.log(`building projects, slovak`);
+			const slug = `/sk/projects/${projectInfo.project.translations[0].slug}`;
+			const template = `project`;
+			const context = {
+				id: projectInfo.project.translations[0].id,
+				lang: `sk`
+			};
+			createProjectsPromises.push(
+				createIndividualPage(slug, template, context, gatsbyUtilities)
+			);
+		}
 	});
 
 	let commissionsSettings = {
@@ -245,6 +278,20 @@ const initPostTypes = async gatsbyUtilities => {
 			createCommissionsPromises.push(
 				createIndividualPage(slug, template, context, gatsbyUtilities)
 			);
+
+
+			if (commissionsInfo.commission.translations.length) {
+				console.log(`building commissions, slovak`);
+				const slug = `/sk/commissions/${commissionsInfo.commission.translations[0].slug}`;
+				const template = `commission`;
+				const context = {
+					id: commissionsInfo.commission.translations[0].id,
+					lang: `sk`
+				};
+				createCommissionsPromises.push(
+					createIndividualPage(slug, template, context, gatsbyUtilities)
+				);
+			}
 		});
 
 	Promise.all([
@@ -263,8 +310,9 @@ exports.createPages = async gatsbyUtilities => {
 		"done with getting edition settings, now main pages, artists, events, etc.."
 	);
 
-	initMainPages(gatsbyUtilities);
 	initPostTypes(gatsbyUtilities);
+	initMainPages(gatsbyUtilities);
+	
 	// initProducts(gatsbyUtilities);
 };
 
@@ -312,7 +360,8 @@ const buildEdition = async (year, gatsbyUtilities) => {
 				...editionInfo.editionData.settings,
 				menu: editionInfo.menu,
 				skMenu: editionInfo.skMenu,
-				year
+				year,
+				content: editionInfo.editionData
 			});
 		}
 
@@ -541,6 +590,7 @@ const getPostType = async (settings, { graphql, reporter }) => {
 							slug
 							id
 							uri
+							title
 						}
 						${settings.postType === `project` ? projectsFragment : ``}
 						${settings.postType === `commission` ? commissionsFragment : ``}
@@ -722,6 +772,11 @@ const initMainPages = async gatsbyUtils => {
 			queryName: `mainProjectsPage`,
 			type: `wpPage`,
 			slug: `projects`
+		},
+		{
+			queryName: `mainShopPage`,
+			type: `wpPage`,
+			slug: `shop`
 		}
 	];
 
@@ -746,12 +801,11 @@ const getSpecificPage = async (settings, { graphql, reporter }) => {
 					slug
 					uri
 					id
-					language {
-						slug
-					}
+					title
 				}
 				slug
 				uri
+				title
 			}
 		}
 	`);
@@ -788,7 +842,8 @@ const initSingleMainPage = async (settings, gatsbyUtils) => {
 
 	let contextEn = {
 		id: pageData.id,
-		lang: `en`
+		lang: `en`,
+		title: pageData.title
 	};
 
 	if (slug === `index`) {
@@ -802,7 +857,8 @@ const initSingleMainPage = async (settings, gatsbyUtils) => {
 		let skData = pageData.translations[0];
 		let contextSk = {
 			id: skData.id,
-			lang: `sk`
+			lang: `sk`,
+			title: skData.title
 		};
 
 		if (slug === `index`) {
@@ -810,7 +866,7 @@ const initSingleMainPage = async (settings, gatsbyUtils) => {
 		}
 
 		if (!skUri) {
-			skUri = skData.uri;
+			skUri = `sk/${pageData.slug}`;
 		}
 
 		createIndividualPage(

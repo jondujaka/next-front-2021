@@ -2,11 +2,24 @@ import React from "react";
 import { graphql, Link } from "gatsby";
 import LangSwitcher from "../components/LangSwitcher";
 import Layout from "../components/layout";
+import Row from "../components/row";
 import Single from "./single";
 
 const NewsArticle = ({ data: { article }, pageContext }) => {
+	const translationSlug = article.translations[0].uri;
+	const isSk = article.language.slug === `sk`;
 	return (
-		<Layout>
+		<Layout translationSlug={translationSlug} isSk={isSk}>
+			<Row>
+				<div className="col col-12 mt-5 mb-6">
+					<h2 className="festival-page-title">
+						<Link className="inherit" to={`${isSk ? `/sk` : ``}/news`}>
+							{isSk ? `Správy` : `News`}
+						</Link>
+						{` > ${article.title}`}
+					</h2>
+				</div>
+			</Row>
 			<Single content={article} />
 		</Layout>
 	);

@@ -8,23 +8,46 @@ import Single from "./single";
 import ProjectsGrid from "../components/blockGrids/projectsGrid";
 
 const Project = ({ data: { project }, pageContext }) => {
-	let related = pageContext.related.map(project => {
-		let newObj = { node: { ...project.project } };
-		return newObj;
-	});
+	let related = pageContext.related
+		? pageContext.related.map(project => {
+				let newObj = { node: { ...project.project } };
+				return newObj;
+		  })
+		: [];
+
+	const isSk = project.language.slug === `sk`;
+	const translationSlug = project.translations[0].uri;
 
 	return (
-		<Layout>
-			<Single content={project} />
-			<Separator />
+		<Layout isSk={isSk} translationSlug={translationSlug}>
 			<Row>
-			<div className="col col-12 mt-5 mb-6">
-					<h1>
-						More projects
-					</h1>
+				<div className="col col-12 mt-5 mb-6">
+					<h2 className="festival-page-title">
+						<Link
+							className="inherit"
+							to={`${isSk ? `/sk` : ``}/projects`}
+						>
+							{isSk ? `Projoekty` : `Projects`}
+						</Link>
+						{` > ${project.title}`}
+					</h2>
 				</div>
-				<ProjectsGrid items={related} />
 			</Row>
+			<Single content={project} />
+
+			{related.length ? (
+				<>
+					<Separator />
+					<Row>
+						<div className="col col-12 mt-5 mb-6">
+							<h1>More projects</h1>
+						</div>
+						<ProjectsGrid items={related} />
+					</Row>
+				</>
+			) : (
+				``
+			)}
 		</Layout>
 	);
 };
@@ -40,41 +63,47 @@ export const ProjectData = graphql`
 		project: wpProject(id: { eq: $id }) {
 			id
 			title
-			# singlePostContent {
-			# 	content {
-			# 		... on WpProject_Singlecontent_Content_MediaText {
-			# 			direction
-			# 			fieldGroupName
-			# 			paragraph {
-			# 				paragraphContent
-			# 				fieldGroupName
-			# 				big
-			# 			}
-			# 			media {
-			# 				image {
-			# 					caption
-			# 					srcSet
-			# 				}
-			# 				imageOrVideo
-			# 				video
-			# 			}
-			# 		}
-			# 		... on WpProject_Singlecontent_Content_Media {
-			# 			fieldGroupName
-			# 			images {
-			# 				caption
-			# 				srcSet
-			# 			}
-			# 			imageOrVideo
-			# 			video
-			# 		}
-			# 		... on WpProject_Singlecontent_Content_Text {
-			# 			fieldGroupName
-			# 			paragraphContent
-			# 			big
-			# 		}
-			# 	}
-			# }
+			language {
+				slug
+			}
+			translations {
+				uri
+			}
+			singleContent {
+				content {
+					... on WpProject_Singlecontent_Content_MediaText {
+						direction
+						fieldGroupName
+						paragraph {
+							paragraphContent
+							fieldGroupName
+							big
+						}
+						media {
+							image {
+								caption
+								srcSet
+							}
+							imageOrVideo
+							video
+						}
+					}
+					... on WpProject_Singlecontent_Content_Media {
+						fieldGroupName
+						images {
+							caption
+							srcSet
+						}
+						imageOrVideo
+						video
+					}
+					... on WpProject_Singlecontent_Content_Text {
+						fieldGroupName
+						paragraphContent
+						big
+					}
+				}
+			}
 		}
 	}
 `;

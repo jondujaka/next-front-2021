@@ -4,11 +4,11 @@ figure {
 	figcaption p{
 		font-family: 'Manege', serif;
 		// font-size: 3.4rem;
-		font-size: 1.4rem;
+		@extend .text-body-small;
 		margin-top: .5em;
-		@include media-breakpoint-up(lg){
-			font-size: 2.75rem;
-		}
+		// @include media-breakpoint-up(lg){
+		// 	font-size: 2.75rem;
+		// }
 	}
 }
 

@@ -23,7 +23,11 @@ const Single = ({ content, direct }) => {
 					</Row>
 				))
 			) : (
-				<h3>Nothing here yet</h3>
+				<Row classes="my-md-4 my-5 my-lg-7">
+					<div className="col-12">
+						<h3>Coming soon...</h3>
+					</div>
+				</Row>
 			)}
 		</div>
 	);
@@ -76,10 +80,10 @@ const DirectionalRow = ({ row }) => {
 		return (
 			<>
 				{row.media && (
-					<Media classes="col-xl-6 col-12" content={row.media} />
+					<Media classes="col-lg-6 col-12 mb-5" content={row.media} />
 				)}
 				{row.paragraph && (
-					<div className="col mx-auto col-12 col-xl-6">
+					<div className="col mx-auto col-12 col-lg-6">
 						<Paragraph
 							big={row.paragraph.big}
 							content={row.paragraph.paragraphContent}

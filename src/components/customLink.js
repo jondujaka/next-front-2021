@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "gatsby";
 import Style from 'style-it';
 
-const CustomLink = ({ link, children, withArrow, classes, colors }) => {
+const CustomLink = ({ link, children, withArrow, classes, colors={backgroundColor: `white`, textColor: `black`} }) => {
 	const styles = colors
 		? `
 			.see-all-link:hover {

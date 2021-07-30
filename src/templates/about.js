@@ -14,11 +14,16 @@ const About = ({ data, pageContext }) => {
 	let scrollSpyItems =
 		sections && sections.map(section => section.title.toLowerCase());
 
+	const langSlug = pageContext.lang ===`en` ? `sk/` : ``;
+	const isSk = pageContext.lang !== `en`;
+	const translationSlug = `/${langSlug}about`;
+
+
 	return (
-		<Layout>
+		<Layout isSk={isSk} translationSlug={translationSlug}>
 			<div className="row mt-6">
 				<div className="col col-12 mt-5 mb-6">
-					<h2 className="festival-page-title">About</h2>
+					<h2 className="festival-page-title">{data.wpPage.title}</h2>
 				</div>
 				<div className="col-12 d-none d-lg-block col-lg-5 col-xl-6 about-nav">
 					{scrollSpyItems && (
@@ -84,9 +89,10 @@ export default About;
 export const aboutQuery = graphql`
 	query aboutPage(
 		# these variables are passed in via createPage.pageContext in gatsby-node.js
-		$id: String
+		$id: String,
+		$lang: String
 	) {
-		wpPage(id: { eq: $id }) {
+		wpPage(id: { eq: $id }, language: {slug: {eq: $lang}}) {
 			about {
 				section {
 					title
@@ -117,6 +123,7 @@ export const aboutQuery = graphql`
 			title
 			translations {
 				slug
+				uri
 			}
 		}
 	}

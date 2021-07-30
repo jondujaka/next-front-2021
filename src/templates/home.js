@@ -10,7 +10,6 @@ import { InView } from "react-intersection-observer";
 import Edition from "./edition";
 
 const Home = ({ data: { page, news }, pageContext }) => {
-	const { translations, language, mainHome } = { page };
 	const { availableEditions } = pageContext;
 
 	const latestEdition =
@@ -19,23 +18,65 @@ const Home = ({ data: { page, news }, pageContext }) => {
 			return prev.year > current.year ? prev : current;
 		});
 
-	const langSlug = page.language.slug == `en` ? `` : `/sk`;
+	const body = useRef(null);
+	const mediaRef = useRef(null);
+	const containerRef = useRef(null);
+
+	const [showVideo, setShowVideo] = useState(false);
+	const [isInView, setIsInView] = useState(true);
 
 	const allNews = news.edges;
 
-	const [isInView, setIsInView] = useState(true);
+	const canReshowVideo = useRef(false);
+
+	const startTimer = () => {
+		window.setTimeout(() =>{
+			canReshowVideo.current=true
+		}, 3000);
+	}
+
+	useEffect(() => {
+		setShowVideo(true);
+		body.current = document.getElementsByTagName("body")[0];
+		body.current.classList.add("overflow-hidden");
+		window.addEventListener('scroll', handleBodyScroll)
+	}, []);
+
+	const handleBodyScroll = (e) => {
+		console.log(window.scrollY);
+		if(window.scrollY === 0 && canReshowVideo.current){
+			setShowVideo(true);
+			body.current.classList.add("overflow-hidden");
+		}
+	}
+
+	const hideVideo = () => {
+		setShowVideo(false);
+		body.current.classList.remove('overflow-hidden');
+		startTimer();
+	};
+
+	const editionContext = {
+		edition: latestEdition.year,
+		lang: page.language.slug,
+		settings: latestEdition.content.settings,
+		translation: latestEdition.content.translations[0],
+		menu: latestEdition.menu,
+		skMenu: latestEdition.skMenu,
+		content: latestEdition.content
+	};
+
+	const langSlug = page.language.slug === `en` ? `sk/` : ``;
+	const isSk = page.language.slug !== `en`;
+	const translationSlug = `/${langSlug}`;
 
 	return (
-		<Layout>
-			{isInView && (
-				<section className="media-container no-scrollbar">
-					<div className="media-wrapper">
-						<Media
-							setIsInView={setIsInView}
-							media={page.mainHome.videoLayer.media}
-						/>
-					</div>
-				</section>
+		<Layout key="layout-home" translationSlug={translationSlug} isSk={isSk}>
+			{showVideo && (
+				<ScrollVideo
+					layer={page.mainHome.videoLayer}
+					hideVideo={hideVideo}
+				/>
 			)}
 			<Row>
 				<HomeHeader
@@ -59,7 +100,7 @@ const Home = ({ data: { page, news }, pageContext }) => {
 			</Row> */}
 
 			<br />
-			<Row>
+			<Row classes="mb-6">
 				<h1 className="col col-12">News</h1>
 				{allNews.map(newsItem => (
 					<NewsBlock
@@ -73,19 +114,50 @@ const Home = ({ data: { page, news }, pageContext }) => {
 					</Link>
 				</div>
 			</Row>
-			<Edition
-				pageContext={{
-					edition: latestEdition.year,
-					lang: `en`,
-					translation: { language: { slug: `sk` } }
-				}}
-				style={{
-					color: latestEdition.textColor,
-					backgroundColor: latestEdition.backgroundColor
-				}}
-				noFooter={true}
-			/>
+			<Edition pageContext={editionContext} embeded={true} />
 		</Layout>
+	);
+};
+
+const ScrollVideo = ({ layer, hideVideo }) => {
+
+	const body = useRef(null);
+	const mediaRef = useRef(null);
+
+	useEffect(() => {
+		const container = document.getElementById("media-container");
+		body.current = document.getElementById("media-container");
+		container.addEventListener("scroll", handleScroll);
+	}, []);
+
+	const handleScroll = e => {
+		const threshold = mediaRef.current.offsetHeight + 200;
+
+		console.log(threshold);
+		console.log(e.target.scrollTop);
+
+		if (e.target.scrollTop > threshold + 10) {
+			body.current.classList.remove("overflow-hidden");
+			hideVideo();
+		}
+
+		// console.log(mediaRef.current);
+		// console.log(body.current)
+		// e.preventDefault();
+		// e.stopPropagation();
+		console.log("asd");
+		// return false;
+	};
+
+	return (
+		<section
+			id="media-container"
+			className="media-container"
+		>
+			<div className="media-wrapper" ref={mediaRef}>
+				<Media media={layer.media} homePage />
+			</div>
+		</section>
 	);
 };
 
@@ -118,19 +190,13 @@ const Media = ({ media, setIsInView }) => {
 		return <img srcSet={`${media.image.srcSet}`} />;
 	} else {
 		return (
-			<InView
-				as="div"
-				className="player-wrapper"
-				onChange={(inView, entry) => setIsInView(inView)}
-			>
-				<ReactPlayer
-					className="react-player"
-					url={media.video}
-					width="100%"
-					height="100%"
-					playing
-				/>
-			</InView>
+			<ReactPlayer
+				className="react-player-home"
+				url={media.video}
+				playing
+				width="100%"
+				height="100%"
+			/>
 		);
 	}
 };
@@ -144,7 +210,7 @@ export const pageQuery = graphql`
 		$lang: String!
 	) {
 		# selecting the current page by id
-		page: wpPage(id: { eq: $id }) {
+		page: wpPage(id: { eq: $id }, language: { slug: { eq: $lang } }) {
 			id
 			title
 			language {
@@ -152,6 +218,7 @@ export const pageQuery = graphql`
 			}
 			translations {
 				uri
+				slug
 			}
 			mainHome {
 				topLinks {
@@ -180,7 +247,7 @@ export const pageQuery = graphql`
 
 		news: allWpNewsArticle(
 			filter: { language: { slug: { eq: $lang } } }
-			limit: 10
+			limit: 6
 			sort: { order: DESC, fields: date }
 		) {
 			edges {
@@ -195,16 +262,7 @@ export const pageQuery = graphql`
 					}
 					featuredImage {
 						node {
-							sizes
-							uri
-							description
-							caption
-							mediaDetails {
-								sizes {
-									name
-									sourceUrl
-								}
-							}
+							srcSet
 						}
 					}
 				}
