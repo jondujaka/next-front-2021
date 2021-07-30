@@ -12,6 +12,7 @@ export function wrapRootElement({ element }) {
 }
 
 export function onRouteUpdate(){
+	console.log('remove class')
 	if(document){
 		document.getElementsByTagName('body')[0].classList.remove('overflow-hidden');
 	}

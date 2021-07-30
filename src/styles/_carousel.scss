@@ -21,6 +21,13 @@
 	}
 }
 
+
+.embla__slide {
+	img {
+		object-fit: cover;
+		height: 100%;
+	}
+}
 .carousel-nav{
 	display: flex;
 	justify-content: center;

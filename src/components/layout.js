@@ -51,6 +51,7 @@ const Layout = ({
 				className={`main-wrapper ${
 					year ? `edition-${year} menu-padding edition-web` : `no-edition festival-web`
 				}`}
+				id="main-wrapper"
 				style={year ? parsedStyle : {}}
 			>
 				{!embeded && <Header noLang={editionHeader.menuItems || false} isSk={isSk} translationSlug={translationSlug}/> }

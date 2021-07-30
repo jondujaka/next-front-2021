@@ -9,7 +9,7 @@ import NewsBlock from "../components/newsBlock";
 import { InView } from "react-intersection-observer";
 import Edition from "./edition";
 
-const Home = ({ data: { page, news }, pageContext }) => {
+const Home = ({ data: { page, news }, pageContext, location }) => {
 	const { availableEditions } = pageContext;
 
 	const latestEdition =
@@ -30,23 +30,26 @@ const Home = ({ data: { page, news }, pageContext }) => {
 	const canReshowVideo = useRef(false);
 
 	const startTimer = () => {
+		canReshowVideo.current = false;
 		window.setTimeout(() =>{
 			canReshowVideo.current=true
-		}, 3000);
+		}, 1000);
 	}
 
 	useEffect(() => {
 		setShowVideo(true);
-		body.current = document.getElementsByTagName("body")[0];
+		body.current = document.getElementById("main-wrapper");
 		body.current.classList.add("overflow-hidden");
 		window.addEventListener('scroll', handleBodyScroll)
 	}, []);
 
 	const handleBodyScroll = (e) => {
 		console.log(window.scrollY);
-		if(window.scrollY === 0 && canReshowVideo.current){
+		if(window.scrollY === 0 && canReshowVideo.current && (location.pathname === `/` || location.pathname === `/sk`)){
 			setShowVideo(true);
 			body.current.classList.add("overflow-hidden");
+			console.log(location.pathname);
+			console.log('add class')
 		}
 	}
 
@@ -121,12 +124,10 @@ const Home = ({ data: { page, news }, pageContext }) => {
 
 const ScrollVideo = ({ layer, hideVideo }) => {
 
-	const body = useRef(null);
 	const mediaRef = useRef(null);
 
 	useEffect(() => {
 		const container = document.getElementById("media-container");
-		body.current = document.getElementById("media-container");
 		container.addEventListener("scroll", handleScroll);
 	}, []);
 
@@ -137,7 +138,6 @@ const ScrollVideo = ({ layer, hideVideo }) => {
 		console.log(e.target.scrollTop);
 
 		if (e.target.scrollTop > threshold + 10) {
-			body.current.classList.remove("overflow-hidden");
 			hideVideo();
 		}
 
