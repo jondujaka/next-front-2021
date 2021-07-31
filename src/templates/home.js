@@ -61,7 +61,7 @@ const Home = ({ data: { page, news }, pageContext, location }) => {
 		startTimer();
 	};
 
-	const editionContext = {
+	const editionContext = latestEdition ? {
 		edition: latestEdition.year,
 		lang: page.language.slug,
 		settings: latestEdition.content.settings,
@@ -69,7 +69,7 @@ const Home = ({ data: { page, news }, pageContext, location }) => {
 		menu: latestEdition.menu,
 		skMenu: latestEdition.skMenu,
 		content: latestEdition.content
-	};
+	} : null;
 
 	const langSlug = page.language.slug === `en` ? `sk/` : ``;
 	const isSk = page.language.slug !== `en`;
@@ -119,7 +119,7 @@ const Home = ({ data: { page, news }, pageContext, location }) => {
 					</Link>
 				</div>
 			</Row>
-			<Edition pageContext={editionContext} embeded={true} />
+			{latestEdition && <Edition pageContext={editionContext} embeded={true} /> }
 		</Layout>
 	);
 };
