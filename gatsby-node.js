@@ -92,7 +92,6 @@ const initPostTypes = async gatsbyUtilities => {
 			createIndividualPage(slug, template, context, gatsbyUtilities)
 		);
 
-
 		if (articleInfo.article.translations.length) {
 			console.log(`building news, slovak`);
 			const slug = `/sk/news/${articleInfo.article.translations[0].slug}`;
@@ -279,7 +278,6 @@ const initPostTypes = async gatsbyUtilities => {
 				createIndividualPage(slug, template, context, gatsbyUtilities)
 			);
 
-
 			if (commissionsInfo.commission.translations.length) {
 				console.log(`building commissions, slovak`);
 				const slug = `/sk/commissions/${commissionsInfo.commission.translations[0].slug}`;
@@ -289,7 +287,12 @@ const initPostTypes = async gatsbyUtilities => {
 					lang: `sk`
 				};
 				createCommissionsPromises.push(
-					createIndividualPage(slug, template, context, gatsbyUtilities)
+					createIndividualPage(
+						slug,
+						template,
+						context,
+						gatsbyUtilities
+					)
 				);
 			}
 		});
@@ -312,7 +315,7 @@ exports.createPages = async gatsbyUtilities => {
 
 	initPostTypes(gatsbyUtilities);
 	initMainPages(gatsbyUtilities);
-	
+
 	// initProducts(gatsbyUtilities);
 };
 
@@ -642,12 +645,19 @@ const getEditionInfo = async (year, { graphql, reporter }) => {
 							  ... on WpEvent {
 								id
 								uri
-							title
-							featuredImage {
-							  node {
-								srcSet
-							  }
-							}
+								title
+								featuredImage {
+									node {
+										srcSet
+									}
+								}
+								language {
+									slug
+								}
+								translations {
+									uri
+									title
+								}
 							  }
 							}
 						  }
@@ -663,6 +673,13 @@ const getEditionInfo = async (year, { graphql, reporter }) => {
 							  node {
 								srcSet
 							  }
+							}
+							language {
+								slug
+							}
+							translations {
+								uri
+								title
 							}
 						  }
 						}

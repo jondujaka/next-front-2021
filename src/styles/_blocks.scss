@@ -257,7 +257,7 @@
 	margin: 1.5rem 2rem;
 
 	.Dropdown-root {
-		margin-right: 5vw;
+		margin-right: 4vw;
 	}
 
 	.Dropdown-control {
@@ -295,7 +295,8 @@
 
 @media (max-width: 480px) {
 	.filter-wrapper .Dropdown-control {
-		font-size: 22px;
+		font-size: 16px;
+		white-space: nowrap;
 	}
 }
 

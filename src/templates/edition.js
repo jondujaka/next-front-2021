@@ -12,6 +12,8 @@ import ArtistsGrid from "../components/blockGrids/artistsGrid";
 const Edition = ({ data, pageContext, embeded, style }) => {
 	const { edition, year, translation, lang, settings, content, menu, skMenu } = pageContext;
 
+	console.log(pageContext);
+
 	let colorStyle;
 
 	if (settings) {
@@ -85,6 +87,7 @@ const Edition = ({ data, pageContext, embeded, style }) => {
 };
 
 const editionRow = (isSk, section, i, year, colors) => {
+
 	const type = section.fieldGroupName;
 	if (type.endsWith(`Media`)) {
 		return section.images.length > 1 ? (
@@ -131,47 +134,88 @@ const editionRow = (isSk, section, i, year, colors) => {
 	}
 
 	if (type.endsWith(`ArtistsSection`)) {
-		return (
-			<>
-				<div className="col-12">
-					<h1>{section.title}</h1>
-				</div>
-				<ArtistsGrid colors={colors} items={section.artists} seeAll />
-				<div className="d-flex col-4 mx-auto justify-content-center align-items-center text-center mb-6">
-					<div className="block-link-wrapper">
-						<CustomLink
-							classes="see-all-link"
-							colors={colors}
-							link={getLink(isSk, year, `/artists`)}
-						>
-							See all artists
-						</CustomLink>
+		if(section.artists && section.artists.length){
+			let parsedArtists = isSk ? section.artists.map(artist => {
+				console.log(artist);
+				if(artist.language.slug === `en` && isSk){
+					return {
+						...artist,
+						uri: artist.translations[0].uri,
+						title: artist.translations[0].title
+					}
+				}
+				return artist;
+			}) : section.artists;
+		
+
+			console.log(parsedArtists)
+
+			return (
+				<>
+					<div className="col-12">
+						<h1>{section.title}</h1>
 					</div>
-				</div>
-			</>
-		);
+					<ArtistsGrid colors={colors} items={parsedArtists} seeAll />
+					<div className="d-flex col-4 mx-auto justify-content-center align-items-center text-center mb-6">
+						<div className="block-link-wrapper">
+							<CustomLink
+								classes="see-all-link"
+								colors={colors}
+								link={getLink(isSk, year, `/artists`)}
+							>
+								See all artists
+							</CustomLink>
+						</div>
+					</div>
+				</>
+			)
+		}
+
+		return ``;
 	}
 
 	if (type.endsWith(`WorkshopsSection`)) {
-		return (
-			<>
-				<div className="col-12">
-					<h1>{section.title}</h1>
-				</div>
-				<ArtistsGrid colors={colors} items={section.workshops} seeAll />
-				<div className="d-flex col-4 mx-auto justify-content-center align-items-center text-center mb-6">
-					<div className="block-link-wrapper">
-						<CustomLink
-							classes="see-all-link"
-							colors={colors}
-							link={getLink(isSk, year, `/workshops`)}
-						>
-							See all workshops
-						</CustomLink>
+		
+		if(section.workshops && section.workshops.length){
+
+			let parsedWorkshops = isSk ? section.workshops.map(workshop => {
+				console.log(workshop);
+				if(workshop.language.slug === `en` && isSk){
+					return {
+						...workshop,
+						uri: workshop.translations[0].uri,
+						title: workshop.translations[0].title
+					}
+				}
+				return workshop;
+			}) : section.workshops;
+		
+
+			console.log(parsedWorkshops)
+
+
+
+			return (
+				<>
+					<div className="col-12">
+						<h1>{section.title}</h1>
 					</div>
-				</div>
-			</>
-		);
+					<ArtistsGrid colors={colors} items={parsedWorkshops} seeAll />
+					<div className="d-flex col-4 mx-auto justify-content-center align-items-center text-center mb-6">
+						<div className="block-link-wrapper">
+							<CustomLink
+								classes="see-all-link"
+								colors={colors}
+								link={getLink(isSk, year, `/workshops`)}
+							>
+								See all workshops
+							</CustomLink>
+						</div>
+					</div>
+				</>
+			);
+		} 
+		return null
 	}
 };
 

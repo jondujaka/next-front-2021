@@ -33,15 +33,15 @@ const EditionMenu = ({ items, bg, isSk = false, translationSlug, skMenu, pageNam
 					<li>
 						{navItems.length &&
 							navItems.map((item, i) => (
-								<Link
+								<a
 									key={`item-${item.url}`}
-									to={parseUrl(isSk, item.url)}
-									getProps={isActive(item.url)}
+									href={parseUrl(isSk, item.url)}
+									
 								>
 									{isSk && skNavItems
 										? skNavItems[i].label
 										: item.label}
-								</Link>
+								</a>
 							))}
 					</li>
 				</ul>
@@ -49,14 +49,14 @@ const EditionMenu = ({ items, bg, isSk = false, translationSlug, skMenu, pageNam
 				<div className="mobile-edition-menu">
 					<ul>
 						<li>
-							<Link
-								to={parseUrl(isSk, navItems[0].url)}
-								getProps={isActive(navItems[0].url)}
+							<a
+								href={parseUrl(isSk, navItems[0].url)}
+								
 							>
 								{isSk && skNavItems
 									? skNavItems[0].label
 									: navItems[0].label}
-							</Link>
+							</a>
 						</li>
 					</ul>
 					<Dropdown

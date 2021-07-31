@@ -12,6 +12,8 @@ import Edition from "./edition";
 const Home = ({ data: { page, news }, pageContext, location }) => {
 	const { availableEditions } = pageContext;
 
+	console.log(page);
+
 	const latestEdition =
 		availableEditions.length &&
 		availableEditions.reduce((prev, current) => {
