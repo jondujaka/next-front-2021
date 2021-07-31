@@ -43,6 +43,11 @@ const Home = ({ data: { page, news }, pageContext, location }) => {
 		body.current = document.getElementById("main-wrapper");
 		body.current.classList.add("overflow-hidden");
 		window.addEventListener('scroll', handleBodyScroll)
+
+
+		return () => {
+			window.removeEventListener('scroll', handleBodyScroll)
+		  }
 	}, []);
 
 	const handleBodyScroll = (e) => {

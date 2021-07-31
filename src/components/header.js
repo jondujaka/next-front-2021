@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { Link } from "gatsby";
+import { Link, useStaticQuery, graphql } from "gatsby";
 import { useAppState } from "./context";
 
 const Header = ({ siteTitle, noLang, isSk, translationSlug }) => {
@@ -83,6 +83,31 @@ const Header = ({ siteTitle, noLang, isSk, translationSlug }) => {
 };
 
 const MainMenuLinks = ({ cart, noLang, mobile, translationSlug, isSk }) => {
+	const data = useStaticQuery(graphql`
+		query MainMenusQuery {
+			allWpMenu(filter: { slug: { regex: "/^main-navigation/" } }) {
+				edges {
+					node {
+						slug
+						menuItems {
+							nodes {
+								url
+								label
+							}
+						}
+					}
+				}
+			}
+		}
+	`);
+
+	const menus = data.allWpMenu.edges;
+
+	const menuSlug = isSk ? `main-navigation-sk` : `main-navigation`;
+	const menuItems = menus.find(menu => menu.node.slug === menuSlug).node.menuItems.nodes;
+
+	console.log(menuItems);
+
 	return (
 		<ul>
 			{mobile && (
@@ -92,78 +117,15 @@ const MainMenuLinks = ({ cart, noLang, mobile, translationSlug, isSk }) => {
 					</Link>
 				</li>
 			)}
-			<li>
-				<Link
-					to={getMenuUrl(`/news`, isSk)}
+			{menuItems.length && menuItems.map(item => <li><Link
+					to={item.url}
 					partiallyActive
 					activeClassName="active"
 				>
-					News
+					{item.label}
 				</Link>
-			</li>
-			<li>
-				<Link
-					to={getMenuUrl(`/about`, isSk)}
-					partiallyActive
-					activeClassName="active"
-				>
-					About
-				</Link>
-			</li>
-			<li>
-				<Link
-					to={getMenuUrl(`/2021`, isSk)}
-					partiallyActive
-					activeClassName="active"
-				>
-					Festival '21
-				</Link>
-			</li>
-			<li>
-				<Link
-					to={getMenuUrl(`/commissions`, isSk)}
-					partiallyActive
-					activeClassName="active"
-				>
-					Commissions
-				</Link>
-			</li>
-			<li>
-				<Link
-					to={getMenuUrl(`/projects`, isSk)}
-					partiallyActive
-					activeClassName="active"
-				>
-					Projects
-				</Link>
-			</li>
-			<li>
-				<Link
-					to={getMenuUrl(`/records`, isSk)}
-					partiallyActive
-					activeClassName="active"
-				>
-					Records
-				</Link>
-			</li>
-			<li>
-				<Link
-					to={getMenuUrl(`/archive`, isSk)}
-					partiallyActive
-					activeClassName="active"
-				>
-					Archive
-				</Link>
-			</li>
-			<li>
-				<Link
-					to={getMenuUrl(`/shop`, isSk)}
-					partiallyActive
-					activeClassName="active"
-				>
-					Shop
-				</Link>
-			</li>
+				</li>
+			)}
 			{cart ? (
 				<li>
 					<Link
@@ -171,7 +133,8 @@ const MainMenuLinks = ({ cart, noLang, mobile, translationSlug, isSk }) => {
 						className="cart-header"
 						partiallyActive
 						activeClassName="active"
-					>Cart - {cart.contents.itemCount}
+					>
+						Cart - {cart.contents.itemCount}
 					</Link>
 				</li>
 			) : (

@@ -89,6 +89,7 @@
 	border: 3px solid $primaryBlue;
 	border-radius: 4.2rem;
 	display: block;
+	overflow: hidden;
 
 	&:hover {
 		background: $primaryBlue;
@@ -96,18 +97,11 @@
 		text-decoration: none;
 	}
 }
-.project-title {
-	font-size: 6rem;
-
-	@include media-breakpoint-up(lg) {
-		font-size: 11rem;
+.project-info {
+	h1 {
+		word-break: break-word;
+		hyphens: auto;
 	}
-	// @include media-breakpoint-up(xxl){
-	// 	font-size: 14rem;
-	// }
-
-	font-family: "Manege", serif;
-	letter-spacing: -0.28rem;
 }
 
 .project-item p {
