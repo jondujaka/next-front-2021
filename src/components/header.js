@@ -26,7 +26,6 @@ const Header = ({ siteTitle, noLang, isSk, translationSlug }) => {
 		}
 
 		if (windowW < 1130) {
-			console.log("in here");
 			setMobileNavOpen(true);
 		}
 	};
@@ -105,8 +104,6 @@ const MainMenuLinks = ({ cart, noLang, mobile, translationSlug, isSk }) => {
 
 	const menuSlug = isSk ? `main-navigation-sk` : `main-navigation`;
 	const menuItems = menus.find(menu => menu.node.slug === menuSlug).node.menuItems.nodes;
-
-	console.log(menuItems);
 
 	return (
 		<ul>

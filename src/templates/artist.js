@@ -15,12 +15,10 @@ import { parse } from "query-string";
 const Artist = ({ data: { artist, events }, pageContext }) => {
 	const { lang, year, settings, menu } = pageContext;
 
-	console.log(settings);
 	const content = artist.artistEventContent;
 	const isSk = lang && lang !== `en`;
 
 	const eventsList = events.edges.filter(event => {
-		console.log(event);
 		return (
 			event.node.eventInfo.artists &&
 			event.node.eventInfo.artists.some(
@@ -92,7 +90,7 @@ const Artist = ({ data: { artist, events }, pageContext }) => {
 								section={section}
 								key={section.fieldGroupName}
 							/>
-						)) : <p>No content yet</p>}
+						)) : <p>Description coming soon...</p>}
 					</div>
 				</Row>
 			)}

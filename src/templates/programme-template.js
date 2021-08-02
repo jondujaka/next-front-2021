@@ -193,7 +193,7 @@ const Day = ({ day, colors }) => {
 const ScheduleItem = ({ item, colors }) => {
 	let time = `${item.date.starttime} - ${item.date.endtime}`;
 	const venue = item.eventInfo.venue ? item.eventInfo.venue : null;
-	const online = true;
+	const online = item.eventInfo.livestreamUrl || '';
 	const styles = colors
 		? `
 		.schedule-item:hover,
@@ -228,15 +228,15 @@ const ScheduleItem = ({ item, colors }) => {
 					</a>
 				)}
 
-				{online && (
+				{online.length ? (
 					<a
 						className="watch-link"
-						href="https://youtube.com"
+						href={online}
 						target="_blank"
 					>
 						Watch online
 					</a>
-				)}
+				) : null}
 			</div>
 		</Link>
 	);
@@ -282,6 +282,7 @@ export const scheduleItemsQuery = graphql`
 						format {
 							slug
 						}
+						livestreamUrl
 						venue {
 							... on WpVenue {
 								id

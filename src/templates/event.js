@@ -69,7 +69,7 @@ const Events = ({ data: { event }, pageContext }) => {
 							/>
 						))
 					) : (
-						<h2>No content yet</h2>
+						<h2>Description coming soon...</h2>
 					)}
 					{parsedArtists &&
 						parsedArtists.map(artist => (

@@ -10,8 +10,6 @@ const Product = ({item}) => {
 		slug: variation.attributes.nodes[0].value
 	}));
 
-	console.log(formats);
-
 	return (
 		<Link
 			className="product-item px-2 p-md-5 col-6 col-lg-4 mb-5"

@@ -8,7 +8,6 @@ const ArtistBlock = ({ item, style, colors={backgroundColor: `FFF`, textColor: `
 	if (!item) {
 		return ``;
 	}
-	console.log(item);
 	if (item.node) {
 		item = item.node;
 	}
