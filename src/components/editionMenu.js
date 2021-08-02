@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { Link, navigate } from "gatsby";
 import Dropdown from "react-dropdown";
+import Style from 'style-it';
 import "react-dropdown/style.css";
 
-const EditionMenu = ({ items, bg, isSk = false, translationSlug, skMenu, pageName, sticky }) => {
+const EditionMenu = ({ items, bg, isSk = false, translationSlug, colors, skMenu, pageName, sticky }) => {
 	const navItems = items.nodes;
 	const skNavItems = skMenu.nodes;
 	const menuItems = navItems
@@ -26,22 +27,29 @@ const EditionMenu = ({ items, bg, isSk = false, translationSlug, skMenu, pageNam
 		navigate(item.value);
 	};
 
-	return (
+	const styles = colors ? `
+		.lang-switcher:hover {
+			color: ${colors.backgroundColor};
+			background: ${colors.borderColor};
+		}
+	` : ``;
+	return Style.it(styles,
 		<div className={`edition-menu-wrapper ${sticky ? `position-sticky` : `position-fixed`}`} style={{ background: bg }}>
 			<nav className="edition-nav">
 				<ul className="desktop-edition-menu">
 					<li>
 						{navItems.length &&
 							navItems.map((item, i) => (
-								<a
+								<Link
 									key={`item-${item.url}`}
-									href={parseUrl(isSk, item.url)}
-									
+									to={parseUrl(isSk, item.url)}
+									getProps={isActive(item.url)}
+									partiallyActive
 								>
 									{isSk && skNavItems
 										? skNavItems[i].label
 										: item.label}
-								</a>
+								</Link>
 							))}
 					</li>
 				</ul>
@@ -49,14 +57,13 @@ const EditionMenu = ({ items, bg, isSk = false, translationSlug, skMenu, pageNam
 				<div className="mobile-edition-menu">
 					<ul>
 						<li>
-							<a
-								href={parseUrl(isSk, navItems[0].url)}
-								
+							<Link to={parseUrl(isSk, navItems[0].url)}
+								partiallyActive
 							>
 								{isSk && skNavItems
 									? skNavItems[0].label
 									: navItems[0].label}
-							</a>
+							</Link>
 						</li>
 					</ul>
 					<Dropdown
@@ -86,19 +93,19 @@ const isActive = url => ({ isCurrent, isPartiallyCurrent, location }) => {
 
 	if (
 		isPartiallyCurrent &&
-		(url.endsWith("/index/") || url.endsWith("/index"))
+		url.length < 6
 	) {
-		if (location.pathname.length === 6) {
+		if (location.pathname.length <= 6) {
 			return activeClassName;
 		}
 		return null;
 	}
 
-	if (url.endsWith("/programme/") && location.pathname.includes("/events/")) {
+	if (url.endsWith("/programme") && location.pathname.includes("/events/")) {
 		return activeClassName;
 	}
 
-	if (url.endsWith("/artists/") && location.pathname.includes("/artist/")) {
+	if (url.endsWith("/artists") && location.pathname.includes("/artist/")) {
 		return activeClassName;
 	}
 

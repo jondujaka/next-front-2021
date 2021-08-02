@@ -42,8 +42,6 @@ const Artist = ({ data: { artist, events }, pageContext }) => {
 			}
 		}
 	});
-
-	console.log(parsedEvents)
 	
 
 	let translationSlug;

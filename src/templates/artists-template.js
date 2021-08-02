@@ -80,30 +80,39 @@ const ArtistsTemplate = ({ data, pageContext }) => {
 	const getFilteredArtists = () => {
 		return newArtists.filter(artist => {
 			let dayMatch = false;
-			let venueMatch= false;
+			let venueMatch = false;
 			let formatMatch = false;
 
-			if(!artist.info.length) return true;
-			artist.info && artist.info.forEach(infoItem => {
-				if (dayFilter.current === "all") {
-					dayMatch = true;
-				} else {
-					infoItem.dates && infoItem.dates.forEach(date => {
-						if (date.date === dayFilter.current) {
-							dayMatch = true;
-						}
-					});
-				}
+			if (!artist.info.length) return true;
+			artist.info &&
+				artist.info.forEach(infoItem => {
+					if (dayFilter.current === "all") {
+						dayMatch = true;
+					} else {
+						infoItem.dates &&
+							infoItem.dates.forEach(date => {
+								if (date.date === dayFilter.current) {
+									dayMatch = true;
+								}
+							});
+					}
 
-				if(venueFilter.current === 'all' || !infoItem.venue || infoItem.venue === venueFilter.current){
-					venueMatch = true;
-				}
+					if (
+						venueFilter.current === "all" ||
+						!infoItem.venue ||
+						infoItem.venue === venueFilter.current
+					) {
+						venueMatch = true;
+					}
 
-				if(formatFilter.current === 'all' || !infoItem.format || infoItem.format === formatFilter.current){
-					formatMatch = true;
-				}
-
-			});
+					if (
+						formatFilter.current === "all" ||
+						!infoItem.format ||
+						infoItem.format === formatFilter.current
+					) {
+						formatMatch = true;
+					}
+				});
 
 			return dayMatch && venueMatch && formatMatch;
 		});
@@ -149,7 +158,14 @@ const ArtistsTemplate = ({ data, pageContext }) => {
 					</h1>
 				</div>
 				<div className="col col-12">
-					<Filter dayItems={allDays} handleClick={filterArtists} />
+					<Filter
+						colors={{
+							textColor: settings.textColor,
+							backgroundColor: settings.backgroundColor
+						}}
+						dayItems={allDays}
+						handleClick={filterArtists}
+					/>
 				</div>
 			</Row>
 			<Row classes="mt-6 justify-content-start">

@@ -2,8 +2,9 @@ import React from "react";
 import { useStaticQuery, graphql } from "gatsby";
 import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
+import Style from "style-it";
 
-const Filter = ({ data, handleClick, dayItems, noFormats }) => {
+const Filter = ({ data, handleClick, dayItems, noFormats, colors }) => {
 	const internalHandleClick = (slug, type) => {
 		handleClick(slug, type);
 	};
@@ -46,7 +47,14 @@ const Filter = ({ data, handleClick, dayItems, noFormats }) => {
 		}))
 	];
 
-	return (
+	const styles = colors ? `
+		.Dropdown-option:hover {
+			color: ${colors.backgroundColor};
+			background: ${colors.textColor};
+		}
+	`: ``;
+
+	return Style.it(styles,
 		<div className="filter-wrapper">
 			{dayItems && (
 				<Dropdown

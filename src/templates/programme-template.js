@@ -136,6 +136,7 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 			isSk={isSk}
 			year={edition}
 			pageName={isSk ? `Program` : `Programme`}
+
 		>
 			<Row fullWidth classes="border-bottom-thick">
 				<div className="col col-12 px-0">
@@ -145,6 +146,10 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 					<Filter
 						dayItems={dayFilterItems}
 						handleClick={filterEvents}
+						colors={{
+							textColor: settings.textColor,
+							backgroundColor: settings.backgroundColor
+						}}
 					/>
 				</div>
 			</Row>
@@ -294,40 +299,3 @@ export const scheduleItemsQuery = graphql`
 		}
 	}
 `;
-
-// export const artistsQuery = graphql`
-// 	query artistsPage($edition: String!) {
-// 		artists: allWpArtist(
-// 			sort: { order: DESC, fields: date }
-// 			filter: {
-// 				editions: { nodes: { elemMatch: { slug: { eq: $edition } } } }
-// 			}
-// 		) {
-// 			edges {
-// 				node {
-// 					id
-// 					slug
-// 					uri
-// 					title
-// 					language {
-// 						slug
-// 					}
-// 					featuredImage {
-// 						node {
-// 							sizes
-// 							uri
-// 							description
-// 							caption
-// 							mediaDetails {
-// 								sizes {
-// 									name
-// 									sourceUrl
-// 								}
-// 							}
-// 						}
-// 					}
-// 				}
-// 			}
-// 		}
-// 	}
-// `;

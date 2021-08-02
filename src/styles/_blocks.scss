@@ -279,12 +279,6 @@
 	color: inherit;
 	@extend .text-body-small;
 	padding: 12px 16px;
-
-	&:hover,
-	&.is-selected {
-		background: black;
-		color: white;
-	}
 }
 
 @media (max-width: 480px) {

@@ -187,6 +187,10 @@ footer {
 .lang-switcher {
 	padding: .8rem;
 	border-radius: 50%;
+
+	&:hover {
+		text-decoration: none;
+	}
 }
 
 

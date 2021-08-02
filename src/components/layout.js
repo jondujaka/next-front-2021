@@ -105,6 +105,7 @@ const Layout = ({
 						isSk={isSk}
 						pageName={pageName}
 						sticky={embeded}
+						colors={parsedStyle}
 					/>
 				)}
 				<main>{children}</main>
