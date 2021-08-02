@@ -160,9 +160,12 @@ const ScrollVideo = ({ layer, hideVideo }) => {
 		<section
 			id="media-container"
 			className="media-container"
-		>
+		>	
+		
 			<div className="media-wrapper" ref={mediaRef}>
+				{layer.title ? <div className="top-video-title">{layer.title}</div> : `` }
 				<Media media={layer.media} homePage />
+				{layer.button.title ? <Link to={layer.button.url} className="top-video-link">{layer.button.title} ⟶</Link> : `` }
 			</div>
 		</section>
 	);
@@ -241,6 +244,7 @@ export const pageQuery = graphql`
 						title
 						url
 					}
+					title
 					media {
 						imageOrVideo
 						video

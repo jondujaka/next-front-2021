@@ -6,7 +6,7 @@
 	position: fixed;
 	width: 100%;
 	top: 0;
-	z-index: 999;
+	z-index: 15;
 	overflow-y: scroll;
 	height: 100vh;
 }
@@ -17,6 +17,38 @@
 	max-width: 1920px;
 	margin-left: auto;
 	margin-right: auto;
+	position: relative;
+	box-shadow: 0 0 99px 0 #4a4af1;
+}
+
+
+.top-video-title,
+.top-video-link {
+	padding: 2.5rem 0;
+	background: white;
+	display: block;
+	@extend .text-body;
+}
+
+// @media (min-width: 960px){
+// 	.top-video-title {
+// 		position: absolute;
+// 		top: 32%;
+// 		z-index: 10;
+// 		text-align: center;
+// 		left: 50%;
+// 		transform: translateX(-50%);
+// 		color: white;
+// 	}
+// 	.top-video-link {
+// 		position: absolute;
+// 		top: calc(40% + 1em);
+// 	}
+// }
+
+
+@media (max-width: 960px){
+	
 }
 
 .show-video {
