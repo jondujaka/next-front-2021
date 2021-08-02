@@ -203,7 +203,10 @@ const Media = ({ media, setIsInView }) => {
 			<ReactPlayer
 				className="react-player-home"
 				url={media.video}
-				playing
+				playing={true}
+				muted
+				playsinline
+				controls={false}
 				width="100%"
 				height="100%"
 			/>
