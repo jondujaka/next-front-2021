@@ -6,7 +6,7 @@ import ReactPlayer from "react-player/youtube";
 
 const SimpleContent = ({ section }) => {
 	if (section.fieldGroupName.endsWith(`Text`)) {
-		return <Paragraph content={section.text} />;
+		return <Paragraph classes="mb-4" content={section.text} />;
 	}
 	if (section.fieldGroupName.endsWith(`Media`)) {
 		if (section.imageOrVideo === `video`) {
