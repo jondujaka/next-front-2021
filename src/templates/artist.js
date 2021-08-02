@@ -15,6 +15,7 @@ import { parse } from "query-string";
 const Artist = ({ data: { artist, events }, pageContext }) => {
 	const { lang, year, settings, menu } = pageContext;
 
+	console.log(settings);
 	const content = artist.artistEventContent;
 	const isSk = lang && lang !== `en`;
 

@@ -121,6 +121,7 @@ const MainMenuLinks = ({ cart, noLang, mobile, translationSlug, isSk }) => {
 					to={item.url}
 					partiallyActive
 					activeClassName="active"
+					key={`${item.url}-${mobile ? `mobile` : `desktop`}`}
 				>
 					{item.label}
 				</Link>

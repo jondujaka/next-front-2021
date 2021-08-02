@@ -200,6 +200,8 @@ const initPostTypes = async gatsbyUtilities => {
 				settings: editionSettings ? { ...editionSettings } : {},
 				eventsList
 			};
+
+			console.log(context);
 			createArtistsPromises.push(
 				createIndividualPage(slug, template, context, gatsbyUtilities)
 			);

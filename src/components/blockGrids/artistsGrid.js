@@ -7,7 +7,7 @@ const ArtistsGrid = ({ items,colors }) => {
 		<>
 			{items.map((item, i) => {
 				return (
-					<ArtistBlock colors={colors} key={`artist-${item.id}`} item={item} />
+					<ArtistBlock colors={colors} key={`artist-${item.id || i}`} item={item} />
 				);
 			})}
 		</>
