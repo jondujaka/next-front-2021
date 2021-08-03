@@ -7,7 +7,7 @@ const ProductsGrid = ({ items }) => {
 		<>
 			{items.map((item, i) => {
 				return (
-					<ProductBlock key={`product-${item.node.id}`} item={item} />
+					<ProductBlock key={`product-${item.node.slug}`} item={item} />
 				);
 			})}
 		</>

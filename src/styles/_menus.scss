@@ -171,6 +171,7 @@ footer {
 	.lang-switcher,
 	.cart-header {
 		border: 2px solid $primaryBlue;
+		margin-right: 1rem;
 
 		&:hover, &.active {
 			text-decoration: none !important;

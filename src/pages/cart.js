@@ -115,6 +115,9 @@ const REMOVE = gql`
 								... on SimpleProduct {
 									price
 								}
+								... on VariableProduct {
+									price
+								}
 							}
 						}
 					}
@@ -138,12 +141,24 @@ const CART = gql`
 							name
 							sku
 							databaseId
-							featuredImage {
-								node {
-									srcSet
+							
+							... on VariableProduct {
+								featuredImage {
+									node {
+										srcSet
+									}
+								}
+								productInfo {
+									subtitle
 								}
 							}
-							... on VariableProduct {
+							... on SimpleProduct {
+								featuredImage {
+									node {
+										srcSet
+									}
+								}
+								price
 								productInfo {
 									subtitle
 								}

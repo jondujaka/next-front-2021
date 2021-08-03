@@ -60,6 +60,18 @@ const ADD_TO_CART = gql`
 									}
 									uri
 								}
+								... on SimpleProduct {
+									price
+									featuredImage {
+										node {
+											srcSet
+										}
+									}
+									productInfo {
+										subtitle
+									}
+									uri
+								}
 							}
 						}
 						variation {

@@ -1,5 +1,5 @@
 import React from "react";
-import { graphql } from "gatsby";
+import { graphql, Link } from "gatsby";
 import Layout from "../components/layout";
 import Row from "../components/row";
 import Carousel from "../components/carousel";
@@ -10,8 +10,20 @@ const Product = ({ data, pageContext }) => {
 	const product = data.product;
 	const carouselItems = product.productInfo.images;
 
+	console.log(product);
+
 	return (
 		<Layout>
+			<Row>
+				<div className="col col-12 mt-5 mb-6">
+					<h2 className="festival-page-title">
+						<Link className="inherit" to="/news">
+							Shop
+						</Link>
+						{` > ${product.name}`}
+					</h2>
+				</div>
+			</Row>
 			<Row classes="mt-6">
 				<div className="col col-12 col-lg-6 product-carousel">
 					{carouselItems.length && <Carousel items={carouselItems} />}
@@ -22,26 +34,13 @@ const Product = ({ data, pageContext }) => {
 						{product.productInfo.subtitle}
 					</h3>
 					<div className="formats">
-						{product.variations.nodes.map(format => {
-							return (
-								<div
-									key={`format-${format.price}`}
-									className="format mb-4"
-								>
-									{format.price && (
-										<span>{format.price}</span>
-									)}
-									<span>
-										{format.attributes.nodes[0].value}
-									</span>
-									<CartButton
-										productId={format.databaseId}
-										classes="ml-4"
-										text="Add to cart"
-									/>
-								</div>
-							);
-						})}
+						{product.variations ? (
+							product.variations.nodes.map(format => {
+								return <ProductInfo format={format} />;
+							})
+						) : (
+							<ProductInfo format={product} />
+						)}
 					</div>
 					<Single content={product} direct={true} />
 				</div>
@@ -49,6 +48,18 @@ const Product = ({ data, pageContext }) => {
 		</Layout>
 	);
 };
+
+const ProductInfo = ({ format }) => (
+	<div key={`format-${format.price}`} className="format mb-4">
+		{format.price && <span>{format.price}</span>}
+		{format.attributes && <span>{format.attributes.nodes[0].value}</span>}
+		<CartButton
+			productId={format.databaseId}
+			classes="ml-4"
+			text="Add to cart"
+		/>
+	</div>
+);
 
 export default Product;
 
@@ -61,10 +72,35 @@ export const productQuery = graphql`
 		product: wpProduct(id: { eq: $id }) {
 			id
 			name
+			... on WpSimpleProduct {
+				id
+				name
+				databaseId
+				productInfo {
+					fieldGroupName
+					subtitle
+					images {
+						srcSet
+					}
+				}
+				price
+				slug
+				type
+				nodeType
+				downloadable
+				databaseId
+			}
 			... on WpVariableProduct {
 				id
 				name
 				databaseId
+				productInfo {
+					fieldGroupName
+					subtitle
+					images {
+						srcSet
+					}
+				}
 				variations {
 					nodes {
 						name
@@ -80,55 +116,6 @@ export const productQuery = graphql`
 								value
 							}
 						}
-					}
-				}
-			}
-			# singlePostContent {
-			# 	content {
-			# 		... on WpProduct_Singlecontent_Content_MediaText {
-			# 			direction
-			# 			fieldGroupName
-			# 			paragraph {
-			# 				paragraphContent
-			# 				fieldGroupName
-			# 				big
-			# 			}
-			# 			media {
-			# 				image {
-			# 					caption
-			# 					srcSet
-			# 				}
-			# 				imageOrVideo
-			# 				video
-			# 			}
-			# 		}
-			# 		... on WpProduct_Singlecontent_Content_Images {
-			# 			fieldGroupName
-			# 			images {
-			# 				caption
-			# 				srcSet
-			# 			}
-			# 			imageOrVideo
-			# 			video
-			# 		}
-			# 		... on WpProduct_Singlecontent_Content_Text {
-			# 			fieldGroupName
-			# 			paragraph {
-			# 				paragraphContent
-			# 				fieldGroupName
-			# 				big
-			# 			}
-			# 		}
-			# 	}
-			# }
-			... on WpVariableProduct {
-				id
-				name
-				productInfo {
-					fieldGroupName
-					subtitle
-					images {
-						srcSet
 					}
 				}
 			}

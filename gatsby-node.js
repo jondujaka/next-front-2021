@@ -15,7 +15,8 @@ const templateMap = {
 	index: `home`,
 	commissions: `commissions`,
 	projects: `projects`,
-	shop: `shop`
+	shop: `shop`,
+	records: `records`
 };
 
 const fs = require(`fs`);
@@ -811,6 +812,11 @@ const initMainPages = async gatsbyUtils => {
 			queryName: `mainShopPage`,
 			type: `wpPage`,
 			slug: `shop`
+		},
+		{
+			queryName: `mainRecordsPage`,
+			type: `wpPage`,
+			slug: `records`
 		}
 	];
 

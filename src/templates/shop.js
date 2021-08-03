@@ -31,11 +31,33 @@ export const shopQuery = graphql`
 		# these variables are passed in via createPage.pageContext in gatsby-node.js
 		$id: String
 	) {
-		products: allWpProduct(sort: { order: DESC, fields: date }) {
+		products: allWpProduct(
+			sort: { order: DESC, fields: date }
+			filter: {
+				productCategories: {
+					nodes: { elemMatch: { slug: { ne: "records" } } }
+				}
+			}
+		) {
 			edges {
 				node {
 					date(formatString: "MMM Do YYYY")
 					slug
+					... on WpSimpleProduct {
+						id
+						name
+						uri
+						name
+						productInfo {
+							subtitle
+						}
+						featuredImage {
+							node {
+								srcSet
+							}
+						}
+					}
+
 					... on WpVariableProduct {
 						id
 						name

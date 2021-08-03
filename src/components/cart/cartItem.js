@@ -1,29 +1,30 @@
 import React from "react";
-import { Link } from "gatsby";
-import Image from "../image";
+import { Link } from "gatsby";	
 
 const CartItem = ({ item }) => {
 	
-	const productInfo = item.product.node;
-	const varInfo = item.variation.node;
-
-	let attribute = varInfo.attributes.nodes.find(atr => atr.name === `format`);
+	const productInfo = item.variation ? item.variation.node : item.product.node;
+	const image = item.product.node.featuredImage.node.srcSet;
+	const url = item.product.node.uri;
+	const name = item.product.node.name;
+	const subtitle = item.product.node.productInfo.subtitle;
+	
 	return (
-		<Link to={productInfo.uri} className="cart-item">
+		<Link to={url} className="cart-item">
 			<div className="cart-image-wrapper">
-				<img srcSet={productInfo.featuredImage.node.srcSet} />
+				<img srcSet={image} />
 			</div>
 
 			<div className="cart-item-info">
 				<h3>
-					{productInfo.name} ({attribute.value})
+					{name} 
 				</h3>
-				<h3>{productInfo.productInfo.subtitle}</h3>
+				<h3>{subtitle}</h3>
 				<span className="mt-4 d-block quantity">
 					Quantity: {item.quantity}
 				</span>
 				<h4 className="price">
-					<span>{varInfo.price}</span>
+					<span>{productInfo.price}</span>
 					<span>BTW (21%) inc.</span>
 				</h4>
 			</div>
