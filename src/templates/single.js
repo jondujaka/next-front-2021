@@ -47,7 +47,7 @@ const DirectionWrapper = ({ content, direct }) => {
 					{content.paragraph ? (
 						<div
 							className={`col mx-auto ${
-								direct ? `` : `col-xl-10 col-12 col-xxl-6`
+								direct ? `` : `col-lg-8 col-12 col-xxl-6`
 							}`}
 						>
 							<Paragraph
@@ -60,7 +60,7 @@ const DirectionWrapper = ({ content, direct }) => {
 					{content.paragraphContent ? (
 						<div
 							className={`col mx-auto ${
-								direct ? `` : `col-xl-10 col-12 col-xxl-6`
+								direct ? `` : `col-lg-8 col-12 col-xxl-6`
 							}`}
 						>
 							<Paragraph

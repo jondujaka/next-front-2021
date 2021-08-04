@@ -47,7 +47,7 @@
 
 .about-nav {
 	@extend .sticky;
-	top: calc(#{$headerHeight} + 1.5rem);
+	top: calc(#{$headerHeight} + 1.5rem + 280px);
 
 	ul {
 		margin: 0;

@@ -12,8 +12,6 @@ import ArtistsGrid from "../components/blockGrids/artistsGrid";
 const Edition = ({ data, pageContext, embeded, style }) => {
 	const { edition, year, translation, lang, settings, content, menu, skMenu } = pageContext;
 
-	console.log(pageContext);
-
 	let colorStyle;
 
 	if (settings) {
@@ -25,16 +23,12 @@ const Edition = ({ data, pageContext, embeded, style }) => {
 		colorStyle = { ...style };
 	}
 
-	console.log(content);
-
 	// if (!content || (content && !content.topText)) {
 	// 	return <h1>Please fill in all the required fields!</h1>;
 	// }
 
 	const parsedContent = content.editionContent ? content.editionContent : content;
 
-
-	console.log(parsedContent);
 
 
 	const startDate = new Date(parsedContent.topText.editionDate.startDate);
@@ -136,7 +130,6 @@ const editionRow = (isSk, section, i, year, colors) => {
 	if (type.endsWith(`ArtistsSection`)) {
 		if(section.artists && section.artists.length){
 			let parsedArtists = isSk ? section.artists.map(artist => {
-				console.log(artist);
 				if(artist.language.slug === `en` && isSk){
 					return {
 						...artist,
@@ -148,7 +141,6 @@ const editionRow = (isSk, section, i, year, colors) => {
 			}) : section.artists;
 		
 
-			console.log(parsedArtists)
 
 			return (
 				<>
@@ -179,7 +171,6 @@ const editionRow = (isSk, section, i, year, colors) => {
 		if(section.workshops && section.workshops.length){
 
 			let parsedWorkshops = isSk ? section.workshops.map(workshop => {
-				console.log(workshop);
 				if(workshop.language.slug === `en` && isSk){
 					return {
 						...workshop,
@@ -191,7 +182,6 @@ const editionRow = (isSk, section, i, year, colors) => {
 			}) : section.workshops;
 		
 
-			console.log(parsedWorkshops)
 
 
 

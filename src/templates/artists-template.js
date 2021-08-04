@@ -47,7 +47,6 @@ const ArtistsTemplate = ({ data, pageContext }) => {
 				});
 			}
 		});
-		console.log(infoArray);
 		return infoArray;
 	};
 

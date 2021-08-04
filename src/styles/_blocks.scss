@@ -69,13 +69,18 @@
 	}
 }
 
-.commission-item .row {
-	height: 100%;
+.commission-title {
+	margin-bottom: 0;
+	text-align: center;
+	margin-bottom: 1.2rem;;
 }
 
-.commission-image-wrapper {
-	margin-bottom: 0;
-	margin-top: auto;
+.commission-item {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	
+	padding: 30px;
 }
 
 .commission-image {
