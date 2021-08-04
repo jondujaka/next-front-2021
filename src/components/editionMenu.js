@@ -31,6 +31,7 @@ const EditionMenu = ({ items, bg, isSk = false, translationSlug, colors, skMenu,
 		.lang-switcher:hover {
 			color: ${colors.backgroundColor};
 			background: ${colors.borderColor};
+			border-color: ${colors.borderColor};
 		}
 	` : ``;
 	return Style.it(styles,

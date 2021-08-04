@@ -12,10 +12,14 @@
 }
 
 footer {
-	height: 30rem;
 	margin: 0;
-	background: white;
-	color: $primaryBlue;
+	background:$primaryBlue;
+	color: white;
+	margin-bottom: $headerHeight;
+	padding: 2rem 0;
+	.credits {
+		@extend .text-small;
+	}
 }
 
 .social-links {
@@ -114,6 +118,11 @@ footer {
 		margin: 0;
 		padding: 0;
 	}
+
+	li {
+		display: flex;
+		align-items: center;
+	}
 }
 
 .edition-nav {
@@ -172,6 +181,7 @@ footer {
 	.cart-header {
 		border: 2px solid $primaryBlue;
 		margin-right: 1rem;
+		padding: 1rem;
 
 		&:hover, &.active {
 			text-decoration: none !important;
@@ -182,12 +192,17 @@ footer {
 }
 
 .cart-header {
+	display: inline-block;
 	border-radius: 3.5rem;
 }
 
 .lang-switcher {
 	padding: .8rem;
 	border-radius: 50%;
+
+	aspect-ratio: 1/1;
+	display: inline-flex;
+	align-items: center;
 
 	&:hover {
 		text-decoration: none;
