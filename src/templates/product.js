@@ -85,7 +85,6 @@ export const productQuery = graphql`
 				}
 				price
 				slug
-				type
 				nodeType
 				downloadable
 				databaseId
