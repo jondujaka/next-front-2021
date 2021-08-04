@@ -12,7 +12,6 @@ import Edition from "./edition";
 const Home = ({ data: { page, news }, pageContext, location }) => {
 	const { availableEditions } = pageContext;
 
-
 	const latestEdition =
 		availableEditions.length &&
 		availableEditions.reduce((prev, current) => {
@@ -32,48 +31,52 @@ const Home = ({ data: { page, news }, pageContext, location }) => {
 
 	const startTimer = () => {
 		canReshowVideo.current = false;
-		window.setTimeout(() =>{
-			canReshowVideo.current=true
+		window.setTimeout(() => {
+			canReshowVideo.current = true;
 		}, 1000);
-	}
+	};
 
 	useEffect(() => {
 		setShowVideo(true);
 		body.current = document.getElementById("main-wrapper");
 		body.current.classList.add("overflow-hidden");
-		window.addEventListener('scroll', handleBodyScroll)
-
+		window.addEventListener("scroll", handleBodyScroll);
 
 		return () => {
-			window.removeEventListener('scroll', handleBodyScroll)
-		  }
+			window.removeEventListener("scroll", handleBodyScroll);
+		};
 	}, []);
 
-	const handleBodyScroll = (e) => {
-		console.log(window.scrollY);
-		if(window.scrollY === 0 && canReshowVideo.current && (location.pathname === `/` || location.pathname === `/sk`)){
+	const handleBodyScroll = e => {
+		if (
+			window.scrollY === 0 &&
+			canReshowVideo.current &&
+			(location.pathname === `/` || location.pathname === `/sk`)
+		) {
 			setShowVideo(true);
 			body.current.classList.add("overflow-hidden");
 			console.log(location.pathname);
-			console.log('add class')
+			console.log("add class");
 		}
-	}
+	};
 
 	const hideVideo = () => {
 		setShowVideo(false);
-		body.current.classList.remove('overflow-hidden');
+		body.current.classList.remove("overflow-hidden");
 		startTimer();
 	};
 
-	const editionContext = latestEdition ? {
-		edition: latestEdition.year,
-		lang: page.language.slug,
-		settings: latestEdition.content.settings,
-		translation: latestEdition.content.translations[0],
-		menu: latestEdition.menu,
-		skMenu: latestEdition.skMenu,
-		content: latestEdition.content
-	} : null;
+	const editionContext = latestEdition
+		? {
+				edition: latestEdition.year,
+				lang: page.language.slug,
+				settings: latestEdition.content.settings,
+				translation: latestEdition.content.translations[0],
+				menu: latestEdition.menu,
+				skMenu: latestEdition.skMenu,
+				content: latestEdition.content
+		  }
+		: null;
 
 	const langSlug = page.language.slug === `en` ? `sk/` : ``;
 	const isSk = page.language.slug !== `en`;
@@ -123,13 +126,14 @@ const Home = ({ data: { page, news }, pageContext, location }) => {
 					</Link>
 				</div>
 			</Row>
-			{latestEdition && <Edition pageContext={editionContext} embeded={true} /> }
+			{latestEdition && (
+				<Edition pageContext={editionContext} embeded={true} />
+			)}
 		</Layout>
 	);
 };
 
 const ScrollVideo = ({ layer, hideVideo }) => {
-
 	const mediaRef = useRef(null);
 
 	useEffect(() => {
@@ -156,15 +160,21 @@ const ScrollVideo = ({ layer, hideVideo }) => {
 	};
 
 	return (
-		<section
-			id="media-container"
-			className="media-container"
-		>	
-		
+		<section id="media-container" className="media-container">
 			<div className="media-wrapper" ref={mediaRef}>
-				{layer.title ? <div className="top-video-title">{layer.title}</div> : `` }
+				{layer.title ? (
+					<div className="top-video-title">{layer.title}</div>
+				) : (
+					``
+				)}
 				<Media media={layer.media} homePage />
-				{layer.button.title ? <Link to={layer.button.url} className="top-video-link">{layer.button.title} ⟶</Link> : `` }
+				{layer.button.title ? (
+					<Link to={layer.button.url} className="top-video-link">
+						{layer.button.title} ⟶
+					</Link>
+				) : (
+					``
+				)}
 			</div>
 		</section>
 	);
@@ -195,6 +205,8 @@ const HomeHeader = ({ items, classes }) => {
 };
 
 const Media = ({ media, setIsInView }) => {
+
+	const playerRef = useRef();
 	if (media.imageOrVideo === `image`) {
 		return <img srcSet={`${media.image.srcSet}`} />;
 	} else {
@@ -203,11 +215,19 @@ const Media = ({ media, setIsInView }) => {
 				className="react-player-home"
 				url={media.video}
 				playing={true}
+				ref={playerRef}
+				loop
 				muted
 				playsinline
 				controls={false}
 				width="100%"
 				height="100%"
+				progressInterval={100}
+				onProgress={progress => {
+					if (progress.played >= 0.99) {
+						playerRef.current.seekTo(0);
+					}
+				}}
 			/>
 		);
 	}
