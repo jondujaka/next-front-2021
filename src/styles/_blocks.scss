@@ -29,10 +29,14 @@
 .news-info {
 	.news-title {
 		margin-top: 1em;
+		@extend .text-body;
 	}
 	h3 {
 		display: block;
 	}
+}
+.news-date {
+	@extend .text-body-small;
 }
 .news-info {
 	padding: 0;
@@ -231,7 +235,7 @@
 	border-radius: 30px;
 	padding: 0.15em 0.7em;
 
-	font-size: 20px;
+	@extend .text-body-small;
 
 	&:hover {
 		text-decoration: none !important;

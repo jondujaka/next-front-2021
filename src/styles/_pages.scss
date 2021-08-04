@@ -45,9 +45,15 @@
 
 // ABOUT & INFO PAGE
 
+.no-edition .about-nav {
+	top: 1.5rem;
+}
+
+.edition-web .about-nav {
+	top: calc(#{$headerHeight} + 1.5rem);
+}
 .about-nav {
 	@extend .sticky;
-	top: calc(#{$headerHeight} + 1.5rem + 15vh);
 
 	ul {
 		margin: 0;

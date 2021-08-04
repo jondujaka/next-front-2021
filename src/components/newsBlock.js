@@ -9,7 +9,7 @@ const NewsBlock = ({ item }) => {
 				{image && <img className="img-fluid" srcSet={image} />}
 			</div>
 			<div className="news-info">
-				<h3 className="mt-0">{item.date}</h3>
+				<h3 className="mt-0 news-date">{item.date}</h3>
 				<h3 className="news-title">{item.title}</h3>
 			</div>
 		</Link>

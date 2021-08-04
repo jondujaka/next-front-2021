@@ -21,7 +21,7 @@ const About = ({ data, pageContext }) => {
 
 	return (
 		<Layout isSk={isSk} translationSlug={translationSlug}>
-			<div className="row mt-6">
+			<div className="row">
 				<div className="col col-12 mt-5 mb-6">
 					<h2 className="festival-page-title">{data.wpPage.title}</h2>
 				</div>

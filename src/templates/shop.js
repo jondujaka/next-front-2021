@@ -14,7 +14,7 @@ const Shop = ({ data, pageContext }) => {
 
 	return (
 		<Layout isSk={isSk} translationSlug={translationSlug}>
-			<Row classes="mt-6">
+			<Row>
 				<div className="col col-12 mt-5 mb-6">
 					<h2 className="festival-page-title">{data.page.title}</h2>
 				</div>
