@@ -57,7 +57,7 @@ const Events = ({ data: { event }, pageContext }) => {
 						)}
 					</div>
 
-				<div className="col-12 col-lg-6 sticky-carousel">
+				<div className="col-12 col-lg-6 mb-6">
 					{event.eventInfo.dates && event.eventInfo.dates.length && (
 						<EventInfo event={event} showDetails />
 					)}

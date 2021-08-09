@@ -82,6 +82,10 @@ const Home = ({ data: { page, news }, pageContext, location }) => {
 	const isSk = page.language.slug !== `en`;
 	const translationSlug = `/${langSlug}`;
 
+	const editionBorder = {
+		borderTop: `3px solid ${editionContext.settings.textColor}`
+	}
+
 	return (
 		<Layout key="layout-home" translationSlug={translationSlug} isSk={isSk}>
 			{showVideo && (
@@ -127,7 +131,9 @@ const Home = ({ data: { page, news }, pageContext, location }) => {
 				</div>
 			</Row>
 			{latestEdition && (
-				<Edition pageContext={editionContext} embeded={true} />
+				<div style={editionBorder} className="home-edition-wrapper">
+					<Edition pageContext={editionContext} embeded={true} />
+				</div>
 			)}
 		</Layout>
 	);

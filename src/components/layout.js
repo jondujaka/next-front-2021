@@ -15,7 +15,7 @@ import { gql, useLazyQuery, useMutation } from "@apollo/client";
 import SocialFooter from "./socialFooter";
 
 import Header from "./header";
-import Row from './row';
+import Row from "./row";
 import EditionMenu from "./editionMenu";
 import "../styles/global.scss";
 
@@ -138,13 +138,30 @@ const Layout = ({
 				)}
 				<main>{children}</main>
 				{embeded ? `` : <SocialFooter />}
-				<footer>
-					<Row>
-						<div className="col col-12">
-							<span className="credits">Website designed by <a href="https://robertfinkei.com" target="_blank">Robert Finkei</a> and developed by <a href="mailto:jdujaka@gmail.com">Jon Dujaka</a>.</span>
-						</div>
-					</Row>
-				</footer>
+				{embeded ? (
+					``
+				) : (
+					<footer>
+						<Row>
+							<div className="col col-12">
+								<span className="credits">
+									Website designed by{" "}
+									<a
+										href="https://robertfinkei.com"
+										target="_blank"
+									>
+										Robert Finkei
+									</a>{" "}
+									and developed by{" "}
+									<a href="mailto:jdujaka@gmail.com">
+										Jon Dujaka
+									</a>
+									.
+								</span>
+							</div>
+						</Row>
+					</footer>
+				)}
 			</div>
 		</>
 	);

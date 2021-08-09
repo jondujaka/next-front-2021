@@ -20,7 +20,7 @@ const SocialFooter = () => {
 	const menuItems = menuData.wpMenu.menuItems.nodes;
 
 	return (
-		<div className="social-footer mt-6">
+		<div className="social-footer">
 			<div className="row">
 				<div className="col col-12"><h1>Follow</h1></div>
 				<div className="social-links social-one">

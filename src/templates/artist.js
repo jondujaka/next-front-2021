@@ -80,7 +80,7 @@ const Artist = ({ data: { artist, events }, pageContext }) => {
 							</>
 						)}
 					</div>
-					<div className="col-12 col-lg-6">
+					<div className="col-12 col-lg-6 mb-6">
 						{parsedEvents.map((event, i) => (
 							<EventInfo event={event} key={`event-${i}`} />
 						))}

@@ -17,7 +17,8 @@ const Edition = ({ data, pageContext, embeded, style }) => {
 	if (settings) {
 		colorStyle = {
 			color: settings.textColor,
-			backgroundColor: settings.backgroundColor
+			backgroundColor: settings.backgroundColor,
+			paddingBottom: `100px`
 		};
 	} else if (style) {
 		colorStyle = { ...style };

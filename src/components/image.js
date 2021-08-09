@@ -1,12 +1,12 @@
 import LazyLoadImage from "react-lazy-load-image-component";
 import React from "react";
 
-const ImageEl = ({ srcSet, caption }) => {
+const ImageEl = ({ srcSet, caption, fixedRatio }) => {
 
 	if (!srcSet) return null;
 
 	return (
-		<figure>
+		<figure className={caption ? `` : `fixed-ratio`}>
 			<img srcSet={srcSet} />
 			{caption ? (
 				<figcaption dangerouslySetInnerHTML={{ __html: caption }} />
