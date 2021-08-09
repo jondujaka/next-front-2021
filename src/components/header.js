@@ -124,7 +124,7 @@ const MainMenuLinks = ({ cart, noLang, mobile, translationSlug, isSk }) => {
 				</Link>
 				</li>
 			)}
-			{cart ? (
+			{cart?.content?.itemCount ? (
 				<li>
 					<Link
 						to="/cart"

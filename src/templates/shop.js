@@ -83,6 +83,13 @@ export const shopQuery = graphql`
 							}
 						}
 					}
+
+					productCategories {
+						nodes {
+							slug
+							name
+						}
+					}
 				}
 			}
 		}
