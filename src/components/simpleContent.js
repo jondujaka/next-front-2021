@@ -9,24 +9,28 @@ const SimpleContent = ({ section }) => {
 		return <Paragraph classes="mb-4" content={section.text} />;
 	}
 	if (section.fieldGroupName.endsWith(`Media`)) {
-		if (section.imageOrVideo === `video`) {
-			return (
-				<ReactPlayer
-					className="inline-player my-5"
-					url={section.video}
-					width="100%"
-					playing={false}
-				/>
-			);
-		} else {
-			return (
-				<Image
-					srcSet={section.image.srcSet}
-					caption={section.image.caption}
-				/>
-			);
-		}
+		return <div className="single-media-wrapper my-5"><RenderMedia section={section}/></div>
 	}
 };
+
+const RenderMedia = ({section}) => {
+	if (section.imageOrVideo === `video`) {
+		return (
+			<ReactPlayer
+				className="inline-player"
+				url={section.video}
+				width="100%"
+				playing={false}
+			/>
+		);
+	} else {
+		return (
+			<Image
+				srcSet={section.image.srcSet}
+				caption={section.image.caption}
+			/>
+		);
+	}
+}
 
 export default SimpleContent;

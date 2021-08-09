@@ -1,8 +1,20 @@
 .news-image {
-	padding-right: 2.5rem;
+	margin-right: 2.5rem;
 	padding-left: 0;
 	float: left;
 	width: 55%;
+
+
+	@supports not (aspect-ratio: 1 / 1) {
+		padding-top: 55%;
+		position: relative;
+
+		img {
+			position: absolute;
+			top: 0;
+			width: 100%;
+		}
+	}
 
 	img {
 		height: 100%;
@@ -155,6 +167,18 @@
 		padding: 0;
 		aspect-ratio: 1/1;
 
+		@supports not (aspect-ratio: 1 / 1) {
+			padding-top: 100%;
+			position: relative;
+	
+			img {
+				position: absolute;
+				top: 0;
+				width: 100%;
+				left: 0;
+			}
+		}
+
 		img {
 			object-fit: cover;
 			height: 100%;
@@ -221,6 +245,18 @@
 	.artist-image {
 		padding-top: 0;
 		aspect-ratio: 3 / 2;
+
+		@supports not (aspect-ratio: 1 / 1) {
+			padding-top: 66%;
+			position: relative;
+	
+			img {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+			}
+		}
 
 		img {
 			height: 100%;

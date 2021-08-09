@@ -94,7 +94,6 @@ const CheckoutForm = () => {
 
 	return (
 		<Layout>
-			<h1>Checkout</h1>
 			<form onSubmit={handleSubmit}>
 				<CardElement
 					options={{
