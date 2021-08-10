@@ -85,10 +85,10 @@ const Artist = ({ data: { artist, events }, pageContext }) => {
 							<EventInfo event={event} key={`event-${i}`} />
 						))}
 						
-						{content.content ? content.content.map(section => (
+						{content.content ? content.content.map((section, i) => (
 							<SimpleContent
 								section={section}
-								key={section.fieldGroupName}
+								key={`${section.fieldGroupName}-${i}`}
 							/>
 						)) : <p>Description coming soon...</p>}
 					</div>

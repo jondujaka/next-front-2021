@@ -23,7 +23,7 @@ const RenderMedia = ({section}) => {
 				playing={false}
 			/>
 		);
-	} else {
+	} else if(section.image) {
 		return (
 			<Image
 				srcSet={section.image.srcSet}
@@ -31,6 +31,8 @@ const RenderMedia = ({section}) => {
 			/>
 		);
 	}
+
+	return ``;
 }
 
 export default SimpleContent;
