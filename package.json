@@ -48,6 +48,7 @@
 		"style-it": "^2.1.4"
 	},
 	"devDependencies": {
+		"lodash.throttle": "^4.1.1",
 		"prettier": "^2.2.1",
 		"react-apollo": "^3.1.5",
 		"tailwindcss": "^2.0.3"

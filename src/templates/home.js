@@ -8,6 +8,7 @@ import Row from "../components/row";
 import NewsBlock from "../components/newsBlock";
 import { InView } from "react-intersection-observer";
 import Edition from "./edition";
+import throttle from 'lodash.throttle';
 
 const Home = ({ data: { page, news }, pageContext, location }) => {
 	const { availableEditions } = pageContext;
@@ -19,11 +20,7 @@ const Home = ({ data: { page, news }, pageContext, location }) => {
 		});
 
 	const body = useRef(null);
-	const mediaRef = useRef(null);
-	const containerRef = useRef(null);
-
 	const [showVideo, setShowVideo] = useState(false);
-	const [isInView, setIsInView] = useState(true);
 
 	const allNews = news.edges;
 
@@ -36,17 +33,6 @@ const Home = ({ data: { page, news }, pageContext, location }) => {
 		}, 1000);
 	};
 
-	useEffect(() => {
-		setShowVideo(true);
-		body.current = document.getElementById("main-wrapper");
-		body.current.classList.add("overflow-hidden");
-		window.addEventListener("scroll", handleBodyScroll);
-
-		return () => {
-			window.removeEventListener("scroll", handleBodyScroll);
-		};
-	}, []);
-
 	const handleBodyScroll = e => {
 		if (
 			window.scrollY === 0 &&
@@ -55,10 +41,22 @@ const Home = ({ data: { page, news }, pageContext, location }) => {
 		) {
 			setShowVideo(true);
 			body.current.classList.add("overflow-hidden");
-			console.log(location.pathname);
-			console.log("add class");
 		}
 	};
+
+	const throttledFunc = throttle(handleBodyScroll, 100);
+
+	useEffect(() => {
+		setShowVideo(true);
+		body.current = document.getElementById("main-wrapper");
+		body.current.classList.add("overflow-hidden");
+		window.addEventListener("scroll", throttledFunc);
+
+		return () => {
+			window.removeEventListener("scroll", throttledFunc);
+		};
+	}, []);
+	
 
 	const hideVideo = () => {
 		setShowVideo(false);
@@ -142,28 +140,22 @@ const Home = ({ data: { page, news }, pageContext, location }) => {
 const ScrollVideo = ({ layer, hideVideo }) => {
 	const mediaRef = useRef(null);
 
-	useEffect(() => {
-		const container = document.getElementById("media-container");
-		container.addEventListener("scroll", handleScroll);
-	}, []);
 
 	const handleScroll = e => {
 		const threshold = mediaRef.current.offsetHeight + 200;
 
-		console.log(threshold);
-		console.log(e.target.scrollTop);
-
 		if (e.target.scrollTop > threshold + 10) {
 			hideVideo();
 		}
-
-		// console.log(mediaRef.current);
-		// console.log(body.current)
-		// e.preventDefault();
-		// e.stopPropagation();
-		console.log("asd");
-		// return false;
 	};
+
+	const throttledFunc = throttle(handleScroll, 100);
+
+	useEffect(() => {
+		const container = document.getElementById("media-container");
+		container.addEventListener("scroll", throttledFunc);
+	}, []);
+	
 
 	return (
 		<section id="media-container" className="media-container">
@@ -212,29 +204,43 @@ const HomeHeader = ({ items, classes }) => {
 
 const Media = ({ media, setIsInView }) => {
 
+	const [videoOverlay, setVideoOverlay] = useState(true);
+
+	const initVideoOverlay = () => {
+		window.setTimeout(() => {
+			if(playerRef.current){
+				playerRef.current.wrapper.classList.remove('has-overlay')
+			}
+		}, 2500)
+	}
+
 	const playerRef = useRef();
 	if (media.imageOrVideo === `image`) {
 		return <img srcSet={`${media.image.srcSet}`} />;
 	} else {
 		return (
-			<ReactPlayer
-				className="react-player-home"
-				url={media.video}
-				playing={true}
-				ref={playerRef}
-				loop
-				muted
-				playsinline
-				controls={false}
-				width="100%"
-				height="100%"
-				progressInterval={100}
-				onProgress={progress => {
-					if (progress.played >= 0.99) {
-						playerRef.current.seekTo(0);
-					}
-				}}
-			/>
+			<>
+				
+				<ReactPlayer
+					className={`react-player-home ${videoOverlay ? `has-overlay` : ``}`}
+					url={media.video}
+					playing={true}
+					ref={playerRef}
+					onReady={initVideoOverlay}
+					loop
+					muted
+					playsinline
+					controls={false}
+					width="100%"
+					height="100%"
+					progressInterval={100}
+					onProgress={progress => {
+						if (progress.played >= 0.99) {
+							playerRef.current.seekTo(0);
+						}
+					}}
+				/>
+			</>
 		);
 	}
 };
