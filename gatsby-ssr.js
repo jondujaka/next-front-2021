@@ -18,3 +18,12 @@ export function wrapRootElement({ element }) {
 		</ApolloProvider>
 	);
 }
+
+export function onRenderBody({pathname, setPostBodyComponents}) {
+
+	if(pathname.includes('get-tickets')){
+		setPostBodyComponents([
+			<script src="https://partners.goout.net/sk-bratislava/nextfestivalsk.js"/>
+		]);
+	}
+};
