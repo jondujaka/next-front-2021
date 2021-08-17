@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "gatsby";
 
 const NewsBlock = ({ item }) => {
-	const image = item.featuredImage.node?.srcSet
+	const image = item.featuredImage?.node?.srcSet;
 	return (
 		<Link to={item.uri} className="news-item col col-lg-6 col-12">
 			<div className="news-image square">

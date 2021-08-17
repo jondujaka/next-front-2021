@@ -6,14 +6,17 @@ import Row from "../components/row";
 import Single from "./single";
 
 const NewsArticle = ({ data: { article }, pageContext }) => {
-	const translationSlug = article.translations[0].uri;
+	const translationSlug = article.translations[0]?.uri;
 	const isSk = article.language.slug === `sk`;
 	return (
 		<Layout translationSlug={translationSlug} isSk={isSk}>
 			<Row>
 				<div className="col col-12 mt-5 mb-6">
 					<h2 className="festival-page-title">
-						<Link className="inherit" to={`${isSk ? `/sk` : ``}/news`}>
+						<Link
+							className="inherit"
+							to={`${isSk ? `/sk` : ``}/news`}
+						>
 							{isSk ? `Správy` : `News`}
 						</Link>
 						{` > ${article.title}`}
