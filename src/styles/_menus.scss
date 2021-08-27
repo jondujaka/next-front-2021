@@ -5,10 +5,15 @@
 	color: $primaryBlue;
 	background: white;
 	padding: 4rem 0;
+	margin-top: 6rem;
 	h1 {
 		margin-bottom: 0.2em;
 		font-family: $serifFont;
 	}
+}
+
+.festival-web .social-footer {
+	margin-top: 0;
 }
 
 footer {
@@ -181,7 +186,7 @@ footer {
 	.cart-header {
 		border: 2px solid $primaryBlue;
 		margin-right: 1rem;
-		padding: 1rem;
+		padding: 1rem 1.7rem;
 
 		&:hover, &.active {
 			text-decoration: none !important;
