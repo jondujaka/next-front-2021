@@ -28,19 +28,19 @@ const Home = ({ data: { page, news }, pageContext, location }) => {
 
 	const startTimer = () => {
 		canReshowVideo.current = false;
-		window.setTimeout(() => {
-			canReshowVideo.current = true;
-		}, 1000);
+		// window.setTimeout(() => {
+		// 	canReshowVideo.current = true;
+		// }, 1000);
 	};
 
 	const handleBodyScroll = e => {
+		body.current.scrollTo(0, 0);
 		if (
 			window.scrollY === 0 &&
-			canReshowVideo.current &&
 			(location.pathname === `/` || location.pathname === `/sk`)
 		) {
 			setShowVideo(true);
-			body.current.classList.add("overflow-hidden");
+			
 		}
 	};
 
@@ -49,7 +49,6 @@ const Home = ({ data: { page, news }, pageContext, location }) => {
 	useEffect(() => {
 		setShowVideo(true);
 		body.current = document.getElementById("main-wrapper");
-		body.current.classList.add("overflow-hidden");
 		window.addEventListener("scroll", throttledFunc);
 
 		return () => {
@@ -60,8 +59,6 @@ const Home = ({ data: { page, news }, pageContext, location }) => {
 
 	const hideVideo = () => {
 		setShowVideo(false);
-		body.current.classList.remove("overflow-hidden");
-		startTimer();
 	};
 
 	const editionContext = latestEdition
@@ -85,13 +82,12 @@ const Home = ({ data: { page, news }, pageContext, location }) => {
 	}
 
 	return (
-		<Layout key="layout-home" translationSlug={translationSlug} isSk={isSk}>
-			{showVideo && (
-				<ScrollVideo
+		<Layout key="layout-home" translationSlug={translationSlug} isSk={isSk} style={editionContext.settings}>
+			<ScrollVideo
 					layer={page.mainHome.videoLayer}
 					hideVideo={hideVideo}
+					show={showVideo}
 				/>
-			)}
 			<Row>
 				<HomeHeader
 					classes="d-none d-md-block desktop col col-12"
@@ -137,28 +133,39 @@ const Home = ({ data: { page, news }, pageContext, location }) => {
 	);
 };
 
-const ScrollVideo = ({ layer, hideVideo }) => {
+const ScrollVideo = ({ layer, hideVideo, show }) => {
+	
 	const mediaRef = useRef(null);
-
+	const containerRef = useRef(null);
+	const canHide = useRef(true);
 
 	const handleScroll = e => {
 		const threshold = mediaRef.current.offsetHeight + 200;
-
-		if (e.target.scrollTop > threshold + 10) {
+		if (e.target.scrollTop > threshold && canHide.current) {
 			hideVideo();
+			canHide.current = false;
+			// containerRef.current.classList.add('overflow-hidden');
+			// setTimeout(() => containerRef.current.scroll(0, threshold + 10), 200);
+
+		}
+
+		if(!canHide.current) {
+			if(e.target.scrollTop < window.innerHeight - 200){
+				canHide.current = true;
+			}
 		}
 	};
 
 	const throttledFunc = throttle(handleScroll, 100);
 
 	useEffect(() => {
-		const container = document.getElementById("media-container");
-		container.addEventListener("scroll", throttledFunc);
+		// const container = document.getElementById("media-container");
+		containerRef.current.addEventListener("scroll", throttledFunc);
 	}, []);
 	
 
 	return (
-		<section id="media-container" className="media-container">
+		<section id="media-container" ref={containerRef} className={`media-container ${show ? `show-video` : `hide-video`}`}>
 			<div className="media-wrapper" ref={mediaRef}>
 				{layer.title ? (
 					<div className="top-video-title">{layer.title}</div>
