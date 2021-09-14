@@ -11,13 +11,21 @@ const ArtistBlock = ({ item, style, colors={backgroundColor: `FFF`, textColor: `
 	if (item.node) {
 		item = item.node;
 	}
-	let image = item.featuredImage?.node.mediaDetails?.sizes.find(
+
+	let image = item.artistEventContent?.images[0].mediaDetails?.sizes.find(
 		size => size.name === `big-thumbnail`
 	);
 
 	if (!image) {
-		image = item.featuredImage && item.featuredImage.node.srcSet
+
+		if(item.artistEventContent?.images.length){
+			image = item.artistEventContent.images[0].srcSet;
+		} else if(item.featuredImage){
+			image = item.featuredImage && item.featuredImage.node.srcSet;
+		}
+
 	}
+
 	if (!item.uri) {
 		return ``;
 	}

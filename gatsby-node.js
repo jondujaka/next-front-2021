@@ -664,8 +664,8 @@ const getEditionInfo = async (year, { graphql, reporter }) => {
 								id
 								uri
 								title
-								featuredImage {
-									node {
+								artistEventContent {
+									images {
 										srcSet
 									}
 								}
@@ -687,10 +687,10 @@ const getEditionInfo = async (year, { graphql, reporter }) => {
 							id
 							uri
 							title
-							featuredImage {
-							  node {
-								srcSet
-							  }
+							artistEventContent {
+								images {
+									srcSet
+								}
 							}
 							language {
 								slug

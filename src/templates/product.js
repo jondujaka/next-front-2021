@@ -57,6 +57,7 @@ const ProductInfo = ({ format }) => (
 			productId={format.databaseId}
 			classes="ml-4"
 			text="Add to cart"
+			disabled={format.stockStatus === `IN_STOCK`}
 		/>
 	</div>
 );
@@ -83,6 +84,7 @@ export const productQuery = graphql`
 						srcSet
 					}
 				}
+				stockStatus
 				price
 				slug
 				nodeType
@@ -100,6 +102,7 @@ export const productQuery = graphql`
 						srcSet
 					}
 				}
+				stockStatus
 				variations {
 					nodes {
 						name
@@ -109,6 +112,7 @@ export const productQuery = graphql`
 						nodeType
 						downloadable
 						databaseId
+						stockStatus
 						attributes {
 							nodes {
 								name

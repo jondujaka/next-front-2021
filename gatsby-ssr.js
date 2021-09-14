@@ -19,11 +19,14 @@ export function wrapRootElement({ element }) {
 	);
 }
 
-export function onRenderBody({pathname, setPostBodyComponents}) {
-
-	if(pathname.includes('get-tickets')){
+export function onRenderBody({ pathname, setPostBodyComponents }) {
+	if (pathname.includes("get-tickets")) {
 		setPostBodyComponents([
-			<script src="https://partners.goout.net/sk-bratislava/nextfestivalsk.js"/>
+			<script
+				key="goout-script"
+				type="text/javascript"
+				src="https://partners.goout.net/sk-bratislava/nextfestivalsk.js"
+			></script>
 		]);
 	}
-};
+}

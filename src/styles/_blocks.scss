@@ -1,7 +1,6 @@
 .news-image {
 	margin-right: 2.5rem;
 	padding-left: 0;
-	float: left;
 	width: 55%;
 
 
@@ -40,7 +39,6 @@
 
 .news-info {
 	.news-title {
-		margin-top: 1em;
 		@extend .text-body;
 	}
 	h3 {
@@ -52,6 +50,7 @@
 }
 .news-info {
 	padding: 0;
+	flex-shrink: 1;
 }
 
 .news-item {
@@ -59,6 +58,7 @@
 	@extend .p-3;
 	@extend .px-lg-4;
 	@extend .py-lg-4;
+	display: flex;
 
 	@include media-breakpoint-down(lg) {
 		.news-info {

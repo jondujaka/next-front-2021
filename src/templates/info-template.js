@@ -19,9 +19,6 @@ const Info = ({ data, pageContext }) => {
 	const langSlug = lang === `en` ? `sk/` : ``;
 	const translationSlug = `/${langSlug}${edition}/info`;
 
-	console.log(lang);
-	console.log(infoPages);
-
 	const translatedContent = infoPages.find(
 		page => page.node.language.slug === lang
 	);
@@ -29,8 +26,6 @@ const Info = ({ data, pageContext }) => {
 	console.log(translatedContent);
 
 	const sections = translatedContent.node.about.section;
-
-	console.log(sections);
 
 	let scrollSpyItems =
 		sections && sections.map(section => section.title.toLowerCase());
@@ -87,6 +82,7 @@ const Info = ({ data, pageContext }) => {
 
 const AboutSection = ({ content }) => {
 	return content.map((item, i) => {
+		console.log(item);
 		if (item.textContent) {
 			return (
 				<Paragraph
@@ -105,7 +101,23 @@ const AboutSection = ({ content }) => {
 				/>
 			);
 		}
+
+		if (item.fieldGroupName === `Page_About_section_Content_Partners`) {
+			return (
+				<div className="partners-wrapper">
+					{item.partnerImages.length && item.partnerImages.map(partner => <Partner partner={partner} />)}
+				</div>
+			);
+		}
 	});
+};
+
+const Partner = ({ partner }) => {
+	return <div className="partner-image">
+		<ImageEl
+			srcSet={partner.srcSet}
+		/>
+	</div>;
 };
 export default Info;
 
@@ -138,6 +150,9 @@ export const infoQuery = graphql`
 								content {
 									... on WpEdition2021_About_section_Content_Partners {
 										fieldGroupName
+										partnerImages {
+											srcSet
+										}
 									}
 									... on WpEdition2021_About_section_Content_Media {
 										fieldGroupName

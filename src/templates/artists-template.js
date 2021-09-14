@@ -196,12 +196,9 @@ export const artistsQuery = graphql`
 					language {
 						slug
 					}
-					featuredImage {
-						node {
-							sizes
-							uri
-							description
-							caption
+
+					artistEventContent {
+						images {
 							srcSet
 						}
 					}

@@ -256,9 +256,7 @@ p {
 		@extend .text-body;
 	}
 
-	strong, b {
-		font-weight: normal !important;
-	}
+	
 
 	a {
 		font-size: inherit;
@@ -266,6 +264,12 @@ p {
 
 	p:not(:first-of-type) {
 		margin-top: 3rem;
+	}
+}
+
+.single-content .paragraph {
+	strong, b {
+		font-weight: normal !important;
 	}
 }
 
@@ -326,10 +330,19 @@ a:focus {
 	height: auto;
 	display: inline-block;
 
-	&:hover {
+	&:disabled:hover {
+		background: transparent;
+		color: $primaryBlue;
+		border-color: $primaryBlue;
+	}
+	
+
+	&:hover:not([disabled]) {
 		background: $primaryBlue;
 		border-color: $primaryBlue;
 	}
+
+	
 }
 
 hr {

@@ -148,15 +148,11 @@ export const workshopsQuery = graphql`
 							slug
 						}
 					}
-					featuredImage {
-						node {
-							sizes
-							uri
-							description
-							caption
+					artistEventContent {
+						images {
 							srcSet
 						}
-					}
+					  }
 					eventInfo {
 						dates {
 							date

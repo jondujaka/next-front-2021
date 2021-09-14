@@ -103,7 +103,7 @@ const ArtistBlock = ({ artist, colors }) => {
 			className="padding-hack event-artist col-8 mt-7 d-block"
 		>
 			<h3 className="big">{artist.title}</h3>
-			<Image srcSet={artist.featuredImage.node.srcSet} />
+			<Image srcSet={artist.artistEventContent.images[0].srcSet} />
 		</Link>
 	);
 };
@@ -154,8 +154,8 @@ export const eventQuery = graphql`
 							slug
 							uri
 						}
-						featuredImage {
-							node {
+						artistEventContent {
+							images {
 								srcSet
 							}
 						}

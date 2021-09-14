@@ -83,6 +83,26 @@
 	}
 }
 
+.partners-wrapper {
+	display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+}
+
+.partner-image {
+	display: block;
+	width: 187px;
+	height: 90px;
+	border-radius: 100%;
+	position: relative;
+	overflow: hidden;
+	margin: 0 20px 40px 20px;
+
+	img {
+		position: absolute;
+		width: 100%;
+	}
+}
+
 @media (min-width: 992px) {
 	.info-content {
 		transform: translateY(calc(#{$headerHeight} * -1 - 30px));

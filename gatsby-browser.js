@@ -11,8 +11,10 @@ export function wrapRootElement({ element }) {
 	);
 }
 
-export function onRouteUpdate(){
-	if(document){
-		document.getElementsByTagName('body')[0].classList.remove('overflow-hidden');
+export function onRouteUpdate() {
+	if (document) {
+		document
+			.getElementsByTagName("body")[0]
+			.classList.remove("overflow-hidden");
 	}
-  }
+}

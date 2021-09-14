@@ -82,8 +82,25 @@ const AboutSection = ({ content }) => {
 				/>
 			);
 		}
+		if (item.fieldGroupName === `Page_About_section_Content_Partners`) {
+			return (
+				<div className="partners-wrapper">
+					{item.partnerImages.length && item.partnerImages.map(partner => <Partner partner={partner} />)}
+				</div>
+			);
+		}
 	});
 };
+
+const Partner = ({ partner }) => {
+	return <div className="partner-image">
+		<img
+			width="50"
+			srcSet={partner.srcSet}
+		/>
+	</div>;
+};
+
 export default About;
 
 export const aboutQuery = graphql`
@@ -113,7 +130,7 @@ export const aboutQuery = graphql`
 						... on WpPage_About_section_Content_Partners {
 							fieldGroupName
 							partnerImages {
-								sizes
+								srcSet
 							}
 						}
 					}
