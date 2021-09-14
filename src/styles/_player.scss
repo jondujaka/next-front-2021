@@ -1,43 +1,10 @@
 .media-container {
 	width: 100%;
 	text-align: center;
-	left: 50%;
-	transform: translateX(-50%);
-	position: fixed;
-	width: 100%;
-	top: 0;
-	z-index: 15;
-	overflow-y: scroll;
-	height: 100vh;
-
-	-ms-overflow-style: none; /* for Internet Explorer, Edge */
-    scrollbar-width: none; /* for Firefox */
-    overflow-y: scroll; 
-
-	&::-webkit-scrollbar {
-		display: none; /* for Chrome, Safari, and Opera */
-	}
-}
-
-.media-wrapper {
-	margin-top: 200px;
-	margin-bottom: calc(100vh + 100px);
-	max-width: 1920px;
-	margin-left: auto;
-	margin-right: auto;
+	margin: 0 auto;
 	position: relative;
+	z-index: 1;
 	box-shadow: 0 0 99px 0 #4a4af1;
-	
-}
-
-.hide-video {
-	z-index: -444;
-	opacity: 0;
-}
-
-.show-video {
-	z-index: 999;
-	opacity: 1;
 }
 
 
@@ -47,11 +14,6 @@
 	background: white;
 	display: block;
 	@extend .text-body;
-}
-
-
-@media (max-width: 960px){
-	
 }
 
 .media-wrapper .react-player-home div {

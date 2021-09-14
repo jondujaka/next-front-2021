@@ -203,48 +203,6 @@ body {
 	font-family: "Gramatika", sans-serif;
 }
 
-.main-title-wrapper {
-	overflow: hidden;
-	display: flex;
-	justify-content: center;
-
-	@include media-breakpoint-down(md) {
-		flex-wrap: wrap;
-		margin-bottom: 1rem;
-		> * {
-			flex-basis: 100%;
-		}
-	}
-}
-
-h1.main-title {
-	font-family: $sansFont;
-	display: block;
-	z-index: -1;
-	position: relative;
-	font-size: 51.5vw;
-	width: auto;
-	text-align: center;
-	color: $primaryBlue;
-	margin: 0;
-	padding: 0;
-	line-height: 0.75;
-
-	@include media-breakpoint-up(md) {
-		margin-top: -1.2vw;
-	}
-
-	@include media-breakpoint-down(md) {
-		font-size: 111vw;
-		&:first-of-type {
-			margin-bottom: -5.7vw;
-		}
-		span {
-			display: block;
-		}
-	}
-}
-
 h1.single-title {
 	@include media-breakpoint-up(xl) {
 		// font-size: 9rem;

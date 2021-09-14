@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { graphql, Link } from "gatsby";
+import { StaticImage } from "gatsby-plugin-image"
 import LangSwitcher from "../components/LangSwitcher";
 import Layout from "../components/layout";
 import CustomLink from "../components/customLink";
@@ -8,7 +9,13 @@ import Row from "../components/row";
 import NewsBlock from "../components/newsBlock";
 import { InView } from "react-intersection-observer";
 import Edition from "./edition";
-import throttle from 'lodash.throttle';
+import throttle from "lodash.throttle";
+
+import TextTopMob from '../images/optimized/letters-top-mobile.svg';
+import TextBotMob from '../images/optimized/letters-bottom-mobile.svg';
+import TextTopDesktop from '../images/optimized/letters-top-desktop.svg';
+import TextBotDesktop from '../images/optimized/letters-bottom-desktop.svg';
+
 
 const Home = ({ data: { page, news }, pageContext, location }) => {
 	const { availableEditions } = pageContext;
@@ -19,47 +26,7 @@ const Home = ({ data: { page, news }, pageContext, location }) => {
 			return prev.year > current.year ? prev : current;
 		});
 
-	const body = useRef(null);
-	const [showVideo, setShowVideo] = useState(false);
-
 	const allNews = news.edges;
-
-	const canReshowVideo = useRef(false);
-
-	const startTimer = () => {
-		canReshowVideo.current = false;
-		// window.setTimeout(() => {
-		// 	canReshowVideo.current = true;
-		// }, 1000);
-	};
-
-	const handleBodyScroll = e => {
-		body.current.scrollTo(0, 0);
-		if (
-			window.scrollY === 0 &&
-			(location.pathname === `/` || location.pathname === `/sk`)
-		) {
-			setShowVideo(true);
-			
-		}
-	};
-
-	const throttledFunc = throttle(handleBodyScroll, 100);
-
-	useEffect(() => {
-		setShowVideo(true);
-		body.current = document.getElementById("main-wrapper");
-		window.addEventListener("scroll", throttledFunc);
-
-		return () => {
-			window.removeEventListener("scroll", throttledFunc);
-		};
-	}, []);
-	
-
-	const hideVideo = () => {
-		setShowVideo(false);
-	};
 
 	const editionContext = latestEdition
 		? {
@@ -79,28 +46,29 @@ const Home = ({ data: { page, news }, pageContext, location }) => {
 
 	const editionBorder = {
 		borderTop: `3px solid ${editionContext.settings.textColor}`
-	}
+	};
 
 	return (
-		<Layout key="layout-home" translationSlug={translationSlug} isSk={isSk} style={editionContext.settings}>
-			<ScrollVideo
-					layer={page.mainHome.videoLayer}
-					hideVideo={hideVideo}
-					show={showVideo}
-				/>
-			<Row>
-				<HomeHeader
-					classes="d-none d-md-block desktop col col-12"
-					items={page.mainHome.topLinks}
-				/>
-			</Row>
+		<Layout
+			key="layout-home"
+			translationSlug={translationSlug}
+			isSk={isSk}
+			style={editionContext.settings}
+		>
+			
+
 			<Row classes="main-title-wrapper" fullWidth={true}>
-				<h1 className="main-title">NE</h1>
-				<HomeHeader
-					classes="d-md-none mobile"
-					items={page.mainHome.topLinks}
+				{/* <TextTopMob /> */}
+				<img className="d-none d-lg-block" src={TextTopDesktop} alt="NEXT" />
+				<img className="d-block d-lg-none" src={TextTopMob} alt="NEXT" />
+				
+				<ScrollVideo
+					layer={page.mainHome.videoLayer}
 				/>
-				<h1 className="main-title">XT</h1>
+				<img className="d-none d-lg-block" src={TextBotDesktop} alt="NEXT" />
+				<img className="d-block d-lg-none" src={TextBotMob} alt="NEXT" />
+				{/* <img className="d-none d-lg-block" src="../images/optimized/letters-bottom-desktop.svg" alt="NEXT" /> */}
+				{/* <img className="d-block d-lg-none" src="../images/optimized/letters-bottom-mobile.svg" alt="NEXT" /> */}
 			</Row>
 
 			{/* <Row>
@@ -133,40 +101,10 @@ const Home = ({ data: { page, news }, pageContext, location }) => {
 	);
 };
 
-const ScrollVideo = ({ layer, hideVideo, show }) => {
-	
-	const mediaRef = useRef(null);
-	const containerRef = useRef(null);
-	const canHide = useRef(true);
-
-	const handleScroll = e => {
-		const threshold = mediaRef.current.offsetHeight + 200;
-		if (e.target.scrollTop > threshold && canHide.current) {
-			hideVideo();
-			canHide.current = false;
-			// containerRef.current.classList.add('overflow-hidden');
-			// setTimeout(() => containerRef.current.scroll(0, threshold + 10), 200);
-
-		}
-
-		if(!canHide.current) {
-			if(e.target.scrollTop < window.innerHeight - 200){
-				canHide.current = true;
-			}
-		}
-	};
-
-	const throttledFunc = throttle(handleScroll, 100);
-
-	useEffect(() => {
-		// const container = document.getElementById("media-container");
-		containerRef.current.addEventListener("scroll", throttledFunc);
-	}, []);
-	
-
+const ScrollVideo = ({ layer, show }) => {
 	return (
-		<section id="media-container" ref={containerRef} className={`media-container ${show ? `show-video` : `hide-video`}`}>
-			<div className="media-wrapper" ref={mediaRef}>
+		<section id="media-container" className={`media-container`}>
+			<div className="media-wrapper">
 				{layer.title ? (
 					<div className="top-video-title">{layer.title}</div>
 				) : (
@@ -210,16 +148,15 @@ const HomeHeader = ({ items, classes }) => {
 };
 
 const Media = ({ media, setIsInView }) => {
-
 	const [videoOverlay, setVideoOverlay] = useState(true);
 
 	const initVideoOverlay = () => {
 		window.setTimeout(() => {
-			if(playerRef.current){
-				playerRef.current.wrapper.classList.remove('has-overlay')
+			if (playerRef.current) {
+				playerRef.current.wrapper.classList.remove("has-overlay");
 			}
-		}, 2500)
-	}
+		}, 2500);
+	};
 
 	const playerRef = useRef();
 	if (media.imageOrVideo === `image`) {
@@ -227,11 +164,12 @@ const Media = ({ media, setIsInView }) => {
 	} else {
 		return (
 			<>
-				
 				<ReactPlayer
-					className={`react-player-home ${videoOverlay ? `has-overlay` : ``}`}
+					className={`react-player-home ${
+						videoOverlay ? `has-overlay` : ``
+					}`}
 					url={media.video}
-					playing={true}
+					playing={false}
 					ref={playerRef}
 					onReady={initVideoOverlay}
 					loop
