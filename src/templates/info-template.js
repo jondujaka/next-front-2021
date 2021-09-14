@@ -22,13 +22,15 @@ const Info = ({ data, pageContext }) => {
 	console.log(lang);
 	console.log(infoPages);
 
-	const translatedContent = infoPages.find(page => page.node.language.slug === lang);
+	const translatedContent = infoPages.find(
+		page => page.node.language.slug === lang
+	);
 
-	console.log(translatedContent)
+	console.log(translatedContent);
 
 	const sections = translatedContent.node.about.section;
 
-	console.log(sections)
+	console.log(sections);
 
 	let scrollSpyItems =
 		sections && sections.map(section => section.title.toLowerCase());
@@ -46,7 +48,7 @@ const Info = ({ data, pageContext }) => {
 			pageName="Info"
 		>
 			<div className="row">
-				<div className="col col-12 d-none d-md-block col-md-4 d-md-block col-xl-6 about-nav">
+				<div className="col-12 d-none d-lg-block col-lg-5 col-xl-6 about-nav">
 					{scrollSpyItems && (
 						<Scrollspy
 							items={scrollSpyItems}
@@ -63,7 +65,7 @@ const Info = ({ data, pageContext }) => {
 						</Scrollspy>
 					)}
 				</div>
-				<div className="col col-12 col-md-8 col-xl-6 info-content mt-5">
+				<div className="col-12 col-lg-7 col-xl-6 about-content">
 					{sections &&
 						sections.map(section => (
 							<div
