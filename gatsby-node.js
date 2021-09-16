@@ -360,10 +360,12 @@ const buildEdition = async (year, gatsbyUtilities) => {
 		// Create the edition
 
 		let shouldBuild = false;
-		let isDev = process.env.GATSBY_IS_PREVIEW || process.env.NODE_ENV === `development`;
-		let {liveWebsite, testWebsite} = editionInfo.editionData.settings;
+		let isDev =
+			process.env.GATSBY_IS_PREVIEW ||
+			process.env.NODE_ENV === `development`;
+		let { liveWebsite, testWebsite } = editionInfo.editionData.settings;
 
-		if(isDev){
+		if (isDev) {
 			shouldBuild = liveWebsite || testWebsite;
 			console.log(`build test or live edition ${year}`);
 		} else {
@@ -371,8 +373,8 @@ const buildEdition = async (year, gatsbyUtilities) => {
 			console.log(`build only live edition ${year}`);
 		}
 
-		if(!shouldBuild){
-			return;	
+		if (!shouldBuild) {
+			return;
 		}
 		// Create an index of editions that should be built
 		if (!editionsToBuild.find(edition => edition.year === year)) {

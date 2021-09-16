@@ -23,7 +23,7 @@ const Layout = ({
 	children,
 	settings,
 	year,
-	style = { color: `#000`, backgroundColor: `#FFF`, borderColor: `#000` },
+	style = { color: `#000`, backgroundColor: `#FFF`, textColor: `#000` },
 	embeded,
 	editionHeader = {},
 	skMenu = {
@@ -122,6 +122,7 @@ const Layout = ({
 						noLang={editionHeader.menuItems || false}
 						isSk={isSk}
 						translationSlug={translationSlug}
+						style={style}
 					/>
 				)}
 				{editionHeader && editionHeader.menuItems && (

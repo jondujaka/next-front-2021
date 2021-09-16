@@ -57,7 +57,7 @@ const Home = ({ data: { page, news }, pageContext, location }) => {
 		>
 			
 
-			<Row classes="main-title-wrapper" fullWidth={true}>
+			<Row classes="main-title-wrapper mt-6" fullWidth={true}>
 				{/* <TextTopMob /> */}
 				<img className="d-none d-lg-block" src={TextTopDesktop} alt="NEXT" />
 				<img className="d-block d-lg-none" src={TextTopMob} alt="NEXT" />

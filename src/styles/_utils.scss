@@ -153,3 +153,17 @@ figure.fixed-ratio {
 .main-wrapper.overflow-hidden {
 	height: 100vh;
 }
+
+
+.widget .newInput-label, .widget .newInput-labelVoucher {
+	font-family: $sansFont;
+}
+
+.gatsby-image-wrapper img {
+	height: auto !important;
+}
+
+.aligncenter {
+	display: block;
+	margin: 0 auto;
+}

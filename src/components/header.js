@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Link, useStaticQuery, graphql } from "gatsby";
 import { useAppState } from "./context";
+import Style from "style-it";
 
-const Header = ({ siteTitle, noLang, isSk, translationSlug }) => {
+const Header = ({ siteTitle, noLang, isSk, translationSlug, style }) => {
 	const { cart } = useAppState();
 
 	const [mobileNavOpen, setMobileNavOpen] = useState(false);
@@ -50,6 +51,7 @@ const Header = ({ siteTitle, noLang, isSk, translationSlug }) => {
 						noLang={noLang}
 						translationSlug={translationSlug}
 						isSk={isSk}
+						style={style}
 					/>
 				</nav>
 
@@ -60,6 +62,7 @@ const Header = ({ siteTitle, noLang, isSk, translationSlug }) => {
 						translationSlug={translationSlug}
 						isSk={isSk}
 						mobile
+						style={style}
 					/>
 				</div>
 			</div>
@@ -81,7 +84,14 @@ const Header = ({ siteTitle, noLang, isSk, translationSlug }) => {
 	);
 };
 
-const MainMenuLinks = ({ cart, noLang, mobile, translationSlug, isSk }) => {
+const MainMenuLinks = ({
+	cart,
+	noLang,
+	mobile,
+	translationSlug,
+	isSk,
+	style
+}) => {
 	const data = useStaticQuery(graphql`
 		query MainMenusQuery {
 			allWpMenu(filter: { slug: { regex: "/^main-navigation/" } }) {
@@ -103,9 +113,30 @@ const MainMenuLinks = ({ cart, noLang, mobile, translationSlug, isSk }) => {
 	const menus = data.allWpMenu.edges;
 
 	const menuSlug = isSk ? `main-navigation-sk` : `main-navigation`;
-	const menuItems = menus.find(menu => menu.node.slug === menuSlug).node.menuItems.nodes;
+	const menuItems = menus.find(menu => menu.node.slug === menuSlug).node
+		.menuItems.nodes;
 
-	return (
+	const styles = style
+		? `
+		.edition-btn {
+			color: ${style.textColor};
+			border: 2px solid${style.textColor};
+			background: ${style.backgroundColor};
+			border-radius: 3.5rem;
+			padding: 1rem 1.7rem;
+		}
+
+		.edition-btn:hover,
+		.edition-btn.active {
+			text-decoration: none;
+			color: ${style.backgroundColor};
+			background: ${style.textColor};
+		}
+	`
+		: ``;
+
+	return Style.it(
+		styles,
 		<ul>
 			{mobile && (
 				<li>
@@ -114,17 +145,21 @@ const MainMenuLinks = ({ cart, noLang, mobile, translationSlug, isSk }) => {
 					</Link>
 				</li>
 			)}
-			{menuItems.length && menuItems.map(item => <li><Link
-					to={item.url}
-					partiallyActive
-					activeClassName="active"
-					key={`${item.url}-${mobile ? `mobile` : `desktop`}`}
-				>
-					{item.label}
-				</Link>
-				</li>
-			)}
-			{cart?.content?.itemCount ? (
+			{menuItems.length &&
+				menuItems.map((item, i) => (
+					<li>
+						<Link
+							to={item.url}
+							partiallyActive
+							className={i === 0 ? `edition-btn` : ``}
+							activeClassName="active"
+							key={`${item.url}-${mobile ? `mobile` : `desktop`}`}
+						>
+							{item.label}
+						</Link>
+					</li>
+				))}
+			{cart?.contents?.itemCount ? (
 				<li>
 					<Link
 						to="/cart"
