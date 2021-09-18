@@ -163,7 +163,7 @@ const Media = ({ media, setIsInView }) => {
 						videoOverlay ? `has-overlay` : ``
 					}`}
 					url={media.video}
-					playing={false}
+					playing={true}
 					ref={playerRef}
 					onReady={initVideoOverlay}
 					loop
