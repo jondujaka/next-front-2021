@@ -19,6 +19,12 @@ const templateMap = {
 	records: `records`
 };
 
+const getLatestEdition = () =>
+	editionsToBuild.length &&
+	editionsToBuild.reduce((prev, current) => {
+		return prev.year > current.year ? prev : current;
+	});
+
 const fs = require(`fs`);
 
 const getNrItems = (arr, limit, start = 0) => {
@@ -87,7 +93,8 @@ const initPostTypes = async gatsbyUtilities => {
 		const context = {
 			id: articleInfo.article.id,
 			related: allNews,
-			lang: `en`
+			lang: `en`,
+			latestEdition: getLatestEdition()
 		};
 		createNewsPromises.push(
 			createIndividualPage(slug, template, context, gatsbyUtilities)
@@ -99,7 +106,8 @@ const initPostTypes = async gatsbyUtilities => {
 			const template = `news-article`;
 			const context = {
 				id: articleInfo.article.translations[0].id,
-				lang: `sk`
+				lang: `sk`,
+				latestEdition: getLatestEdition()
 			};
 			createNewsPromises.push(
 				createIndividualPage(slug, template, context, gatsbyUtilities)
@@ -238,7 +246,8 @@ const initPostTypes = async gatsbyUtilities => {
 		const template = `project`;
 		const context = {
 			id: projectInfo.project.id,
-			related: allProjects
+			related: allProjects,
+			latestEdition: getLatestEdition()
 		};
 		createProjectsPromises.push(
 			createIndividualPage(slug, template, context, gatsbyUtilities)
@@ -250,7 +259,8 @@ const initPostTypes = async gatsbyUtilities => {
 			const template = `project`;
 			const context = {
 				id: projectInfo.project.translations[0].id,
-				lang: `sk`
+				lang: `sk`,
+				latestEdition: getLatestEdition()
 			};
 			createProjectsPromises.push(
 				createIndividualPage(slug, template, context, gatsbyUtilities)
@@ -275,7 +285,8 @@ const initPostTypes = async gatsbyUtilities => {
 			const template = `commission`;
 			const context = {
 				id: commissionsInfo.commission.id,
-				related: allCommissions
+				related: allCommissions.slice(0, 5),
+				latestEdition: getLatestEdition()
 			};
 			createCommissionsPromises.push(
 				createIndividualPage(slug, template, context, gatsbyUtilities)
@@ -287,7 +298,9 @@ const initPostTypes = async gatsbyUtilities => {
 				const template = `commission`;
 				const context = {
 					id: commissionsInfo.commission.translations[0].id,
-					lang: `sk`
+					lang: `sk`,
+					latestEdition: getLatestEdition(),
+					related: allCommissions.slice(0, 5),
 				};
 				createCommissionsPromises.push(
 					createIndividualPage(
@@ -349,8 +362,6 @@ const buildEdition = async (year, gatsbyUtilities) => {
 			template: `workshops-template`
 		}
 	];
-
-	console.log(editionInfo);
 
 	if (
 		editionInfo &&
@@ -885,12 +896,9 @@ const initSingleMainPage = async (settings, gatsbyUtils) => {
 	let contextEn = {
 		id: pageData.id,
 		lang: `en`,
-		title: pageData.title
+		title: pageData.title,
+		latestEdition: getLatestEdition()
 	};
-
-	if (slug === `index`) {
-		contextEn.availableEditions = editionsToBuild;
-	}
 
 	createIndividualPage(uri, templateSlug, { ...contextEn }, gatsbyUtils);
 
@@ -900,12 +908,9 @@ const initSingleMainPage = async (settings, gatsbyUtils) => {
 		let contextSk = {
 			id: skData.id,
 			lang: `sk`,
-			title: skData.title
+			title: skData.title,
+			latestEdition: getLatestEdition()
 		};
-
-		if (slug === `index`) {
-			contextSk.availableEditions = editionsToBuild;
-		}
 
 		if (!skUri) {
 			skUri = `sk/${pageData.slug}`;

@@ -16,8 +16,10 @@ const Edition = ({ data, pageContext, embeded, style }) => {
 
 	if (settings) {
 		colorStyle = {
+			textColor: settings.textColor,
 			color: settings.textColor,
 			backgroundColor: settings.backgroundColor,
+			borderColor: settings.textColor,
 			paddingBottom: `100px`
 		};
 	} else if (style) {

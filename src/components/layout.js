@@ -60,7 +60,7 @@ const Layout = ({
 
 	let parsedStyle = {
 		...style,
-		borderColor: style.color
+		borderColor: style.textColor
 	};
 
 	return (

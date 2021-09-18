@@ -271,6 +271,9 @@ p {
 	strong, b {
 		font-weight: normal !important;
 	}
+	p {
+		line-break: anywhere;
+	}
 }
 
 p{

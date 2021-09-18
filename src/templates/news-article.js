@@ -7,9 +7,10 @@ import Single from "./single";
 
 const NewsArticle = ({ data: { article }, pageContext }) => {
 	const translationSlug = article.translations[0]?.uri;
+	const { latestEdition } = pageContext;
 	const isSk = article.language.slug === `sk`;
 	return (
-		<Layout translationSlug={translationSlug} isSk={isSk}>
+		<Layout isSk={isSk} translationSlug={translationSlug} style={latestEdition}>
 			<Row>
 				<div className="col col-12 mt-5 mb-6">
 					<h2 className="festival-page-title">

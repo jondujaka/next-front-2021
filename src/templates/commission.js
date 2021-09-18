@@ -13,6 +13,8 @@ const Commission = ({ data: { commission }, pageContext }) => {
 		return newObj;
 	}) : [];
 
+	const { latestEdition } = pageContext;
+
 	let fake = [];
 
 	for (let i = 0; i < 5; i++) {
@@ -26,7 +28,7 @@ const Commission = ({ data: { commission }, pageContext }) => {
 		: null;
 
 	return (
-		<Layout translationSlug={translationSlug} isSk={isSk}>
+		<Layout isSk={isSk} translationSlug={translationSlug} style={latestEdition}>
 			<Row>
 				<div className="col col-12 mt-5 mb-6">
 					<h2 className="festival-page-title">

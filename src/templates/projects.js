@@ -6,13 +6,14 @@ import ProjectsGrid from "../components/blockGrids/projectsGrid";
 
 const Projects = ({ data, pageContext }) => {
 	const projects = data.projects.edges;
+	const { latestEdition } = pageContext;
 
 	const langSlug = pageContext.lang === `en` ? `sk/` : ``;
 	const isSk = pageContext.lang !== `en`;
 	const translationSlug = `/${langSlug}projects`;
 
 	return (
-		<Layout isSk={isSk} translationSlug={translationSlug}>
+		<Layout isSk={isSk} translationSlug={translationSlug} style={latestEdition}>
 			<Row classes="mt-6">
 				<div className="col col-12 mt-5 mb-6">
 					<h2 className="festival-page-title">{data.page.title}</h2>

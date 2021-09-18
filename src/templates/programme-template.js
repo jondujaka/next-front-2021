@@ -128,6 +128,7 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 		<Layout
 			style={{
 				color: settings.textColor,
+				textColor: settings.textColor,
 				backgroundColor: settings.backgroundColor
 			}}
 			editionHeader={menu}

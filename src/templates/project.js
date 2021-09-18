@@ -17,9 +17,10 @@ const Project = ({ data: { project }, pageContext }) => {
 
 	const isSk = project.language.slug === `sk`;
 	const translationSlug = project.translations[0].uri;
+	const { latestEdition } = pageContext;
 
 	return (
-		<Layout isSk={isSk} translationSlug={translationSlug}>
+		<Layout isSk={isSk} translationSlug={translationSlug} style={latestEdition}>
 			<Row>
 				<div className="col col-12 mt-5 mb-6">
 					<h2 className="festival-page-title">

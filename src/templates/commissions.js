@@ -7,13 +7,14 @@ import Masonry from "react-masonry-css";
 
 const Commissions = ({ data, pageContext }) => {
 	const coms = data.commissions.edges;
+	const { latestEdition } = pageContext;
 
 	const langSlug = pageContext.lang ===`en` ? `sk/` : ``;
 	const isSk = pageContext.lang !== `en`;
 	const translationSlug = `/${langSlug}commissions`;
 
 	return (
-		<Layout isSk={isSk} translationSlug={translationSlug}>
+		<Layout isSk={isSk} translationSlug={translationSlug} style={latestEdition}>
 			<Row>
 				<div className="col col-12 mt-5 mb-6">
 					<h2 className="festival-page-title">{data.page.title}</h2>

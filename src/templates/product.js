@@ -9,11 +9,10 @@ import Single from "./single.js";
 const Product = ({ data, pageContext }) => {
 	const product = data.product;
 	const carouselItems = product.productInfo.images;
-
-	console.log(product);
+	const { latestEdition } = pageContext;
 
 	return (
-		<Layout>
+		<Layout style={latestEdition}>
 			<Row>
 				<div className="col col-12 mt-5 mb-6">
 					<h2 className="festival-page-title">
@@ -73,6 +72,7 @@ export const productQuery = graphql`
 		product: wpProduct(id: { eq: $id }) {
 			id
 			name
+			
 			... on WpSimpleProduct {
 				id
 				name

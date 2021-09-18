@@ -18,13 +18,7 @@ import TextBotDesktop from '../images/optimized/letters-bottom-desktop.svg';
 
 
 const Home = ({ data: { page, news }, pageContext, location }) => {
-	const { availableEditions } = pageContext;
-
-	const latestEdition =
-		availableEditions.length &&
-		availableEditions.reduce((prev, current) => {
-			return prev.year > current.year ? prev : current;
-		});
+	const { latestEdition } = pageContext;
 
 	const allNews = news.edges;
 

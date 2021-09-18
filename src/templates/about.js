@@ -10,6 +10,7 @@ import Scrollspy from "react-scrollspy";
 
 const About = ({ data, pageContext }) => {
 	const sections = data.wpPage.about.section;
+	const { latestEdition } = pageContext;
 
 	let scrollSpyItems =
 		sections && sections.map(section => section.title.toLowerCase());
@@ -20,7 +21,7 @@ const About = ({ data, pageContext }) => {
 
 
 	return (
-		<Layout isSk={isSk} translationSlug={translationSlug}>
+		<Layout isSk={isSk} translationSlug={translationSlug} style={latestEdition}>
 			<div className="row">
 				<div className="col col-12 mt-5 mb-6">
 					<h2 className="festival-page-title">{data.wpPage.title}</h2>
