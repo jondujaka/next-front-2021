@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "./image";
 
-const getColNr = (length) => length === 1 ? 6 : 12 / length;
+const getColNr = (length) => length === 1 ? 8 : 12 / length;
 const Media = ({ content, classes }) => {
 	if (content.images) {
 		return content.images.map((image, i) => (

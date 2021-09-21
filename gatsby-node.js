@@ -93,26 +93,26 @@ const initPostTypes = async gatsbyUtilities => {
 		const context = {
 			id: articleInfo.article.id,
 			related: allNews,
-			lang: `en`,
+			lang: articleInfo.article.language.slug,
 			latestEdition: getLatestEdition()
 		};
 		createNewsPromises.push(
 			createIndividualPage(slug, template, context, gatsbyUtilities)
 		);
 
-		if (articleInfo.article.translations.length) {
-			console.log(`building news, slovak`);
-			const slug = `/sk/news/${articleInfo.article.translations[0].slug}`;
-			const template = `news-article`;
-			const context = {
-				id: articleInfo.article.translations[0].id,
-				lang: `sk`,
-				latestEdition: getLatestEdition()
-			};
-			createNewsPromises.push(
-				createIndividualPage(slug, template, context, gatsbyUtilities)
-			);
-		}
+		// if (articleInfo.article.translations.length) {
+		// 	console.log(`building news, slovak`);
+		// 	const slug = `/sk/news/${articleInfo.article.translations[0].slug}`;
+		// 	const template = `news-article`;
+		// 	const context = {
+		// 		id: articleInfo.article.translations[0].id,
+		// 		lang: `sk`,
+		// 		latestEdition: getLatestEdition()
+		// 	};
+		// 	createNewsPromises.push(
+		// 		createIndividualPage(slug, template, context, gatsbyUtilities)
+		// 	);
+		// }
 	});
 
 	let eventSettings = {
@@ -141,23 +141,7 @@ const initPostTypes = async gatsbyUtilities => {
 				id: eventInfo.event.id,
 				settings: { ...editionSettings },
 				related: allEvents,
-				lang: `en`
-			};
-			createEventPromises.push(
-				createIndividualPage(slug, template, context, gatsbyUtilities)
-			);
-		}
-
-		if (eventInfo.event.translations.length) {
-			console.log(`building events for: ${year.slug}, slovak`);
-			const slug = `/sk/${year.slug}/events/${eventInfo.event.translations[0].slug}`;
-			const template = `event`;
-			const context = {
-				edition: year,
-				id: eventInfo.event.translations[0].id,
-				settings: { ...editionSettings },
-				related: allEvents,
-				lang: `sk`
+				lang: eventInfo.event.language.slug
 			};
 			createEventPromises.push(
 				createIndividualPage(slug, template, context, gatsbyUtilities)
@@ -207,30 +191,16 @@ const initPostTypes = async gatsbyUtilities => {
 				year: year.slug,
 				id: artistInfo.artist.id,
 				settings: editionSettings ? { ...editionSettings } : {},
-				eventsList
-			};
-
-			console.log(context);
-			createArtistsPromises.push(
-				createIndividualPage(slug, template, context, gatsbyUtilities)
-			);
-		}
-
-		if (artistInfo.artist.translations.length) {
-			const translation = artistInfo.artist.translations[0];
-			const slug = translation.uri;
-			const template = `artist`;
-			const context = {
-				year: year.slug,
-				id: translation.id,
-				settings: editionSettings ? { ...editionSettings } : {},
 				eventsList,
-				lang: `sk`
+				lang: artistInfo.artist.language.slug
 			};
+
+
 			createArtistsPromises.push(
 				createIndividualPage(slug, template, context, gatsbyUtilities)
 			);
 		}
+
 	});
 
 	let projectsSettings = {
@@ -247,25 +217,26 @@ const initPostTypes = async gatsbyUtilities => {
 		const context = {
 			id: projectInfo.project.id,
 			related: allProjects,
-			latestEdition: getLatestEdition()
+			latestEdition: getLatestEdition(),
+			lang: projectInfo.project.language.slug
 		};
 		createProjectsPromises.push(
 			createIndividualPage(slug, template, context, gatsbyUtilities)
 		);
 
-		if (projectInfo.project.translations.length) {
-			console.log(`building projects, slovak`);
-			const slug = `/sk/projects/${projectInfo.project.translations[0].slug}`;
-			const template = `project`;
-			const context = {
-				id: projectInfo.project.translations[0].id,
-				lang: `sk`,
-				latestEdition: getLatestEdition()
-			};
-			createProjectsPromises.push(
-				createIndividualPage(slug, template, context, gatsbyUtilities)
-			);
-		}
+		// if (projectInfo.project.translations.length) {
+		// 	console.log(`building projects, slovak`);
+		// 	const slug = `/sk/projects/${projectInfo.project.translations[0].slug}`;
+		// 	const template = `project`;
+		// 	const context = {
+		// 		id: projectInfo.project.translations[0].id,
+		// 		lang: `sk`,
+		// 		latestEdition: getLatestEdition()
+		// 	};
+		// 	createProjectsPromises.push(
+		// 		createIndividualPage(slug, template, context, gatsbyUtilities)
+		// 	);
+		// }
 	});
 
 	let commissionsSettings = {
@@ -286,31 +257,32 @@ const initPostTypes = async gatsbyUtilities => {
 			const context = {
 				id: commissionsInfo.commission.id,
 				related: allCommissions.slice(0, 5),
-				latestEdition: getLatestEdition()
+				latestEdition: getLatestEdition(),
+				lang: commissionsInfo.commission.language.slug
 			};
 			createCommissionsPromises.push(
 				createIndividualPage(slug, template, context, gatsbyUtilities)
 			);
 
-			if (commissionsInfo.commission.translations.length) {
-				console.log(`building commissions, slovak`);
-				const slug = `/sk/commissions/${commissionsInfo.commission.translations[0].slug}`;
-				const template = `commission`;
-				const context = {
-					id: commissionsInfo.commission.translations[0].id,
-					lang: `sk`,
-					latestEdition: getLatestEdition(),
-					related: allCommissions.slice(0, 5),
-				};
-				createCommissionsPromises.push(
-					createIndividualPage(
-						slug,
-						template,
-						context,
-						gatsbyUtilities
-					)
-				);
-			}
+			// if (commissionsInfo.commission.translations.length) {
+			// 	console.log(`building commissions, slovak`);
+			// 	const slug = `/sk/commissions/${commissionsInfo.commission.translations[0].slug}`;
+			// 	const template = `commission`;
+			// 	const context = {
+			// 		id: commissionsInfo.commission.translations[0].id,
+			// 		lang: `sk`,
+			// 		latestEdition: getLatestEdition(),
+			// 		related: allCommissions.slice(0, 5),
+			// 	};
+			// 	createCommissionsPromises.push(
+			// 		createIndividualPage(
+			// 			slug,
+			// 			template,
+			// 			context,
+			// 			gatsbyUtilities
+			// 		)
+			// 	);
+			// }
 		});
 
 	Promise.all([
@@ -613,13 +585,16 @@ const getPostType = async (settings, { graphql, reporter }) => {
 	const graphqlResult = await graphql(/* GraphQL */ `
 		query ${settings.queryName} {
 			# Query index pages from edition
-			${settings.gqlName}(filter: {language: {slug: {eq: "en"}}}) {
+			${settings.gqlName} {
 				edges {
 					${settings.postType}: node {
 						slug
 						title
 						id
 						uri
+						language {
+							slug
+						}
 						translations {
 							slug
 							id
