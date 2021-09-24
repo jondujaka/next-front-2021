@@ -18,6 +18,8 @@ body {
 
 	> * {
 		@include make-col-ready();
+		padding-right: 1.5rem;
+    	padding-left: 1.5rem;
 	}
 }
 

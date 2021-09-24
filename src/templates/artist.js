@@ -22,7 +22,7 @@ const Artist = ({ data: { artist, events }, pageContext }) => {
 		return (
 			event.node.eventInfo.artists &&
 			event.node.eventInfo.artists.some(
-				eventArtist => eventArtist.id === artist.translations[0].id
+				eventArtist => artist.translations.length && eventArtist.id === artist.translations[0].id
 			)
 		);
 	});

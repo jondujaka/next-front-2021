@@ -37,7 +37,7 @@ const ArtistBlock = ({ item, style, colors={backgroundColor: `FFF`, textColor: `
 		}
 	` : ``;
 	return Style.it(styles,
-		<Link className="artist-item px-2 px-md-4 col-6 col-lg-4 mb-5" to={item.uri}>
+		<Link className="artist-item px-2 px-md-4 col-6 col-lg-4 mb-3" to={item.uri}>
 			<div className="row p-1 p-md-3 ">
 				<div className="artist-info col col-12 text-center">
 					<h3 className="artist-title">{item.title || item.name}</h3>
