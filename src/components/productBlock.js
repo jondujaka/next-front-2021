@@ -9,7 +9,7 @@ const Product = ({item}) => {
 	const formats =content.variations ? content.variations.nodes.map(variation => ({
 		slug: variation.attributes.nodes[0].value,
 		name: variation.attributes.nodes[0].value
-	})) : content.productCategories.nodes.map(category => ({
+	})) : content.productCategories && content.productCategories.nodes.map(category => ({
 		slug: category.slug,
 		name: category.name
 	}));
