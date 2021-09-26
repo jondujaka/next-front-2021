@@ -33,7 +33,7 @@ const Product = ({item}) => {
 				</div>
 				<div className="product-image col col-12">
 					{image && <img srcSet={image} />}
-					{formats.length ? <div className="product-formats">
+					{formats && formats.length ? <div className="product-formats">
 						{formats.map(format => <span key={format.slug}>{format.name}</span>)}
 					</div> : ``}
 				</div>

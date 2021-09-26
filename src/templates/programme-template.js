@@ -34,7 +34,6 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 		: ``;
 
 	const filterEvents = (slug, type) => {
-		console.log(slug);
 
 		if (type === `day`) {
 			setDayFilter(slug);
@@ -69,14 +68,12 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 	};
 
 	const setUpDays = () => {
-		console.log("asd");
 		let dayFilters = [{
 			label: "All Days",
 			value: "all"
 		}];
 		const allDaysInit = {};
 		allEvents.forEach(event => {
-			console.log("creating days again?");
 			const { eventInfo } = event.node;
 			if (!eventInfo.dates) {
 				return;

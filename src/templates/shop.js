@@ -5,7 +5,6 @@ import Row from "../components/row";
 import ProductsGrid from "../components/blockGrids/productsGrid";
 
 const Shop = ({ data, pageContext }) => {
-	console.log(data);
 	const products = data.products.edges;
 	const { latestEdition } = pageContext;
 

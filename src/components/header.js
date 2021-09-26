@@ -112,8 +112,6 @@ const MainMenuLinks = ({
 
 	const menus = data.allWpMenu.edges;
 
-	console.log(data);
-
 	const menuSlug = isSk ? `main-navigation-sk` : `main-navigation`;
 	const menuItems = menus.find(menu => menu.node.slug === menuSlug).node
 		.menuItems.nodes;

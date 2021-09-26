@@ -23,8 +23,6 @@ const Info = ({ data, pageContext }) => {
 		page => page.node.language.slug === lang
 	);
 
-	console.log(translatedContent);
-
 	const sections = translatedContent.node.about.section;
 
 	let scrollSpyItems =
@@ -82,7 +80,6 @@ const Info = ({ data, pageContext }) => {
 
 const AboutSection = ({ content }) => {
 	return content.map((item, i) => {
-		console.log(item);
 		if (item.textContent) {
 			return (
 				<Paragraph
