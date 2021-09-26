@@ -40,6 +40,9 @@
 .news-info {
 	.news-title {
 		@extend .text-body;
+
+		word-wrap: break-word;
+  		overflow-wrap: break-word;
 	}
 	h3 {
 		display: block;
@@ -267,6 +270,10 @@
 			object-fit: cover;
 		}
 	}
+}
+
+.block-link-wrapper {
+	max-width: 100%;
 }
 
 .see-all-link {

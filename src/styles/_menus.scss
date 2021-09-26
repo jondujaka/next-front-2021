@@ -31,7 +31,7 @@ footer {
 	width: 100%;
 	margin-top: 2rem;
 	a {
-		width: 200px;
+		width: 170px;
 		display: inline-block;
 
 		@extend .text-body-small;
@@ -226,6 +226,7 @@ footer {
 }
 .main-nav-mobile {
 	display: block;
+
 }
 .desktop-edition-menu,
 .main-nav.desktop {
@@ -240,6 +241,12 @@ footer {
 		display: block;
 		margin: .5rem 0;
 		padding: .5rem;
+		order: 2;
+
+		&:nth-of-type(2) {
+			order: 0;
+			margin-bottom: 1rem;
+		}
 
 		a {
 			@extend .text-body;
@@ -310,8 +317,8 @@ footer {
 
 	.next-button.mobile {
 		position: fixed;
-		bottom: 0;
-		right: 0;
+		bottom: -2px;
+		right: -2px;
 		z-index: 999;
 		background: white;
 		padding: 1.2rem 3.5rem;
