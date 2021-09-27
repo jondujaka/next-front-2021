@@ -34,7 +34,7 @@ const Home = ({ data: { page, news }, pageContext, location }) => {
 		  }
 		: null;
 
-	const langSlug = page.language.slug === `en` ? `sk/` : ``;
+	const langSlug = page.language.slug === `en` ? `sk` : ``;
 	const isSk = page.language.slug !== `en`;
 	const translationSlug = `/${langSlug}`;
 
