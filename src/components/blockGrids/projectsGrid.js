@@ -7,7 +7,6 @@ const projectsGrid = ({ items }) => {
 		default: 2,
 		1140: 1
 	};
-	
 
 	return (
 		<Masonry

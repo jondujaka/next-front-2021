@@ -10,7 +10,7 @@ const ProjectBlock = ({ item }) => {
 
 	return (
 		<Link
-			className="project-item py-5 px-2 mb-6"
+			className="project-item py-5 px-2 mb-lg-6 mb-4"
 			to={item.uri}
 		>
 			<div className="row">
