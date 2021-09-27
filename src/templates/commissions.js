@@ -16,7 +16,7 @@ const Commissions = ({ data, pageContext }) => {
 	return (
 		<Layout isSk={isSk} translationSlug={translationSlug} style={latestEdition}>
 			<Row>
-				<div className="col col-12 mt-5 mb-6">
+				<div className="col col-12 mt-5 mb-md-6 mb-4">
 					<h2 className="festival-page-title">{data.page.title}</h2>
 				</div>
 			</Row>
