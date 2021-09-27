@@ -15,12 +15,6 @@ const Commission = ({ data: { commission }, pageContext }) => {
 
 	const { latestEdition } = pageContext;
 
-	let fake = [];
-
-	for (let i = 0; i < 5; i++) {
-		fake.push(related[i % 2]);
-	}
-
 	const langSlug = pageContext.lang === `en` ? `sk/` : ``;
 	const isSk = pageContext.lang === `sk`;
 	const translationSlug = commission.translations.length
@@ -47,7 +41,7 @@ const Commission = ({ data: { commission }, pageContext }) => {
 						<div class="col col-12 mt-5 mb-6">
 							<h1>More commissions</h1>
 						</div>
-						<CommissionsGrid items={fake} />
+						<CommissionsGrid items={related} />
 					</Row>
 				</>
 			) : (

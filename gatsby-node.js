@@ -88,10 +88,17 @@ const initPostTypes = async gatsbyUtilities => {
 	allNews.map(articleInfo => {
 		const slug = articleInfo.article.uri;
 		const template = `news-article`;
+		const lang = articleInfo.article.language.slug;
 		const context = {
 			id: articleInfo.article.id,
-			related: allNews,
-			lang: articleInfo.article.language.slug,
+			related: allNews
+				.filter(
+					newsArticle =>
+						newsArticle.article.id !== articleInfo.article.id &&
+						newsArticle.article.language.slug === lang
+				)
+				.slice(0, 4),
+			lang: lang,
 			latestEdition: getLatestEdition()
 		};
 		createNewsPromises.push(
@@ -193,12 +200,10 @@ const initPostTypes = async gatsbyUtilities => {
 				lang: artistInfo.artist.language.slug
 			};
 
-
 			createArtistsPromises.push(
 				createIndividualPage(slug, template, context, gatsbyUtilities)
 			);
 		}
-
 	});
 
 	let projectsSettings = {
@@ -212,11 +217,18 @@ const initPostTypes = async gatsbyUtilities => {
 	allProjects.map(projectInfo => {
 		const slug = projectInfo.project.uri;
 		const template = `project`;
+		const lang = projectInfo.project.language.slug;
 		const context = {
 			id: projectInfo.project.id,
-			related: allProjects,
+			related: allProjects
+				.filter(
+					project =>
+						project.project.id !== projectInfo.project.id &&
+						project.project.language.slug === lang
+				)
+				.slice(0, 5),
 			latestEdition: getLatestEdition(),
-			lang: projectInfo.project.language.slug
+			lang: lang
 		};
 		createProjectsPromises.push(
 			createIndividualPage(slug, template, context, gatsbyUtilities)
@@ -252,11 +264,19 @@ const initPostTypes = async gatsbyUtilities => {
 		allCommissions.map(commissionsInfo => {
 			const slug = commissionsInfo.commission.uri;
 			const template = `commission`;
+			const lang = commissionsInfo.commission.language.slug;
 			const context = {
 				id: commissionsInfo.commission.id,
-				related: allCommissions.slice(0, 5),
+				related: allCommissions
+					.filter(
+						commission =>
+							commission.commission.id !==
+								commissionsInfo.commission.id &&
+							commission.commission.language.slug === lang
+					)
+					.slice(0, 5),
 				latestEdition: getLatestEdition(),
-				lang: commissionsInfo.commission.language.slug
+				lang: lang
 			};
 			createCommissionsPromises.push(
 				createIndividualPage(slug, template, context, gatsbyUtilities)
