@@ -234,8 +234,10 @@ footer {
 }
 
 .main-nav-mobile {
-	display: flex;
-	flex-direction: column;
+	ul {
+		display: flex;
+		flex-direction: column;
+	}
 
 	li {
 		display: block;

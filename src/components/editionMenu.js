@@ -70,7 +70,7 @@ const EditionMenu = ({ items, bg, isSk = false, translationSlug, colors, skMenu,
 					<Dropdown
 						options={menuItems}
 						onChange={internalHandleClick}
-						placeholder={pageName === `index` ? `Navigation` : pageName}
+						placeholder={pageName === `index` ? `Home` : pageName}
 					/>
 				</div>
 
