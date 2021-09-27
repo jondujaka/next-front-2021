@@ -105,7 +105,7 @@ const ScrollVideo = ({ layer, show }) => {
 					``
 				)}
 				<Media media={layer.media} homePage />
-				{layer.button.title ? (
+				{layer.button && layer.button.title ? (
 					<Link to={layer.button.url} className="top-video-link">
 						{layer.button.title} ⟶
 					</Link>
