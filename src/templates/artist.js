@@ -51,6 +51,7 @@ const Artist = ({ data: { artist, events }, pageContext }) => {
 		<Layout
 			style={{
 				color: settings.textColor,
+				textColor: settings.textColor,
 				backgroundColor: settings.backgroundColor
 			}}
 			editionHeader={settings.menu}
@@ -58,6 +59,7 @@ const Artist = ({ data: { artist, events }, pageContext }) => {
 			isSk={isSk}
 			translationSlug={translationSlug}
 			year={year}
+			pageName={isSk ? `Umelci` : `Artists`}
 		>
 			{!content ? (
 				<h1>No content yet</h1>

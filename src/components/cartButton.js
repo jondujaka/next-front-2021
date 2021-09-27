@@ -16,6 +16,7 @@ const CartButton = ({ text, productId, classes = "", disabled}) => {
 	});
 
 	function handleAddToCart() {
+		console.log('adding')
 		addToCart({
 			variables: {
 				input: { productId, quantity: 1, clientMutationId: "123" }

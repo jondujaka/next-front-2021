@@ -85,7 +85,7 @@ const CheckoutForm = () => {
 		return source;
 	}
 
-	function handleSuccessfulCheckout({ order }){
+	function handleSuccessfulCheckout({ order }) {
 		setFormState("IDLE");
 		localStorage.removeItem("woo-session");
 		setCart(undefined);
@@ -93,21 +93,15 @@ const CheckoutForm = () => {
 	}
 
 	return (
-		<Layout>
-			<form onSubmit={handleSubmit}>
-				<CardElement
-					options={{
-						hidePostalCode: true,
-						style: { base: { fontSize: `18px` } }
-					}}
-				/>
-				<button
-					type="submit"
-				>
-					Pay
-				</button>
-			</form>
-		</Layout>
+		<form onSubmit={handleSubmit}>
+			<CardElement
+				options={{
+					hidePostalCode: true,
+					style: { base: { fontSize: `18px` } }
+				}}
+			/>
+			<button type="submit">Pay</button>
+		</form>
 	);
 };
 

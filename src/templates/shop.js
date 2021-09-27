@@ -12,13 +12,18 @@ const Shop = ({ data, pageContext }) => {
 	const isSk = pageContext.lang !== `en`;
 	const translationSlug = `/${langSlug}shop`;
 
+	const filteredProducts = products.filter(product => {
+		const isSkProduct = product.node.uri.startsWith('/sk/');
+		return isSk ? isSkProduct : !isSkProduct;
+	});
+
 	return (
 		<Layout isSk={isSk} translationSlug={translationSlug} style={latestEdition}>
 			<Row>
 				<div className="col col-12 mt-5 mb-6">
 					<h2 className="festival-page-title">{data.page.title}</h2>
 				</div>
-				<ProductsGrid items={products} />
+				<ProductsGrid items={filteredProducts} />
 			</Row>
 		</Layout>
 	);

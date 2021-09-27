@@ -62,7 +62,7 @@ const Cart = () => {
 
 	return (
 		<Layout>
-			<Row classes="mt-5">
+			<Row classes="mt-5 mb-5">
 				<div className="col-12 d-none d-lg-block col-lg-6 col-xl-6 about-nav">
 					<ul>
 						<li className="active">

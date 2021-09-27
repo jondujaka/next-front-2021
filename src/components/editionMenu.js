@@ -102,11 +102,11 @@ const isActive = url => ({ isCurrent, isPartiallyCurrent, location }) => {
 		return null;
 	}
 
-	if (url.endsWith("/programme") && location.pathname.includes("/events/")) {
+	if ((url.endsWith("/programme") || url.endsWith("/programme/")) && location.pathname.includes("/events/")) {
 		return activeClassName;
 	}
 
-	if (url.endsWith("/artists") && location.pathname.includes("/artist/")) {
+	if ((url.endsWith("/artists") || url.endsWith("/artists/")) && location.pathname.includes("/artist/")) {
 		return activeClassName;
 	}
 

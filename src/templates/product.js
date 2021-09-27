@@ -16,8 +16,8 @@ const Product = ({ data, pageContext }) => {
 			<Row>
 				<div className="col col-12 mt-5 mb-6">
 					<h2 className="festival-page-title">
-						<Link className="inherit" to="/news">
-							Shop
+						<Link className="inherit" to="/records">
+							Records
 						</Link>
 						{` > ${product.name}`}
 					</h2>
@@ -56,7 +56,7 @@ const ProductInfo = ({ format }) => (
 			productId={format.databaseId}
 			classes="ml-4"
 			text="Add to cart"
-			disabled={format.stockStatus === `IN_STOCK`}
+			disabled={format.stockStatus !== `IN_STOCK`}
 		/>
 	</div>
 );

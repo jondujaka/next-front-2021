@@ -68,8 +68,6 @@
 .about-title {
 	font-family: $sansFont;
 	font-size: 5rem;
-	position: sticky;
-	top: 0;
 }
 
 .info-content p {
@@ -116,5 +114,6 @@
 		height: 100%;
 		position: sticky;
 		top: calc(#{$headerHeight} + 1.5rem);
+		padding-right: 4rem;
 	}
 }

@@ -12,13 +12,18 @@ const Records = ({ data, pageContext }) => {
 	const isSk = pageContext.lang !== `en`;
 	const translationSlug = `/${langSlug}records`;
 
+	const filteredRecords = records.filter(record => {
+		const isSkRecord = record.node.uri.startsWith('/sk/');
+		return isSk ? isSkRecord : !isSkRecord;
+	});
+
 	return (
 		<Layout isSk={isSk} translationSlug={translationSlug} style={latestEdition}>
 			<Row>
 				<div className="col col-12 mt-5 mb-6">
 					<h2 className="festival-page-title">{data.page.title}</h2>
 				</div>
-				<ProductsGrid items={records} />
+				<ProductsGrid items={filteredRecords} />
 			</Row>
 		</Layout>
 	);
@@ -43,6 +48,20 @@ export const recordsQuery = graphql`
 				node {
 					date(formatString: "MMM Do YYYY")
 					slug
+					... on WpSimpleProduct {
+						id
+						name
+						uri
+						name
+						productInfo {
+							subtitle
+						}
+						featuredImage {
+							node {
+								srcSet
+							}
+						}
+					}
 					... on WpVariableProduct {
 						id
 						name

@@ -31,6 +31,7 @@ const Info = ({ data, pageContext }) => {
 		<Layout
 			style={{
 				color: settings.textColor,
+				textColor: settings.textColor,
 				backgroundColor: settings.backgroundColor
 			}}
 			isSk={isSk}

@@ -32,8 +32,6 @@ const getNrItems = (arr, limit, start = 0) => {
 	for (let i = start; i++; i < limit) {
 		result.push(arr[i]);
 	}
-	console.log(`NR ITEMS`);
-	console.log(result);
 	return result;
 };
 
@@ -55,7 +53,7 @@ const initProducts = async gatsbyUtilities => {
 	const createProductsPromises = [];
 
 	allProducts.map(productInfo => {
-		const slug = `/product/${productInfo.product.slug}/`;
+		const slug = productInfo.product.uri;
 		const template = `product`;
 		const context = {
 			id: productInfo.product.id,
@@ -496,6 +494,12 @@ const getAllProducts = async ({ graphql, reporter }) => {
 						name
 						slug
 						id
+						... on WpSimpleProduct {
+							uri
+						}
+						... on WpVariableProduct {
+							uri
+						}
 					}
 				}
 			}

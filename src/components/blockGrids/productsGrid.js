@@ -5,11 +5,11 @@ const ProductsGrid = ({ items }) => {
 
 	return (
 		<>
-			{items.map((item, i) => {
+			{items.length ? items.map((item, i) => {
 				return (
 					<ProductBlock key={`product-${item.node.slug}`} item={item} />
 				);
-			})}
+			}): <h3>No items yet</h3>}
 		</>
 	);
 };

@@ -29,6 +29,7 @@ const Events = ({ data: { event }, pageContext }) => {
 		<Layout
 			style={{
 				color: settings.textColor,
+				textColor: settings.textColor,
 				backgroundColor: settings.backgroundColor
 			}}
 			isSk={isSk}
@@ -36,6 +37,7 @@ const Events = ({ data: { event }, pageContext }) => {
 			editionHeader={settings.menu}
 			skMenu={settings.skMenu}
 			year={2021}
+			pageName={isSk ? `Program` : `Programme`}
 		>
 			<Row>
 				<div className="col-12 text-center mt-45 mb-6">
@@ -69,7 +71,7 @@ const Events = ({ data: { event }, pageContext }) => {
 							/>
 						))
 					) : (
-						<h2>Description coming soon...</h2>
+						<h4>Description coming soon...</h4>
 					)}
 					{parsedArtists &&
 						parsedArtists.map(artist => (
@@ -100,7 +102,7 @@ const ArtistBlock = ({ artist, colors }) => {
 		style,
 		<Link
 			to={artist.uri}
-			className="padding-hack event-artist col-8 mt-7 d-block"
+			className="padding-hack event-artist col-10 col-lg-8 mt-1 mt-lg-7 d-block"
 		>
 			<h3 className="big">{artist.title}</h3>
 			<Image srcSet={artist.artistEventContent.images[0].srcSet} />
