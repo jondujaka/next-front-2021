@@ -38,11 +38,6 @@ export const shopQuery = graphql`
 	) {
 		products: allWpProduct(
 			sort: { order: DESC, fields: date }
-			filter: {
-				productCategories: {
-					nodes: { elemMatch: { slug: { ne: "records" } } }
-				}
-			}
 		) {
 			edges {
 				node {
