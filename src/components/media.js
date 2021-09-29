@@ -17,6 +17,9 @@ const Media = ({ content, classes }) => {
 };
 
 const SingleMedia = ({ item, classes }) => {
+	if(!item || !item.scrSet) {
+		return '';
+	}
 	return (
 		<div className={`col ${classes ? classes : ``}`}>
 			<Image srcSet={item.srcSet} caption={item.caption} />
