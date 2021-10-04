@@ -81,7 +81,7 @@ const Home = ({ data: { page, news }, pageContext, location }) => {
 					/>
 				))}
 				<div className="col col-12 text-center mt-5">
-					<Link className="big-button" to={`${langSlug}/news`}>
+					<Link className="big-button" to={`${isSl ? `/sk`: ``}/news`}>
 						See all News
 					</Link>
 				</div>
