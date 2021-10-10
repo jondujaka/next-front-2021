@@ -57,6 +57,7 @@ const initProducts = async gatsbyUtilities => {
 		const template = `product`;
 		const context = {
 			id: productInfo.product.id,
+			latestEdition: getLatestEdition(),
 			related: allProducts,
 			lang: `en`
 		};
@@ -544,6 +545,7 @@ const getPostType = async (settings, { graphql, reporter }) => {
 
 	const withEdition = [`artist`, `event`, `workshop`];
 	const noLanguage = [`project`];
+
 	let editionsFragment = `
 		editions {
 			nodes {
@@ -618,6 +620,11 @@ const getPostType = async (settings, { graphql, reporter }) => {
 						uri
 						language {
 							slug
+						}
+						featuredImage {
+							node {
+								srcSet
+							}
 						}
 						translations {
 							slug

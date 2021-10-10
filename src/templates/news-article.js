@@ -2,6 +2,7 @@ import React from "react";
 import { graphql, Link } from "gatsby";
 import LangSwitcher from "../components/LangSwitcher";
 import Layout from "../components/layout";
+import NewsBlock from "../components/newsBlock";
 import Row from "../components/row";
 import Single from "./single";
 
@@ -25,10 +26,24 @@ const NewsArticle = ({ data: { article }, pageContext }) => {
 				</div>
 			</Row>
 			<Single content={article} />
+			<MoreNews items={pageContext.related} />
 		</Layout>
 	);
 };
 
+const MoreNews = ({items}) => {
+	return (
+		<div className="related-news">
+			<div className="row">
+				<div className="col-12 mb-4"><h1>More News</h1></div>
+				{items.length && items.map(item => {
+					console.log(item)
+					return <NewsBlock key={`news-${item.article.id}`} item={item.article} />
+				})}
+			</div>
+		</div>
+	)
+}
 export default NewsArticle;
 
 export const eventQuery = graphql`
