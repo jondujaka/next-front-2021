@@ -50,7 +50,7 @@ const Product = ({ data, pageContext }) => {
 
 const ProductInfo = ({ format }) => (
 	<div key={`format-${format.price}`} className="format mb-4">
-		{format.price && <span>{format.price}</span>}
+		<span>{format.price ? format.price : `Free`}</span>
 		{format.attributes && <span>{format.attributes.nodes[0].value}</span>}
 		<CartButton
 			productId={format.databaseId}
