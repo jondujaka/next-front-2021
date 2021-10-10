@@ -154,7 +154,7 @@ const Layout = ({
 										Robert Finkei
 									</a>{" "}
 									and developed by{" "}
-									<a href="mailto:jdujaka@gmail.com">
+									<a href="https://jondujaka.com">
 										Jon Dujaka
 									</a>
 									.
