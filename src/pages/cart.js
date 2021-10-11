@@ -5,6 +5,7 @@ import { gql, useLazyQuery, useMutation } from "@apollo/client";
 import Row from "../components/row";
 import { Link } from "gatsby";
 import CartItem from "../components/cart/cartItem";
+import { loadStripe } from "@stripe/stripe-js";
 
 const Cart = () => {
 	const { cart, setCart } = useAppState();
@@ -60,6 +61,30 @@ const Cart = () => {
 		);
 	};
 
+	const handleFormSubmission = async(event) => {
+	  
+
+		console.log(cart.contents.nodes);
+		return;
+		
+		const response = await fetch('http://localhost:8888/.netlify/functions/create-checkout', {
+		  method: 'POST',
+		  headers: {
+			'Content-Type': 'application/json',
+		  },
+		  body: JSON.stringify({items: cart.contents.nodes}),
+		}).then((res) => res.json());
+	  
+		const stripe = await loadStripe(response.publishableKey);
+		const { error } = await stripe.redirectToCheckout({
+		  sessionId: response.sessionId,
+		});
+	  
+		if (error) {
+		  console.error(error);
+		}
+	  }
+
 	return (
 		<Layout>
 			<Row classes="mt-5 mb-5">
@@ -88,7 +113,7 @@ const Cart = () => {
 					) : (
 						``
 					)}
-					<Link className="checkout-btn" to="/checkout">Checkout</Link>
+					<button className="checkout-btn" onClick={handleFormSubmission}>Checkout</button>
 				</div>
 			</Row>
 		</Layout>
@@ -146,6 +171,7 @@ const CART = gql`
 								featuredImage {
 									node {
 										srcSet
+										sourceUrl
 									}
 								}
 								productInfo {
@@ -156,6 +182,7 @@ const CART = gql`
 								featuredImage {
 									node {
 										srcSet
+										sourceUrl
 									}
 								}
 								price

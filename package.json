@@ -45,6 +45,7 @@
 		"react-scrollspy": "^3.4.3",
 		"react-scrollspy-navigation": "^1.0.2",
 		"sass": "^1.42.1",
+		"stripe": "^8.180.0",
 		"style-it": "^2.1.4"
 	},
 	"devDependencies": {
