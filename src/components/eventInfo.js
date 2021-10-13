@@ -20,14 +20,16 @@ const EventInfo = ({ event, showDetails = false }) => {
 			{event.eventInfo.dates.map((date, i) => (
 				<EventDates link={event.url} key={`date-${i}`} date={date} />
 			))}
-			<a
-				target="_blank"
-				rel="noreferrer noopener"
-				href={venue.venueInfo.mapsLink}
-				className="big"
-			>
-				{venue.title}
-			</a>
+			{venue && (
+				<a
+					target="_blank"
+					rel="noreferrer noopener"
+					href={venue.venueInfo.mapsLink}
+					className="big"
+				>
+					{venue.title}
+				</a>
+			)}
 			{showDetails && <EventDetails info={event.eventInfo} />}
 		</div>
 	);
@@ -39,7 +41,9 @@ const EventDetails = ({ info }) => {
 	const { format, price, capacity } = info;
 	return (
 		<div className="mt-2 mt-lg-4 mt-xxl-6">
-			{format?.slug && <span className="big d-block">Format: {format.name}</span>}
+			{format?.slug && (
+				<span className="big d-block">Format: {format.name}</span>
+			)}
 			{capacity && (
 				<span className="big d-block">Capacity: {capacity}</span>
 			)}

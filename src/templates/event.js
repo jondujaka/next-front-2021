@@ -20,7 +20,7 @@ const Events = ({ data: { event }, pageContext }) => {
 		translationSlug = event.translations[0].uri;
 	}
 
-	let parsedArtists = isSk ? info.artists.map(artist => ({
+	let parsedArtists = isSk ? info.artists && info.artists.length && info.artists.map(artist => ({
 		...artist,
 		uri: artist.translations.length ? artist.translations[0].uri : artist.uri
 	})) : info.artists;
