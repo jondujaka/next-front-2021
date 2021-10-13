@@ -14,13 +14,13 @@ exports.handler = async event => {
 					name: item.product.node.name,
 					id: item.product.node.databseId,
 					images: [
-						item.product.node.sourceUrl,
+						item.product.node.featuredImage.node.sourceUrl,
 					],
 				},
 				unit_amount: Number(item.product.node.price.substring(1)) * 100
 			},
 			
-			quantity: 1,
+			quantity: item.quantity,
 		}
 	});
 
@@ -28,7 +28,7 @@ exports.handler = async event => {
 		payment_method_types: ["card"],
 		line_items: items,
 		mode: "payment",
-		success_url: `${process.env.URL}/order-received`,
+		success_url: `${process.env.URL}/order-received?clearCart=true`,
 		cancel_url: `${process.env.URL}/cart`
 	});
 

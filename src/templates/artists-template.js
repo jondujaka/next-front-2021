@@ -28,25 +28,25 @@ const ArtistsTemplate = ({ data, pageContext }) => {
 
 	const getEventInfoByArtistId = artistId => {
 		let infoArray = [];
-		eventsList.forEach(({ node }) => {
-			let match = false;
+		// eventsList.forEach(({ node }) => {
+		// 	let match = false;
 
-			node.eventInfo.artists.forEach(eventArtist => {
-				if (eventArtist.id === artistId) {
-					match = true;
-				}
-			});
+		// 	node.eventInfo.artists.forEach(eventArtist => {
+		// 		if (eventArtist.id === artistId) {
+		// 			match = true;
+		// 		}
+		// 	});
 
-			if (match) {
-				infoArray.push({
-					dates: node.eventInfo.dates,
-					format:
-						node.eventInfo.format.slug &&
-						node.eventInfo.format.slug,
-					venue: node.eventInfo.venue && node.eventInfo.venue.slug
-				});
-			}
-		});
+		// 	if (match) {
+		// 		infoArray.push({
+		// 			dates: node.eventInfo.dates,
+		// 			format:
+		// 				node.eventInfo.format.slug &&
+		// 				node.eventInfo.format.slug,
+		// 			venue: node.eventInfo.venue && node.eventInfo.venue.slug
+		// 		});
+		// 	}
+		// });
 		return infoArray;
 	};
 

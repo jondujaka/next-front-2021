@@ -25,12 +25,12 @@
 .formats {
 	@extend .text-big;
 
-	span {
+	.price {
 		margin-right: 1rem;
+		margin-left: 1rem;
 	}
 
 	.cart-button {
 		margin-left: 2rem;
 	}
 }
-

@@ -25,7 +25,6 @@ $serifFont: "Manege", serif;
 	-webkit-font-smoothing: antialiased !important;
 }
 
-
 .festival-web {
 	h1,
 	.serif-title {
@@ -43,7 +42,7 @@ $serifFont: "Manege", serif;
 	}
 }
 h1 {
-	line-height: .95;
+	line-height: 0.95;
 }
 h2,
 h3,
@@ -65,7 +64,7 @@ h6 {
 .text-body-small {
 	font-size: 20px;
 	letter-spacing: 0.02em;
-	line-height: .9;
+	line-height: 0.9;
 }
 .text-small {
 	font-size: 17px;
@@ -153,7 +152,7 @@ a {
 	color: inherit;
 
 	text-underline-offset: 2px;
-    text-decoration-thickness: 2px;
+	text-decoration-thickness: 2px;
 
 	&:visited {
 		color: inherit;
@@ -256,8 +255,6 @@ p {
 		@extend .text-body;
 	}
 
-	
-
 	a {
 		font-size: inherit;
 	}
@@ -268,12 +265,13 @@ p {
 }
 
 .single-content .paragraph {
-	strong, b {
+	strong,
+	b {
 		font-weight: normal !important;
 	}
 }
 
-p{
+p {
 	@extend .text-body-small;
 }
 .big {
@@ -300,7 +298,7 @@ a:focus {
 
 .hollow-link {
 	@extend .text-xxxl;
-	line-height: .845;
+	line-height: 0.845;
 	-webkit-text-stroke: 1px;
 	-webkit-text-fill-color: transparent;
 	cursor: pointer;
@@ -321,6 +319,34 @@ a:focus {
 	font-size: 14rem;
 }
 
+.cart-button-wrapper {
+	display: inline;
+	span {
+		transition: 0.3s all ease-in-out;
+		margin-left: 2rem;
+		display: inline-block;
+	}
+	.show {
+		transform: translateX(0);
+		opacity: 1;
+	}
+
+	.hide {
+		opacity: 0;
+		transform: translateX(100px);
+	}
+}
+
+.cart-button:focus {
+	background: transparent;
+	border: 3px solid $primaryBlue;
+	color: $primaryBlue;
+	&:hover {
+		background: $primaryBlue;
+		color: white;
+		border-color: $primaryBlue;
+	}
+}
 .cart-button {
 	border: 3px solid $primaryBlue;
 	border-radius: 3.5rem;
@@ -335,14 +361,11 @@ a:focus {
 		color: $primaryBlue;
 		border-color: $primaryBlue;
 	}
-	
 
 	&:hover:not([disabled]) {
 		background: $primaryBlue;
 		border-color: $primaryBlue;
 	}
-
-	
 }
 
 hr {

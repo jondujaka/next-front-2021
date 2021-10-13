@@ -37,53 +37,62 @@ const Cart = () => {
 
 	const CartContent = ({}) => {
 		if (loading) {
-			return <span>Loading cart...</span>;
+			return <span className="cart-info">Loading cart...</span>;
 		}
 
 		if (loadingMutation) {
-			return <span>Updating cart...</span>;
+			return <span className="cart-info">Updating cart...</span>;
 		}
 
 		if (!cart) {
-			return <span>Empty cart</span>;
+			return <span className="cart-info">Empty cart</span>;
 		}
 
 		if (cart?.contents.itemCount === 0) {
-			return <span>Empty cart</span>;
+			return <span className="cart-info">Empty cart</span>;
 		}
 
 		return (
 			<>
 				{cart?.contents.nodes.map((item, i) => {
-					return <CartItem item={item} key={item.product.node.databaseId} />;
+					return (
+						<CartItem
+							item={item}
+							key={item.product.node.databaseId}
+						/>
+					);
 				})}
 			</>
 		);
 	};
 
-	const handleFormSubmission = async(event) => {
-	  
+	const handleFormSubmission = async event => {
+		event.preventDefault();
 
-		console.log(cart.contents.nodes);
-		return;
-		
-		const response = await fetch('http://localhost:8888/.netlify/functions/create-checkout', {
-		  method: 'POST',
-		  headers: {
-			'Content-Type': 'application/json',
-		  },
-		  body: JSON.stringify({items: cart.contents.nodes}),
-		}).then((res) => res.json());
-	  
-		const stripe = await loadStripe(response.publishableKey);
-		const { error } = await stripe.redirectToCheckout({
-		  sessionId: response.sessionId,
-		});
-	  
-		if (error) {
-		  console.error(error);
+		try {
+			const response = await fetch(
+				`/.netlify/functions/create-checkout`,
+				{
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json"
+					},
+					body: JSON.stringify({ items: cart.contents.nodes })
+				}
+			).then(res => res.json());
+
+			const stripe = await loadStripe(response.publishableKey);
+			const { error } = await stripe.redirectToCheckout({
+				sessionId: response.sessionId
+			});
+
+			if (error) {
+				console.error(error);
+			}
+		} catch (e) {
+			console.error(e);
 		}
-	  }
+	};
 
 	return (
 		<Layout>
@@ -113,7 +122,13 @@ const Cart = () => {
 					) : (
 						``
 					)}
-					<button className="checkout-btn" onClick={handleFormSubmission}>Checkout</button>
+					<a
+						href="#"
+						className="checkout-btn"
+						onClick={handleFormSubmission}
+					>
+						Checkout
+					</a>
 				</div>
 			</Row>
 		</Layout>
@@ -132,6 +147,7 @@ const REMOVE = gql`
 					nodes {
 						quantity
 						key
+						uri
 						product {
 							node {
 								name
@@ -151,6 +167,7 @@ const REMOVE = gql`
 		}
 	}
 `;
+
 const CART = gql`
 	query Cart {
 		cart {
@@ -166,7 +183,7 @@ const CART = gql`
 							name
 							sku
 							databaseId
-							
+
 							... on VariableProduct {
 								featuredImage {
 									node {
@@ -185,6 +202,7 @@ const CART = gql`
 										sourceUrl
 									}
 								}
+								uri
 								price
 								productInfo {
 									subtitle

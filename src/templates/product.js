@@ -23,16 +23,16 @@ const Product = ({ data, pageContext }) => {
 					</h2>
 				</div>
 			</Row>
-			<Row classes="mt-6">
+			<Row classes="my-6">
 				<div className="col col-12 col-lg-6 product-carousel">
 					{carouselItems.length && <Carousel items={carouselItems} />}
 				</div>
 				<div className="col col-12 col-lg-6">
 					<h2>{product.name}</h2>
-					<h3 className="product-subtitle">
+					<h3 className="product-subtitle mb-6">
 						{product.productInfo.subtitle}
 					</h3>
-					<div className="formats">
+					<div className="formats mb-4">
 						{product.variations ? (
 							product.variations.nodes.map(format => {
 								return <ProductInfo format={format} />;
@@ -41,7 +41,15 @@ const Product = ({ data, pageContext }) => {
 							<ProductInfo format={product} />
 						)}
 					</div>
-					<Single content={product} direct={true} />
+					<div className="product-description">
+						<div
+							className="big"
+							dangerouslySetInnerHTML={{
+								__html: product.description
+							}}
+						/>
+					</div>
+					{/* <Single content={product} direct={true} /> */}
 				</div>
 			</Row>
 		</Layout>
@@ -50,11 +58,10 @@ const Product = ({ data, pageContext }) => {
 
 const ProductInfo = ({ format }) => (
 	<div key={`format-${format.price}`} className="format mb-4">
-		<span>{format.price ? format.price : `Free`}</span>
 		{format.attributes && <span>{format.attributes.nodes[0].value}</span>}
+		<span className="price">{format.price ? format.price : `Free`}</span>
 		<CartButton
-			productId={format.databaseId}
-			classes="ml-4"
+			productId={format.SKU ?? format.databaseId}
 			text="Add to cart"
 			disabled={format.stockStatus !== `IN_STOCK`}
 		/>
@@ -72,11 +79,12 @@ export const productQuery = graphql`
 		product: wpProduct(id: { eq: $id }) {
 			id
 			name
-			
+			description
 			... on WpSimpleProduct {
 				id
 				name
 				databaseId
+				sku
 				productInfo {
 					fieldGroupName
 					subtitle
@@ -113,6 +121,7 @@ export const productQuery = graphql`
 						downloadable
 						databaseId
 						stockStatus
+						sku
 						attributes {
 							nodes {
 								name

@@ -13,13 +13,16 @@ module.exports = {
 		{
 			resolve: `gatsby-source-wordpress`,
 			options: {
-				url: process.env.WP_GRAPHQL_URL,
+				url: `https://nextfestival.sk/content/graphql`,
 				verboseOutput: true,
 				debug: {
 					graphql: {
 						showQueryVarsOnError: true,
 						showQueryOnError: true
 					}
+				},
+				type: {
+					MediaItem: { createFileNodes: false },
 				}
 			}
 		},

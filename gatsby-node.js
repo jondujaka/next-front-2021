@@ -128,7 +128,7 @@ const initPostTypes = async gatsbyUtilities => {
 	};
 	const allEvents = await getPostType(eventSettings, gatsbyUtilities);
 	const createEventPromises = [];
-	allEvents.map(eventInfo => {
+	allEvents && allEvents.length && allEvents.map(eventInfo => {
 		const year = eventInfo.event.editions.nodes.length
 			? eventInfo.event.editions.nodes.reduce((a, b) =>
 					Math.max(parseInt(a.slug), parseInt(b.slug))
@@ -172,7 +172,9 @@ const initPostTypes = async gatsbyUtilities => {
 			edition => edition.year == year.slug
 		);
 
-		const eventsList = allEvents.flatMap(eventInfo => {
+		const eventsList = [];
+		
+		allEvents.flatMap(eventInfo => {
 			if (
 				eventInfo.event.eventInfo &&
 				eventInfo.event.eventInfo.artists &&
