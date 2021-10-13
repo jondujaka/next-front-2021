@@ -6,6 +6,10 @@ exports.handler = async event => {
 	// const validatedQuantity = quantity > 0 && quantity < 11 ? quantity : 1;
 
 	const incomingItems = JSON.parse(event.body).items;
+
+	const isVariation = item.variation ?? false;
+
+	const price = isVariation ? item.variation.node.price : item.product.node.price;
 	const items = incomingItems.map(item => {
 		return {
 			price_data: {
@@ -17,7 +21,7 @@ exports.handler = async event => {
 						item.product.node.featuredImage.node.sourceUrl,
 					],
 				},
-				unit_amount: Number(item.product.node.price.substring(1)) * 100
+				unit_amount: Number(price.substring(1)) * 100
 			},
 			
 			quantity: item.quantity,
