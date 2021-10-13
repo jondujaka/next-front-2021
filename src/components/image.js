@@ -5,6 +5,8 @@ const ImageEl = ({ srcSet, caption, fixedRatio }) => {
 
 	if (!srcSet) return null;
 
+	console.log('image')
+
 	return (
 		<figure className={caption ? `` : `fixed-ratio`}>
 			<img srcSet={srcSet} />

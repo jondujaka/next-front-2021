@@ -264,18 +264,22 @@ p {
 	}
 }
 
-.single-content .paragraph {
-	strong,
-	b {
-		font-weight: normal !important;
-	}
-}
+// .single-content .paragraph {
+// 	strong,
+// 	b {
+// 		font-weight: normal !important;
+// 	}
+// }
 
 p {
 	@extend .text-body-small;
 }
 .big {
 	@extend .text-body;
+
+	p {
+		@extend .text-body;
+	}
 }
 
 .text-big p {

@@ -245,8 +245,12 @@
 }
 
 .product-description {
-	margin-top: 1rem;
+	margin-top: 3rem;
 	font-size: 3rem;
+
+	p {
+		margin-top: 2rem;
+	}
 }
 
 .no-edition {
@@ -309,7 +313,7 @@
 		}
 
 		img {
-			height: 100%;
+			min-height: 100%;
 			object-fit: cover;
 		}
 	}

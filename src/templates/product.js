@@ -43,7 +43,6 @@ const Product = ({ data, pageContext }) => {
 					</div>
 					<div className="product-description">
 						<div
-							className="big"
 							dangerouslySetInnerHTML={{
 								__html: product.description
 							}}
@@ -59,7 +58,7 @@ const Product = ({ data, pageContext }) => {
 const ProductInfo = ({ format }) => (
 	<div key={`format-${format.price}`} className="format mb-4">
 		{format.attributes && <span>{format.attributes.nodes[0].value}</span>}
-		<span className="price">{format.price ? format.price : `Free`}</span>
+		<span className="price">{format.price ? format.price : `0 EUR`}</span>
 		<CartButton
 			productId={format.SKU ?? format.databaseId}
 			text="Add to cart"
