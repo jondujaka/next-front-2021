@@ -55,7 +55,7 @@ const Edition = ({ data, pageContext, embeded, style }) => {
 
 		const parsedEndDate = format(endDate, `{dd} ${localeFormat(endDate, "{MMM}")} {yyyy}`);
 
-		return `${parsedStartDate} - ${parsedEndDate}`;
+		return `${parsedStartDate}–${parsedEndDate}`;
 	}	
 
 	return (

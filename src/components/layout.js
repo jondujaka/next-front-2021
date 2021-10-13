@@ -146,18 +146,23 @@ const Layout = ({
 						<Row>
 							<div className="col col-12">
 								<span className="credits">
-									Website designed by{" "}
+									Website <br className="d-block d-md-none" />{" "}
+									designed by{" "}
 									<a
 										href="https://robertfinkei.com"
 										target="_blank"
 									>
 										Robert Finkei
 									</a>{" "}
-									and developed by{" "}
+									<br className="d-block d-md-none" />
+									<span className="d-none d-md-inline">
+										{" "}
+										and
+									</span>{" "}
+									developed by{" "}
 									<a href="https://jondujaka.com">
 										Jon Dujaka
 									</a>
-									.
 								</span>
 							</div>
 						</Row>
