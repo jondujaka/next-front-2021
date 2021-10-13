@@ -54,6 +54,7 @@
 }
 .about-nav {
 	@extend .sticky;
+	margin-bottom: 160px;
 
 	ul {
 		margin: 0;
@@ -74,16 +75,28 @@
 	margin-bottom: 1.5em;
 }
 
-
 .about-content {
-	p, figure {
+	> div {
+		padding-top: 20px;
+		margin-top: -20px;
+	}
+	p,
+	figure {
 		margin-bottom: 1.5em;
+	}
+}
+
+.info-content {
+	padding-top: 20px;
+	> div {
+		padding-top: 100px;
+		margin-top: -100px;
 	}
 }
 
 .partners-wrapper {
 	display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+	grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
 }
 
 .partner-image {
@@ -98,18 +111,17 @@
 	}
 }
 
+// @media (min-width: 992px) {
+// 	.info-content {
+// 		transform: translateY(calc(#{$headerHeight} * -1 - 30px));
+// 		> div {
+// 			padding-top: calc(#{$headerHeight} + 30px);
+// 		}
+// 	}
+// }
+
+// SINGLE PAGES
 @media (min-width: 992px) {
-	.info-content {
-		transform: translateY(calc(#{$headerHeight} * -1 - 30px));
-		> div {
-			padding-top: calc(#{$headerHeight} + 30px);
-		}
-	}
-}
-
-
-// SINGLE PAGES 
-@media (min-width: 992px){
 	.sticky-carousel {
 		height: 100%;
 		position: sticky;

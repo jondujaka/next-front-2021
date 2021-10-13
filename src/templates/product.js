@@ -4,7 +4,7 @@ import Layout from "../components/layout";
 import Row from "../components/row";
 import Carousel from "../components/carousel";
 import CartButton from "../components/cartButton";
-import Single from "./single.js";
+import Image from "../components/image";
 
 const Product = ({ data, pageContext }) => {
 	const product = data.product;
@@ -25,11 +25,17 @@ const Product = ({ data, pageContext }) => {
 			</Row>
 			<Row classes="my-6">
 				<div className="col col-12 col-lg-6 product-carousel">
-					{carouselItems.length && <Carousel items={carouselItems} />}
+					{carouselItems.length > 1 ? (
+						<Carousel items={carouselItems} />
+					) : (
+						<div className="carousel-container">
+							<Image srcSet={carouselItems[0].srcSet} />
+						</div>
+					)}
 				</div>
 				<div className="col col-12 col-lg-6">
-					<h2>{product.name}</h2>
-					<h3 className="product-subtitle mb-6">
+					<h2 className="product-page-title">{product.name}</h2>
+					<h3 className="product-subtitle mb-4 mb-lg-6">
 						{product.productInfo.subtitle}
 					</h3>
 					<div className="formats mb-4">
@@ -42,7 +48,7 @@ const Product = ({ data, pageContext }) => {
 						)}
 					</div>
 					<div className="product-description">
-						<div
+						<p
 							dangerouslySetInnerHTML={{
 								__html: product.description
 							}}
@@ -53,6 +59,10 @@ const Product = ({ data, pageContext }) => {
 			</Row>
 		</Layout>
 	);
+};
+
+const renderImage = image => {
+	return <Image srcSet={image.srcSet} />;
 };
 
 const ProductInfo = ({ format }) => (

@@ -23,8 +23,8 @@ const CartItem = ({ item }) => {
 			</div>
 
 			<div className="cart-item-info">
-				<h3>{name}</h3>
-				<h3>{subtitle}</h3>
+				<h2 className="product-page-title">{name}</h2>
+				<h2 className="product-subtitle mb-4 mb-lg-6">{subtitle}</h2>
 				<span className="mt-4 d-block quantity">
 					Quantity: {item.quantity}
 				</span>

@@ -1,6 +1,6 @@
 import React from "react";
 import { graphql, Link } from "gatsby";
-import { format } from "light-date";
+import { format, localeFormat } from "light-date";
 import Layout from "../components/layout";
 import Row from "../components/row";
 import Image from "../components/image";
@@ -20,7 +20,6 @@ const Edition = ({ data, pageContext, embeded, style }) => {
 			color: settings.textColor,
 			backgroundColor: settings.backgroundColor,
 			borderColor: settings.textColor,
-			paddingBottom: `100px`
 		};
 	} else if (style) {
 		colorStyle = { ...style };
@@ -43,7 +42,21 @@ const Edition = ({ data, pageContext, embeded, style }) => {
 	const langSlug = lang ===`en` ? `sk/` : ``;
 	const translationSlug = `/${langSlug}${edition}`;
 
+	const getDate = () => {
+		const startMonth = format(startDate, "{MM}")
+		const endMonth = format(endDate, "{MM}");
 
+		let parsedStartDate;
+		if(startMonth === endMonth){
+			parsedStartDate = format(startDate,"{dd}");
+		} else {
+			parsedStartDate = format(startDate, `{dd} ${localeFormat(startDate, "{MMM}")}`);
+		}
+
+		const parsedEndDate = format(endDate, `{dd} ${localeFormat(endDate, "{MMM}")} {yyyy}`);
+
+		return `${parsedStartDate} - ${parsedEndDate}`;
+	}	
 
 	return (
 		<Layout
@@ -61,8 +74,7 @@ const Edition = ({ data, pageContext, embeded, style }) => {
 				<h1>{parsedContent.topText.firstTilte}</h1>
 				<h1>{parsedContent.topText.secondTitle}</h1>
 				<h1>
-					{format(startDate, "{dd}.{MM}")} -{" "}
-					{format(endDate, "{dd}.{MM} {yyyy}")}
+					{getDate()}
 				</h1>
 			</Row>
 

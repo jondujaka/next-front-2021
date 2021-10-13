@@ -97,7 +97,7 @@ const Cart = () => {
 	return (
 		<Layout>
 			<Row classes="mt-5 mb-5">
-				<div className="col-12 d-none d-lg-block col-lg-6 col-xl-6 about-nav">
+				<div className="col-12 d-none d-lg-block col-md-5 col-xl-6 about-nav">
 					<ul>
 						<li className="active">
 							<Link to="/cart" className="hollow-link">
@@ -111,13 +111,13 @@ const Cart = () => {
 						</li>
 					</ul>
 				</div>
-				<div className="col col-12 col-lg-6">
+				<div className="col col-12 col-md-7 col-xl-6">
 					<CartContent />
 					{cart ? (
 						<div className="checkout-info">
 							<h4>Subtotal {cart.subtotal}</h4>
 							<h4>Shipping {cart.shippingTotal}</h4>
-							<h4>TOTAL {cart.total}</h4>
+							<h4 className="total">TOTAL {cart.total}</h4>
 						</div>
 					) : (
 						``

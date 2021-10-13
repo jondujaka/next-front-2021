@@ -46,7 +46,7 @@ const About = ({ data, pageContext }) => {
 				<div className="col-12 col-lg-7 col-xl-6 about-content">
 					{sections &&
 						sections.map(section => (
-							<Row
+							<div
 								classes="mb-5 pt-4"
 								id={section.title.toLowerCase()}
 								key={`about-section-${section.title}`}
@@ -55,7 +55,7 @@ const About = ({ data, pageContext }) => {
 									{section.title}
 								</h2>
 								<AboutSection content={section.content} />
-							</Row>
+							</div>
 						))}
 				</div>
 			</div>

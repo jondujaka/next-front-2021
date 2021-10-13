@@ -16,7 +16,7 @@ const Product = ({item}) => {
 
 	return (
 		<Link
-			className="product-item p-4 col-6 col-lg-4 mb-5"
+			className="product-item p-4 col-6 col-lg-4 mb-3 mb-lg-5"
 			to={content.uri}
 		>
 			{/* <div className="row p-1 p-md-3 ">

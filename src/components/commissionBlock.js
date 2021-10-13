@@ -18,12 +18,14 @@ const CommissionBlock = ({ item }) => {
 	};
 	return (
 		<Link
-			className="commission-item py-5 col-6 mb-4 mb-md-6 col-lg-4"
+			className="commission-item py-4 py-lg-5 col-6 mb-lg-4 mb-md-6 col-lg-4"
 			to={item.uri}
 		>
 			<h3 className="text-body commission-title">{item.title}</h3>
-			<div className="commission-image-wrapper col col-12">
-				<div className="commission-image" style={bg}></div>
+			<div className="commission-image-parent">
+				<div className="commission-image-wrapper col col-12">
+					<div className="commission-image" style={bg}></div>
+				</div>
 			</div>
 		</Link>
 	);

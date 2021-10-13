@@ -8,21 +8,32 @@
 		background-color: $primaryBlue;
 		color: white;
 	}
-
 }
 
 .cart-info {
 	display: block;
-    font-size: 4rem;
-    margin-bottom: 4rem;
+	font-size: 4rem;
+	margin-bottom: 4rem;
 }
 
 .cart-image-wrapper {
 	max-width: 370px;
 	aspect-ratio: 1/1;
 
+	@supports not (aspect-ratio: 1 / 1) {
+		padding-top: 66%;
+		position: relative;
+
+		img {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+		}
+	}
+
 	img {
-		height: 100%;
+		min-height: 100%;
 		object-fit: cover;
 	}
 }
@@ -36,7 +47,8 @@
 		@extend .text-body;
 	}
 
-	.quantity, .price span {
+	.quantity,
+	.price span {
 		display: block;
 		@extend .text-body-small;
 	}
@@ -45,15 +57,17 @@
 		margin-top: auto;
 		margin-bottom: 0;
 	}
-
 }
 
-.checkout-info{
+.checkout-info {
 	@extend .mt-6;
 	h4 {
-		@extend .text-body;
+		@extend .text-body-small;
 	}
-} 
+	.total {
+		font-size: 5rem;
+	}
+}
 
 .checkout-btn {
 	@extend .text-body;

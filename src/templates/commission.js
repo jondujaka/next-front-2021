@@ -38,7 +38,7 @@ const Commission = ({ data: { commission }, pageContext }) => {
 				<>
 					<Separator />
 					<Row classes="justify-content-center">
-						<div class="col col-12 mt-5 mb-6">
+						<div class="col col-12 mb-5 mt-lg-5 mb-lg-6">
 							<h1>More commissions</h1>
 						</div>
 						<CommissionsGrid items={related} />

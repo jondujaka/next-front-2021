@@ -3,6 +3,26 @@
 	padding-left: 0;
 	width: 55%;
 
+	@extend .blue-image;
+
+	@supports not (aspect-ratio: 1 / 1) {
+		padding-top: 55%;
+		position: relative;
+
+		img {
+			position: absolute;
+			top: 0;
+			width: 100%;
+		}
+	}
+
+	img {
+		height: 100%;
+		object-fit: cover;
+	}
+}
+
+.blue-image {
 	.image-wrapper {
 		position: relative;
 		width: 100%;
@@ -21,24 +41,6 @@
 		}
 	}
 
-	@supports not (aspect-ratio: 1 / 1) {
-		padding-top: 55%;
-		position: relative;
-
-		img {
-			position: absolute;
-			top: 0;
-			width: 100%;
-		}
-	}
-
-	img {
-		filter: grayscale(100%) contrast(1);
-		mix-blend-mode: lighten;
-		height: 100%;
-		object-fit: cover;
-	}
-
 	&:after {
 		content: "";
 		z-index: 4;
@@ -49,6 +51,12 @@
 		height: 100%;
 		background: rgba(255, 255, 255, 0.3);
 		display: none;
+	}
+
+	img,
+	.circle-image {
+		filter: grayscale(100%) contrast(1);
+		mix-blend-mode: screen;
 	}
 }
 
@@ -127,7 +135,12 @@
 .commission-title {
 	margin-bottom: 0;
 	text-align: center;
-	margin-bottom: 1.2rem;
+
+	margin-bottom: 0.45rem;
+
+	@media screen and (min-width: 768px) {
+		margin-bottom: 1.2rem;
+	}
 }
 
 .commission-item {
@@ -135,13 +148,44 @@
 	flex-direction: column;
 	justify-content: flex-end;
 
-	padding: 30px;
+	padding: 10px;
+
+	@media screen and (min-width: 960px) {
+		padding: 30px;
+	}
 }
 
 .commission-image {
 	width: 100%;
 	padding-bottom: 100%;
 	position: relative;
+
+	border-radius: 50%;
+
+	filter: grayscale(100%) contrast(1);
+	mix-blend-mode: screen;
+}
+
+.commission-image-wrapper {
+	position: relative;
+	width: 100%;
+	background-color: #4d45ff;
+	border-radius: 50%;
+
+	&::after {
+		background-color: #fff;
+		content: "";
+		height: 100%;
+		left: 0;
+		bottom: 0;
+		mix-blend-mode: color-burn;
+		position: absolute;
+		width: 100%;
+		z-index: 1;
+	}
+}
+
+.circle-image {
 	border-radius: 50%;
 }
 
@@ -192,8 +236,8 @@
 
 	.product-title {
 		@extend .text-body;
-		@extend .mb-3;
-		@extend .mb-lg-4;
+		// @extend .mb-3;
+		margin-bottom: 0;
 		text-align: left;
 	}
 	&:hover {
@@ -207,6 +251,7 @@
 		position: relative;
 		padding: 0;
 		aspect-ratio: 1/1;
+		margin-top: .6rem;
 
 		@supports not (aspect-ratio: 1 / 1) {
 			padding-top: 100%;
@@ -227,18 +272,19 @@
 
 		.product-formats {
 			position: absolute;
-			position: absolute;
 			right: 14px;
 			bottom: 14px;
+			display: flex;
+    		flex-direction: column;
+    		align-items: flex-end;
 
 			span {
-				@extend .text-body-small;
+				@extend .text-small;
 				background: white;
-				display: block;
-				margin-top: 8px;
-				padding: 9px 12px;
-				width: 100%;
+				margin-top: 5px;
+				padding: 0px 12px;
 				text-transform: capitalize;
+				line-height: 1.4;
 			}
 		}
 	}
@@ -246,9 +292,10 @@
 
 .product-description {
 	margin-top: 3rem;
-	font-size: 3rem;
+	@extend .text-body-small;
 
-	p {
+	p > *,
+	p p {
 		margin-top: 2rem;
 	}
 }
@@ -357,9 +404,11 @@
 	display: flex;
 	justify-content: flex-start;
 	margin: 1.5rem 2rem;
+	flex-wrap: wrap;
 
 	.Dropdown-root {
 		margin-right: 4vw;
+		margin-top: 0.7em;
 	}
 
 	.Dropdown-control {
@@ -396,6 +445,11 @@
 	}
 }
 
+.edition-nav {
+	.Dropdown-menu {
+		right: 0;
+	}
+}
 .Dropdown-menu {
 	height: auto;
 	width: auto;

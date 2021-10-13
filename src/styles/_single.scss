@@ -14,16 +14,36 @@
 	margin-bottom: 4rem;
 }
 
+.product-page-title {
+	margin-bottom: 0.2em;
+}
+.product-page-title,
 .product-subtitle {
-	font-family: $serifFont;
-	margin-top: -1rem;
+	@extend .sans-serif-type;
 	font-size: 5rem;
+}
+
+.product-subtitle {
+	margin-top: -1rem;
 	margin-bottom: 4rem;
 	display: block;
 }
 
 .formats {
-	@extend .text-big;
+	line-height: 1.1;
+	font-size: 24px;
+
+	@media screen and (min-width: 960px){
+		font-size: 28px;
+	}
+
+	@media screen and (min-width: 1280px){
+		font-size: 32px;
+	}
+
+	@media screen and (min-width: 1920px){
+		font-size: 36px;
+	}
 
 	.price {
 		margin-right: 1rem;

@@ -47,6 +47,7 @@ const Info = ({ data, pageContext }) => {
 						<Scrollspy
 							items={scrollSpyItems}
 							currentClassName="active"
+							offset={-80}
 						>
 							{sections.map(section => (
 								<li key={`about-${section.title}`}>
@@ -59,7 +60,7 @@ const Info = ({ data, pageContext }) => {
 						</Scrollspy>
 					)}
 				</div>
-				<div className="col-12 col-lg-7 col-xl-6 about-content">
+				<div className="col-12 col-lg-7 col-xl-6 about-content info-content">
 					{sections &&
 						sections.map(section => (
 							<div

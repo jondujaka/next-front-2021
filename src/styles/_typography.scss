@@ -18,11 +18,23 @@
 	font-display: swap;
 }
 
+@font-face {
+	font-family: "Gramatika";
+	src: local("Gramatika Bold"), local("Gramatika-Bold"),
+		url("./type/Gramatika-Bold.woff2") format("woff2"),
+		url("./type/Gramatika-Bold.woff") format("woff");
+	font-weight: bold;
+	font-style: normal;
+	font-display: swap;
+}
+
 $sansFont: "Gramatika", sans-serif;
+$sansBoldFont: "Gramatika Bold";
 $serifFont: "Manege", serif;
 
 * {
 	-webkit-font-smoothing: antialiased !important;
+	letter-spacing: 0.02em;
 }
 
 .festival-web {
@@ -30,6 +42,10 @@ $serifFont: "Manege", serif;
 	.serif-title {
 		font-family: $serifFont;
 	}
+}
+
+.sans-serif-type {
+	font-family: $sansFont;
 }
 
 .edition-web {
@@ -41,15 +57,18 @@ $serifFont: "Manege", serif;
 		font-family: $sansFont;
 	}
 }
+
 h1 {
 	line-height: 0.95;
 }
+
+h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-	letter-spacing: unset;
+	letter-spacing: 0.02em;
 }
 
 .text-xxxl {
@@ -225,16 +244,20 @@ h2 {
 }
 
 h3 {
-	@include media-breakpoint-up(xl) {
-		font-size: 4.5rem;
-	}
-	@include media-breakpoint-up(xxl) {
-		font-size: 5rem;
-	}
+	
+	font-size: 3.2rem;
+	
 	@include media-breakpoint-up(lg) {
 		font-size: 3.5rem;
 	}
-	font-size: 3.2rem;
+
+	@include media-breakpoint-up(xxl) {
+		font-size: 5rem;
+	}
+
+	@include media-breakpoint-up(xl) {
+		font-size: 5rem;
+	}
 
 	line-height: 0.9;
 }
@@ -259,8 +282,12 @@ p {
 		font-size: inherit;
 	}
 
-	p:not(:first-of-type) {
+	> *  {
 		margin-top: 3rem;
+	}
+
+	> p:first-of-type {
+		margin-top: 0;
 	}
 }
 
@@ -374,4 +401,5 @@ a:focus {
 
 hr {
 	border-top: 3px solid;
+	margin: 1.5rem 0;
 }
