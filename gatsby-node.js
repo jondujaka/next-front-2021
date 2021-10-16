@@ -16,7 +16,8 @@ const templateMap = {
 	commissions: `commissions`,
 	projects: `projects`,
 	shop: `shop`,
-	records: `records`
+	records: `records`,
+	getTickets: `get-tickets`
 };
 
 const getLatestEdition = () =>
@@ -75,7 +76,7 @@ const initProducts = async gatsbyUtilities => {
 const initPostTypes = async gatsbyUtilities => {
 	console.log(`init post types`);
 
-	// initProducts(gatsbyUtilities);
+	initProducts(gatsbyUtilities);
 
 	let articlesSettings = {
 		postType: `article`,
@@ -128,32 +129,39 @@ const initPostTypes = async gatsbyUtilities => {
 	};
 	const allEvents = await getPostType(eventSettings, gatsbyUtilities);
 	const createEventPromises = [];
-	allEvents && allEvents.length && allEvents.map(eventInfo => {
-		const year = eventInfo.event.editions.nodes.length
-			? eventInfo.event.editions.nodes.reduce((a, b) =>
-					Math.max(parseInt(a.slug), parseInt(b.slug))
-			  )
-			: 2021;
-		const editionSettings = editionsToBuild.find(
-			edition => edition.year == year.slug
-		);
-
-		{
-			console.log(`building events for: ${year.slug}, english`);
-			const slug = eventInfo.event.uri;
-			const template = `event`;
-			const context = {
-				edition: year,
-				id: eventInfo.event.id,
-				settings: { ...editionSettings },
-				related: allEvents,
-				lang: eventInfo.event.language.slug
-			};
-			createEventPromises.push(
-				createIndividualPage(slug, template, context, gatsbyUtilities)
+	allEvents &&
+		allEvents.length &&
+		allEvents.map(eventInfo => {
+			const year = eventInfo.event.editions.nodes.length
+				? eventInfo.event.editions.nodes.reduce((a, b) =>
+						Math.max(parseInt(a.slug), parseInt(b.slug))
+				  )
+				: 2021;
+			const editionSettings = editionsToBuild.find(
+				edition => edition.year == year.slug
 			);
-		}
-	});
+
+			{
+				console.log(`building events for: ${year.slug}, english`);
+				const slug = eventInfo.event.uri;
+				const template = `event`;
+				const context = {
+					edition: year,
+					id: eventInfo.event.id,
+					settings: { ...editionSettings },
+					related: allEvents,
+					lang: eventInfo.event.language.slug
+				};
+				createEventPromises.push(
+					createIndividualPage(
+						slug,
+						template,
+						context,
+						gatsbyUtilities
+					)
+				);
+			}
+		});
 
 	let artistSettings = {
 		postType: `artist`,
@@ -173,7 +181,7 @@ const initPostTypes = async gatsbyUtilities => {
 		);
 
 		const eventsList = [];
-		
+
 		allEvents.flatMap(eventInfo => {
 			if (
 				eventInfo.event.eventInfo &&
@@ -769,6 +777,9 @@ const getEditionInfo = async (year, { graphql, reporter }) => {
 					nodes {
 						url
 						label
+						menuItems {
+							hide
+						}
 					}
 				}
 			}
@@ -779,6 +790,9 @@ const getEditionInfo = async (year, { graphql, reporter }) => {
 					nodes {
 						url
 						label
+						menuItems {
+							hide
+						}
 					}
 				}
 			}
@@ -838,7 +852,7 @@ const initMainPages = async gatsbyUtils => {
 			queryName: `mainRecordsPage`,
 			type: `wpPage`,
 			slug: `records`
-		}
+		},
 	];
 
 	queries.map(query =>

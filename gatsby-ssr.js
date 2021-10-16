@@ -20,7 +20,7 @@ export function wrapRootElement({ element }) {
 }
 
 export function onRenderBody({ pathname, setPostBodyComponents }) {
-	if (pathname.includes("get-tickets")) {
+	if (pathname.includes("tickets")) {
 		setPostBodyComponents([
 			<script
 				key="goout-script"
