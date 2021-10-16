@@ -75,7 +75,7 @@ const initProducts = async gatsbyUtilities => {
 const initPostTypes = async gatsbyUtilities => {
 	console.log(`init post types`);
 
-	initProducts(gatsbyUtilities);
+	// initProducts(gatsbyUtilities);
 
 	let articlesSettings = {
 		postType: `article`,
@@ -769,7 +769,6 @@ const getEditionInfo = async (year, { graphql, reporter }) => {
 					nodes {
 						url
 						label
-						hide
 					}
 				}
 			}
@@ -780,7 +779,6 @@ const getEditionInfo = async (year, { graphql, reporter }) => {
 					nodes {
 						url
 						label
-						hide
 					}
 				}
 			}
