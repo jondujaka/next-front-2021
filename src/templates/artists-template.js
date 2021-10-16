@@ -9,6 +9,10 @@ import { node } from "prop-types";
 
 const ArtistsTemplate = ({ data, pageContext }) => {
 	const { settings, edition, menu, lang, skMenu } = pageContext;
+	const isSk = lang !== `en`;
+	const langSlug = lang === `en` ? `sk/` : ``;
+	const translationSlug = `/${langSlug}${edition}/artists`;
+	
 	let artistsList = data.artists.edges;
 
 	const eventsList = data.events.edges;
@@ -132,10 +136,6 @@ const ArtistsTemplate = ({ data, pageContext }) => {
 
 		setAllArtists(filteredArtists);
 	};
-
-	const isSk = lang !== `en`;
-	const langSlug = lang === `en` ? `sk/` : ``;
-	const translationSlug = `/${langSlug}${edition}/artists`;
 
 	return (
 		<Layout

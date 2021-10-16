@@ -769,6 +769,7 @@ const getEditionInfo = async (year, { graphql, reporter }) => {
 					nodes {
 						url
 						label
+						hide
 					}
 				}
 			}
@@ -779,6 +780,7 @@ const getEditionInfo = async (year, { graphql, reporter }) => {
 					nodes {
 						url
 						label
+						hide
 					}
 				}
 			}
