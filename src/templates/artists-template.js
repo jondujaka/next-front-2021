@@ -19,7 +19,7 @@ const ArtistsTemplate = ({ data, pageContext }) => {
 
 	const allDays = [
 		{
-			label: "All Days",
+			label: isSk ? "Všetky dni" : "All Days",
 			value: "all"
 		}
 	];
@@ -163,6 +163,7 @@ const ArtistsTemplate = ({ data, pageContext }) => {
 							textColor: settings.textColor,
 							backgroundColor: settings.backgroundColor
 						}}
+						isSk={isSk}
 						dayItems={allDays}
 						handleClick={filterArtists}
 					/>

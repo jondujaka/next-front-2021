@@ -145,25 +145,30 @@ const Layout = ({
 					<footer>
 						<Row>
 							<div className="col col-12">
-								<span className="credits">
-									Website <br className="d-block d-md-none" />{" "}
-									designed by{" "}
-									<a
-										href="https://robertfinkei.com"
-										target="_blank"
-									>
-										Robert Finkei
-									</a>{" "}
-									<br className="d-block d-md-none" />
-									<span className="d-none d-md-inline">
-										{" "}
-										and
-									</span>{" "}
-									developed by{" "}
-									<a href="https://jondujaka.com">
-										Jon Dujaka
-									</a>
-								</span>
+								{isSk ? (
+									<SkCredits />
+								) : (
+									<span className="credits">
+										Website{" "}
+										<br className="d-block d-md-none" />{" "}
+										designed by{" "}
+										<a
+											href="https://robertfinkei.com"
+											target="_blank"
+										>
+											Robert Finkei
+										</a>{" "}
+										<br className="d-block d-md-none" />
+										<span className="d-none d-md-inline">
+											{" "}
+											and
+										</span>{" "}
+										developed by{" "}
+										<a href="https://jondujaka.com">
+											Jon Dujaka
+										</a>
+									</span>
+								)}
 							</div>
 						</Row>
 					</footer>
@@ -172,6 +177,17 @@ const Layout = ({
 		</>
 	);
 };
+
+const SkCredits = () => (
+	<span className="credits">
+		Webdizajn:{" "}
+		<a href="https://robertfinkei.com" target="_blank">
+			Robert Finkei
+		</a>{" "}
+		<br className="d-block d-md-none" />
+		/ Web Development: <a href="https://jondujaka.com">Jon Dujaka</a>
+	</span>
+);
 
 Layout.propTypes = {
 	children: PropTypes.node.isRequired,

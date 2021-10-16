@@ -11,7 +11,11 @@ const NewsArticle = ({ data: { article }, pageContext }) => {
 	const { latestEdition } = pageContext;
 	const isSk = article.language.slug === `sk`;
 	return (
-		<Layout isSk={isSk} translationSlug={translationSlug} style={latestEdition}>
+		<Layout
+			isSk={isSk}
+			translationSlug={translationSlug}
+			style={latestEdition}
+		>
 			<Row>
 				<div className="col col-12 mt-5 mb-6">
 					<h2 className="festival-page-title">
@@ -26,24 +30,32 @@ const NewsArticle = ({ data: { article }, pageContext }) => {
 				</div>
 			</Row>
 			<Single content={article} />
-			<MoreNews items={pageContext.related} />
+			<MoreNews items={pageContext.related} isSk={isSk} />
 		</Layout>
 	);
 };
 
-const MoreNews = ({items}) => {
+const MoreNews = ({ items, isSk }) => {
 	return (
 		<div className="related-news">
 			<div className="row">
-				<div className="col-12 mb-4"><h1>More News</h1></div>
-				{items.length && items.map(item => {
-					console.log(item)
-					return <NewsBlock key={`news-${item.article.id}`} item={item.article} />
-				})}
+				<div className="col-12 mb-4">
+					<h1>{isSk ? `Viac noviniek` : `More News`}</h1>
+				</div>
+				{items.length &&
+					items.map(item => {
+						console.log(item);
+						return (
+							<NewsBlock
+								key={`news-${item.article.id}`}
+								item={item.article}
+							/>
+						);
+					})}
 			</div>
 		</div>
-	)
-}
+	);
+};
 export default NewsArticle;
 
 export const eventQuery = graphql`

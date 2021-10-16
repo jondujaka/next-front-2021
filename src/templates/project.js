@@ -20,7 +20,11 @@ const Project = ({ data: { project }, pageContext }) => {
 	const { latestEdition } = pageContext;
 
 	return (
-		<Layout isSk={isSk} translationSlug={translationSlug} style={latestEdition}>
+		<Layout
+			isSk={isSk}
+			translationSlug={translationSlug}
+			style={latestEdition}
+		>
 			<Row>
 				<div className="col col-12 mt-5 mb-6">
 					<h2 className="festival-page-title">
@@ -28,7 +32,7 @@ const Project = ({ data: { project }, pageContext }) => {
 							className="inherit"
 							to={`${isSk ? `/sk` : ``}/projects`}
 						>
-							{isSk ? `Projoekty` : `Projects`}
+							{isSk ? `Projekty` : `Projects`}
 						</Link>
 						{` > ${project.title}`}
 					</h2>
@@ -41,7 +45,7 @@ const Project = ({ data: { project }, pageContext }) => {
 					<Separator />
 					<Row>
 						<div className="col col-12 mt-5 mb-6">
-							<h1>More projects</h1>
+							<h1>{isSk ? `Viac projektov` : `More projects`}</h1>
 						</div>
 						<ProjectsGrid items={related} />
 					</Row>

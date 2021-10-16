@@ -24,7 +24,7 @@ const WorkshopsTemplate = ({ data, pageContext }) => {
 
 	const allDays = [
 		{
-			label: "All Days",
+			label: isSk ? "Všetky dni" : "All Days",
 			value: "all"
 		}
 	];
@@ -153,7 +153,7 @@ export const workshopsQuery = graphql`
 						images {
 							srcSet
 						}
-					  }
+					}
 					eventInfo {
 						dates {
 							date

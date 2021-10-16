@@ -33,7 +33,15 @@ const EditionMenu = ({ items, bg, isSk = false, translationSlug, colors, skMenu,
 			background: ${colors.borderColor};
 			border-color: ${colors.borderColor};
 		}
+		.Dropdown-option:hover,
+		.Dropdown-option.is-selected {
+			color: ${colors.backgroundColor};
+			background: ${colors.textColor};
+		}
 	` : ``;
+
+	const getHomeText = () => isSk ? `Domov` : `Home`;
+
 	return Style.it(styles,
 		<div className={`edition-menu-wrapper ${sticky ? `position-sticky` : `position-fixed`}`} style={{ background: bg }}>
 			<nav className="edition-nav">
@@ -70,7 +78,7 @@ const EditionMenu = ({ items, bg, isSk = false, translationSlug, colors, skMenu,
 					<Dropdown
 						options={menuItems}
 						onChange={internalHandleClick}
-						placeholder={pageName === `index` ? `Home` : pageName}
+						placeholder={pageName === `index` ? getHomeText() : pageName}
 					/>
 				</div>
 

@@ -10,7 +10,16 @@ import Carousel from "../components/carousel";
 import ArtistsGrid from "../components/blockGrids/artistsGrid";
 
 const Edition = ({ data, pageContext, embeded, style }) => {
-	const { edition, year, translation, lang, settings, content, menu, skMenu } = pageContext;
+	const {
+		edition,
+		year,
+		translation,
+		lang,
+		settings,
+		content,
+		menu,
+		skMenu
+	} = pageContext;
 
 	let colorStyle;
 
@@ -19,7 +28,7 @@ const Edition = ({ data, pageContext, embeded, style }) => {
 			textColor: settings.textColor,
 			color: settings.textColor,
 			backgroundColor: settings.backgroundColor,
-			borderColor: settings.textColor,
+			borderColor: settings.textColor
 		};
 	} else if (style) {
 		colorStyle = { ...style };
@@ -29,38 +38,42 @@ const Edition = ({ data, pageContext, embeded, style }) => {
 	// 	return <h1>Please fill in all the required fields!</h1>;
 	// }
 
-	const parsedContent = content.editionContent ? content.editionContent : content;
-
-
+	const parsedContent = content.editionContent
+		? content.editionContent
+		: content;
 
 	const startDate = new Date(parsedContent.topText.editionDate.startDate);
 	const endDate = new Date(parsedContent.topText.editionDate.endDate);
 
-
-	
 	const isSk = lang !== `en`;
-	const langSlug = lang ===`en` ? `sk/` : ``;
+	const langSlug = lang === `en` ? `sk/` : ``;
 	const translationSlug = `/${langSlug}${edition}`;
 
 	const getDate = () => {
-		const startMonth = format(startDate, "{MM}")
+		const startMonth = format(startDate, "{MM}");
 		const endMonth = format(endDate, "{MM}");
 
 		let parsedStartDate;
-		if(startMonth === endMonth){
-			parsedStartDate = format(startDate,"{dd}");
+		if (startMonth === endMonth) {
+			parsedStartDate = format(startDate, "{dd}");
 		} else {
-			parsedStartDate = format(startDate, `{dd} ${localeFormat(startDate, "{MMM}")}`);
+			parsedStartDate = format(
+				startDate,
+				`{dd} ${localeFormat(startDate, "{MMM}")}`
+			);
 		}
 
-		const parsedEndDate = format(endDate, `{dd} ${localeFormat(endDate, "{MMM}")} {yyyy}`);
+		const parsedEndDate = format(
+			endDate,
+			`{dd} ${localeFormat(endDate, "{MMM}")} {yyyy}`
+		);
 
 		return `${parsedStartDate}–${parsedEndDate}`;
-	}	
+	};
 
 	return (
 		<Layout
-		 	key="layout-edition"
+			key="layout-edition"
 			style={colorStyle}
 			embeded={embeded}
 			year={edition || year}
@@ -73,9 +86,7 @@ const Edition = ({ data, pageContext, embeded, style }) => {
 			<Row classes="edition-title">
 				<h1>{parsedContent.topText.firstTilte}</h1>
 				<h1>{parsedContent.topText.secondTitle}</h1>
-				<h1>
-					{getDate()}
-				</h1>
+				<h1>{getDate()}</h1>
 			</Row>
 
 			{parsedContent.content &&
@@ -86,7 +97,13 @@ const Edition = ({ data, pageContext, embeded, style }) => {
 								classes="my-4 my-md-5"
 								key={`section-edition-${i}`}
 							>
-								{editionRow(isSk, section, i, edition, settings)}
+								{editionRow(
+									isSk,
+									section,
+									i,
+									edition,
+									settings
+								)}
 							</Row>
 						);
 					}
@@ -96,7 +113,6 @@ const Edition = ({ data, pageContext, embeded, style }) => {
 };
 
 const editionRow = (isSk, section, i, year, colors) => {
-
 	const type = section.fieldGroupName;
 	if (type.endsWith(`Media`)) {
 		return section.images.length > 1 ? (
@@ -143,19 +159,19 @@ const editionRow = (isSk, section, i, year, colors) => {
 	}
 
 	if (type.endsWith(`ArtistsSection`)) {
-		if(section.artists && section.artists.length){
-			let parsedArtists = isSk ? section.artists.map(artist => {
-				if(artist.language.slug === `en` && isSk){
-					return {
-						...artist,
-						uri: artist.translations[0].uri,
-						title: artist.translations[0].title
-					}
-				}
-				return artist;
-			}) : section.artists;
-		
-
+		if (section.artists && section.artists.length) {
+			let parsedArtists = isSk
+				? section.artists.map(artist => {
+						if (artist.language.slug === `en` && isSk) {
+							return {
+								...artist,
+								uri: artist.translations[0].uri,
+								title: artist.translations[0].title
+							};
+						}
+						return artist;
+				  })
+				: section.artists;
 
 			return (
 				<>
@@ -170,42 +186,42 @@ const editionRow = (isSk, section, i, year, colors) => {
 								colors={colors}
 								link={getLink(isSk, year, `/artists`)}
 							>
-								See all artists
+								{isSk ? `Všetci umelci` : `See all artists`}
 							</CustomLink>
 						</div>
 					</div>
 				</>
-			)
+			);
 		}
 
 		return ``;
 	}
 
 	if (type.endsWith(`WorkshopsSection`)) {
-		
-		if(section.workshops && section.workshops.length){
-
-			let parsedWorkshops = isSk ? section.workshops.map(workshop => {
-				if(workshop.language.slug === `en` && isSk){
-					return {
-						...workshop,
-						uri: workshop.translations[0].uri,
-						title: workshop.translations[0].title
-					}
-				}
-				return workshop;
-			}) : section.workshops;
-		
-
-
-
+		if (section.workshops && section.workshops.length) {
+			let parsedWorkshops = isSk
+				? section.workshops.map(workshop => {
+						if (workshop.language.slug === `en` && isSk) {
+							return {
+								...workshop,
+								uri: workshop.translations[0].uri,
+								title: workshop.translations[0].title
+							};
+						}
+						return workshop;
+				  })
+				: section.workshops;
 
 			return (
 				<>
 					<div className="col-12">
 						<h1>{section.title}</h1>
 					</div>
-					<ArtistsGrid colors={colors} items={parsedWorkshops} seeAll />
+					<ArtistsGrid
+						colors={colors}
+						items={parsedWorkshops}
+						seeAll
+					/>
 					<div className="d-flex col-4 mx-auto justify-content-center align-items-center text-center mb-6">
 						<div className="block-link-wrapper">
 							<CustomLink
@@ -213,23 +229,25 @@ const editionRow = (isSk, section, i, year, colors) => {
 								colors={colors}
 								link={getLink(isSk, year, `/workshops`)}
 							>
-								See all workshops
+								{isSk
+									? `Všetky workshopy`
+									: `See all workshops`}
 							</CustomLink>
 						</div>
 					</div>
 				</>
 			);
-		} 
-		return null
+		}
+		return null;
 	}
 };
 
 const getLink = (isSk, year, link) => {
-	if(isSk){
-		return `/sk/${year}${link}`
+	if (isSk) {
+		return `/sk/${year}${link}`;
 	} else {
-		return `/${year}${link}`
+		return `/${year}${link}`;
 	}
-}
+};
 
 export default Edition;

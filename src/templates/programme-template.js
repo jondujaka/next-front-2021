@@ -69,7 +69,7 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 
 	const setUpDays = () => {
 		let dayFilters = [{
-			label: "All Days",
+			label: isSk ? "Všetky dni" : "All Days",
 			value: "all"
 		}];
 		const allDaysInit = {};
@@ -144,6 +144,7 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 					<Filter
 						dayItems={dayFilterItems}
 						handleClick={filterEvents}
+						isSk={isSk}
 						colors={{
 							textColor: settings.textColor,
 							backgroundColor: settings.backgroundColor
