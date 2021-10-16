@@ -19,9 +19,10 @@ export function wrapRootElement({ element }) {
 	);
 }
 
-export function onRenderBody({ pathname, setPostBodyComponents }) {
-	if (pathname.includes("tickets")) {
-		setPostBodyComponents([
+export function onRenderBody({ pathname, setHeadComponents }) {
+	console.log(pathname);
+	if (pathname.includes("get-tickets")) {
+		setHeadComponents([
 			<script
 				key="goout-script"
 				type="text/javascript"

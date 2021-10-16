@@ -1,4 +1,6 @@
 
+@use "sass:math";
+
 @mixin make-row($gutter: $grid-gutter-width) {
 	--#{$variable-prefix}gutter-x: #{$gutter};
 	--#{$variable-prefix}gutter-y: 0;
@@ -28,14 +30,14 @@
 	width: auto;
 }
 @mixin make-col-offset($size, $columns: $grid-columns) {
-	$num: $size / $columns;
+	$num: math.div($size, $columns);
 	margin-left: if($num == 0, 0, percentage($num));
 }
 
 @mixin make-col($size: false, $columns: $grid-columns) {
 	@if $size {
 		flex: 0 0 auto;
-		width: percentage($size / $columns);
+		width: percentage(math.div($size, $columns));
 	} @else {
 		flex: 1 1 0;
 		max-width: 100%;
@@ -50,7 +52,7 @@
 @mixin row-cols($count) {
 	> * {
 		flex: 0 0 auto;
-		width: 100% / $count;
+		width: math.div(100%, $count);
 	}
 }
 
