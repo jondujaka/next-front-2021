@@ -5,7 +5,7 @@ import Row from "../components/row";
 const GetTickets = ({ pageContext }) => {
 	return (
 		<Layout
-			pageName={isSk ? `Lístky` : `Tickets`}
+			pageName="Tickets"
 			
 		>
 			<Row>
