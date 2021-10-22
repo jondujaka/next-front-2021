@@ -157,7 +157,7 @@ const ArtistsTemplate = ({ data, pageContext }) => {
 						{isSk ? `Umelci` : `Artists`}
 					</h1>
 				</div>
-				<div className="col col-12">
+				{/* <div className="col col-12">
 					<Filter
 						colors={{
 							textColor: settings.textColor,
@@ -167,7 +167,7 @@ const ArtistsTemplate = ({ data, pageContext }) => {
 						dayItems={allDays}
 						handleClick={filterArtists}
 					/>
-				</div>
+				</div> */}
 			</Row>
 			<Row classes="mt-6 justify-content-start">
 				{allArtists && (
@@ -183,7 +183,7 @@ export default ArtistsTemplate;
 export const artistsQuery = graphql`
 	query artistsPage($edition: String!, $lang: String!) {
 		artists: allWpArtist(
-			sort: { order: DESC, fields: date }
+			sort: { order: ASC, fields: slug }
 			filter: {
 				editions: { nodes: { elemMatch: { slug: { eq: $edition } } } }
 				language: { slug: { eq: $lang } }
