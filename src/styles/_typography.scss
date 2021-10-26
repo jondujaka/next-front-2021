@@ -127,6 +127,9 @@ h6 {
 	.text-small {
 		font-size: 26px;
 	}
+	h1 {
+		letter-spacing: initial !important;
+	}
 }
 
 @media screen and (min-width: 1600px) {
@@ -400,6 +403,6 @@ a:focus {
 }
 
 hr {
-	border-top: 3px solid;
+	border-top: 3px solid $primaryBlue;
 	margin: 1.5rem 0;
 }

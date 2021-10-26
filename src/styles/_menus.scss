@@ -73,7 +73,6 @@ footer {
 	padding-top: $headerHeight;
 }
 
-.header-wrapper,
 .edition-menu-wrapper {
 	left: 0;
 	width: 100%;
@@ -95,8 +94,22 @@ footer {
 	bottom: 0;
 	background: white;
 	border-top: 3px solid $primaryBlue;
+	border-left: 3px solid $primaryBlue;
+	border-top-left-radius: 45px;
 	justify-content: space-around;
 	position: fixed;
+	width: calc(100% - 10rem);
+	right: 0;
+	height: $headerHeight;
+	display: flex;
+	align-items: center;
+	padding: 1.25rem 1.5rem;
+	box-shadow: 0 0 99px 0 $primaryBlue;
+
+	.next-button {
+		font-size: 6.5rem;
+		margin-left: 2rem;
+	}
 
 	a {
 		@extend .text-body-small;

@@ -1,12 +1,13 @@
 .media-container {
 	width: 100%;
 	text-align: center;
-	margin: 0 auto;
 	position: relative;
 	z-index: 1;
 	box-shadow: 0 0 99px 0 #4a4af1;
+	border-bottom-right-radius: 16rem;
+	background-clip: padding-box;
+	overflow: hidden;
 }
-
 
 .top-video-title,
 .top-video-link {
@@ -14,6 +15,22 @@
 	background: white;
 	display: block;
 	@extend .text-body;
+}
+
+.main-title-wrapper {
+	max-width: calc(100% - 35rem);
+	position: relative;
+	margin-bottom: 14rem;
+}
+
+.top-video-link {
+	padding: 2.5rem 0;
+	right: -20px;
+	top: 50%;
+	padding: 1em;
+	transform: rotate(-90deg) translateX(50%);
+	transform-origin: 100% 0;
+	position: absolute;
 }
 
 .media-wrapper .react-player-home div {
@@ -44,7 +61,7 @@
 		position: relative;
 
 		&:before {
-			content: '';
+			content: "";
 			position: absolute;
 			top: 0;
 			left: 0;
@@ -54,7 +71,7 @@
 			z-index: 1;
 			background: $primaryBlue;
 			opacity: 0;
-			transition: opacity .4s ease-in-out;
+			transition: opacity 0.4s ease-in-out;
 		}
 
 		&.has-overlay:before {
@@ -65,7 +82,7 @@
 
 .inline-player {
 	height: auto !important;
-	 > div {
+	> div {
 		position: relative;
 		padding-bottom: 56.25%; /* 16:9 */
 		height: 0;
@@ -77,5 +94,5 @@
 			width: 100%;
 			height: 100%;
 		}
-	 }
+	}
 }

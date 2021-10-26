@@ -19,6 +19,12 @@
 	img {
 		height: 100%;
 		object-fit: cover;
+		webkit-transition: 1s -webkit-filter linear;
+		-moz-transition: 1s -moz-filter linear;
+		-moz-transition: 1s filter linear;
+		-ms-transition: 1s -ms-filter linear;
+		-o-transition: 1s -o-filter linear;
+		transition: 1s filter linear, 1s -webkit-filter linear;
 	}
 }
 
@@ -57,18 +63,12 @@
 	.circle-image {
 		filter: grayscale(100%) contrast(1);
 		mix-blend-mode: screen;
-	}
-}
-
-.news-item:hover {
-	.image-wrapper {
-		&::after {
-			display: none;
-		}
-		img {
-			filter: none;
-			mix-blend-mode: initial;
-		}
+		webkit-transition: 1s -webkit-filter linear;
+		-moz-transition: 1s -moz-filter linear;
+		-moz-transition: 1s filter linear;
+		-ms-transition: 1s -ms-filter linear;
+		-o-transition: 1s -o-filter linear;
+		transition: 1s filter linear, 1s -webkit-filter linear;
 	}
 }
 
@@ -123,6 +123,10 @@
 
 	&:hover {
 		background: $primaryBlue;
+		img,
+		.commission-image {
+			filter: invert(1) grayscale(100%) contrast(1);
+		}
 		.fake-news-image {
 			background: white;
 		}
@@ -251,7 +255,7 @@
 		position: relative;
 		padding: 0;
 		aspect-ratio: 1/1;
-		margin-top: .6rem;
+		margin-top: 0.6rem;
 
 		@supports not (aspect-ratio: 1 / 1) {
 			padding-top: 100%;
@@ -275,8 +279,8 @@
 			right: 14px;
 			bottom: 14px;
 			display: flex;
-    		flex-direction: column;
-    		align-items: flex-end;
+			flex-direction: column;
+			align-items: flex-end;
 
 			span {
 				@extend .text-small;

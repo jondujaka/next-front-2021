@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { graphql, Link } from "gatsby";
-import { StaticImage } from "gatsby-plugin-image"
+import { StaticImage } from "gatsby-plugin-image";
 import LangSwitcher from "../components/LangSwitcher";
 import Layout from "../components/layout";
 import CustomLink from "../components/customLink";
@@ -11,11 +11,10 @@ import { InView } from "react-intersection-observer";
 import Edition from "./edition";
 import throttle from "lodash.throttle";
 
-import TextTopMob from '../images/optimized/letters-top-mobile.svg';
-import TextBotMob from '../images/optimized/letters-bottom-mobile.svg';
-import TextTopDesktop from '../images/optimized/letters-top-desktop.svg';
-import TextBotDesktop from '../images/optimized/letters-bottom-desktop.svg';
-
+import TextTopMob from "../images/optimized/letters-top-mobile.svg";
+import TextBotMob from "../images/optimized/letters-bottom-mobile.svg";
+import TextTopDesktop from "../images/optimized/letters-top-desktop.svg";
+import TextBotDesktop from "../images/optimized/letters-bottom-desktop.svg";
 
 const Home = ({ data: { page, news }, pageContext, location }) => {
 	const { latestEdition } = pageContext;
@@ -49,27 +48,16 @@ const Home = ({ data: { page, news }, pageContext, location }) => {
 			isSk={isSk}
 			style={editionContext.settings}
 		>
-			
-
-			<Row classes="main-title-wrapper mt-6" fullWidth={true}>
-				{/* <TextTopMob /> */}
-				<img className="d-none d-lg-block" src={TextTopDesktop} alt="NEXT" />
-				<img className="d-block d-lg-none" src={TextTopMob} alt="NEXT" />
-				
-				<ScrollVideo
-					layer={page.mainHome.videoLayer}
-				/>
-				<img className="d-none d-lg-block" src={TextBotDesktop} alt="NEXT" />
-				<img className="d-block d-lg-none" src={TextBotMob} alt="NEXT" />
-				{/* <img className="d-none d-lg-block" src="../images/optimized/letters-bottom-desktop.svg" alt="NEXT" /> */}
-				{/* <img className="d-block d-lg-none" src="../images/optimized/letters-bottom-mobile.svg" alt="NEXT" /> */}
+			<Row classes="main-title-wrapper" fullWidth={true}>
+				<ScrollVideo layer={page.mainHome.videoLayer} />
+				{page.mainHome.videoLayer.button && page.mainHome.videoLayer.button.title ? (
+					<Link to={page.mainHome.videoLayer.button.url} className="top-video-link">
+						Revisit NEXT 2020 with us! ⟶
+					</Link>
+				) : (
+					``
+				)}
 			</Row>
-
-			{/* <Row>
-				{page.translations.length ? (
-					<Link to={langSlug}>Switch language - {isInView.toString()}</Link>
-				) : null}
-			</Row> */}
 
 			<br />
 			<Row classes="mb-6">
@@ -81,7 +69,10 @@ const Home = ({ data: { page, news }, pageContext, location }) => {
 					/>
 				))}
 				<div className="col col-12 text-center mt-5">
-					<Link className="big-button" to={`${isSk ? `/sk`: ``}/news`}>
+					<Link
+						className="big-button"
+						to={`${isSk ? `/sk` : ``}/news`}
+					>
 						{isSk ? `Viac noviniek` : `See all News`}
 					</Link>
 				</div>
@@ -99,19 +90,7 @@ const ScrollVideo = ({ layer, show }) => {
 	return (
 		<section id="media-container" className={`media-container`}>
 			<div className="media-wrapper">
-				{layer.title ? (
-					<div className="top-video-title">{layer.title}</div>
-				) : (
-					``
-				)}
 				<Media media={layer.media} homePage />
-				{layer.button && layer.button.title ? (
-					<Link to={layer.button.url} className="top-video-link">
-						{layer.button.title} ⟶
-					</Link>
-				) : (
-					``
-				)}
 			</div>
 		</section>
 	);
