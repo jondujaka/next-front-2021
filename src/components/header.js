@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { Link, useStaticQuery, graphql } from "gatsby";
 import { useAppState } from "./context";
 import Style from "style-it";
+import CloseButton from "../images/optimized/close-button.svg";
 
 const Header = ({ siteTitle, noLang, isSk, translationSlug, style }) => {
 	const { cart } = useAppState();
@@ -78,7 +79,7 @@ const Header = ({ siteTitle, noLang, isSk, translationSlug, style }) => {
 				className={`close-button ${mobileNavOpen ? `show` : `hide`}`}
 				onClick={closeMobileNav}
 			>
-				X
+				<img src={CloseButton} />
 			</button>
 		</>
 	);

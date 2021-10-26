@@ -1,20 +1,10 @@
 import React, { useEffect, useState, useRef } from "react";
 import { graphql, Link } from "gatsby";
-import { StaticImage } from "gatsby-plugin-image";
-import LangSwitcher from "../components/LangSwitcher";
 import Layout from "../components/layout";
-import CustomLink from "../components/customLink";
 import ReactPlayer from "react-player/youtube";
 import Row from "../components/row";
 import NewsBlock from "../components/newsBlock";
-import { InView } from "react-intersection-observer";
 import Edition from "./edition";
-import throttle from "lodash.throttle";
-
-import TextTopMob from "../images/optimized/letters-top-mobile.svg";
-import TextBotMob from "../images/optimized/letters-bottom-mobile.svg";
-import TextTopDesktop from "../images/optimized/letters-top-desktop.svg";
-import TextBotDesktop from "../images/optimized/letters-bottom-desktop.svg";
 
 const Home = ({ data: { page, news }, pageContext, location }) => {
 	const { latestEdition } = pageContext;
