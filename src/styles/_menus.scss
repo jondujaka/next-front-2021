@@ -98,7 +98,7 @@ footer {
 	border-top-left-radius: 45px;
 	justify-content: space-around;
 	position: fixed;
-	width: calc(100% - 10rem);
+	width: calc(100% - 6rem);
 	right: 0;
 	height: $headerHeight;
 	display: flex;
@@ -109,10 +109,11 @@ footer {
 	.next-button {
 		font-size: 6.5rem;
 		margin-left: 2rem;
+		text-decoration: none !important;
 	}
 
 	a {
-		@extend .text-body-small;
+		@extend .text-nav-small;
 		text-transform: uppercase;
 		color: $primaryBlue;
 
@@ -138,10 +139,6 @@ footer {
 	flex-grow: 1;
 	display: flex;
 	justify-content: flex-end;
-
-	a {
-		padding: 1rem;
-	}
 
 	ul,
 	li {

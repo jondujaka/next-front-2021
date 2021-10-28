@@ -85,6 +85,10 @@ h6 {
 	letter-spacing: 0.02em;
 	line-height: 0.9;
 }
+.text-nav-small {
+	font-size: 20px;
+	line-height: 0.9;
+}
 .text-small {
 	font-size: 17px;
 }
@@ -100,6 +104,9 @@ h6 {
 	.text-body-small {
 		font-size: 24px;
 	}
+	.text-nav-small {
+		font-size: 22px;
+	}
 	.text-body {
 		font-size: 28px;
 	}
@@ -112,6 +119,12 @@ h6 {
 	.text-body {
 		font-size: 34px;
 	}
+
+	.text-nav-small {
+		font-size: 22px;
+		padding: 1rem .7rem;
+	}
+	
 }
 
 @media screen and (min-width: 1240px) {
@@ -124,6 +137,10 @@ h6 {
 	.text-body-small {
 		font-size: 28px;
 	}
+	.text-nav-small {
+		font-size: 26px;
+		padding: 1rem .6rem;
+	}
 	.text-small {
 		font-size: 26px;
 	}
@@ -133,6 +150,10 @@ h6 {
 }
 
 @media screen and (min-width: 1600px) {
+	.text-nav-small {
+		font-size: 30px;
+		padding: 1rem 1.4rem
+	}
 	.text-body {
 		font-size: 48px;
 	}
@@ -145,6 +166,10 @@ h6 {
 	}
 	.text-body {
 		font-size: 50px;
+	}
+	.text-nav-small {
+		font-size: 35px;
+		padding: 1rem 1.7rem;
 	}
 	.text-body-small {
 		line-height: 1;

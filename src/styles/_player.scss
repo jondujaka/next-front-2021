@@ -18,19 +18,39 @@
 }
 
 .main-title-wrapper {
-	max-width: calc(100% - 35rem);
+	max-width: 100%;
+	padding-right: 10%;
 	position: relative;
 	margin-bottom: 14rem;
 }
 
-.top-video-link {
-	padding: 2.5rem 0;
-	right: -20px;
-	top: 50%;
-	padding: 1em;
-	transform: rotate(-90deg) translateX(50%);
-	transform-origin: 100% 0;
-	position: absolute;
+@media screen and (max-width: 960px) {
+
+	.top-video-link {
+		text-align: center;
+		position: absolute;
+		left: 50%;
+		transform: translateX(-50%);
+		width: 100%;
+	}
+}
+
+@media screen and (min-width: 961px) {
+	.main-title-wrapper {
+		padding: 0;
+		max-width: 85%;
+	}
+	.top-video-link {
+		padding: 2.5rem 0;
+		right: -20px;
+		top: 50%;
+		padding: 1em;
+		transform: rotate(-90deg) translateX(50%);
+		transform-origin: 100% 0;
+		position: absolute;
+		max-width: 50vw;
+		text-align: center;
+	}
 }
 
 .media-wrapper .react-player-home div {
