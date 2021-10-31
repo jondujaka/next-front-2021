@@ -18,16 +18,3 @@ export function onRouteUpdate() {
 			.classList.remove("overflow-hidden");
 	}
 }
-
-export function onRenderBody({ pathname, setHeadComponents }) {
-	console.log(pathname);
-	if (pathname.includes("get-tickets")) {
-		setHeadComponents([
-			<script
-				key="goout-script"
-				type="text/javascript"
-				src="https://partners.goout.net/sk-bratislava/nextfestivalsk.js"
-			></script>
-		]);
-	}
-}

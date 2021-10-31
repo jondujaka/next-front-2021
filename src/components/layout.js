@@ -19,6 +19,8 @@ import Row from "./row";
 import EditionMenu from "./editionMenu";
 import "../styles/global.scss";
 
+const allMeta = require(`../utils/seo.json`);
+
 const Layout = ({
 	children,
 	settings,
@@ -30,9 +32,16 @@ const Layout = ({
 		menuItems: []
 	},
 	translationSlug,
+	slug = "",
+	title = "",
+	seoDescription = "",
+	seoImage,
 	isSk,
 	pageName = ``
 }) => {
+
+	const meta = isSk ? allMeta.sk : allMeta.en;
+
 	const data = useStaticQuery(graphql`
 		query SiteTitleQuery {
 			site {
@@ -63,50 +72,59 @@ const Layout = ({
 		borderColor: style.textColor
 	};
 
+	const metaTitle = title ? `${meta.title} | ${title}` : meta.title;
+	
+
 	return (
 		<>
-			<Helmet
-				htmlAttributes={{
-					lang: "en"
-				}}
-				title={pageName}
-				meta={
-					[
-						// {
-						// 	name: `description`,
-						// 	content: metaDescription
-						// },
-						// {
-						// 	property: `og:title`,
-						// 	content: pageName
-						// },
-						// {
-						// 	property: `og:description`,
-						// 	content: metaDescription
-						// },
-						// {
-						// 	property: `og:type`,
-						// 	content: `website`
-						// },
-						// {
-						// 	name: `twitter:card`,
-						// 	content: `summary`
-						// },
-						// {
-						// 	name: `twitter:creator`,
-						// 	content: site.siteMetadata?.author || ``
-						// },
-						// {
-						// 	name: `twitter:title`,
-						// 	content: title
-						// },
-						// {
-						// 	name: `twitter:description`,
-						// 	content: metaDescription
-						// }
-					]
-				}
-			/>
+			<Helmet defer={false}>
+				<html lang={isSk ? `sk` : `en`} />
+				<title>{metaTitle}</title>
+				<meta charset="utf-8" />
+
+				{/* TEMPORARY */}
+
+				<meta
+					name="description"
+					content={seoDescription || meta.description}
+				/>
+				<meta name="keywords" content={meta.keywords} />
+
+				<link
+					rel="alternate"
+					hreflang={isSk ? `en` : `sk`}
+					href={`${meta.base_url}${translationSlug}`}
+				/>
+
+				{/* SOCIAL */}
+				<meta property="og:locale" content={isSk ? `sk` : `en`} />
+				<meta property="og:type" content="website" />
+				<meta property="og:title" content={metaTitle} />
+				<meta property="og:locale" content={isSk ? `sk_SK` : `en_US`} />
+				<meta
+					property="og:description"
+					content={seoDescription || meta.description}
+				/>
+				<meta property="og:url" content={`${meta.base_url}${slug}`} />
+				<meta property="og:site_name" content="NEXT" />
+				<meta property="og:image" content={meta.image} />
+				<meta property="twitter:image" content={meta.image} />
+				<meta
+					name="twitter:image:alt"
+					content={seoDescription || meta.description}
+				/>
+				<meta name="twitter:card" content="summary_large_image" />
+
+				<meta name="theme-color" content="#4c45fa" />
+
+				{/* Makes the page extend on iOS all the way to the top edge */}
+				<meta name="apple-mobile-web-app-capable" content="yes" />
+				<meta
+					name="apple-mobile-web-app-status-bar-style"
+					content="black-translucent"
+				/>
+			</Helmet>
+
 			{/* <Header siteTitle={data.site.siteMetadata?.title || `Title`} /> */}
 			<div
 				className={`main-wrapper ${
@@ -184,8 +202,8 @@ const SkCredits = () => (
 		<a href="https://robertfinkei.com" target="_blank">
 			Robert Finkei
 		</a>{" "}
-		<br className="d-block d-md-none" />
-		/ Web Development: <a href="https://jondujaka.com">Jon Dujaka</a>
+		<br className="d-block d-md-none" />/ Web Development:{" "}
+		<a href="https://jondujaka.com">Jon Dujaka</a>
 	</span>
 );
 

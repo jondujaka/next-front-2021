@@ -85,8 +85,8 @@
 	.news-title {
 		@extend .text-body;
 
-		word-wrap: break-word;
-		overflow-wrap: break-word;
+		word-wrap: anywhere;
+		overflow-wrap: anywhere;
 	}
 	h3 {
 		display: block;
@@ -315,6 +315,8 @@
 }
 
 .artist-item {
+	align-items: flex-end;
+	display: flex;
 	&:hover {
 		text-decoration: none;
 	}

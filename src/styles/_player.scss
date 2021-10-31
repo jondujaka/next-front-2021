@@ -4,7 +4,8 @@
 	position: relative;
 	z-index: 1;
 	box-shadow: 0 0 99px 0 #4a4af1;
-	border-bottom-right-radius: 16rem;
+	border-bottom-right-radius: 7rem;
+	
 	background-clip: padding-box;
 	overflow: hidden;
 }
@@ -31,14 +32,17 @@
 		position: absolute;
 		left: 50%;
 		transform: translateX(-50%);
-		width: 100%;
 	}
 }
 
 @media screen and (min-width: 961px) {
+
+	.media-container {
+		border-bottom-right-radius: 16rem;
+	}
 	.main-title-wrapper {
 		padding: 0;
-		max-width: 85%;
+		max-width: 80%;
 	}
 	.top-video-link {
 		padding: 2.5rem 0;

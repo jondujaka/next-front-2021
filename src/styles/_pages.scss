@@ -34,10 +34,6 @@
 
 .edition-title {
 	padding-top: 1.5rem;
-	h1 {
-		@extend .normal-line-height;
-	}
-
 	> div:not(:first-of-type) h1 {
 		margin-top: -0.15em;
 	}
@@ -54,7 +50,7 @@
 }
 .about-nav {
 	@extend .sticky;
-	margin-bottom: 160px;
+	margin-bottom: 80px;
 
 	ul {
 		margin: 0;
@@ -94,11 +90,6 @@
 	}
 }
 
-.partners-wrapper {
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-}
-
 .partner-image {
 	display: flex;
 	align-items: center;
@@ -128,4 +119,13 @@
 		top: calc(#{$headerHeight} + 1.5rem);
 		padding-right: 4rem;
 	}
+}
+
+
+// TICKETS
+
+
+.goOutHolder {
+	max-width: 190rem;
+	margin: 0 auto;
 }

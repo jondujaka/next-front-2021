@@ -51,7 +51,7 @@ const Home = ({ data: { page, news }, pageContext, location }) => {
 
 			<br />
 			<Row classes="mb-6">
-				<h1 className="col col-12">News</h1>
+				<h1 className="col col-12">{isSk ? `News` : `Novinky`}</h1>
 				{allNews.map(newsItem => (
 					<NewsBlock
 						key={`news-${newsItem.node.id}`}
@@ -200,7 +200,7 @@ export const pageQuery = graphql`
 
 		news: allWpNewsArticle(
 			filter: { language: { slug: { eq: $lang } } }
-			limit: 6
+			limit: 4
 			sort: { order: DESC, fields: date }
 		) {
 			edges {

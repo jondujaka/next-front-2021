@@ -13,7 +13,7 @@ const News = ({ data, pageContext }) => {
 	const translationSlug = `/${langSlug}news`;
 
 	return (
-		<Layout translationSlug={translationSlug} isSk={isSk} style={latestEdition}  >
+		<Layout translationSlug={translationSlug} isSk={isSk} title={pageContext.title} style={latestEdition}  >
 			<Row>
 				<div className="col col-12 mt-5 mb-6">
 					<h2 className="festival-page-title">{pageContext.title}</h2>
