@@ -64,7 +64,7 @@
 		"develop": "gatsby develop",
 		"format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
 		"start": "npm run develop",
-		"start-build": "npm install && gatsby build", //yarn add tailwindcss@compat postcss@^7 autoprefixer@^7 postcss-flexbugs-fixes@^4 postcss-preset-env 
+		"start-build": "yarn && gatsby build", 
 		"web": "gatsby develop -p $PORT -H 0.0.0.0",
 		"serve": "gatsby serve",
 		"clean": "gatsby clean",
