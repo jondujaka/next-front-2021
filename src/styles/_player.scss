@@ -13,7 +13,7 @@
 .top-video-title,
 .top-video-link {
 	padding: 2.5rem 0;
-	background: white;
+	background: white;	
 	display: block;
 	@extend .text-body;
 }
@@ -29,9 +29,8 @@
 
 	.top-video-link {
 		text-align: center;
-		position: absolute;
-		left: 50%;
-		transform: translateX(-50%);
+		position: absolute;	
+		padding: 2.5rem 16px;
 	}
 }
 

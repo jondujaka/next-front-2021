@@ -46,7 +46,7 @@ const Home = ({ data: { page, news }, pageContext, location }) => {
 						to={page.mainHome.videoLayer.button.url}
 						className="top-video-link"
 					>
-						{page.mainHome.videoLayer.button.title}
+						{page.mainHome.videoLayer.button.title} &rarr;
 					</Link>
 				) : (
 					``
