@@ -40,9 +40,13 @@ const Home = ({ data: { page, news }, pageContext, location }) => {
 		>
 			<Row classes="main-title-wrapper" fullWidth={true}>
 				<ScrollVideo layer={page.mainHome.videoLayer} />
-				{page.mainHome.videoLayer.button && page.mainHome.videoLayer.button.title ? (
-					<Link to={page.mainHome.videoLayer.button.url} className="top-video-link">
-						Revisit NEXT 2020 with us! ⟶
+				{page.mainHome.videoLayer.button &&
+				page.mainHome.videoLayer.button.title ? (
+					<Link
+						to={page.mainHome.videoLayer.button.url}
+						className="top-video-link"
+					>
+						{page.mainHome.videoLayer.button.title}
 					</Link>
 				) : (
 					``
@@ -51,7 +55,7 @@ const Home = ({ data: { page, news }, pageContext, location }) => {
 
 			<br />
 			<Row classes="mb-6">
-				<h1 className="col col-12">{isSk ? `News` : `Novinky`}</h1>
+				<h1 className="col col-12">{isSk ? `Novinky` : `News		`}</h1>
 				{allNews.map(newsItem => (
 					<NewsBlock
 						key={`news-${newsItem.node.id}`}
