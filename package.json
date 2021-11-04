@@ -1,7 +1,7 @@
 {
 	"name": "next-festival",
 	"private": true,
-	"description": "Front-end for the Next Festival website",
+	"description": "Front-end for the NEXT Festival website",
 	"version": "1.0.0",
 	"author": "Jon Dujaka <jdujaka@gmail.com>",
 	"dependencies": {
