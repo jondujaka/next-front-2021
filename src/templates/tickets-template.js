@@ -8,7 +8,7 @@ const TicketsTemplate = ({ pageContext }) => {
 	const { settings, edition, menu, lang, skMenu } = pageContext;
 
 	const isSk = lang !== `en`;
-	const langSlug = lang ===`en` ? `sk/` : ``;
+	const langSlug = lang === `en` ? `sk/` : ``;
 	const translationSlug = `/${langSlug}${edition}/tickets`;
 
 	return (
@@ -24,17 +24,22 @@ const TicketsTemplate = ({ pageContext }) => {
 			skMenu={skMenu}
 			year={edition}
 			pageName={isSk ? `Lístky` : `Tickets`}
-			
 		>
 			<Row>
+				<Helmet>
+					<script
+						src="https://partners.goout.net/sk-bratislava/nextfestivalsk.js"
+						type="text/javascript"
+					/>
+				</Helmet>
 				<div className="col col-12 px-0">
-					<h1 className="normal-line-height fw-title">{isSk ? `Lístky` : `Tickets`}</h1>
+					<h1 className="normal-line-height fw-title">
+						{isSk ? `Lístky` : `Tickets`}
+					</h1>
 				</div>
 			</Row>
 		</Layout>
-		
 	);
 };
-
 
 export default TicketsTemplate;
