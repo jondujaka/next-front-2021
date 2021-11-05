@@ -3,6 +3,7 @@ import { Link } from "gatsby";
 import Layout from "../components/layout";
 import Row from "../components/row";
 import Style from "style-it";
+import Helmet from "react-helmet";
 
 const TicketsTemplate = ({ pageContext }) => {
 	const { settings, edition, menu, lang, skMenu } = pageContext;
