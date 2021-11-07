@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "gatsby";
+import { Link, navigate } from "gatsby";
 import Layout from "../components/layout";
 import Row from "../components/row";
 import Style from "style-it";
@@ -9,6 +9,10 @@ const TicketsTemplate = ({ pageContext }) => {
 	const { settings, edition, menu, lang, skMenu } = pageContext;
 
 	const isSk = lang !== `en`;
+
+	if (isSk) {
+		navigate("/2021/tickets");
+	}
 	const langSlug = lang === `en` ? `sk/` : ``;
 	const translationSlug = `/${langSlug}${edition}/tickets`;
 
@@ -20,7 +24,7 @@ const TicketsTemplate = ({ pageContext }) => {
 				backgroundColor: settings.backgroundColor
 			}}
 			isSk={isSk}
-			translationSlug={translationSlug}
+			// translationSlug={translationSlug}
 			editionHeader={menu}
 			skMenu={skMenu}
 			year={edition}

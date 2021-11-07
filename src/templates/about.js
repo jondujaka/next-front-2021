@@ -15,13 +15,17 @@ const About = ({ data, pageContext }) => {
 	let scrollSpyItems =
 		sections && sections.map(section => section.title.toLowerCase());
 
-	const langSlug = pageContext.lang ===`en` ? `sk/` : ``;
+	const langSlug = pageContext.lang === `en` ? `sk/` : ``;
 	const isSk = pageContext.lang !== `en`;
 	const translationSlug = `/${langSlug}about`;
 
-
 	return (
-		<Layout isSk={isSk} translationSlug={translationSlug} title={data.wpPage.title} style={latestEdition}>
+		<Layout
+			isSk={isSk}
+			translationSlug={translationSlug}
+			title={data.wpPage.title}
+			style={latestEdition}
+		>
 			<div className="row">
 				<div className="col col-12 mt-5 mb-6">
 					<h2 className="festival-page-title">{data.wpPage.title}</h2>
@@ -32,14 +36,19 @@ const About = ({ data, pageContext }) => {
 							items={scrollSpyItems}
 							currentClassName="active"
 						>
-							{sections.map(section => (
-								<li key={`about-${section.title}`}>
-									<HollowLink
-										link={`#${section.title.toLowerCase()}`}
-										text={section.title}
-									/>
-								</li>
-							))}
+							{sections.map(section => {
+								if (section.title === "Banner") {
+									return null;
+								}
+								return (
+									<li key={`about-${section.title}`}>
+										<HollowLink
+											link={`#${section.title.toLowerCase()}`}
+											text={section.title}
+										/>
+									</li>
+								);
+							})}
 						</Scrollspy>
 					)}
 				</div>
@@ -51,9 +60,11 @@ const About = ({ data, pageContext }) => {
 								id={section.title.toLowerCase()}
 								key={`about-section-${section.title}`}
 							>
-								<h2 className="d-lg-none d-block about-title">
-									{section.title}
-								</h2>
+								{section.title !== "Banner" && (
+									<h2 className="d-md-none d-block about-title">
+										{section.title}
+									</h2>
+								)}
 								<AboutSection content={section.content} />
 							</div>
 						))}
@@ -76,17 +87,18 @@ const AboutSection = ({ content }) => {
 		}
 		if (item.image) {
 			return (
-				<ImageEl
-					key={`img-about-${i}`}
-					srcSet={item.image.srcSet}
-					caption={item.image.caption}
-				/>
+				<figure>
+					<img srcSet={item.image.srcSet} />
+				</figure>
 			);
 		}
 		if (item.fieldGroupName === `Page_About_section_Content_Partners`) {
 			return (
 				<div className="partners-wrapper">
-					{item.partnerImages.length && item.partnerImages.map(partner => <Partner partner={partner} />)}
+					{item.partnerImages.length &&
+						item.partnerImages.map(partner => (
+							<Partner partner={partner} />
+						))}
 				</div>
 			);
 		}
@@ -94,12 +106,11 @@ const AboutSection = ({ content }) => {
 };
 
 const Partner = ({ partner }) => {
-	return <div className="partner-image">
-		<img
-			width="50"
-			srcSet={partner.srcSet}
-		/>
-	</div>;
+	return (
+		<div className="partner-image">
+			<img width="50" srcSet={partner.srcSet} />
+		</div>
+	);
 };
 
 export default About;
@@ -107,10 +118,10 @@ export default About;
 export const aboutQuery = graphql`
 	query aboutPage(
 		# these variables are passed in via createPage.pageContext in gatsby-node.js
-		$id: String,
+		$id: String
 		$lang: String
 	) {
-		wpPage(id: { eq: $id }, language: {slug: {eq: $lang}}) {
+		wpPage(id: { eq: $id }, language: { slug: { eq: $lang } }) {
 			about {
 				section {
 					title

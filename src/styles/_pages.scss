@@ -90,15 +90,18 @@
 	}
 }
 
-.partner-image {
+.partners-wrapper {
 	display: flex;
+	flex-wrap: wrap;
 	align-items: center;
-	width: 187px;
-	margin: 0 20px 40px 20px;
 
-	img {
-		width: 100%;
-		height: auto;
+	.partner-image {
+		max-width: 36%;
+		width: 150px;
+		margin: 0 20px 20px 20px;
+		img {
+			width: 100%;
+		}
 	}
 }
 
@@ -121,9 +124,7 @@
 	}
 }
 
-
 // TICKETS
-
 
 .goOutHolder {
 	max-width: 190rem;
