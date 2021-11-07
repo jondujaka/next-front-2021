@@ -10,9 +10,12 @@ const TicketsTemplate = ({ pageContext }) => {
 
 	const isSk = lang !== `en`;
 
-	if (isSk) {
-		navigate("/2021/tickets");
-	}
+	useEffect(() => {
+		if (isSk) {
+			navigate("/2021/tickets");
+		}
+	}, []);
+
 	const langSlug = lang === `en` ? `sk/` : ``;
 	const translationSlug = `/${langSlug}${edition}/tickets`;
 
