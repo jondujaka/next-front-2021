@@ -176,7 +176,7 @@ const editionRow = (isSk, section, i, year, colors) => {
 			return (
 				<>
 					<div className="col-12">
-						<h1>{section.title}</h1>
+						<h1>{isSk ? `Umelci` : `Artists`}</h1>
 					</div>
 					<ArtistsGrid colors={colors} items={parsedArtists} seeAll />
 					<div className="d-flex col-4 mx-auto justify-content-center align-items-center text-center mb-6">
