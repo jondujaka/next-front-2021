@@ -44,7 +44,6 @@ const MoreNews = ({ items, isSk }) => {
 				</div>
 				{items.length &&
 					items.map(item => {
-						console.log(item);
 						return (
 							<NewsBlock
 								key={`news-${item.article.id}`}

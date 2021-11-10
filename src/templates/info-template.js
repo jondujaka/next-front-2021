@@ -88,7 +88,6 @@ const Info = ({ data, pageContext }) => {
 };
 
 const AboutSection = ({ content }) => {
-	console.log(content);
 	return content.map((item, i) => {
 		if (item.textContent) {
 			return (
