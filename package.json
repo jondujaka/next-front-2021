@@ -2,7 +2,7 @@
 	"name": "next-festival",
 	"private": true,
 	"description": "Front-end for the Next Festival website",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"author": "Jon Dujaka <jdujaka@gmail.com>",
 	"dependencies": {
 		"@stripe/react-stripe-js": "^1.6.0",
