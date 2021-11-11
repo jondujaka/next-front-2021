@@ -76,7 +76,7 @@ const initProducts = async gatsbyUtilities => {
 const initPostTypes = async gatsbyUtilities => {
 	console.log(`init post types`);
 
-	// initProducts(gatsbyUtilities);
+	initProducts(gatsbyUtilities);
 
 	let articlesSettings = {
 		postType: `article`,
@@ -851,17 +851,17 @@ const initMainPages = async gatsbyUtils => {
 			queryName: `mainProjectsPage`,
 			type: `wpPage`,
 			slug: `projects`
+		},
+		{
+			queryName: `mainShopPage`,
+			type: `wpPage`,
+			slug: `shop`
+		},
+		{
+			queryName: `mainRecordsPage`,
+			type: `wpPage`,
+			slug: `records`
 		}
-		// {
-		// 	queryName: `mainShopPage`,
-		// 	type: `wpPage`,
-		// 	slug: `shop`
-		// },
-		// {
-		// 	queryName: `mainRecordsPage`,
-		// 	type: `wpPage`,
-		// 	slug: `records`
-		// }
 	];
 
 	queries.map(query =>
