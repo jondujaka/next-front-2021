@@ -13,13 +13,17 @@ module.exports = {
 		{
 			resolve: `gatsby-source-wordpress`,
 			options: {
-				url: `https://nextfestival.sk/content/graphql`,
+				url: `https://nextcontent.a2hosted.com/graphql`,
 				verboseOutput: true,
 				debug: {
 					graphql: {
 						showQueryVarsOnError: true,
 						showQueryOnError: true
 					}
+				},
+				schema: {
+					perPage: 50,
+					requestConcurrency: 5
 				},
 				type: {
 					MediaItem: { createFileNodes: false }
