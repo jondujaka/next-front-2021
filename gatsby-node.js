@@ -325,15 +325,6 @@ const initPostTypes = async gatsbyUtilities => {
 exports.createPages = async gatsbyUtilities => {
 	// const editions = await getEditions(gatsbyUtilities);
 
-	const { actions } = gatsbyUtilities;
-	const { createRedirect } = actions;
-
-	createRedirect({
-		fromPath: "/sk/2021/tickets",
-		toPath: "/2021/tickets",
-		isPermanent: false
-	});
-
 	await initEditions(gatsbyUtilities);
 	console.log(
 		"done with getting edition settings, now main pages, artists, events, etc.."

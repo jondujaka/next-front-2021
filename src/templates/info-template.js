@@ -67,11 +67,11 @@ const Info = ({ data, pageContext }) => {
 				</div>
 				<div className="col-12 col-lg-7 col-xl-6 about-content info-content">
 					{sections &&
-						sections.map(section => (
+						sections.map((section, i) => (
 							<div
 								className="mb-5"
 								id={section.title.toLowerCase()}
-								key={`about-section-${section.title}`}
+								key={`about-section-${section.title}-${i}`}
 							>
 								{section.title !== "Banner" && (
 									<h2 className="d-md-none d-block about-title">
@@ -121,7 +121,13 @@ const AboutSection = ({ content }) => {
 
 const Partner = ({ partner }) => {
 	if (!partner.srcSet) {
-		return null;
+		return (
+			<div className="partner-image">
+				<figure>
+					<img src={partner.sourceUrl} />
+				</figure>
+			</div>
+		);
 	}
 	return (
 		<div className="partner-image">
@@ -164,6 +170,7 @@ export const infoQuery = graphql`
 										fieldGroupName
 										partnerImages {
 											srcSet
+											sourceUrl
 										}
 									}
 									... on WpEdition2021_About_section_Content_Media {
