@@ -22,28 +22,31 @@ const Artist = ({ data: { artist, events }, pageContext }) => {
 		return (
 			event.node.eventInfo.artists &&
 			event.node.eventInfo.artists.some(
-				eventArtist => artist.translations.length && eventArtist.id === artist.translations[0].id
+				eventArtist =>
+					artist.translations.length &&
+					eventArtist.id === artist.translations[0].id
 			)
 		);
 	});
-	
+
 	const parsedEvents = eventsList.map(ev => {
-		if(isSk) {
+		if (isSk) {
 			return {
 				...ev.node,
-				url: ev.node.translations.length ? `/${lang}/${year}/events/${ev.node.translations[0].slug}` : ev.node.uri
-			}
+				url: ev.node.translations.length
+					? `/${lang}/${year}/events/${ev.node.translations[0].slug}`
+					: ev.node.uri
+			};
 		} else {
 			return {
 				...ev.node,
 				url: ev.node.uri
-			}
+			};
 		}
 	});
-	
 
 	let translationSlug;
-	if(artist.translations.length){
+	if (artist.translations.length) {
 		translationSlug = artist.translations[0].uri;
 	}
 
@@ -77,7 +80,9 @@ const Artist = ({ data: { artist, events }, pageContext }) => {
 										style={{ color: settings.textColor }}
 									/>
 								) : (
-									<Image srcSet={content.images[0].srcSet} />
+									<Image
+										srcSet={content.images[0]?.srcSet || ""}
+									/>
 								)}
 							</>
 						)}
@@ -86,13 +91,17 @@ const Artist = ({ data: { artist, events }, pageContext }) => {
 						{parsedEvents.map((event, i) => (
 							<EventInfo event={event} key={`event-${i}`} />
 						))}
-						
-						{content.content ? content.content.map((section, i) => (
-							<SimpleContent
-								section={section}
-								key={`${section.fieldGroupName}-${i}`}
-							/>
-						)) : <p>Description coming soon...</p>}
+
+						{content.content ? (
+							content.content.map((section, i) => (
+								<SimpleContent
+									section={section}
+									key={`${section.fieldGroupName}-${i}`}
+								/>
+							))
+						) : (
+							<p>Description coming soon...</p>
+						)}
 					</div>
 				</Row>
 			)}
@@ -138,7 +147,7 @@ export const artistQuery = graphql`
 				}
 			}
 		}
-		events: allWpEvent(filter: {language: { slug: { eq: "en" }}}) {
+		events: allWpEvent(filter: { language: { slug: { eq: "en" } } }) {
 			edges {
 				node {
 					id
