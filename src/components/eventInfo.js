@@ -71,7 +71,8 @@ const EventDates = ({ date, link }) => {
 	return (
 		<span className="big d-block">
 			<span className="text-uppercase">{day}</span> {formatedDate} {month}{" "}
-			{date.starttime} - {date.endtime} CET
+			{date.starttime}
+			{date.endTime && ` - ${date.endtime}`} CET
 		</span>
 	);
 };

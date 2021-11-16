@@ -34,7 +34,6 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 		: ``;
 
 	const filterEvents = (slug, type) => {
-
 		if (type === `day`) {
 			setDayFilter(slug);
 		}
@@ -50,15 +49,17 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 			let venueMatch =
 				eventInfo.venue &&
 				(venueFilter.current === "all" ||
-				eventInfo.venue.slug === venueFilter.current);
+					eventInfo.venue.slug === venueFilter.current);
 
 			let formatMatch =
 				eventInfo.format &&
 				(formatFilter.current === "all" ||
 					eventInfo.format.slug === formatFilter.current);
 
-			if (!eventInfo.venue && venueFilter.current === `all`) venueMatch = true;
-			if (!eventInfo.format && formatFilter.current === `all`) formatMatch = true;
+			if (!eventInfo.venue && venueFilter.current === `all`)
+				venueMatch = true;
+			if (!eventInfo.format && formatFilter.current === `all`)
+				formatMatch = true;
 
 			return venueMatch && formatMatch;
 		});
@@ -68,10 +69,12 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 	};
 
 	const setUpDays = () => {
-		let dayFilters = [{
-			label: isSk ? "Všetky dni" : "All Days",
-			value: "all"
-		}];
+		let dayFilters = [
+			{
+				label: isSk ? "Všetky dni" : "All Days",
+				value: "all"
+			}
+		];
 		const allDaysInit = {};
 		allEvents.forEach(event => {
 			const { eventInfo } = event.node;
@@ -117,7 +120,7 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 	}, [allEvents]);
 
 	const isSk = lang !== `en`;
-	const langSlug = lang ===`en` ? `sk/` : ``;
+	const langSlug = lang === `en` ? `sk/` : ``;
 	const translationSlug = `/${langSlug}${edition}/programme`;
 
 	return Style.it(
@@ -134,11 +137,12 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 			isSk={isSk}
 			year={edition}
 			pageName={isSk ? `Program` : `Programme`}
-
 		>
 			<Row fullWidth classes="border-bottom-thick">
 				<div className="col col-12 px-0">
-					<h1 className="normal-line-height fw-title">{isSk ? `Program` : `Programme`}</h1>
+					<h1 className="normal-line-height fw-title">
+						{isSk ? `Program` : `Programme`}
+					</h1>
 				</div>
 				<div className="col col-12">
 					<Filter
@@ -153,8 +157,8 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 				</div>
 			</Row>
 			<Row>
-				{allDays &&
-					Object.keys(allDays).length ? Object.keys(allDays).map(key => {
+				{allDays && Object.keys(allDays).length ? (
+					Object.keys(allDays).map(key => {
 						if (key === dayFilter || dayFilter === "all") {
 							return (
 								<Day
@@ -164,8 +168,16 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 								/>
 							);
 						}
-					}) : <div className="col col-12 mt-7"><h3>{initLoad ? `Loading the programme...` : `Sorry, there are no events with the selected filters.`}</h3></div>
-				}
+					})
+				) : (
+					<div className="col col-12 mt-7">
+						<h3>
+							{initLoad
+								? `Loading the programme...`
+								: `Sorry, there are no events with the selected filters.`}
+						</h3>
+					</div>
+				)}
 			</Row>
 		</Layout>
 	);
@@ -190,9 +202,11 @@ const Day = ({ day, colors }) => {
 };
 
 const ScheduleItem = ({ item, colors }) => {
-	let time = `${item.date.starttime} - ${item.date.endtime}`;
+	let timeStart = item.date.starttime;
+	let timeEnd = item.date.endtime ? ` - ${item.date.endtime}` : ``;
+	let time = timeStart ? `${timeStart}${timeEnd}` : "";
 	const venue = item.eventInfo.venue ? item.eventInfo.venue : null;
-	const online = item.eventInfo.livestreamUrl || '';
+	const online = item.eventInfo.livestreamUrl || "";
 	const styles = colors
 		? `
 		.schedule-item:hover,
@@ -228,11 +242,7 @@ const ScheduleItem = ({ item, colors }) => {
 				)}
 
 				{online.length ? (
-					<a
-						className="watch-link"
-						href={online}
-						target="_blank"
-					>
+					<a className="watch-link" href={online} target="_blank">
 						Watch online
 					</a>
 				) : null}
@@ -249,7 +259,7 @@ export const scheduleItemsQuery = graphql`
 			sort: { order: DESC, fields: date }
 			filter: {
 				editions: { nodes: { elemMatch: { slug: { eq: $edition } } } }
-				language: {slug: {eq: $lang}}
+				language: { slug: { eq: $lang } }
 			}
 		) {
 			edges {
