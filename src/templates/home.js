@@ -126,6 +126,7 @@ const Media = ({ media }) => {
 				loop="true"
 				autoplay="true"
 				muted="true"
+				plaisinline="true"
 			>
 				<source src={videoMp4} type="video/mp4" />
 				<source src={videoWebm} type="video/webm" />

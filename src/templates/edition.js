@@ -123,6 +123,7 @@ const editionRow = (isSk, section, i, year, colors) => {
 				loop="true"
 				autoplay="true"
 				muted="true"
+				plaisinline="true"
 			>
 				<source src={videoMp4} type="video/mp4" />
 				<source src={videoWebm} type="video/webm" />
