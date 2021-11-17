@@ -5,6 +5,8 @@ import ReactPlayer from "react-player/youtube";
 import Row from "../components/row";
 import NewsBlock from "../components/newsBlock";
 import Edition from "./edition";
+import videoWebm from "../videos/next-web-encoded.webm";
+import videoMp4 from "../videos/next-web-encoded.mp4";
 
 const Home = ({ data: { page, news }, pageContext, location }) => {
 	const { latestEdition } = pageContext;
@@ -114,45 +116,20 @@ const HomeHeader = ({ items, classes }) => {
 	);
 };
 
-const Media = ({ media, setIsInView }) => {
-	const [videoOverlay, setVideoOverlay] = useState(true);
-
-	const initVideoOverlay = () => {
-		window.setTimeout(() => {
-			if (playerRef.current) {
-				playerRef.current.wrapper.classList.remove("has-overlay");
-			}
-		}, 2500);
-	};
-
-	const playerRef = useRef();
+const Media = ({ media }) => {
 	if (media.imageOrVideo === `image`) {
 		return <img srcSet={`${media.image.srcSet}`} />;
 	} else {
 		return (
-			<>
-				<ReactPlayer
-					className={`react-player-home ${
-						videoOverlay ? `has-overlay` : ``
-					}`}
-					url={media.video}
-					playing={true}
-					ref={playerRef}
-					onReady={initVideoOverlay}
-					loop
-					muted
-					playsinline
-					controls={false}
-					width="100%"
-					height="100%"
-					progressInterval={100}
-					onProgress={progress => {
-						if (progress.played >= 0.99) {
-							playerRef.current.seekTo(0);
-						}
-					}}
-				/>
-			</>
+			<video
+				className="home-video"
+				loop="true"
+				autoplay="true"
+				muted="true"
+			>
+				<source src={videoMp4} type="video/mp4" />
+				<source src={videoWebm} type="video/webm" />
+			</video>
 		);
 	}
 };
