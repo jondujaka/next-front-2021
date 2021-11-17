@@ -8,6 +8,8 @@ import Paragraph from "../components/paragraph";
 import CustomLink from "../components/customLink";
 import Carousel from "../components/carousel";
 import ArtistsGrid from "../components/blockGrids/artistsGrid";
+import videoWebm from "../videos/next-edition-2021.webm";
+import videoMp4 from "../videos/next-edition-2021.mp4";
 
 const Edition = ({ data, pageContext, embeded, style }) => {
 	const {
@@ -115,14 +117,16 @@ const Edition = ({ data, pageContext, embeded, style }) => {
 const editionRow = (isSk, section, i, year, colors) => {
 	const type = section.fieldGroupName;
 	if (type.endsWith(`Media`)) {
-		return section.images.length > 1 ? (
-			<div className="col-12 px-md-4 px-lg-8">
-				<Carousel key={`${type}-${i}`} items={section.images} />
-			</div>
-		) : (
-			<div className="col-12 px-md-3 px-lg-8">
-				<Image key={`${type}-${i}`} srcSet={section.images[0].srcSet} />
-			</div>
+		return (
+			<video
+				className="home-video"
+				loop="true"
+				autoplay="true"
+				muted="true"
+			>
+				<source src={videoMp4} type="video/mp4" />
+				<source src={videoWebm} type="video/webm" />
+			</video>
 		);
 	}
 	if (type.endsWith(`Title`)) {
