@@ -95,6 +95,7 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 					allDaysInit[dateSlug] = {
 						name: dayTitle,
 						slug: dateSlug,
+						primitive: format(new Date(dateSlug), "{yyyy}{MM}{dd}"),
 						items: []
 					};
 
@@ -111,6 +112,14 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 				allDaysInit[dateSlug].items.push(simplifiedEvent);
 			});
 		});
+
+		// Sort events for each day
+
+		// const sortedAllDays = allDaysInit.sort((a, b) => {
+		// 	if (a.primitive > b.primitive) {
+		// 		return -1;
+		// 	}
+		// });
 		setDayFilterItems(dayFilters);
 		setAllDays(allDaysInit);
 	};
@@ -157,33 +166,52 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 				</div>
 			</Row>
 			<Row>
-				{allDays && Object.keys(allDays).length ? (
-					Object.keys(allDays).map(key => {
-						if (key === dayFilter || dayFilter === "all") {
-							return (
-								<Day
-									day={allDays[key]}
-									key={key}
-									colors={settings}
-								/>
-							);
-						}
-					})
-				) : (
-					<div className="col col-12 mt-7">
-						<h3>
-							{initLoad
-								? `Loading the programme...`
-								: `Sorry, there are no events with the selected filters.`}
-						</h3>
-					</div>
+				{allDays && (
+					<>
+						{Object.keys(allDays).length ? (
+							<RenderDays
+								allDays={allDays}
+								dayFilter={dayFilter}
+								settings={settings}
+							/>
+						) : (
+							<div className="col col-12 mt-7">
+								<h3>
+									{initLoad
+										? `Loading the programme...`
+										: `Sorry, there are no events with the selected filters.`}
+								</h3>
+							</div>
+						)}
+					</>
 				)}
 			</Row>
 		</Layout>
 	);
 };
 
+const RenderDays = ({ allDays, dayFilter, settings }) => {
+	const keys = Object.keys(allDays);
+	const sortedKeys = keys.sort((a, b) => {
+		if (a > b) {
+			return 1;
+		}
+	});
+
+	return sortedKeys.map(key => {
+		if (key === dayFilter || dayFilter === "all") {
+			return <Day day={allDays[key]} key={key} colors={settings} />;
+		}
+	});
+};
+
 const Day = ({ day, colors }) => {
+	day.items = day.items.sort((a, b) => {
+		console.log(a.date.starttime);
+		if (a.date.starttime > b.date.starttime) {
+			return 1;
+		}
+	});
 	return (
 		<div id={day.slug} className="col col-12 day-wrapper px-0">
 			<h5
@@ -224,25 +252,35 @@ const ScheduleItem = ({ item, colors }) => {
 		}
 	`
 		: ``;
+
+	const handleClick = e => {
+		e.stopPropagation();
+	};
 	return Style.it(
 		styles,
 		<Link to={item.uri} className="schedule-item">
 			<span className="item-time">{time}</span>
 			<span className="item-info mt-5 mt-lg-0">{item.title}</span>
 			<div className="item-location">
-				{venue && (
+				{venue && venue.title !== "Online" && (
 					<a
 						className="venue-info"
 						href={venue.venueInfo.mapsLink}
 						target="_blank"
+						onClick={handleClick}
 					>
 						<MapPin color={venue.venueInfo.color} />
 						{venue.title}
 					</a>
 				)}
 
-				{online.length ? (
-					<a className="watch-link" href={online} target="_blank">
+				{online.length || (venue && venue.title == "Online") ? (
+					<a
+						className="watch-link"
+						href={online || venue.venueInfo.mapsLink}
+						target="_blank"
+						onClick={handleClick}
+					>
 						Watch online
 					</a>
 				) : null}
