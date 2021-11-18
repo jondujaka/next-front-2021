@@ -116,6 +116,7 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 		// Sort events for each day
 
 		const sortedAllDays = dayFilters.sort((a, b) => {
+			console.log("sorting");
 			if (a.value === "all") {
 				return 0;
 			}
@@ -123,7 +124,6 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 				return 1;
 			}
 		});
-		console.log(sortedAllDays);
 		setDayFilterItems(sortedAllDays);
 		setAllDays(allDaysInit);
 	};
@@ -197,6 +197,7 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 const RenderDays = ({ allDays, dayFilter, settings }) => {
 	const keys = Object.keys(allDays);
 	const sortedKeys = keys.sort((a, b) => {
+		console.log("sorting");
 		if (a > b) {
 			return 1;
 		}

@@ -12,7 +12,7 @@ const ArtistsTemplate = ({ data, pageContext }) => {
 	const isSk = lang !== `en`;
 	const langSlug = lang === `en` ? `sk/` : ``;
 	const translationSlug = `/${langSlug}${edition}/artists`;
-	
+
 	let artistsList = data.artists.edges;
 
 	const eventsList = data.events.edges;
@@ -86,6 +86,8 @@ const ArtistsTemplate = ({ data, pageContext }) => {
 			let venueMatch = false;
 			let formatMatch = false;
 
+			console.log(artist);
+
 			if (!artist.info.length) return true;
 			artist.info &&
 				artist.info.forEach(infoItem => {
@@ -157,7 +159,7 @@ const ArtistsTemplate = ({ data, pageContext }) => {
 						{isSk ? `Umelci` : `Artists`}
 					</h1>
 				</div>
-				{/* <div className="col col-12">
+				<div className="col col-12">
 					<Filter
 						colors={{
 							textColor: settings.textColor,
@@ -167,7 +169,7 @@ const ArtistsTemplate = ({ data, pageContext }) => {
 						dayItems={allDays}
 						handleClick={filterArtists}
 					/>
-				</div> */}
+				</div>
 			</Row>
 			<Row classes="mt-6 justify-content-start">
 				{allArtists && (
