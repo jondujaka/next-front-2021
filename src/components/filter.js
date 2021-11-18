@@ -19,7 +19,7 @@ const Filter = ({
 	const { venues, formats } = useStaticQuery(
 		graphql`
 			query {
-				venues: allWpVenue {
+				venues: allWpVenue(sort: { fields: title }) {
 					edges {
 						node {
 							slug
@@ -30,7 +30,7 @@ const Filter = ({
 						}
 					}
 				}
-				formats: allWpFormat {
+				formats: allWpFormat(sort: { fields: name }) {
 					edges {
 						node {
 							slug

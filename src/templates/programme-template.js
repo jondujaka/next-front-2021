@@ -115,12 +115,16 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 
 		// Sort events for each day
 
-		// const sortedAllDays = allDaysInit.sort((a, b) => {
-		// 	if (a.primitive > b.primitive) {
-		// 		return -1;
-		// 	}
-		// });
-		setDayFilterItems(dayFilters);
+		const sortedAllDays = dayFilters.sort((a, b) => {
+			if (a.value === "all") {
+				return 0;
+			}
+			if (a.value > b.value) {
+				return 1;
+			}
+		});
+		console.log(sortedAllDays);
+		setDayFilterItems(sortedAllDays);
 		setAllDays(allDaysInit);
 	};
 
@@ -207,7 +211,6 @@ const RenderDays = ({ allDays, dayFilter, settings }) => {
 
 const Day = ({ day, colors }) => {
 	day.items = day.items.sort((a, b) => {
-		console.log(a.date.starttime);
 		if (a.date.starttime > b.date.starttime) {
 			return 1;
 		}
