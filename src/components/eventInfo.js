@@ -7,14 +7,7 @@ const EventInfo = ({ event, showDetails = false }) => {
 	if (!event.eventInfo || !event.eventInfo.dates) {
 		return ``;
 	}
-	const venue = event.eventInfo.venue
-		? event.eventInfo.venue
-		: {
-				venueInfo: {
-					mapsLink: `https://www.google.com/maps/place/World+Fashion+Centre/@52.3577347,4.8531381,14z/data=!4m5!3m4!1s0x47c5e218eb7d69d7:0x794faa28d5d5ef!8m2!3d52.3546016!4d4.8409488`
-				},
-				title: `Fake venue`
-		  };
+	const venue = event.eventInfo.venue ? event.eventInfo.venue : null;
 	return (
 		<div className="mb-6">
 			{event.eventInfo.dates.map((date, i) => (
