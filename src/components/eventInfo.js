@@ -47,9 +47,11 @@ const EventDetails = ({ info }) => {
 			{capacity && (
 				<span className="big d-block">Capacity: {capacity}</span>
 			)}
-			<span className="big d-block">
-				Registration fee: {price ? `${price} EUR` : `Free`}
-			</span>
+			{price && (
+				<span className="big d-block">
+					Registration fee: {price ? `${price} EUR` : `Free`}
+				</span>
+			)}
 		</div>
 	);
 };
