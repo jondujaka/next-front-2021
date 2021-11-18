@@ -117,7 +117,7 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 
 		const sortedAllDays = dayFilters.sort((a, b) => {
 			console.log("sorting");
-			if (a.value === "all") {
+			if (a.value === "all" || v.value === "all") {
 				return 0;
 			}
 			if (a.value > b.value) {
