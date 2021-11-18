@@ -27,6 +27,9 @@ module.exports = {
 				},
 				type: {
 					MediaItem: { createFileNodes: false }
+				},
+				production: {
+					allow404Images: true
 				}
 			}
 		},
