@@ -123,6 +123,10 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 			if (a.value > b.value) {
 				return 1;
 			}
+			if (a.value < b.value) {
+				return -1;
+			}
+			return 0;
 		});
 		setDayFilterItems(sortedAllDays);
 		setAllDays(allDaysInit);
@@ -197,10 +201,13 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 const RenderDays = ({ allDays, dayFilter, settings }) => {
 	const keys = Object.keys(allDays);
 	const sortedKeys = keys.sort((a, b) => {
-		console.log("sorting");
 		if (a > b) {
 			return 1;
 		}
+		if (a < b) {
+			return -1;
+		}
+		return 0;
 	});
 
 	return sortedKeys.map(key => {
@@ -212,9 +219,7 @@ const RenderDays = ({ allDays, dayFilter, settings }) => {
 
 const Day = ({ day, colors }) => {
 	day.items = day.items.sort((a, b) => {
-		if (a.date.starttime > b.date.starttime) {
-			return 1;
-		}
+		return a.date.starttime > b.date.starttime ? 1 : -1;
 	});
 	return (
 		<div id={day.slug} className="col col-12 day-wrapper px-0">
