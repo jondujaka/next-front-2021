@@ -6,8 +6,9 @@ import Row from "../components/row";
 import Separator from "../components/separator";
 import Single from "./single";
 import ProjectsGrid from "../components/blockGrids/projectsGrid";
+import NewsBlock from "../components/newsBlock";
 
-const Project = ({ data: { project }, pageContext }) => {
+const Project = ({ data: { project, news }, pageContext }) => {
 	let related = pageContext.related
 		? pageContext.related.map(project => {
 				let newObj = { node: { ...project.project } };
@@ -18,6 +19,8 @@ const Project = ({ data: { project }, pageContext }) => {
 	const isSk = project.language.slug === `sk`;
 	const translationSlug = project.translations[0].uri;
 	const { latestEdition } = pageContext;
+
+	const allNews = news.edges;
 
 	return (
 		<Layout
@@ -39,6 +42,25 @@ const Project = ({ data: { project }, pageContext }) => {
 				</div>
 			</Row>
 			<Single content={project} />
+
+			{allNews.length ? (
+				<>
+					<Separator />
+					<Row>
+						<div className="col col-12 mt-5 mb-6">
+							<h1>{isSk ? `Related news` : `Related news`}</h1>
+						</div>
+						{allNews.map(newsItem => (
+							<NewsBlock
+								key={`news-${newsItem.node.id}`}
+								item={newsItem.node}
+							/>
+						))}
+					</Row>
+				</>
+			) : (
+				``
+			)}
 
 			{related.length ? (
 				<>
@@ -63,7 +85,40 @@ export const ProjectData = graphql`
 	query projectById(
 		# these variables are passed in via createPage.pageContext in gatsby-node.js
 		$id: String!
+		$newsTag: [String]
+		$lang: String
 	) {
+		news: allWpNewsArticle(
+			sort: { order: DESC, fields: date }
+			filter: {
+				tags: {
+					nodes: {
+						elemMatch: {
+							slug: { in: $newsTag }
+							language: { slug: { eq: $lang } }
+						}
+					}
+				}
+			}
+		) {
+			edges {
+				node {
+					date(formatString: "MMM Do YYYY")
+					id
+					slug
+					uri
+					title
+					language {
+						slug
+					}
+					featuredImage {
+						node {
+							srcSet
+						}
+					}
+				}
+			}
+		}
 		# selecting the current post by id
 		project: wpProject(id: { eq: $id }) {
 			id

@@ -229,8 +229,10 @@ const initPostTypes = async gatsbyUtilities => {
 		const slug = projectInfo.project.uri;
 		const template = `project`;
 		const lang = projectInfo.project.language.slug;
+		const newsTag = projectInfo.project.projectDescription?.newsTag || [];
 		const context = {
 			id: projectInfo.project.id,
+			newsTag: newsTag.map(tag => tag.slug).filter(Boolean),
 			related: allProjects
 				.filter(
 					project =>
@@ -567,6 +569,9 @@ const getPostType = async (settings, { graphql, reporter }) => {
 	let projectsFragment = `
 		projectDescription {
 			shortDescription
+			newsTag {
+				slug
+			}
 		}
 	`;
 
