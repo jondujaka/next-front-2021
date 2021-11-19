@@ -110,6 +110,22 @@ const Edition = ({ data, pageContext, embeded, style }) => {
 						);
 					}
 				})}
+
+			<Row classes="my-4 my-md-5">
+				<div className="col col-12">
+					<video
+						className="home-video"
+						loop
+						autoPlay="true"
+						muted="true"
+						playsInline="true"
+						poster="https://nextcontent.a2hosted.com/wp-content/uploads/2021/11/vlcsnap-2021-11-19-11h31m42s575.png"
+					>
+						<source src={videoMp4} type="video/mp4" />
+						<source src={videoWebm} type="video/webm" />
+					</video>
+				</div>
+			</Row>
 		</Layout>
 	);
 };
@@ -117,18 +133,14 @@ const Edition = ({ data, pageContext, embeded, style }) => {
 const editionRow = (isSk, section, i, year, colors) => {
 	const type = section.fieldGroupName;
 	if (type.endsWith(`Media`)) {
-		return (
-			<video
-				className="home-video"
-				loop
-				autoPlay="true"
-				muted="true"
-				playsInline="true"
-				poster="https://nextcontent.a2hosted.com/wp-content/uploads/2021/11/vlcsnap-2021-11-19-11h31m42s575.png"
-			>
-				<source src={videoMp4} type="video/mp4" />
-				<source src={videoWebm} type="video/webm" />
-			</video>
+		return section.images.length > 1 ? (
+			<div className="col-12 px-md-4 px-lg-8">
+				<Carousel key={`${type}-${i}`} items={section.images} />
+			</div>
+		) : (
+			<div className="col-12 px-md-3 px-lg-8">
+				<Image key={`${type}-${i}`} srcSet={section.images[0].srcSet} />
+			</div>
 		);
 	}
 	if (type.endsWith(`Title`)) {
