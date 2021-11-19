@@ -45,7 +45,7 @@ const ArtistsTemplate = ({ data, pageContext }) => {
 				infoArray.push({
 					dates: node.eventInfo.dates,
 					format:
-						node.eventInfo.format.slug &&
+						node.eventInfo?.format?.slug &&
 						node.eventInfo.format.slug,
 					venue: node.eventInfo.venue && node.eventInfo.venue.slug
 				});
@@ -86,8 +86,6 @@ const ArtistsTemplate = ({ data, pageContext }) => {
 			let venueMatch = false;
 			let formatMatch = false;
 
-			console.log(artist);
-
 			if (!artist.info.length) return false;
 			artist.info &&
 				artist.info.forEach(infoItem => {
@@ -104,16 +102,16 @@ const ArtistsTemplate = ({ data, pageContext }) => {
 
 					if (
 						venueFilter.current === "all" ||
-						!infoItem.venue ||
-						infoItem.venue === venueFilter.current
+						(infoItem.venue &&
+							infoItem.venue === venueFilter.current)
 					) {
 						venueMatch = true;
 					}
 
 					if (
 						formatFilter.current === "all" ||
-						!infoItem.format ||
-						infoItem.format === formatFilter.current
+						(infoItem.format &&
+							infoItem.format === formatFilter.current)
 					) {
 						formatMatch = true;
 					}
