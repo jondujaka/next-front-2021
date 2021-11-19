@@ -124,6 +124,7 @@ const editionRow = (isSk, section, i, year, colors) => {
 				autoplay="true"
 				muted="true"
 				plaisinline="true"
+				poster="https://nextcontent.a2hosted.com/wp-content/uploads/2021/11/vlcsnap-2021-11-19-11h31m42s575.png"
 			>
 				<source src={videoMp4} type="video/mp4" />
 				<source src={videoWebm} type="video/webm" />
