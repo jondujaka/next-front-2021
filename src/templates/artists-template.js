@@ -32,25 +32,25 @@ const ArtistsTemplate = ({ data, pageContext }) => {
 
 	const getEventInfoByArtistId = artistId => {
 		let infoArray = [];
-		// eventsList.forEach(({ node }) => {
-		// 	let match = false;
+		eventsList.forEach(({ node }) => {
+			// console.log(node);
 
-		// 	node.eventInfo.artists.forEach(eventArtist => {
-		// 		if (eventArtist.id === artistId) {
-		// 			match = true;
-		// 		}
-		// 	});
+			const match =
+				node.eventInfo?.artists &&
+				node.eventInfo.artists.some(
+					eventArtist => eventArtist.id === artistId
+				);
 
-		// 	if (match) {
-		// 		infoArray.push({
-		// 			dates: node.eventInfo.dates,
-		// 			format:
-		// 				node.eventInfo.format.slug &&
-		// 				node.eventInfo.format.slug,
-		// 			venue: node.eventInfo.venue && node.eventInfo.venue.slug
-		// 		});
-		// 	}
-		// });
+			if (match) {
+				infoArray.push({
+					dates: node.eventInfo.dates,
+					format:
+						node.eventInfo.format.slug &&
+						node.eventInfo.format.slug,
+					venue: node.eventInfo.venue && node.eventInfo.venue.slug
+				});
+			}
+		});
 		return infoArray;
 	};
 
@@ -88,7 +88,7 @@ const ArtistsTemplate = ({ data, pageContext }) => {
 
 			console.log(artist);
 
-			if (!artist.info.length) return true;
+			if (!artist.info.length) return false;
 			artist.info &&
 				artist.info.forEach(infoItem => {
 					if (dayFilter.current === "all") {
@@ -172,8 +172,10 @@ const ArtistsTemplate = ({ data, pageContext }) => {
 				</div>
 			</Row>
 			<Row classes="mt-6 justify-content-start">
-				{allArtists && (
+				{allArtists?.length ? (
 					<ArtistsGrid colors={settings} items={allArtists} />
+				) : (
+					<h4>There are no Artists matching the selected filters.</h4>
 				)}
 			</Row>
 		</Layout>
