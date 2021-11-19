@@ -127,7 +127,7 @@ const Media = ({ media }) => {
 				autoPlay="true"
 				muted="true"
 				playsInline="true"
-				poster="https://nextcontent.a2hosted.com/wp-content/uploads/2021/11/vlcsnap-2021-11-19-11h31m25s233.png"
+				poster="https://nextcontent.a2hosted.com/wp-content/uploads/2021/11/vlcsnap-2021-11-19-11h31m25s233.jpg"
 			>
 				<source src={videoMp4} type="video/mp4" />
 				<source src={videoWebm} type="video/webm" />

@@ -119,7 +119,7 @@ const Edition = ({ data, pageContext, embeded, style }) => {
 						autoPlay="true"
 						muted="true"
 						playsInline="true"
-						poster="https://nextcontent.a2hosted.com/wp-content/uploads/2021/11/vlcsnap-2021-11-19-11h31m42s575.png"
+						poster="https://nextcontent.a2hosted.com/wp-content/uploads/2021/11/vlcsnap-2021-11-19-15h59m22s677.jpg"
 					>
 						<source src={videoMp4} type="video/mp4" />
 						<source src={videoWebm} type="video/webm" />
