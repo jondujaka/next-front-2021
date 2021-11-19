@@ -123,10 +123,10 @@ const Media = ({ media }) => {
 		return (
 			<video
 				className="home-video"
-				loop="true"
-				autoplay="true"
+				loop
+				autoPlay="true"
 				muted="true"
-				plaisinline="false"
+				plaisInline="true"
 				poster="https://nextcontent.a2hosted.com/wp-content/uploads/2021/11/vlcsnap-2021-11-19-11h31m25s233.png"
 			>
 				<source src={videoMp4} type="video/mp4" />
