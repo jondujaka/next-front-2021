@@ -66,6 +66,14 @@ module.exports = {
 				icon: `${__dirname}/src/images/favicon/next.png` // This path is relative to the root of the site.
 			}
 		},
+		{
+			resolve: "gatsby-plugin-matomo",
+			options: {
+				siteId: "1",
+				matomoUrl: "https://nextcontent.a2hosted.com/stats/",
+				siteUrl: "https://nextfestival.sk"
+			}
+		},
 		`gatsby-plugin-gatsby-cloud`,
 
 		// this (optional) plugin enables Progressive Web App + Offline functionality
