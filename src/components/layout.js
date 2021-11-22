@@ -39,7 +39,6 @@ const Layout = ({
 	isSk,
 	pageName = ``
 }) => {
-
 	const meta = isSk ? allMeta.sk : allMeta.en;
 
 	const data = useStaticQuery(graphql`
@@ -73,7 +72,6 @@ const Layout = ({
 	};
 
 	const metaTitle = title ? `${meta.title} | ${title}` : meta.title;
-	
 
 	return (
 		<>
@@ -122,6 +120,12 @@ const Layout = ({
 				<meta
 					name="apple-mobile-web-app-status-bar-style"
 					content="black-translucent"
+				/>
+
+				<script
+					type="text/javascript"
+					charset="UTF-8"
+					src="//cdn.cookie-script.com/s/3c8bb78d413c45af28f18270091bf0dc.js"
 				/>
 			</Helmet>
 
