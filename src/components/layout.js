@@ -200,7 +200,7 @@ const Layout = ({
 							<div className="col col-12">
 								<span>
 									Copyright 2021 &copy; NEXT.{" "}
-									<Link to="/privacy-policy">
+									<Link to="/privacy">
 										Privacy Policy and Cookies
 									</Link>
 								</span>
