@@ -116,7 +116,6 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 		// Sort events for each day
 
 		const sortedAllDays = dayFilters.sort((a, b) => {
-			console.log("sorting");
 			if (a.value === "all" || b.value === "all") {
 				return 0;
 			}

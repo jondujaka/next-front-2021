@@ -8,7 +8,7 @@
 import React, { useEffect } from "react";
 import { useAppState } from "../components/context";
 import PropTypes from "prop-types";
-import { useStaticQuery, graphql } from "gatsby";
+import { useStaticQuery, graphql, Link } from "gatsby";
 import Helmet from "react-helmet";
 import { gql, useLazyQuery, useMutation } from "@apollo/client";
 
@@ -196,6 +196,14 @@ const Layout = ({
 										</a>
 									</span>
 								)}
+							</div>
+							<div className="col col-12">
+								<span>
+									Copyright 2021 &copy; NEXT.{" "}
+									<Link to="/privacy-policy">
+										Privacy Policy and Cookies
+									</Link>
+								</span>
 							</div>
 						</Row>
 					</footer>

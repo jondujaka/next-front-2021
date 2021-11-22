@@ -3,7 +3,6 @@ import Image from "./image";
 
 const getColNr = length => (length === 1 ? 8 : 12 / length);
 const Media = ({ content, classes }) => {
-	console.log(content);
 	if (content.images) {
 		return content.images.map((image, i) => (
 			<SingleMedia

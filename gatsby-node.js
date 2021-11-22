@@ -17,7 +17,8 @@ const templateMap = {
 	projects: `projects`,
 	shop: `shop`,
 	records: `records`,
-	getTickets: `get-tickets`
+	getTickets: `get-tickets`,
+	privacyPolicy: `privacy-policy`
 };
 
 const getLatestEdition = () =>
@@ -857,6 +858,13 @@ const initMainPages = async gatsbyUtils => {
 			queryName: `mainRecordsPage`,
 			type: `wpPage`,
 			slug: `records`
+		},
+		{
+			queryName: false,
+			type: `page`,
+			slug: `privacy-policy`,
+			title: `Privacy Policy`,
+			id: `20211122`
 		}
 	];
 
@@ -902,10 +910,15 @@ const getSpecificPage = async (settings, { graphql, reporter }) => {
 };
 
 const initSingleMainPage = async (settings, gatsbyUtils) => {
-	const pageData = await getSpecificPage(settings, gatsbyUtils);
+	let pageData = settings.queryName
+		? await getSpecificPage(settings, gatsbyUtils)
+		: null;
 
 	if (!pageData) {
-		return;
+		pageData = {
+			uri: settings.slug,
+			...settings
+		};
 	}
 
 	let slug = pageData.slug;
@@ -930,7 +943,7 @@ const initSingleMainPage = async (settings, gatsbyUtils) => {
 	createIndividualPage(uri, templateSlug, { ...contextEn }, gatsbyUtils);
 
 	// SK Version (if it exists)
-	if (pageData.translations.length) {
+	if (pageData.translations?.length) {
 		let skData = pageData.translations[0];
 		let contextSk = {
 			id: skData.id,

@@ -19,7 +19,6 @@ const Artist = ({ data: { artist, events }, pageContext }) => {
 	const isSk = lang && lang !== `en`;
 
 	const eventsList = events.edges.filter(event => {
-		console.log(event.node.eventInfo.artists);
 		return (
 			event.node.eventInfo.artists &&
 			event.node.eventInfo.artists.some(
