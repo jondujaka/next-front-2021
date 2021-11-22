@@ -18,7 +18,7 @@ const templateMap = {
 	shop: `shop`,
 	records: `records`,
 	getTickets: `get-tickets`,
-	privacyPolicy: `privacy-policy`
+	privacy: `privacy-policy`
 };
 
 const getLatestEdition = () =>
@@ -862,7 +862,7 @@ const initMainPages = async gatsbyUtils => {
 		{
 			queryName: false,
 			type: `page`,
-			slug: `privacy-policy`,
+			slug: `privacy`,
 			title: `Privacy Policy`,
 			id: `20211122`
 		}
@@ -921,8 +921,6 @@ const initSingleMainPage = async (settings, gatsbyUtils) => {
 		};
 	}
 
-	console.log(`creating ${settings.slug}`);
-
 	let slug = pageData.slug;
 	let templateSlug = templateMap[pageData.slug];
 
@@ -942,14 +940,15 @@ const initSingleMainPage = async (settings, gatsbyUtils) => {
 		latestEdition: getLatestEdition()
 	};
 
-	createIndividualPage(uri, templateSlug, { ...contextEn }, gatsbyUtils);
-
 	// SK Version (if it exists)
 
 	let skData = pageData;
 	let contextSk = {
 		...contextEn
 	};
+	if (!skUri) {
+		skUri = `sk/${pageData.slug}`;
+	}
 
 	if (pageData.translations?.length) {
 		skData = pageData.translations[0];
@@ -959,11 +958,13 @@ const initSingleMainPage = async (settings, gatsbyUtils) => {
 			title: skData.title,
 			latestEdition: getLatestEdition()
 		};
+	} else {
+		contextEn.fakeTranslation = skUri;
+		contextSk.fakeTranslation = uri;
 	}
 
-	if (!skUri) {
-		skUri = `sk/${pageData.slug}`;
-	}
-
+	// EN
+	createIndividualPage(uri, templateSlug, { ...contextEn }, gatsbyUtils);
+	// SK
 	createIndividualPage(skUri, templateSlug, { ...contextSk }, gatsbyUtils);
 };

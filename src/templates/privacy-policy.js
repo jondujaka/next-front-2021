@@ -2,7 +2,11 @@ import React from "react";
 import Layout from "../components/layout";
 import Row from "../components/row";
 
-const PrivacyPolicy = ({ data, pageContext }) => {
+const PrivacyPolicy = ({ pageContext }) => {
+	const isSk = pageContext.lang === `sk`;
+	const translationSlug = pageContext.fakeTranslation;
+	const { latestEdition } = pageContext;
+
 	return (
 		<Layout
 			isSk={isSk}
