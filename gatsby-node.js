@@ -921,6 +921,8 @@ const initSingleMainPage = async (settings, gatsbyUtils) => {
 		};
 	}
 
+	console.log(`creating ${settings.slug}`);
+
 	let slug = pageData.slug;
 	let templateSlug = templateMap[pageData.slug];
 
@@ -943,24 +945,25 @@ const initSingleMainPage = async (settings, gatsbyUtils) => {
 	createIndividualPage(uri, templateSlug, { ...contextEn }, gatsbyUtils);
 
 	// SK Version (if it exists)
+
+	let skData = pageData;
+	let contextSk = {
+		...contextEn
+	};
+
 	if (pageData.translations?.length) {
-		let skData = pageData.translations[0];
-		let contextSk = {
+		skData = pageData.translations[0];
+		contextSk = {
 			id: skData.id,
 			lang: `sk`,
 			title: skData.title,
 			latestEdition: getLatestEdition()
 		};
-
-		if (!skUri) {
-			skUri = `sk/${pageData.slug}`;
-		}
-
-		createIndividualPage(
-			skUri,
-			templateSlug,
-			{ ...contextSk },
-			gatsbyUtils
-		);
 	}
+
+	if (!skUri) {
+		skUri = `sk/${pageData.slug}`;
+	}
+
+	createIndividualPage(skUri, templateSlug, { ...contextSk }, gatsbyUtils);
 };
