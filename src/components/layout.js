@@ -80,6 +80,11 @@ const Layout = ({
 				<title>{metaTitle}</title>
 				<meta charset="utf-8" />
 
+				<meta
+					name="google-site-verification"
+					content="hZJ352wwwhOf9SvYQv2NNvHzK_jtFORAGDUf-LjNG90"
+				/>
+
 				{/* TEMPORARY */}
 
 				<meta
