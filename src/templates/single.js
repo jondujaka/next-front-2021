@@ -1,6 +1,7 @@
 import React from "react";
 import Row from "../components/row";
 import Media from "../components/media";
+import Video from "../components/video";
 import Paragraph from "../components/paragraph";
 
 const Single = ({ content, direct }) => {
@@ -13,6 +14,8 @@ const Single = ({ content, direct }) => {
 	const rows = content.singleContent
 		? content.singleContent.content
 		: content.singlePostContent.content;
+
+	console.log(rows);
 	return (
 		<div
 			className={`single-content ${direct ? `no-padding` : `separator`}`}
@@ -51,6 +54,7 @@ const DirectionWrapper = ({ content, direct }) => {
 			) : (
 				<>
 					{content.media ? <Media content={content.media} /> : null}
+					{content.video ? <Video url={content.video} /> : null}
 					{content.images ? <Media content={content} /> : null}
 					{content.paragraph ? (
 						<div
