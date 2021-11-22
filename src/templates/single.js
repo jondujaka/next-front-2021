@@ -54,7 +54,11 @@ const DirectionWrapper = ({ content, direct }) => {
 			) : (
 				<>
 					{content.media ? <Media content={content.media} /> : null}
-					{content.video ? <Video url={content.video} /> : null}
+					{content.video ? (
+						<div className="col mx-auto col-lg-6 col-12">
+							<Video url={content.video} />
+						</div>
+					) : null}
 					{content.images ? <Media content={content} /> : null}
 					{content.paragraph ? (
 						<div
