@@ -164,7 +164,18 @@ const ArtistsTemplate = ({ data, pageContext }) => {
 							backgroundColor: settings.backgroundColor
 						}}
 						isSk={isSk}
-						dayItems={allDays}
+						dayItems={allDays.sort((a, b) => {
+							if (a.value === "all" || b.value === "all") {
+								return 0;
+							}
+							if (a.value > b.value) {
+								return 1;
+							}
+							if (a.value < b.value) {
+								return -1;
+							}
+							return 0;
+						})}
 						handleClick={filterArtists}
 					/>
 				</div>
