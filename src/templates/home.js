@@ -5,6 +5,8 @@ import ReactPlayer from "react-player/youtube";
 import Row from "../components/row";
 import NewsBlock from "../components/newsBlock";
 import Edition from "./edition";
+import videoWebm from "../videos/next-web-encoded.webm";
+import videoMp4 from "../videos/next-web-encoded.mp4";
 
 const Home = ({ data: { page, news }, pageContext, location }) => {
 	const { latestEdition } = pageContext;
@@ -40,9 +42,13 @@ const Home = ({ data: { page, news }, pageContext, location }) => {
 		>
 			<Row classes="main-title-wrapper" fullWidth={true}>
 				<ScrollVideo layer={page.mainHome.videoLayer} />
-				{page.mainHome.videoLayer.button && page.mainHome.videoLayer.button.title ? (
-					<Link to={page.mainHome.videoLayer.button.url} className="top-video-link">
-						Revisit NEXT 2020 with us! ⟶
+				{page.mainHome.videoLayer.button &&
+				page.mainHome.videoLayer.button.title ? (
+					<Link
+						to={page.mainHome.videoLayer.button.url}
+						className="top-video-link"
+					>
+						{page.mainHome.videoLayer.button.title} &rarr;
 					</Link>
 				) : (
 					``
@@ -51,7 +57,7 @@ const Home = ({ data: { page, news }, pageContext, location }) => {
 
 			<br />
 			<Row classes="mb-6">
-				<h1 className="col col-12">{isSk ? `News` : `Novinky`}</h1>
+				<h1 className="col col-12">{isSk ? `Novinky` : `News		`}</h1>
 				{allNews.map(newsItem => (
 					<NewsBlock
 						key={`news-${newsItem.node.id}`}
@@ -110,45 +116,22 @@ const HomeHeader = ({ items, classes }) => {
 	);
 };
 
-const Media = ({ media, setIsInView }) => {
-	const [videoOverlay, setVideoOverlay] = useState(true);
-
-	const initVideoOverlay = () => {
-		window.setTimeout(() => {
-			if (playerRef.current) {
-				playerRef.current.wrapper.classList.remove("has-overlay");
-			}
-		}, 2500);
-	};
-
-	const playerRef = useRef();
+const Media = ({ media }) => {
 	if (media.imageOrVideo === `image`) {
 		return <img srcSet={`${media.image.srcSet}`} />;
 	} else {
 		return (
-			<>
-				<ReactPlayer
-					className={`react-player-home ${
-						videoOverlay ? `has-overlay` : ``
-					}`}
-					url={media.video}
-					playing={true}
-					ref={playerRef}
-					onReady={initVideoOverlay}
-					loop
-					muted
-					playsinline
-					controls={false}
-					width="100%"
-					height="100%"
-					progressInterval={100}
-					onProgress={progress => {
-						if (progress.played >= 0.99) {
-							playerRef.current.seekTo(0);
-						}
-					}}
-				/>
-			</>
+			<video
+				className="home-video"
+				loop
+				autoPlay="true"
+				muted="true"
+				playsInline="true"
+				poster="https://nextcontent.a2hosted.com/wp-content/uploads/2021/11/vlcsnap-2021-11-19-11h31m25s233.jpg"
+			>
+				<source src={videoMp4} type="video/mp4" />
+				<source src={videoWebm} type="video/webm" />
+			</video>
 		);
 	}
 };

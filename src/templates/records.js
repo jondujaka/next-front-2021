@@ -13,12 +13,16 @@ const Records = ({ data, pageContext }) => {
 	const translationSlug = `/${langSlug}records`;
 
 	const filteredRecords = records.filter(record => {
-		const isSkRecord = record.node.uri.startsWith('/sk/');
+		const isSkRecord = record.node.uri.startsWith("/sk/");
 		return isSk ? isSkRecord : !isSkRecord;
 	});
 
 	return (
-		<Layout isSk={isSk} translationSlug={translationSlug} style={latestEdition}>
+		<Layout
+			isSk={isSk}
+			translationSlug={translationSlug}
+			style={latestEdition}
+		>
 			<Row>
 				<div className="col col-12 mt-5 mb-6">
 					<h2 className="festival-page-title">{data.page.title}</h2>

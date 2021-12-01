@@ -8,6 +8,8 @@ import Paragraph from "../components/paragraph";
 import CustomLink from "../components/customLink";
 import Carousel from "../components/carousel";
 import ArtistsGrid from "../components/blockGrids/artistsGrid";
+import videoWebm from "../videos/next-edition-2021.webm";
+import videoMp4 from "../videos/next-edition-2021.mp4";
 
 const Edition = ({ data, pageContext, embeded, style }) => {
 	const {
@@ -108,6 +110,22 @@ const Edition = ({ data, pageContext, embeded, style }) => {
 						);
 					}
 				})}
+
+			<Row classes="my-4 my-md-5">
+				<div className="col col-12">
+					<video
+						className="home-video"
+						loop
+						autoPlay="true"
+						muted="true"
+						playsInline="true"
+						poster="https://nextcontent.a2hosted.com/wp-content/uploads/2021/11/vlcsnap-2021-11-19-15h59m22s677.jpg"
+					>
+						<source src={videoMp4} type="video/mp4" />
+						<source src={videoWebm} type="video/webm" />
+					</video>
+				</div>
+			</Row>
 		</Layout>
 	);
 };
@@ -176,7 +194,7 @@ const editionRow = (isSk, section, i, year, colors) => {
 			return (
 				<>
 					<div className="col-12">
-						<h1>{section.title}</h1>
+						<h1>{isSk ? `Umelci` : `Artists`}</h1>
 					</div>
 					<ArtistsGrid colors={colors} items={parsedArtists} seeAll />
 					<div className="d-flex col-4 mx-auto justify-content-center align-items-center text-center mb-6">

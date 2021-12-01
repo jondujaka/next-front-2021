@@ -19,15 +19,18 @@ const Filter = ({
 	const { venues, formats } = useStaticQuery(
 		graphql`
 			query {
-				venues: allWpVenue {
+				venues: allWpVenue(sort: { fields: title }) {
 					edges {
 						node {
 							slug
 							title
+							language {
+								slug
+							}
 						}
 					}
 				}
-				formats: allWpFormat {
+				formats: allWpFormat(sort: { fields: name }) {
 					edges {
 						node {
 							slug
@@ -39,9 +42,15 @@ const Filter = ({
 		`
 	);
 
+	const venueByLanguage = venues.edges.filter(edge => {
+		if (isSk) {
+			return edge.node.language.slug === "sk";
+		}
+		return edge.node.language.slug === "en";
+	});
 	const venueItems = [
 		{ value: `all`, label: isSk ? `Všetky miesta` : `All Venues` },
-		...venues.edges.map(edge => ({
+		...venueByLanguage.map(edge => ({
 			value: edge.node.slug,
 			label: edge.node.title
 		}))
@@ -61,7 +70,8 @@ const Filter = ({
 				color: ${colors.backgroundColor};
 				background: ${colors.textColor};
 			}
-		`: ``;
+		`
+		: ``;
 
 	return Style.it(
 		styles,

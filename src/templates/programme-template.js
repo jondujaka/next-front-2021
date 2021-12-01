@@ -34,7 +34,6 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 		: ``;
 
 	const filterEvents = (slug, type) => {
-
 		if (type === `day`) {
 			setDayFilter(slug);
 		}
@@ -50,15 +49,17 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 			let venueMatch =
 				eventInfo.venue &&
 				(venueFilter.current === "all" ||
-				eventInfo.venue.slug === venueFilter.current);
+					eventInfo.venue.slug === venueFilter.current);
 
 			let formatMatch =
 				eventInfo.format &&
 				(formatFilter.current === "all" ||
 					eventInfo.format.slug === formatFilter.current);
 
-			if (!eventInfo.venue && venueFilter.current === `all`) venueMatch = true;
-			if (!eventInfo.format && formatFilter.current === `all`) formatMatch = true;
+			if (!eventInfo.venue && venueFilter.current === `all`)
+				venueMatch = true;
+			if (!eventInfo.format && formatFilter.current === `all`)
+				formatMatch = true;
 
 			return venueMatch && formatMatch;
 		});
@@ -68,10 +69,12 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 	};
 
 	const setUpDays = () => {
-		let dayFilters = [{
-			label: isSk ? "Všetky dni" : "All Days",
-			value: "all"
-		}];
+		let dayFilters = [
+			{
+				label: isSk ? "Všetky dni" : "All Days",
+				value: "all"
+			}
+		];
 		const allDaysInit = {};
 		allEvents.forEach(event => {
 			const { eventInfo } = event.node;
@@ -92,6 +95,7 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 					allDaysInit[dateSlug] = {
 						name: dayTitle,
 						slug: dateSlug,
+						primitive: format(new Date(dateSlug), "{yyyy}{MM}{dd}"),
 						items: []
 					};
 
@@ -108,7 +112,22 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 				allDaysInit[dateSlug].items.push(simplifiedEvent);
 			});
 		});
-		setDayFilterItems(dayFilters);
+
+		// Sort events for each day
+
+		const sortedAllDays = dayFilters.sort((a, b) => {
+			if (a.value === "all" || b.value === "all") {
+				return 0;
+			}
+			if (a.value > b.value) {
+				return 1;
+			}
+			if (a.value < b.value) {
+				return -1;
+			}
+			return 0;
+		});
+		setDayFilterItems(sortedAllDays);
 		setAllDays(allDaysInit);
 	};
 
@@ -117,7 +136,7 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 	}, [allEvents]);
 
 	const isSk = lang !== `en`;
-	const langSlug = lang ===`en` ? `sk/` : ``;
+	const langSlug = lang === `en` ? `sk/` : ``;
 	const translationSlug = `/${langSlug}${edition}/programme`;
 
 	return Style.it(
@@ -134,11 +153,12 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 			isSk={isSk}
 			year={edition}
 			pageName={isSk ? `Program` : `Programme`}
-
 		>
 			<Row fullWidth classes="border-bottom-thick">
 				<div className="col col-12 px-0">
-					<h1 className="normal-line-height fw-title">{isSk ? `Program` : `Programme`}</h1>
+					<h1 className="normal-line-height fw-title">
+						{isSk ? `Program` : `Programme`}
+					</h1>
 				</div>
 				<div className="col col-12">
 					<Filter
@@ -153,25 +173,53 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 				</div>
 			</Row>
 			<Row>
-				{allDays &&
-					Object.keys(allDays).length ? Object.keys(allDays).map(key => {
-						if (key === dayFilter || dayFilter === "all") {
-							return (
-								<Day
-									day={allDays[key]}
-									key={key}
-									colors={settings}
-								/>
-							);
-						}
-					}) : <div className="col col-12 mt-7"><h3>{initLoad ? `Loading the programme...` : `Sorry, there are no events with the selected filters.`}</h3></div>
-				}
+				{allDays && (
+					<>
+						{Object.keys(allDays).length ? (
+							<RenderDays
+								allDays={allDays}
+								dayFilter={dayFilter}
+								settings={settings}
+							/>
+						) : (
+							<div className="col col-12 mt-7">
+								<h3>
+									{initLoad
+										? `Loading the programme...`
+										: `Sorry, there are no events with the selected filters.`}
+								</h3>
+							</div>
+						)}
+					</>
+				)}
 			</Row>
 		</Layout>
 	);
 };
 
+const RenderDays = ({ allDays, dayFilter, settings }) => {
+	const keys = Object.keys(allDays);
+	const sortedKeys = keys.sort((a, b) => {
+		if (a > b) {
+			return 1;
+		}
+		if (a < b) {
+			return -1;
+		}
+		return 0;
+	});
+
+	return sortedKeys.map(key => {
+		if (key === dayFilter || dayFilter === "all") {
+			return <Day day={allDays[key]} key={key} colors={settings} />;
+		}
+	});
+};
+
 const Day = ({ day, colors }) => {
+	day.items = day.items.sort((a, b) => {
+		return a.date.starttime > b.date.starttime ? 1 : -1;
+	});
 	return (
 		<div id={day.slug} className="col col-12 day-wrapper px-0">
 			<h5
@@ -190,9 +238,11 @@ const Day = ({ day, colors }) => {
 };
 
 const ScheduleItem = ({ item, colors }) => {
-	let time = `${item.date.starttime} - ${item.date.endtime}`;
+	let timeStart = item.date.starttime;
+	let timeEnd = item.date.endtime ? ` - ${item.date.endtime}` : ``;
+	let time = timeStart ? `${timeStart}${timeEnd}` : "";
 	const venue = item.eventInfo.venue ? item.eventInfo.venue : null;
-	const online = item.eventInfo.livestreamUrl || '';
+	const online = item.eventInfo.livestreamUrl || "";
 	const styles = colors
 		? `
 		.schedule-item:hover,
@@ -210,28 +260,34 @@ const ScheduleItem = ({ item, colors }) => {
 		}
 	`
 		: ``;
+
+	const handleClick = e => {
+		e.stopPropagation();
+	};
 	return Style.it(
 		styles,
 		<Link to={item.uri} className="schedule-item">
 			<span className="item-time">{time}</span>
 			<span className="item-info mt-5 mt-lg-0">{item.title}</span>
 			<div className="item-location">
-				{venue && (
+				{venue && venue.title !== "Online" && (
 					<a
 						className="venue-info"
 						href={venue.venueInfo.mapsLink}
 						target="_blank"
+						onClick={handleClick}
 					>
 						<MapPin color={venue.venueInfo.color} />
 						{venue.title}
 					</a>
 				)}
 
-				{online.length ? (
+				{online.length || (venue && venue.title == "Online") ? (
 					<a
 						className="watch-link"
-						href={online}
+						href={online || venue.venueInfo.mapsLink}
 						target="_blank"
+						onClick={handleClick}
 					>
 						Watch online
 					</a>
@@ -249,7 +305,7 @@ export const scheduleItemsQuery = graphql`
 			sort: { order: DESC, fields: date }
 			filter: {
 				editions: { nodes: { elemMatch: { slug: { eq: $edition } } } }
-				language: {slug: {eq: $lang}}
+				language: { slug: { eq: $lang } }
 			}
 		) {
 			edges {

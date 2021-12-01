@@ -5,7 +5,7 @@
 	z-index: 1;
 	box-shadow: 0 0 99px 0 #4a4af1;
 	border-bottom-right-radius: 7rem;
-	
+
 	background-clip: padding-box;
 	overflow: hidden;
 }
@@ -26,17 +26,14 @@
 }
 
 @media screen and (max-width: 960px) {
-
 	.top-video-link {
 		text-align: center;
 		position: absolute;
-		left: 50%;
-		transform: translateX(-50%);
+		padding: 2.5rem 16px;
 	}
 }
 
 @media screen and (min-width: 961px) {
-
 	.media-container {
 		border-bottom-right-radius: 16rem;
 	}
@@ -57,23 +54,10 @@
 	}
 }
 
-.media-wrapper .react-player-home div {
-	position: relative;
-	padding-bottom: 56.25%;
-
-	height: 0;
-	overflow: hidden;
-	max-width: 100%;
+.home-video {
+	width: 100%;
 	height: auto;
-	pointer-events: none;
-
-	> iframe {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-	}
+	display: block;
 }
 
 .react-player {
@@ -83,20 +67,6 @@
 
 	&-home {
 		position: relative;
-
-		&:before {
-			content: "";
-			position: absolute;
-			top: 0;
-			left: 0;
-			display: block;
-			width: 100%;
-			height: 100%;
-			z-index: 1;
-			background: $primaryBlue;
-			opacity: 0;
-			transition: opacity 0.4s ease-in-out;
-		}
 
 		&.has-overlay:before {
 			opacity: 1;

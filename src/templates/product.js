@@ -72,7 +72,7 @@ const ProductInfo = ({ format }) => (
 		<CartButton
 			productId={format.SKU ?? format.databaseId}
 			text="Add to cart"
-			disabled={format.stockStatus !== `IN_STOCK`}
+			disabled={true}
 		/>
 	</div>
 );

@@ -12,7 +12,7 @@ const ArtistsTemplate = ({ data, pageContext }) => {
 	const isSk = lang !== `en`;
 	const langSlug = lang === `en` ? `sk/` : ``;
 	const translationSlug = `/${langSlug}${edition}/artists`;
-	
+
 	let artistsList = data.artists.edges;
 
 	const eventsList = data.events.edges;
@@ -32,25 +32,25 @@ const ArtistsTemplate = ({ data, pageContext }) => {
 
 	const getEventInfoByArtistId = artistId => {
 		let infoArray = [];
-		// eventsList.forEach(({ node }) => {
-		// 	let match = false;
+		eventsList.forEach(({ node }) => {
+			// console.log(node);
 
-		// 	node.eventInfo.artists.forEach(eventArtist => {
-		// 		if (eventArtist.id === artistId) {
-		// 			match = true;
-		// 		}
-		// 	});
+			const match =
+				node.eventInfo?.artists &&
+				node.eventInfo.artists.some(
+					eventArtist => eventArtist.id === artistId
+				);
 
-		// 	if (match) {
-		// 		infoArray.push({
-		// 			dates: node.eventInfo.dates,
-		// 			format:
-		// 				node.eventInfo.format.slug &&
-		// 				node.eventInfo.format.slug,
-		// 			venue: node.eventInfo.venue && node.eventInfo.venue.slug
-		// 		});
-		// 	}
-		// });
+			if (match) {
+				infoArray.push({
+					dates: node.eventInfo.dates,
+					format:
+						node.eventInfo?.format?.slug &&
+						node.eventInfo.format.slug,
+					venue: node.eventInfo.venue && node.eventInfo.venue.slug
+				});
+			}
+		});
 		return infoArray;
 	};
 
@@ -86,7 +86,7 @@ const ArtistsTemplate = ({ data, pageContext }) => {
 			let venueMatch = false;
 			let formatMatch = false;
 
-			if (!artist.info.length) return true;
+			if (!artist.info.length) return false;
 			artist.info &&
 				artist.info.forEach(infoItem => {
 					if (dayFilter.current === "all") {
@@ -102,16 +102,16 @@ const ArtistsTemplate = ({ data, pageContext }) => {
 
 					if (
 						venueFilter.current === "all" ||
-						!infoItem.venue ||
-						infoItem.venue === venueFilter.current
+						(infoItem.venue &&
+							infoItem.venue === venueFilter.current)
 					) {
 						venueMatch = true;
 					}
 
 					if (
 						formatFilter.current === "all" ||
-						!infoItem.format ||
-						infoItem.format === formatFilter.current
+						(infoItem.format &&
+							infoItem.format === formatFilter.current)
 					) {
 						formatMatch = true;
 					}
@@ -157,21 +157,34 @@ const ArtistsTemplate = ({ data, pageContext }) => {
 						{isSk ? `Umelci` : `Artists`}
 					</h1>
 				</div>
-				{/* <div className="col col-12">
+				<div className="col col-12">
 					<Filter
 						colors={{
 							textColor: settings.textColor,
 							backgroundColor: settings.backgroundColor
 						}}
 						isSk={isSk}
-						dayItems={allDays}
+						dayItems={allDays.sort((a, b) => {
+							if (a.value === "all" || b.value === "all") {
+								return 0;
+							}
+							if (a.value > b.value) {
+								return 1;
+							}
+							if (a.value < b.value) {
+								return -1;
+							}
+							return 0;
+						})}
 						handleClick={filterArtists}
 					/>
-				</div> */}
+				</div>
 			</Row>
 			<Row classes="mt-6 justify-content-start">
-				{allArtists && (
+				{allArtists?.length ? (
 					<ArtistsGrid colors={settings} items={allArtists} />
+				) : (
+					<h4>There are no Artists matching the selected filters.</h4>
 				)}
 			</Row>
 		</Layout>

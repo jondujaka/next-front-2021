@@ -1,36 +1,33 @@
 @font-face {
-	font-family: "Manege";
-	src: local("Manege Light"), local("Manege-Light"),
-		url("./type/Manege-Light.woff2") format("woff2"),
-		url("./type/Manege-Light.woff") format("woff");
+	font-family: 'Manege';
+	src: local('Manege Light'), local('Manege-Light'), url('./type/Manege-Light.woff2') format('woff2'),
+		url('./type/Manege-Light.woff') format('woff');
 	font-weight: normal;
 	font-style: normal;
 	font-display: swap;
 }
 
 @font-face {
-	font-family: "Gramatika";
-	src: local("Gramatika Regular"), local("Gramatika-Regular"),
-		url("./type/Gramatika-Regular.woff2") format("woff2"),
-		url("./type/Gramatika-Regular.woff") format("woff");
+	font-family: 'Gramatika';
+	src: local('Gramatika Regular'), local('Gramatika-Regular'), url('./type/Gramatika-Regular.woff2') format('woff2'),
+		url('./type/Gramatika-Regular.woff') format('woff');
 	font-weight: normal;
 	font-style: normal;
 	font-display: swap;
 }
 
 @font-face {
-	font-family: "Gramatika";
-	src: local("Gramatika Bold"), local("Gramatika-Bold"),
-		url("./type/Gramatika-Bold.woff2") format("woff2"),
-		url("./type/Gramatika-Bold.woff") format("woff");
+	font-family: 'Gramatika';
+	src: local('Gramatika Bold'), local('Gramatika-Bold'), url('./type/Gramatika-Bold.woff2') format('woff2'),
+		url('./type/Gramatika-Bold.woff') format('woff');
 	font-weight: bold;
 	font-style: normal;
 	font-display: swap;
 }
 
-$sansFont: "Gramatika", sans-serif;
-$sansBoldFont: "Gramatika Bold";
-$serifFont: "Manege", serif;
+$sansFont: 'Gramatika', sans-serif;
+$sansBoldFont: 'Gramatika Bold';
+$serifFont: 'Manege', serif;
 
 * {
 	-webkit-font-smoothing: antialiased !important;
@@ -105,7 +102,7 @@ h6 {
 		font-size: 24px;
 	}
 	.text-nav-small {
-		font-size: 22px;
+		font-size: 21px;
 	}
 	.text-body {
 		font-size: 28px;
@@ -116,15 +113,11 @@ h6 {
 	.text-xxxl {
 		font-size: 90px;
 	}
-	.text-body {
-		font-size: 34px;
-	}
 
 	.text-nav-small {
-		font-size: 22px;
-		padding: 1rem .7rem;
+		font-size: 21px;
+		padding: 1rem 0.7rem;
 	}
-	
 }
 
 @media screen and (min-width: 1240px) {
@@ -138,11 +131,11 @@ h6 {
 		font-size: 28px;
 	}
 	.text-nav-small {
-		font-size: 26px;
-		padding: 1rem .6rem;
+		font-size: 24px;
+		padding: 1rem 0.6rem;
 	}
 	.text-small {
-		font-size: 26px;
+		font-size: 24px;
 	}
 	h1 {
 		letter-spacing: initial !important;
@@ -152,7 +145,7 @@ h6 {
 @media screen and (min-width: 1600px) {
 	.text-nav-small {
 		font-size: 30px;
-		padding: 1rem 1.4rem
+		padding: 1rem 1.4rem;
 	}
 	.text-body {
 		font-size: 48px;
@@ -242,11 +235,11 @@ a.active {
 }
 
 .big-button {
-	font-family: "Manege", serif;
+	font-family: 'Manege', serif;
 	font-size: 5rem;
 }
 body {
-	font-family: "Gramatika", sans-serif;
+	font-family: 'Gramatika', sans-serif;
 }
 
 h1.single-title {
@@ -259,7 +252,7 @@ h1.single-title {
 		// font-size: 11rem;
 	}
 	text-align: center;
-	font-family: "Manege";
+	font-family: 'Manege';
 
 	margin: 0 auto 4rem auto;
 	-webkit-font-smoothing: antialiased;
@@ -272,9 +265,8 @@ h2 {
 }
 
 h3 {
-	
 	font-size: 3.2rem;
-	
+
 	@include media-breakpoint-up(lg) {
 		font-size: 3.5rem;
 	}
@@ -310,7 +302,7 @@ p {
 		font-size: inherit;
 	}
 
-	> *  {
+	> * {
 		margin-top: 3rem;
 	}
 

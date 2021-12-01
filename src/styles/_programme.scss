@@ -51,7 +51,7 @@
 		text-decoration: none;
 	}
 
-	@media (max-width: 992px){
+	@media (max-width: 992px) {
 		font-size: 24px;
 	}
 
@@ -100,6 +100,6 @@
 	border-radius: 30px;
 	padding: 6px 10px;
 	&:hover {
-		background: #fff;
+		text-decoration: none;
 	}
 }

@@ -20,11 +20,6 @@ const Events = ({ data: { event }, pageContext }) => {
 		translationSlug = event.translations[0].uri;
 	}
 
-	let parsedArtists = isSk ? info.artists && info.artists.length && info.artists.map(artist => ({
-		...artist,
-		uri: artist.translations.length ? artist.translations[0].uri : artist.uri
-	})) : info.artists;
-
 	return (
 		<Layout
 			style={{
@@ -45,19 +40,19 @@ const Events = ({ data: { event }, pageContext }) => {
 				</div>
 
 				<div className="col-12 make-first col-lg-6 sticky-carousel mb-6">
-						{content.images && (
-							<>
-								{content.images.length > 1 ? (
-									<Carousel
-										items={content.images}
-										style={{ color: settings.textColor }}
-									/>
-								) : (
-									<Image srcSet={content.images[0].srcSet} />
-								)}
-							</>
-						)}
-					</div>
+					{content.images && (
+						<>
+							{content.images.length > 1 ? (
+								<Carousel
+									items={content.images}
+									style={{ color: settings.textColor }}
+								/>
+							) : (
+								<Image srcSet={content.images[0].srcSet} />
+							)}
+						</>
+					)}
+				</div>
 
 				<div className="col-12 col-lg-6 mb-6">
 					{event.eventInfo.dates && event.eventInfo.dates.length && (
@@ -73,14 +68,6 @@ const Events = ({ data: { event }, pageContext }) => {
 					) : (
 						<h4>Description coming soon...</h4>
 					)}
-					{parsedArtists &&
-						parsedArtists.map(artist => (
-							<ArtistBlock
-								colors={settings}
-								artist={artist}
-								key={artist.id}
-							/>
-						))}
 				</div>
 			</Row>
 		</Layout>
@@ -88,27 +75,6 @@ const Events = ({ data: { event }, pageContext }) => {
 };
 
 export default Events;
-
-const ArtistBlock = ({ artist, colors }) => {
-	const style = colors
-		? `
-		.event-artist:hover {
-			color: ${colors.backgroundColor} !important;
-			background: ${colors.textColor} !important;
-		}
-	`
-		: ``;
-	return Style.it(
-		style,
-		<Link
-			to={artist.uri}
-			className="padding-hack event-artist col-10 col-lg-8 mt-1 mt-lg-7 d-block"
-		>
-			<h3 className="big">{artist.title}</h3>
-			<Image srcSet={artist.artistEventContent.images[0].srcSet} />
-		</Link>
-	);
-};
 
 export const eventQuery = graphql`
 	query eventById(
@@ -147,22 +113,6 @@ export const eventQuery = graphql`
 			}
 			eventInfo {
 				capacity
-				artists {
-					... on WpArtist {
-						id
-						uri
-						title
-						translations {
-							slug
-							uri
-						}
-						artistEventContent {
-							images {
-								srcSet
-							}
-						}
-					}
-				}
 				format {
 					slug
 					name

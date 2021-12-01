@@ -17,7 +17,8 @@ const templateMap = {
 	projects: `projects`,
 	shop: `shop`,
 	records: `records`,
-	getTickets: `get-tickets`
+	getTickets: `get-tickets`,
+	privacy: `privacy-policy`
 };
 
 const getLatestEdition = () =>
@@ -229,8 +230,10 @@ const initPostTypes = async gatsbyUtilities => {
 		const slug = projectInfo.project.uri;
 		const template = `project`;
 		const lang = projectInfo.project.language.slug;
+		const newsTag = projectInfo.project.projectDescription?.newsTag || [];
 		const context = {
 			id: projectInfo.project.id,
+			newsTag: newsTag.map(tag => tag.slug).filter(Boolean),
 			related: allProjects
 				.filter(
 					project =>
@@ -567,6 +570,9 @@ const getPostType = async (settings, { graphql, reporter }) => {
 	let projectsFragment = `
 		projectDescription {
 			shortDescription
+			newsTag {
+				slug
+			}
 		}
 	`;
 
@@ -853,6 +859,13 @@ const initMainPages = async gatsbyUtils => {
 			type: `wpPage`,
 			slug: `records`
 		},
+		{
+			queryName: false,
+			type: `page`,
+			slug: `privacy`,
+			title: `Privacy Policy`,
+			id: `20211122`
+		}
 	];
 
 	queries.map(query =>
@@ -897,10 +910,15 @@ const getSpecificPage = async (settings, { graphql, reporter }) => {
 };
 
 const initSingleMainPage = async (settings, gatsbyUtils) => {
-	const pageData = await getSpecificPage(settings, gatsbyUtils);
+	let pageData = settings.queryName
+		? await getSpecificPage(settings, gatsbyUtils)
+		: null;
 
 	if (!pageData) {
-		return;
+		pageData = {
+			uri: settings.slug,
+			...settings
+		};
 	}
 
 	let slug = pageData.slug;
@@ -922,27 +940,31 @@ const initSingleMainPage = async (settings, gatsbyUtils) => {
 		latestEdition: getLatestEdition()
 	};
 
-	createIndividualPage(uri, templateSlug, { ...contextEn }, gatsbyUtils);
-
 	// SK Version (if it exists)
-	if (pageData.translations.length) {
-		let skData = pageData.translations[0];
-		let contextSk = {
+
+	let skData = pageData;
+	let contextSk = {
+		...contextEn
+	};
+	if (!skUri) {
+		skUri = `sk/${pageData.slug}`;
+	}
+
+	if (pageData.translations?.length) {
+		skData = pageData.translations[0];
+		contextSk = {
 			id: skData.id,
 			lang: `sk`,
 			title: skData.title,
 			latestEdition: getLatestEdition()
 		};
-
-		if (!skUri) {
-			skUri = `sk/${pageData.slug}`;
-		}
-
-		createIndividualPage(
-			skUri,
-			templateSlug,
-			{ ...contextSk },
-			gatsbyUtils
-		);
+	} else {
+		contextEn.fakeTranslation = skUri;
+		contextSk.fakeTranslation = uri;
 	}
+
+	// EN
+	createIndividualPage(uri, templateSlug, { ...contextEn }, gatsbyUtils);
+	// SK
+	createIndividualPage(skUri, templateSlug, { ...contextSk }, gatsbyUtils);
 };

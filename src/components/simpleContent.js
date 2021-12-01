@@ -9,11 +9,15 @@ const SimpleContent = ({ section }) => {
 		return <Paragraph classes="mb-4" content={section.text} />;
 	}
 	if (section.fieldGroupName.endsWith(`Media`)) {
-		return <div className="single-media-wrapper my-5"><RenderMedia section={section}/></div>
+		return (
+			<div className="single-media-wrapper my-5">
+				<RenderMedia section={section} />
+			</div>
+		);
 	}
 };
 
-const RenderMedia = ({section}) => {
+const RenderMedia = ({ section }) => {
 	if (section.imageOrVideo === `video`) {
 		return (
 			<ReactPlayer
@@ -21,9 +25,10 @@ const RenderMedia = ({section}) => {
 				url={section.video}
 				width="100%"
 				playing={false}
+				controls={true}
 			/>
 		);
-	} else if(section.image) {
+	} else if (section.image) {
 		return (
 			<Image
 				srcSet={section.image.srcSet}
@@ -33,6 +38,6 @@ const RenderMedia = ({section}) => {
 	}
 
 	return ``;
-}
+};
 
 export default SimpleContent;

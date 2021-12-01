@@ -8,7 +8,7 @@
 import React, { useEffect } from "react";
 import { useAppState } from "../components/context";
 import PropTypes from "prop-types";
-import { useStaticQuery, graphql } from "gatsby";
+import { useStaticQuery, graphql, Link } from "gatsby";
 import Helmet from "react-helmet";
 import { gql, useLazyQuery, useMutation } from "@apollo/client";
 
@@ -39,7 +39,6 @@ const Layout = ({
 	isSk,
 	pageName = ``
 }) => {
-
 	const meta = isSk ? allMeta.sk : allMeta.en;
 
 	const data = useStaticQuery(graphql`
@@ -73,7 +72,6 @@ const Layout = ({
 	};
 
 	const metaTitle = title ? `${meta.title} | ${title}` : meta.title;
-	
 
 	return (
 		<>
@@ -81,6 +79,11 @@ const Layout = ({
 				<html lang={isSk ? `sk` : `en`} />
 				<title>{metaTitle}</title>
 				<meta charset="utf-8" />
+
+				<meta
+					name="google-site-verification"
+					content="hZJ352wwwhOf9SvYQv2NNvHzK_jtFORAGDUf-LjNG90"
+				/>
 
 				{/* TEMPORARY */}
 
@@ -122,6 +125,12 @@ const Layout = ({
 				<meta
 					name="apple-mobile-web-app-status-bar-style"
 					content="black-translucent"
+				/>
+
+				<script
+					type="text/javascript"
+					charset="UTF-8"
+					src="//cdn.cookie-script.com/s/3c8bb78d413c45af28f18270091bf0dc.js"
 				/>
 			</Helmet>
 
@@ -187,6 +196,14 @@ const Layout = ({
 										</a>
 									</span>
 								)}
+							</div>
+							<div className="col col-12">
+								<span>
+									Copyright 2021 &copy; NEXT.{" "}
+									<Link to="/privacy">
+										Privacy Policy and Cookies
+									</Link>
+								</span>
 							</div>
 						</Row>
 					</footer>

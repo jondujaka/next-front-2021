@@ -49,28 +49,35 @@ const Info = ({ data, pageContext }) => {
 							currentClassName="active"
 							offset={-80}
 						>
-							{sections.map(section => (
-								<li key={`about-${section.title}`}>
-									<HollowLink
-										link={`#${section.title.toLowerCase()}`}
-										text={section.title}
-									/>
-								</li>
-							))}
+							{sections.map(section => {
+								if (section.title === "Banner") {
+									return null;
+								}
+								return (
+									<li key={`about-${section.title}`}>
+										<HollowLink
+											link={`#${section.title.toLowerCase()}`}
+											text={section.title}
+										/>
+									</li>
+								);
+							})}
 						</Scrollspy>
 					)}
 				</div>
 				<div className="col-12 col-lg-7 col-xl-6 about-content info-content">
 					{sections &&
-						sections.map(section => (
+						sections.map((section, i) => (
 							<div
 								className="mb-5"
 								id={section.title.toLowerCase()}
-								key={`about-section-${section.title}`}
+								key={`about-section-${section.title}-${i}`}
 							>
-								<h2 className="d-md-none d-block about-title">
-									{section.title}
-								</h2>
+								{section.title !== "Banner" && (
+									<h2 className="d-md-none d-block about-title">
+										{section.title}
+									</h2>
+								)}
 								<AboutSection content={section.content} />
 							</div>
 						))}
@@ -93,18 +100,19 @@ const AboutSection = ({ content }) => {
 		}
 		if (item.image) {
 			return (
-				<ImageEl
-					key={`img-about-${i}`}
-					srcSet={item.image.srcSet}
-					caption={item.image.caption}
-				/>
+				<figure>
+					<img srcSet={item.image.srcSet} />
+				</figure>
 			);
 		}
 
-		if (item.fieldGroupName === `Page_About_section_Content_Partners`) {
+		if (item.fieldGroupName.endsWith("About_section_Content_Partners")) {
 			return (
 				<div className="partners-wrapper">
-					{item.partnerImages.length && item.partnerImages.map(partner => <Partner partner={partner} />)}
+					{item.partnerImages.length &&
+						item.partnerImages.map(partner => (
+							<Partner partner={partner} />
+						))}
 				</div>
 			);
 		}
@@ -112,11 +120,22 @@ const AboutSection = ({ content }) => {
 };
 
 const Partner = ({ partner }) => {
-	return <div className="partner-image">
-		<ImageEl
-			srcSet={partner.srcSet}
-		/>
-	</div>;
+	if (!partner.srcSet) {
+		return (
+			<div className="partner-image">
+				<figure>
+					<img src={partner.sourceUrl} />
+				</figure>
+			</div>
+		);
+	}
+	return (
+		<div className="partner-image">
+			<figure>
+				<img srcSet={partner.srcSet} />
+			</figure>
+		</div>
+	);
 };
 export default Info;
 
@@ -151,10 +170,14 @@ export const infoQuery = graphql`
 										fieldGroupName
 										partnerImages {
 											srcSet
+											sourceUrl
 										}
 									}
 									... on WpEdition2021_About_section_Content_Media {
 										fieldGroupName
+										image {
+											srcSet
+										}
 									}
 									... on WpEdition2021_About_section_Content_Text {
 										big

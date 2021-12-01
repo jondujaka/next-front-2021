@@ -315,7 +315,7 @@ footer {
 }
 
 .hide {
-	transform: translateY(100%);
+	transform: translateY(223%);
 }
 @media (max-width: 1130px) {
 	.header-wrapper {
@@ -339,7 +339,7 @@ footer {
 		box-shadow: 0 0 60px 16px rgb(74 74 241 / 60%);
 
 		&.closed {
-			transform: translateX(110%);
+			transform: translateX(135%);
 		}
 	}
 	.next-button.desktop {

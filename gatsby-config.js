@@ -3,18 +3,17 @@ require("dotenv").config({
 });
 
 module.exports = {
-	pathPrefix: `/front/dist`,
 	siteMetadata: {
 		title: `Next 2021`,
 		description: `Next Festival 2021 Edition`,
 		author: `@jondujaka`,
-		siteUrl: `https://nextfestival.sk`,
+		siteUrl: `https://nextfestival.sk`
 	},
 	plugins: [
 		{
 			resolve: `gatsby-source-wordpress`,
 			options: {
-				url: `https://nextfestival.sk/content/graphql`,
+				url: `https://nextcontent.a2hosted.com/graphql`,
 				verboseOutput: true,
 				debug: {
 					graphql: {
@@ -22,8 +21,15 @@ module.exports = {
 						showQueryOnError: true
 					}
 				},
+				schema: {
+					perPage: 50,
+					requestConcurrency: 5
+				},
 				type: {
 					MediaItem: { createFileNodes: false }
+				},
+				production: {
+					allow404Images: true
 				}
 			}
 		},
@@ -60,11 +66,21 @@ module.exports = {
 				icon: `${__dirname}/src/images/favicon/next.png` // This path is relative to the root of the site.
 			}
 		},
+		{
+			resolve: "gatsby-plugin-matomo",
+			options: {
+				siteId: "1",
+				matomoUrl: "https://nextcontent.a2hosted.com/stats/",
+				siteUrl: "https://nextfestival.sk"
+			}
+		},
 		`gatsby-plugin-gatsby-cloud`,
-		
+
 		// this (optional) plugin enables Progressive Web App + Offline functionality
 		// To learn more, visit: https://gatsby.dev/offline
 		`gatsby-plugin-offline`,
-		`gatsby-plugin-sitemap`
+		`gatsby-plugin-sitemap`,
+		`gatsby-plugin-netlify`,
+		`gatsby-plugin-client-side-redirect`
 	]
 };

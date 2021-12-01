@@ -13,12 +13,16 @@ const Shop = ({ data, pageContext }) => {
 	const translationSlug = `/${langSlug}shop`;
 
 	const filteredProducts = products.filter(product => {
-		const isSkProduct = product.node.uri.startsWith('/sk/');
+		const isSkProduct = product.node.uri.startsWith("/sk/");
 		return isSk ? isSkProduct : !isSkProduct;
 	});
 
 	return (
-		<Layout isSk={isSk} translationSlug={translationSlug} style={latestEdition}>
+		<Layout
+			isSk={isSk}
+			translationSlug={translationSlug}
+			style={latestEdition}
+		>
 			<Row>
 				<div className="col col-12 mt-5 mb-6">
 					<h2 className="festival-page-title">{data.page.title}</h2>
@@ -36,9 +40,7 @@ export const shopQuery = graphql`
 		# these variables are passed in via createPage.pageContext in gatsby-node.js
 		$id: String
 	) {
-		products: allWpProduct(
-			sort: { order: DESC, fields: date }
-		) {
+		products: allWpProduct(sort: { order: DESC, fields: date }) {
 			edges {
 				node {
 					date(formatString: "MMM Do YYYY")
