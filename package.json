@@ -26,7 +26,7 @@
 		"gatsby-plugin-sitemap": "^5.0.0",
 		"gatsby-source-filesystem": "^3.14.0",
 		"gatsby-source-graphql": "^3.14.0",
-		"gatsby-source-wordpress": "^5.14.1",
+		"gatsby-source-wordpress": "^6.3.0",
 		"gatsby-transformer-sharp": "^3.14.0",
 		"gql": "^1.1.2",
 		"isomorphic-fetch": "^3.0.0",
