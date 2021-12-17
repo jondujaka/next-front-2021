@@ -140,6 +140,7 @@ h6 {
 	h1 {
 		letter-spacing: initial !important;
 	}
+	
 }
 
 @media screen and (min-width: 1600px) {
@@ -398,7 +399,7 @@ a:focus {
 		border-color: $primaryBlue;
 	}
 }
-.cart-button {
+.cart-button, .checkout-btn {
 	border: 3px solid $primaryBlue;
 	border-radius: 3.5rem;
 	padding: 1.2rem 2.5rem;

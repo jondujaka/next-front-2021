@@ -30,6 +30,9 @@ module.exports = {
 				},
 				production: {
 					allow404Images: true
+				},
+				development: {
+					allow404Images: true
 				}
 			}
 		},
@@ -75,6 +78,33 @@ module.exports = {
 			}
 		},
 		`gatsby-plugin-gatsby-cloud`,
+		{
+			resolve: `gatsby-plugin-snipcart-advanced`,
+			options: {
+				version: "3.0.29",
+				publicApiKey:
+					"MGMzMzNkNWMtMWRmZC00NDJkLWIyNjgtMmFlODYxNDBiMWIwNjM3NzUyODg3MzUxOTkzMjE2",
+				defaultLang: "en",
+				currency: "eur",
+				openCartOnAdd: false,
+				useSideCart: true
+				// be careful with this mode cart. The cart in this mode has a bug of scroll in firefox
+				// locales: {
+				// 	fr: {
+				// 		actions: {
+				// 			checkout: "Valider le panier"
+				// 		}
+				// 	}
+				// },
+				// templatesUrl:
+				// 	"path on your template file. Set file in the static folder, ex: '/snipcart/index.html'",
+				// // not work on dev. Gatsby not serve html file in dev https://github.com/gatsbyjs/gatsby/issues/13072
+				// innerHTML: `
+				//   <billing section="bottom">
+				// 	  <!-- Customization goes here -->
+				//   </billing>`
+			}
+		},
 
 		// this (optional) plugin enables Progressive Web App + Offline functionality
 		// To learn more, visit: https://gatsby.dev/offline

@@ -95,7 +95,7 @@ const Layout = ({
 
 				<link
 					rel="alternate"
-					hreflang={isSk ? `en` : `sk`}
+					hrefLang={isSk ? `en` : `sk`}
 					href={`${meta.base_url}${translationSlug}`}
 				/>
 
@@ -132,6 +132,8 @@ const Layout = ({
 					charset="UTF-8"
 					src="//cdn.cookie-script.com/s/3c8bb78d413c45af28f18270091bf0dc.js"
 				/>
+
+				{/* SNIPCART */}
 			</Helmet>
 
 			{/* <Header siteTitle={data.site.siteMetadata?.title || `Title`} /> */}

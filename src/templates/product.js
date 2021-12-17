@@ -19,7 +19,7 @@ const Product = ({ data, pageContext }) => {
 						<Link className="inherit" to="/records">
 							Records
 						</Link>
-						{` > ${product.name}`}
+						{` > ${product.title}`}
 					</h2>
 				</div>
 			</Row>
@@ -39,13 +39,11 @@ const Product = ({ data, pageContext }) => {
 						{product.productInfo.subtitle}
 					</h3>
 					<div className="formats mb-4">
-						{product.variations ? (
-							product.variations.nodes.map(format => {
-								return <ProductInfo format={format} />;
+						{product.productInfo.variations &&
+							product.productInfo.variations.map(format => {
+								return <ProductInfo product={product} format={format} />;
 							})
-						) : (
-							<ProductInfo format={product} />
-						)}
+						}
 					</div>
 					<div className="product-description">
 						<p
@@ -65,12 +63,13 @@ const renderImage = image => {
 	return <Image srcSet={image.srcSet} />;
 };
 
-const ProductInfo = ({ format }) => (
+const ProductInfo = ({product, format }) => (
 	<div key={`format-${format.price}`} className="format mb-4">
-		{format.attributes && <span>{format.attributes.nodes[0].value}</span>}
+		<span>{format.format}</span>
 		<span className="price">{format.price ? format.price : `0 EUR`}</span>
 		<CartButton
-			productId={format.SKU ?? format.databaseId}
+			format={format}
+			product={product}
 			text="Add to cart"
 			disabled={true}
 		/>
@@ -82,62 +81,39 @@ export default Product;
 export const productQuery = graphql`
 	query productById(
 		# these variables are passed in via createPage.pageContext in gatsby-node.js
-		$id: String!
+		$id: Int!
 	) {
 		# selecting the current post by id
-		product: wpProduct(id: { eq: $id }) {
-			id
-			name
-			description
-			... on WpSimpleProduct {
-				id
-				name
-				databaseId
-				sku
-				productInfo {
-					fieldGroupName
-					subtitle
-					images {
-						srcSet
-					}
+		product: wpSnipproduct(databaseId: { eq: $id }) {
+			databaseId
+			title
+			slug
+			uri
+
+			featuredImage {
+				node {
+					srcSet
+					sourceUrl
 				}
-				stockStatus
-				price
-				slug
-				nodeType
-				downloadable
-				databaseId
 			}
-			... on WpVariableProduct {
-				id
-				name
-				databaseId
-				productInfo {
-					fieldGroupName
-					subtitle
-					images {
-						srcSet
+
+			productInfo {
+				description
+				subtitle
+				variations {
+					price
+					format
+					downloadLink {
+						sourceUrl
 					}
 				}
-				stockStatus
-				variations {
-					nodes {
-						name
-						price
-						slug
-						type
-						nodeType
-						downloadable
-						databaseId
-						stockStatus
-						sku
-						attributes {
-							nodes {
-								name
-								value
-							}
-						}
-					}
+				images {
+					srcSet
+				}
+			}
+			snipcategories {
+				nodes {
+					slug
 				}
 			}
 		}

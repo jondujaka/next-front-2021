@@ -11,7 +11,7 @@ import {
 
 
 const httpLink = new HttpLink({
-	uri: `https://nextfestival.sk/content/graphql`,
+	uri: `https://nextcontent.a2hosted.com/graphql`,
 	fetch,
 	credentials: 'include'
 });

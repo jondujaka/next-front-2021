@@ -1,13 +1,24 @@
 import React, { useState } from "react";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { gql, useMutation } from "@apollo/client";
+import axios from 'axios'
 import { navigate } from "gatsby";
 import { useAppState } from "./context";
-
+import countries from "../utils/countries";
 import Layout from "./layout";
+import { useForm } from "react-hook-form";
 
 const CheckoutForm = () => {
-	const [formState, setFormState] = useState("IDLE");
+	const [formStateCart, setFormStateCart] = useState("IDLE");
+	const {
+		register,
+		handleSubmit,
+		watch,
+		formState: { errors, isDirty, isValid }
+	} = useForm({ mode: "onBlur" });
+
+	const [loading, setLoading] = useState(false);
+	const [shippingVal, setShippingVal] = useState(false);
 
 	const { setCart } = useAppState();
 	const stripe = useStripe();
@@ -19,13 +30,13 @@ const CheckoutForm = () => {
 		},
 		onError(error) {
 			console.error(error);
-			setFormState("ERROR");
+			setFormStateCart("ERROR");
 		}
 	});
 
-	const handleSubmit = async event => {
-		event.preventDefault();
-		setFormState("LOADING");
+	const onSubmit = async () => {
+		// event.preventDefault();
+		setFormStateCart("LOADING");
 		try {
 			const source = await handleStripe();
 
@@ -86,21 +97,127 @@ const CheckoutForm = () => {
 	}
 
 	function handleSuccessfulCheckout({ order }) {
-		setFormState("IDLE");
+		setFormStateCart("IDLE");
 		localStorage.removeItem("woo-session");
 		setCart(undefined);
 		navigate("/order-received", { state: order });
 	}
 
+	const calculateShipping = async (ev) => {
+		
+		let countryCode = ev.target.value;
+		if(countryCode){
+			setLoading(true);
+			const result = await axios.post(`http://localhost:8888/.netlify/functions/get-shipping`, {
+				country: countryCode
+			});
+
+			if(result.data && result.data.length && result.data !== 'NOT_FOUND'){
+				const value = result.data[0].settings.cost.value;
+				setShippingVal(value);
+			} else {
+				setShippingVal(false);
+			}
+			setLoading(false);
+		}
+	}
+
 	return (
-		<form onSubmit={handleSubmit}>
+		<form onSubmit={handleSubmit(onSubmit)}>
+			<h3>Your details</h3>
+
+			<div className="form-element">
+				<label>Full name</label>
+				<input
+					type="text"
+					{...register("name", {
+						required: "Name is required"
+					})}
+				/>
+				<span className="error">{errors.name?.message}</span>
+			</div>
+
+			<div className="form-element">
+				<label>Email</label>
+				<input
+					type="email"
+					{...register("email", {
+						required: true,
+						pattern: {
+							value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+							message: "invalid email address"
+						}
+					})}
+				/>
+				<span className="error">{errors.email?.message}</span>
+			</div>
+
+			<div className="form-element">
+				<label>Address</label>
+				<input
+					type="text"
+					{...register("address", { required: 'Address is required' })}
+				/>
+				<span className="error">{errors.address?.message}</span>
+			</div>
+
+			<div className="form-element">
+				<label>City</label>
+				<input type="text" {...register("city", { required: "City is required" })} />
+				<span className="error">{errors.city?.message}</span>
+			</div>
+
+			<div className="form-element">
+				<label>Postcode</label>
+				<input
+					type="text"
+					{...register("postcode", { required: "Postcode is required" })}
+				/>
+				<span className="error">{errors.postcode?.message}</span>
+			</div>
+
+			<div className="form-element">
+				<label>State (Optional)</label>
+				<input type="text" {...register("state")} />
+				{/* <span className="error">{errors.state?.message}</span> */}
+			</div>
+
+			<div className="form-element">
+				<label>Country</label>
+				<select  {...register("country", { required: "Country is required", onChange: (e) => calculateShipping(e) })}>
+					<option value="">Select a country</option>
+					{Object.keys(countries).map(key => (
+						<option value={key}>{countries[key]}</option>
+					))}
+				</select>
+				<span className="error">{errors.country?.message}</span>
+			</div>
+
+			<h3 className="mt-6">Payment details</h3>
+
 			<CardElement
+				className="card-element"
 				options={{
 					hidePostalCode: true,
 					style: { base: { fontSize: `18px` } }
 				}}
 			/>
-			<button type="submit">Pay</button>
+
+			<div className="checkout-total">
+				Subtotal: <b>400Eur</b>
+				<br />
+				Shipping: {shippingVal && <b>{shippingVal}Eur</b>}
+				<br />
+				TOTAL: <b>415Eur</b>
+			</div>
+
+			<button
+				disabled={!isDirty || !isValid || !shippingVal || loading}
+				className="checkout-btn mt-6"
+				type="submit"
+			>
+				{!loading ? 'Complete Payment' : 'Loading' }
+			</button>
 		</form>
 	);
 };

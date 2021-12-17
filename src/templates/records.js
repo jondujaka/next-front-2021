@@ -27,7 +27,7 @@ const Records = ({ data, pageContext }) => {
 				<div className="col col-12 mt-5 mb-6">
 					<h2 className="festival-page-title">{data.page.title}</h2>
 				</div>
-				<ProductsGrid items={filteredRecords} />
+				<ProductsGrid items={records} />
 			</Row>
 		</Layout>
 	);
@@ -40,10 +40,10 @@ export const recordsQuery = graphql`
 		# these variables are passed in via createPage.pageContext in gatsby-node.js
 		$id: String
 	) {
-		records: allWpProduct(
+		records: allWpSnipproduct(
 			sort: { order: DESC, fields: date }
 			filter: {
-				productCategories: {
+				snipcategories: {
 					nodes: { elemMatch: { slug: { eq: "records" } } }
 				}
 			}
@@ -52,44 +52,16 @@ export const recordsQuery = graphql`
 				node {
 					date(formatString: "MMM Do YYYY")
 					slug
-					... on WpSimpleProduct {
-						id
-						name
-						uri
-						name
-						productInfo {
-							subtitle
-						}
-						featuredImage {
-							node {
-								srcSet
-							}
+					databaseId
+					title
+					uri
+					featuredImage {
+						node {
+							srcSet
 						}
 					}
-					... on WpVariableProduct {
-						id
-						name
-						uri
-						name
-						productInfo {
-							subtitle
-						}
-						featuredImage {
-							node {
-								srcSet
-							}
-						}
-						variations {
-							nodes {
-								name
-								nodeType
-								attributes {
-									nodes {
-										value
-									}
-								}
-							}
-						}
+					productInfo {
+						subtitle
 					}
 				}
 			}
