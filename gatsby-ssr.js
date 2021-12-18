@@ -1,20 +1,28 @@
-/**
- * Implement Gatsby's SSR (Server Side Rendering) APIs in this file.
- *
- * See: https://www.gatsbyjs.com/docs/ssr-apis/
- */
+const React = require('react');
 
-// You can delete this file if you're not using it
+let warning = false
 
-import React from "react";
-import { ApolloProvider } from "@apollo/client";
-import { client } from "./src/apollo/client";
-import { AppProvider } from "./src/components/context";
+exports.onRenderBody = ({ setPostBodyComponents }, options = {}) => {
+	options = Object.assign({
+		apiKey: 'MGMzMzNkNWMtMWRmZC00NDJkLWIyNjgtMmFlODYxNDBiMWIwNjM3NzUyODg3MzUxOTkzMjE2',
+		autopop: false,
+		js: 'https://cdn.snipcart.com/themes/v3.2.1/default/snipcart.js',
+		styles: 'https://cdn.snipcart.com/themes/v3.2.1/default/snipcart.css',
+	}, options)
 
-export function wrapRootElement({ element }) {
-	return (
-		<ApolloProvider client={client}>
-			<AppProvider>{element}</AppProvider>
-		</ApolloProvider>
-	);
+	if(!options.apiKey){
+		if (!warning) {
+			warning = true
+			console.log('No Snipcart API key found')
+		}
+		return
+	}
+
+	const components = [
+		<script key='snipcartJs' src={options.js} id="snipcart" data-api-key={options.apiKey} data-autopop="false" data-currency="eur" data-config-modal-style="side"></script>
+	]
+	if (options.styles){
+		components.push(<link key='snipcartStyle' href={options.styles} type="text/css" rel="stylesheet" />)
+	}
+	return setPostBodyComponents(components)
 }

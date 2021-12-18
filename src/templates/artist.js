@@ -1,16 +1,11 @@
 import React from "react";
 import { graphql, Link } from "gatsby";
-import withPreview from "../components/withPreview";
-import LangSwitcher from "../components/LangSwitcher";
 import Layout from "../components/layout";
-import gql from "graphql-tag";
 import Row from "../components/row";
 import Image from "../components/image";
 import Carousel from "../components/carousel";
 import SimpleContent from "../components/simpleContent";
 import EventInfo from "../components/eventInfo";
-import { node } from "prop-types";
-import { parse } from "query-string";
 
 const Artist = ({ data: { artist, events }, pageContext }) => {
 	const { lang, year, settings, menu } = pageContext;

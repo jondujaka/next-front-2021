@@ -1,13 +1,10 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Link, useStaticQuery, graphql } from "gatsby";
-import { useAppState } from "./context";
 import Style from "style-it";
 import CloseButton from "../images/optimized/close-button.svg";
 
 const Header = ({ siteTitle, noLang, isSk, translationSlug, style }) => {
-	const { cart } = useAppState();
-
 	const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
 	const closeMobileNav = () => {
@@ -48,7 +45,6 @@ const Header = ({ siteTitle, noLang, isSk, translationSlug, style }) => {
 
 				<nav className="main-nav desktop">
 					<MainMenuLinks
-						cart={cart}
 						noLang={noLang}
 						translationSlug={translationSlug}
 						isSk={isSk}
@@ -58,7 +54,6 @@ const Header = ({ siteTitle, noLang, isSk, translationSlug, style }) => {
 
 				<div className="main-nav-mobile">
 					<MainMenuLinks
-						cart={cart}
 						noLang={noLang}
 						translationSlug={translationSlug}
 						isSk={isSk}
@@ -85,14 +80,7 @@ const Header = ({ siteTitle, noLang, isSk, translationSlug, style }) => {
 	);
 };
 
-const MainMenuLinks = ({
-	cart,
-	noLang,
-	mobile,
-	translationSlug,
-	isSk,
-	style
-}) => {
+const MainMenuLinks = ({ noLang, mobile, translationSlug, isSk, style }) => {
 	const data = useStaticQuery(graphql`
 		query MainMenusQuery {
 			allWpMenu(filter: { slug: { regex: "/^main-navigation/" } }) {
@@ -160,20 +148,6 @@ const MainMenuLinks = ({
 						</Link>
 					</li>
 				))}
-			{cart?.contents?.itemCount ? (
-				<li>
-					<Link
-						to="/cart"
-						className="cart-header"
-						partiallyActive
-						activeClassName="active"
-					>
-						Cart - {cart.contents.itemCount}
-					</Link>
-				</li>
-			) : (
-				``
-			)}
 			{!noLang && translationSlug && (
 				<li>
 					<Link to={translationSlug} className="lang-switcher">

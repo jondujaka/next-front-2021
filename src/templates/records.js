@@ -62,6 +62,9 @@ export const recordsQuery = graphql`
 					}
 					productInfo {
 						subtitle
+						variations {
+							format
+						}
 					}
 				}
 			}

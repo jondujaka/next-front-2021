@@ -137,3 +137,8 @@ select:focus {
 .error {
 	color: $errorRed;
 }
+
+
+.product-format {
+	text-transform: capitalize;
+}

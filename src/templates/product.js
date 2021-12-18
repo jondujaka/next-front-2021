@@ -65,8 +65,8 @@ const renderImage = image => {
 
 const ProductInfo = ({product, format }) => (
 	<div key={`format-${format.price}`} className="format mb-4">
-		<span>{format.format}</span>
-		<span className="price">{format.price ? format.price : `0 EUR`}</span>
+		{format && format.format !== 'default' && <span className="product-format">{format.format}</span>}
+		<span className="price">&euro;{format.price ? format.price : `0`}</span>
 		<CartButton
 			format={format}
 			product={product}
@@ -103,9 +103,7 @@ export const productQuery = graphql`
 				variations {
 					price
 					format
-					downloadLink {
-						sourceUrl
-					}
+					downloadId
 				}
 				images {
 					srcSet

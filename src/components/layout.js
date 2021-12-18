@@ -6,11 +6,9 @@
  */
 
 import React, { useEffect } from "react";
-import { useAppState } from "../components/context";
 import PropTypes from "prop-types";
-import { useStaticQuery, graphql, Link } from "gatsby";
+import { Link } from "gatsby";
 import Helmet from "react-helmet";
-import { gql, useLazyQuery, useMutation } from "@apollo/client";
 
 import SocialFooter from "./socialFooter";
 
@@ -41,30 +39,6 @@ const Layout = ({
 }) => {
 	const meta = isSk ? allMeta.sk : allMeta.en;
 
-	const data = useStaticQuery(graphql`
-		query SiteTitleQuery {
-			site {
-				siteMetadata {
-					title
-				}
-			}
-		}
-	`);
-
-	const { cart, setCart } = useAppState();
-	const [maybeGetCart, { loading }] = useLazyQuery(CART, {
-		onCompleted: ({ cart }) => {
-			setCart(cart);
-		}
-	});
-
-	useEffect(() => {
-		if (cart) {
-			return;
-		}
-
-		maybeGetCart();
-	}, [cart, maybeGetCart]);
 
 	let parsedStyle = {
 		...style,
@@ -231,60 +205,5 @@ Layout.propTypes = {
 	translationSlug: PropTypes.string,
 	isSk: PropTypes.bool
 };
-
-const CART = gql`
-	query Cart {
-		cart {
-			subtotal
-			total
-			shippingTotal
-			contents {
-				itemCount
-				nodes {
-					quantity
-					product {
-						node {
-							name
-							sku
-							databaseId
-							... on VariableProduct {
-								productInfo {
-									subtitle
-								}
-								featuredImage {
-									node {
-										srcSet
-									}
-								}
-							}
-							... on SimpleProduct {
-								price
-								productInfo {
-									subtitle
-								}
-								featuredImage {
-									node {
-										srcSet
-									}
-								}
-							}
-						}
-					}
-					variation {
-						node {
-							price
-							attributes {
-								nodes {
-									value
-									name
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-`;
 
 export default Layout;
