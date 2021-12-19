@@ -18,6 +18,7 @@ const CartButton = ({ product, format, classes = "", disabled }) => {
 				data-item-name={`${product.title} - ${product.productInfo.subtitle}${
 					format && format.format !== 'default' ? ` (${capFirst(format.format)})` : ``
 				}`}
+				data-item-weight={format.weight}
 			>
 				Add to cart
 			</button>

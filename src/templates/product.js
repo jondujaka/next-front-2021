@@ -104,6 +104,7 @@ export const productQuery = graphql`
 					price
 					format
 					downloadId
+					weight
 				}
 				images {
 					srcSet
