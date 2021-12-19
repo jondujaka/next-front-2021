@@ -36,7 +36,7 @@ export const shopQuery = graphql`
 		# these variables are passed in via createPage.pageContext in gatsby-node.js
 		$id: String
 	) {
-		products: allWpProduct(sort: { order: DESC, fields: date }) {
+		products: allWpSnipproduct(sort: { order: DESC, fields: date }) {
 			edges {
 				node {
 					date(formatString: "MMM Do YYYY")
