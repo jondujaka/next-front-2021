@@ -10,8 +10,8 @@ const ProjectMedia = ({ media }) => {
 
 	return (
 		<>
-			{images.imageGroups?.length && <ProjectImages images={images} />}
 			{videos.videos?.length && <ProjectVideos videos={videos} />}
+			{images.imageGroups?.length && <ProjectImages images={images} />}
 		</>
 	);
 };
