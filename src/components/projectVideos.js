@@ -28,7 +28,7 @@ const ProjectVideos = ({ videos }) => {
 								className="inline-player"
 								url={video.videoUrl}
 								width="100%"
-								playing={false}
+								playing={true}
 								controls={true}
 								light={true}
 							/>
