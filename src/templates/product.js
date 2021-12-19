@@ -48,7 +48,7 @@ const Product = ({ data, pageContext }) => {
 					<div className="product-description">
 						<p
 							dangerouslySetInnerHTML={{
-								__html: product.description
+								__html: product.productInfo.description
 							}}
 						/>
 					</div>

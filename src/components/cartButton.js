@@ -12,7 +12,7 @@ const CartButton = ({ product, format, classes = "", disabled }) => {
 				}`}
 				data-item-image={product.featuredImage.node.sourceUrl}
 				data-item-format={format.format}
-				data-item-price={format.price}
+				data-item-price={format.price || 0}
 				data-item-file-guid={format.downloadId}
 				data-item-url={`https://a01d-77-250-254-148.ngrok.io${product.uri}`}
 				data-item-name={`${product.title} - ${product.productInfo.subtitle}${
