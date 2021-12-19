@@ -841,11 +841,11 @@ const initMainPages = async gatsbyUtils => {
 			type: `wpPage`,
 			slug: `projects`
 		},
-		// {
-		// 	queryName: `mainShopPage`,
-		// 	type: `wpPage`,
-		// 	slug: `shop`
-		// },
+		{
+			queryName: `mainShopPage`,
+			type: `wpPage`,
+			slug: `shop`
+		},
 		{
 			queryName: `mainRecordsPage`,
 			type: `wpPage`,
