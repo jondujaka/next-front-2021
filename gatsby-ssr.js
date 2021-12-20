@@ -4,7 +4,7 @@ let warning = false
 
 exports.onRenderBody = ({ setPostBodyComponents }, options = {}) => {
 	options = Object.assign({
-		apiKey: 'MGMzMzNkNWMtMWRmZC00NDJkLWIyNjgtMmFlODYxNDBiMWIwNjM3NzUyODg3MzUxOTkzMjE2',
+		apiKey: process.env.SNIPC_PUBLIC,
 		autopop: false,
 		js: 'https://cdn.snipcart.com/themes/v3.2.1/default/snipcart.js',
 		styles: 'https://cdn.snipcart.com/themes/v3.2.1/default/snipcart.css',
