@@ -84,3 +84,61 @@
 		color: white;
 	}
 }
+
+.card-element {
+	border: 0.1rem solid #d1d1d1;
+	border-radius: 0.4rem;
+	box-shadow: none;
+	box-sizing: inherit;
+	padding: 0.6rem 1rem 0.7rem;
+}
+
+input[type="color"]:focus,
+input[type="date"]:focus,
+input[type="datetime"]:focus,
+input[type="datetime-local"]:focus,
+input[type="email"]:focus,
+input[type="month"]:focus,
+input[type="number"]:focus,
+input[type="password"]:focus,
+input[type="search"]:focus,
+input[type="tel"]:focus,
+input[type="text"]:focus,
+input[type="url"]:focus,
+input[type="week"]:focus,
+input:not([type]):focus,
+textarea:focus,
+select:focus {
+	border-color: $primaryBlue;
+}
+
+.StripeElement--focus {
+	border-color: $primaryBlue;
+}
+
+.checkout-total {
+	margin-top: 4rem;
+	@extend .text-body-small;
+	background: #f4f5f6;
+	border-left: 2px solid $primaryBlue;
+	padding: 2rem 1rem;
+	max-width: 100%;
+	text-align: right;
+	max-width: 445px;
+	font-family: $sansFont;
+	line-height: 1.5;
+
+}
+
+.form-element {
+	margin-bottom: 1rem;
+}
+
+.error {
+	color: $errorRed;
+}
+
+
+.product-format {
+	text-transform: capitalize;
+}

@@ -13,7 +13,7 @@ module.exports = {
 		{
 			resolve: `gatsby-source-wordpress`,
 			options: {
-				url: `https://nextcontent.a2hosted.com/graphql`,
+				url: process.env.WORDPRESS_URL,
 				verboseOutput: true,
 				debug: {
 					graphql: {
@@ -29,6 +29,9 @@ module.exports = {
 					MediaItem: { createFileNodes: false }
 				},
 				production: {
+					allow404Images: true
+				},
+				development: {
 					allow404Images: true
 				}
 			}
@@ -70,12 +73,11 @@ module.exports = {
 			resolve: "gatsby-plugin-matomo",
 			options: {
 				siteId: "1",
-				matomoUrl: "https://nextcontent.a2hosted.com/stats/",
+				matomoUrl: process.env.MATOMO_URL,
 				siteUrl: "https://nextfestival.sk"
 			}
 		},
 		`gatsby-plugin-gatsby-cloud`,
-
 		// this (optional) plugin enables Progressive Web App + Offline functionality
 		// To learn more, visit: https://gatsby.dev/offline
 		`gatsby-plugin-offline`,

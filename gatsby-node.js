@@ -58,7 +58,7 @@ const initProducts = async gatsbyUtilities => {
 		const slug = productInfo.product.uri;
 		const template = `product`;
 		const context = {
-			id: productInfo.product.id,
+			id: productInfo.product.databaseId,
 			latestEdition: getLatestEdition(),
 			related: allProducts,
 			lang: `en`
@@ -76,8 +76,6 @@ const initProducts = async gatsbyUtilities => {
 
 const initPostTypes = async gatsbyUtilities => {
 	console.log(`init post types`);
-
-	initProducts(gatsbyUtilities);
 
 	let articlesSettings = {
 		postType: `article`,
@@ -336,7 +334,7 @@ exports.createPages = async gatsbyUtilities => {
 	initPostTypes(gatsbyUtilities);
 	initMainPages(gatsbyUtilities);
 
-	// initProducts(gatsbyUtilities);
+	initProducts(gatsbyUtilities);
 };
 
 const buildEdition = async (year, gatsbyUtilities) => {
@@ -522,18 +520,12 @@ const createIndividualPage = async (
 const getAllProducts = async ({ graphql, reporter }) => {
 	const gqlResult = await graphql(/* GraphQL */ `
 		query allProductsQuery {
-			allWpProduct {
+			allWpSnipproduct {
 				edges {
 					product: node {
-						name
-						slug
-						id
-						... on WpSimpleProduct {
-							uri
-						}
-						... on WpVariableProduct {
-							uri
-						}
+						title
+						uri
+						databaseId
 					}
 				}
 			}
@@ -550,7 +542,7 @@ const getAllProducts = async ({ graphql, reporter }) => {
 		return;
 	}
 
-	return gqlResult.data.allWpProduct.edges;
+	return gqlResult.data.allWpSnipproduct.edges;
 };
 
 const getPostType = async (settings, { graphql, reporter }) => {

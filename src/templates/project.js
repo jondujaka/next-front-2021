@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { graphql, Link } from "gatsby";
 import LangSwitcher from "../components/LangSwitcher";
 import Layout from "../components/layout";
@@ -6,6 +6,7 @@ import Row from "../components/row";
 import Separator from "../components/separator";
 import Single from "./single";
 import ProjectsGrid from "../components/blockGrids/projectsGrid";
+import ProjectMedia from "../components/projectMedia";
 import NewsBlock from "../components/newsBlock";
 
 const Project = ({ data: { project, news }, pageContext }) => {
@@ -21,6 +22,14 @@ const Project = ({ data: { project, news }, pageContext }) => {
 	const { latestEdition } = pageContext;
 
 	const allNews = news.edges;
+
+	const [showAllRelatedNews, setShowAllRelatedNews] = useState(
+		allNews.length <= 4
+	);
+	const handleClick = e => {
+		e.preventDefault();
+		setShowAllRelatedNews(!showAllRelatedNews);
+	};
 
 	return (
 		<Layout
@@ -50,16 +59,43 @@ const Project = ({ data: { project, news }, pageContext }) => {
 						<div className="col col-12 mt-5 mb-6">
 							<h1>{isSk ? `Related news` : `Related news`}</h1>
 						</div>
-						{allNews.map(newsItem => (
-							<NewsBlock
-								key={`news-${newsItem.node.id}`}
-								item={newsItem.node}
-							/>
-						))}
+						{allNews.map((newsItem, i) => {
+							if (showAllRelatedNews) {
+								return (
+									<NewsBlock
+										key={`news-${newsItem.node.id}`}
+										item={newsItem.node}
+									/>
+								);
+							} else {
+								if (i < 4) {
+									return (
+										<NewsBlock
+											key={`news-${newsItem.node.id}`}
+											item={newsItem.node}
+										/>
+									);
+								}
+							}
+						})}
+
+						<div className="col col-12 text-center mt-5">
+							<a
+								className="big-button"
+								href="#"
+								onClick={handleClick}
+							>
+								{showAllRelatedNews ? `See less` : `See more`}
+							</a>
+						</div>
 					</Row>
 				</>
 			) : (
 				``
+			)}
+
+			{project.projectDescription.media && (
+				<ProjectMedia media={project.projectDescription.media} />
 			)}
 
 			{related.length ? (
@@ -128,6 +164,28 @@ export const ProjectData = graphql`
 			}
 			translations {
 				uri
+			}
+			projectDescription {
+				media {
+					videos {
+						title
+						videos {
+							videoUrl
+							videoTitle
+						}
+					}
+					images {
+						title
+						imageGroups {
+							groupTitle
+							images {
+								srcSet
+								sourceUrl
+								caption
+							}
+						}
+					}
+				}
 			}
 			singleContent {
 				content {

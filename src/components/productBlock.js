@@ -6,13 +6,7 @@ const Product = ({item}) => {
 	const content = item.node;
 	const image = content.featuredImage?.node?.srcSet || ``;
 
-	const formats =content.variations ? content.variations.nodes.map(variation => ({
-		slug: variation.attributes.nodes[0].value,
-		name: variation.attributes.nodes[0].value
-	})) : content.productCategories && content.productCategories.nodes.map(category => ({
-		slug: category.slug,
-		name: category.name
-	}));
+	const formats = content.productInfo.variations;
 
 	return (
 		<Link
@@ -34,7 +28,7 @@ const Product = ({item}) => {
 				<div className="product-image col col-12">
 					{image && <img srcSet={image} />}
 					{formats && formats.length ? <div className="product-formats">
-						{formats.map(format => <span key={format.slug}>{format.name}</span>)}
+						{formats.map(format => format.format !== 'default' && <span className="product-format" key={format.format}>{format.format}</span>)}
 					</div> : ``}
 				</div>
 		</Link>

@@ -30,7 +30,7 @@
 
 		&::after {
 			background-color: #fff;
-			content: '';
+			content: "";
 			height: 100%;
 			left: 0;
 			bottom: 0;
@@ -42,7 +42,7 @@
 	}
 
 	&:after {
-		content: '';
+		content: "";
 		z-index: 4;
 		position: absolute;
 		top: 0;
@@ -169,7 +169,7 @@
 
 	&::after {
 		background-color: #fff;
-		content: '';
+		content: "";
 		height: 100%;
 		left: 0;
 		bottom: 0;
@@ -275,6 +275,7 @@
 
 			span {
 				@extend .text-small;
+				border: 2px solid;
 				background: white;
 				margin-top: 5px;
 				padding: 0px 12px;
@@ -288,6 +289,11 @@
 .product-description {
 	margin-top: 3rem;
 	@extend .text-body-small;
+
+	h3 {
+		text-transform: capitalize;
+		font-size: 1.5em;
+	}
 
 	p > *,
 	p p {
@@ -477,4 +483,30 @@
 	border-top-color: inherit;
 	border-width: 0.3em 0.2em 0;
 	right: 0;
+}
+
+.project-image {
+	.image-wrapper {
+		cursor: pointer;
+		width: 100%;
+		position: relative;
+		margin: 1rem 0;
+	
+		img {
+			height: 100%;
+			object-fit: cover;
+		}
+	}
+}
+
+.project-videos {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+}
+
+.react-player__shadow {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
 }

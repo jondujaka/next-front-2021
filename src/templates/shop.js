@@ -12,10 +12,6 @@ const Shop = ({ data, pageContext }) => {
 	const isSk = pageContext.lang !== `en`;
 	const translationSlug = `/${langSlug}shop`;
 
-	const filteredProducts = products.filter(product => {
-		const isSkProduct = product.node.uri.startsWith("/sk/");
-		return isSk ? isSkProduct : !isSkProduct;
-	});
 
 	return (
 		<Layout
@@ -27,7 +23,7 @@ const Shop = ({ data, pageContext }) => {
 				<div className="col col-12 mt-5 mb-6">
 					<h2 className="festival-page-title">{data.page.title}</h2>
 				</div>
-				<ProductsGrid items={filteredProducts} />
+				<ProductsGrid items={products} />
 			</Row>
 		</Layout>
 	);
@@ -40,56 +36,23 @@ export const shopQuery = graphql`
 		# these variables are passed in via createPage.pageContext in gatsby-node.js
 		$id: String
 	) {
-		products: allWpProduct(sort: { order: DESC, fields: date }) {
+		products: allWpSnipproduct(sort: { order: DESC, fields: date }) {
 			edges {
 				node {
 					date(formatString: "MMM Do YYYY")
 					slug
-					... on WpSimpleProduct {
-						id
-						name
-						uri
-						name
-						productInfo {
-							subtitle
-						}
-						featuredImage {
-							node {
-								srcSet
-							}
+					databaseId
+					title
+					uri
+					featuredImage {
+						node {
+							srcSet
 						}
 					}
-
-					... on WpVariableProduct {
-						id
-						name
-						uri
-						name
-						productInfo {
-							subtitle
-						}
-						featuredImage {
-							node {
-								srcSet
-							}
-						}
+					productInfo {
+						subtitle
 						variations {
-							nodes {
-								name
-								nodeType
-								attributes {
-									nodes {
-										value
-									}
-								}
-							}
-						}
-					}
-
-					productCategories {
-						nodes {
-							slug
-							name
+							format
 						}
 					}
 				}
