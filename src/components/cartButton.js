@@ -5,7 +5,7 @@ const CartButton = ({ product, format, classes = "", disabled }) => {
 	return (
 		<div className="cart-button-wrapper">
 
-<button disabled>
+<button disabled className={`cart-button ${classes}`}>
 				Add to cart
 			</button>
 			{/* <span className={showStatus ? 'show' : 'hide'}>{addedStatus}</span> */}
