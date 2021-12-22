@@ -1,25 +1,11 @@
 import React, { useState } from "react";
 
 const CartButton = ({ product, format, classes = "", disabled }) => {
-	console.log(product);
 
 	return (
 		<div className="cart-button-wrapper">
-			<button
-				className={`snipcart-add-item cart-button ${classes}`}
-				data-item-id={`${product.databaseId}${
-					format && format.format !== 'default' ? `-${format.format}` : ``
-				}`}
-				data-item-image={product.featuredImage.node.sourceUrl}
-				data-item-format={format.format}
-				data-item-price={format.price || 0}
-				data-item-file-guid={format.downloadId}
-				data-item-url={`https://snipcart--nextfestival.netlify.app${product.uri}`}
-				data-item-name={`${product.title} - ${product.productInfo.subtitle}${
-					format && format.format !== 'default' ? ` (${capFirst(format.format)})` : ``
-				}`}
-				data-item-weight={format.weight}
-			>
+
+<button disabled>
 				Add to cart
 			</button>
 			{/* <span className={showStatus ? 'show' : 'hide'}>{addedStatus}</span> */}
