@@ -103,7 +103,7 @@ const Project = ({ data: { project, news }, pageContext }) => {
 					<Separator />
 					<Row>
 						<div className="col col-12 mt-5 mb-6">
-							<h1>{isSk ? `Viac projektov` : `More projects`}</h1>
+							<h1>{isSk ? `Viac` : `More projects`}</h1>
 						</div>
 						<ProjectsGrid items={related} />
 					</Row>
