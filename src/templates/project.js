@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import { graphql, Link } from "gatsby";
-import LangSwitcher from "../components/LangSwitcher";
+import Scrollspy from "react-scrollspy";
 import Layout from "../components/layout";
 import Row from "../components/row";
+import Image from '../components/image';
 import Separator from "../components/separator";
 import Single from "./single";
 import ProjectsGrid from "../components/blockGrids/projectsGrid";
 import ProjectMedia from "../components/projectMedia";
 import NewsBlock from "../components/newsBlock";
+import { object } from "prop-types";
 
 const Project = ({ data: { project, news }, pageContext }) => {
 	let related = pageContext.related
@@ -21,6 +23,11 @@ const Project = ({ data: { project, news }, pageContext }) => {
 	const translationSlug = project.translations[0].uri;
 	const { latestEdition } = pageContext;
 
+	const { grants, menuLabels, media, menuImages } =
+		project.projectDescription;
+
+	const hasProjectMenu = menuLabels && Object.keys(menuLabels).length;
+
 	const allNews = news.edges;
 
 	const [showAllRelatedNews, setShowAllRelatedNews] = useState(
@@ -30,6 +37,14 @@ const Project = ({ data: { project, news }, pageContext }) => {
 		e.preventDefault();
 		setShowAllRelatedNews(!showAllRelatedNews);
 	};
+
+	const sectionIds = [
+		"project-about",
+		"project-grants",
+		"project-news",
+		"project-videos",
+		"project-pictures"
+	];
 
 	return (
 		<Layout
@@ -50,12 +65,78 @@ const Project = ({ data: { project, news }, pageContext }) => {
 					</h2>
 				</div>
 			</Row>
-			<Single content={project} />
+
+			<Row>
+				<div className="col-12">
+					{project.title && (
+						<h1 className="single-title">{project.title}</h1>
+					)}
+				</div>
+			</Row>
+			{hasProjectMenu && (
+				<div className="project-menu edition-menu-wrapper  position-sticky">
+					<nav className="project-nav">
+						<Scrollspy
+							items={sectionIds}
+							currentClassName="active"
+							offset={-100}
+						>
+							<li>
+								<a href="#project-about">{menuLabels.about}</a>
+							</li>
+							<li>
+								<a href="#project-grants">{menuLabels.grant}</a>
+							</li>
+							<li>
+								<a href="#project-news">{menuLabels.news}</a>
+							</li>
+
+							<li>
+								<a href="#project-videos">
+									{menuLabels.videos}
+								</a>
+							</li>
+							<li>
+								<a href="#project-pictures">
+									{menuLabels.pictures}
+								</a>
+							</li>
+						</Scrollspy>
+					</nav>
+					<div className="menu-images">
+						{menuImages &&
+							menuImages.map(image => (
+								<div className="single-menu-image">
+									<Image srcSet={image.srcSet || ""} />
+								</div>
+							))}
+					</div>
+				</div>
+			)}
+
+			<Single noTitle content={project} id="project-about" />
+
+			{grants && (
+				<>
+					<Separator />
+					<Row id="project-grants">
+						<div className="col col-12 mt-5 mb-6">
+							<h1>{grants.title}</h1>
+						</div>
+						<div className="col-lg-6 col-12 mx-auto">
+							<div
+								dangerouslySetInnerHTML={{
+									__html: grants.text
+								}}
+							/>
+						</div>
+					</Row>
+				</>
+			)}
 
 			{allNews.length ? (
 				<>
-					<Separator />
-					<Row>
+					<Row id="project-news">
 						<div className="col col-12 mt-5 mb-6">
 							<h1>{isSk ? `Related news` : `Related news`}</h1>
 						</div>
@@ -94,14 +175,12 @@ const Project = ({ data: { project, news }, pageContext }) => {
 				``
 			)}
 
-			{project.projectDescription.media && (
-				<ProjectMedia media={project.projectDescription.media} />
-			)}
+			{media && <ProjectMedia media={media} />}
 
 			{related.length ? (
 				<>
 					<Separator />
-					<Row>
+					<Row id="project-related">
 						<div className="col col-12 mt-5 mb-6">
 							<h1>{isSk ? `Viac` : `More projects`}</h1>
 						</div>
@@ -166,6 +245,20 @@ export const ProjectData = graphql`
 				uri
 			}
 			projectDescription {
+				grants {
+					text
+					title
+				}
+				menuLabels {
+					videos
+					pictures
+					news
+					grant
+					about
+				}
+				menuImages {
+					srcSet
+				}
 				media {
 					videos {
 						title
