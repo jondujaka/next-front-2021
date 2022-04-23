@@ -159,7 +159,7 @@ const Project = ({ data: { project, news }, pageContext }) => {
 						<div className="col col-12 mt-5 mb-6">
 							<h1>{grants.title}</h1>
 						</div>
-						<div className="col-lg-6 col-12 mx-auto">
+						<div className="col-lg-6 col-12 mx-auto small-images">
 							<div
 								dangerouslySetInnerHTML={{
 									__html: grants.text

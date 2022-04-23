@@ -135,6 +135,12 @@
 
 // PROJECT PAGE
 
+.small-images p img {
+	display: inline;
+	max-width: 40%;
+	height: auto;
+}
+
 .project-menu {
 	background: white;
 	margin-top: 0 !important;
