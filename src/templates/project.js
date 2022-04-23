@@ -1,15 +1,15 @@
 import React, { useState } from "react";
-import { graphql, Link } from "gatsby";
+import { graphql, Link, navigate } from "gatsby";
 import Scrollspy from "react-scrollspy";
 import Layout from "../components/layout";
+import Dropdown from "react-dropdown";
 import Row from "../components/row";
-import Image from '../components/image';
+import Image from "../components/image";
 import Separator from "../components/separator";
 import Single from "./single";
 import ProjectsGrid from "../components/blockGrids/projectsGrid";
 import ProjectMedia from "../components/projectMedia";
 import NewsBlock from "../components/newsBlock";
-import { object } from "prop-types";
 
 const Project = ({ data: { project, news }, pageContext }) => {
 	let related = pageContext.related
@@ -46,6 +46,47 @@ const Project = ({ data: { project, news }, pageContext }) => {
 		"project-pictures"
 	];
 
+	const menuItems = [
+		{
+			value: "#project-about",
+			label: menuLabels.about
+		},
+		{
+			value: "#project-grants",
+			label: menuLabels.grant
+		},
+		{
+			value: "#project-news",
+			label: menuLabels.news
+		},
+		{
+			value: "#project-videos",
+			label: menuLabels.videos
+		},
+		{
+			value: "#project-pictures",
+			label: menuLabels.pictures
+		}
+	];
+
+	const [currentItem, setCurrentItem] = useState(menuItems[0]);
+
+	const internalHandleClick = item => {
+		navigate(item.value);
+	};
+
+	const changeActiveItem = value => {
+		if(!value?.id) {
+			return;
+		}
+		const targetItem = menuItems.find(item => item.value === `#${value.id}`);
+
+		console.log(targetItem)
+		if(targetItem){
+			setCurrentItem(targetItem);
+		}
+	}
+
 	return (
 		<Layout
 			isSk={isSk}
@@ -75,34 +116,29 @@ const Project = ({ data: { project, news }, pageContext }) => {
 			</Row>
 			{hasProjectMenu && (
 				<div className="project-menu edition-menu-wrapper  position-sticky">
-					<nav className="project-nav">
+					<nav className="project-nav project-desktop-nav">
 						<Scrollspy
 							items={sectionIds}
 							currentClassName="active"
 							offset={-100}
+							onUpdate={changeActiveItem}
 						>
-							<li>
-								<a href="#project-about">{menuLabels.about}</a>
-							</li>
-							<li>
-								<a href="#project-grants">{menuLabels.grant}</a>
-							</li>
-							<li>
-								<a href="#project-news">{menuLabels.news}</a>
-							</li>
-
-							<li>
-								<a href="#project-videos">
-									{menuLabels.videos}
-								</a>
-							</li>
-							<li>
-								<a href="#project-pictures">
-									{menuLabels.pictures}
-								</a>
-							</li>
+							{menuItems.map(item => (
+								<li>
+									<a href={item.value}>{item.label}</a>
+								</li>
+							))}
 						</Scrollspy>
 					</nav>
+					<div className="project-mobile-nav">
+						<Dropdown
+							options={menuItems}
+							onChange={internalHandleClick}
+							placeholder={currentItem.label}
+							value={currentItem.value}
+						/>
+					</div>
+
 					<div className="menu-images">
 						{menuImages &&
 							menuImages.map(image => (
