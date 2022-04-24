@@ -120,7 +120,7 @@ const Project = ({ data: { project, news }, pageContext }) => {
 						<Scrollspy
 							items={sectionIds}
 							currentClassName="active"
-							offset={-100}
+							offset={-110}
 							onUpdate={changeActiveItem}
 						>
 							{menuItems.map(item => (
