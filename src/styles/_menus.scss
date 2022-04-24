@@ -365,6 +365,14 @@ footer {
 		letter-spacing: 0.04em;
 		box-shadow: 0 0 60px 16px rgb(74 74 241 / 60%);
 	}
+
+	.project-menu {
+		height: 70px;
+
+		.menu-images figure {
+			max-height: 30px
+		}
+	}
 }
 
 .project-desktop-nav {
