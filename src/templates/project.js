@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import { graphql, Link } from "gatsby";
-import LangSwitcher from "../components/LangSwitcher";
+import { graphql, Link, navigate } from "gatsby";
+import Scrollspy from "react-scrollspy";
 import Layout from "../components/layout";
+import Dropdown from "react-dropdown";
 import Row from "../components/row";
+import Image from "../components/image";
 import Separator from "../components/separator";
 import Single from "./single";
 import ProjectsGrid from "../components/blockGrids/projectsGrid";
@@ -21,6 +23,11 @@ const Project = ({ data: { project, news }, pageContext }) => {
 	const translationSlug = project.translations[0].uri;
 	const { latestEdition } = pageContext;
 
+	const { grants, menuLabels, media, menuImages } =
+		project.projectDescription;
+
+	const hasProjectMenu = menuLabels && Object.keys(menuLabels).length;
+
 	const allNews = news.edges;
 
 	const [showAllRelatedNews, setShowAllRelatedNews] = useState(
@@ -30,6 +37,55 @@ const Project = ({ data: { project, news }, pageContext }) => {
 		e.preventDefault();
 		setShowAllRelatedNews(!showAllRelatedNews);
 	};
+
+	const sectionIds = [
+		"project-about",
+		"project-grants",
+		"project-news",
+		"project-videos",
+		"project-pictures"
+	];
+
+	const menuItems = [
+		{
+			value: "#project-about",
+			label: menuLabels.about
+		},
+		{
+			value: "#project-grants",
+			label: menuLabels.grant
+		},
+		{
+			value: "#project-news",
+			label: menuLabels.news
+		},
+		{
+			value: "#project-videos",
+			label: menuLabels.videos
+		},
+		{
+			value: "#project-pictures",
+			label: menuLabels.pictures
+		}
+	];
+
+	const [currentItem, setCurrentItem] = useState(menuItems[0]);
+
+	const internalHandleClick = item => {
+		navigate(item.value);
+	};
+
+	const changeActiveItem = value => {
+		if(!value?.id) {
+			return;
+		}
+		const targetItem = menuItems.find(item => item.value === `#${value.id}`);
+
+		console.log(targetItem)
+		if(targetItem){
+			setCurrentItem(targetItem);
+		}
+	}
 
 	return (
 		<Layout
@@ -50,12 +106,73 @@ const Project = ({ data: { project, news }, pageContext }) => {
 					</h2>
 				</div>
 			</Row>
-			<Single content={project} />
+
+			<Row>
+				<div className="col-12">
+					{project.title && (
+						<h1 className="single-title">{project.title}</h1>
+					)}
+				</div>
+			</Row>
+			{hasProjectMenu && (
+				<div className="project-menu edition-menu-wrapper  position-sticky">
+					<nav className="project-nav project-desktop-nav">
+						<Scrollspy
+							items={sectionIds}
+							currentClassName="active"
+							offset={-110}
+							onUpdate={changeActiveItem}
+						>
+							{menuItems.map(item => (
+								<li>
+									<a href={item.value}>{item.label}</a>
+								</li>
+							))}
+						</Scrollspy>
+					</nav>
+					<div className="project-mobile-nav">
+						<Dropdown
+							options={menuItems}
+							onChange={internalHandleClick}
+							placeholder={currentItem.label}
+							value={currentItem.value}
+						/>
+					</div>
+
+					<div className="menu-images">
+						{menuImages &&
+							menuImages.map(image => (
+								<div className="single-menu-image">
+									<Image srcSet={image.srcSet || ""} />
+								</div>
+							))}
+					</div>
+				</div>
+			)}
+
+			<Single noTitle content={project} id="project-about" />
+
+			{grants && (
+				<>
+					<Separator />
+					<Row id="project-grants">
+						<div className="col col-12 mt-5 mb-6">
+							<h1>{grants.title}</h1>
+						</div>
+						<div className="col-lg-6 col-12 mx-auto small-images">
+							<div
+								dangerouslySetInnerHTML={{
+									__html: grants.text
+								}}
+							/>
+						</div>
+					</Row>
+				</>
+			)}
 
 			{allNews.length ? (
 				<>
-					<Separator />
-					<Row>
+					<Row id="project-news">
 						<div className="col col-12 mt-5 mb-6">
 							<h1>{isSk ? `Related news` : `Related news`}</h1>
 						</div>
@@ -94,14 +211,12 @@ const Project = ({ data: { project, news }, pageContext }) => {
 				``
 			)}
 
-			{project.projectDescription.media && (
-				<ProjectMedia media={project.projectDescription.media} />
-			)}
+			{media && <ProjectMedia media={media} />}
 
 			{related.length ? (
 				<>
 					<Separator />
-					<Row>
+					<Row id="project-related">
 						<div className="col col-12 mt-5 mb-6">
 							<h1>{isSk ? `Viac` : `More projects`}</h1>
 						</div>
@@ -166,6 +281,20 @@ export const ProjectData = graphql`
 				uri
 			}
 			projectDescription {
+				grants {
+					text
+					title
+				}
+				menuLabels {
+					videos
+					pictures
+					news
+					grant
+					about
+				}
+				menuImages {
+					srcSet
+				}
 				media {
 					videos {
 						title

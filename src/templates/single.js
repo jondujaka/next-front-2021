@@ -4,7 +4,7 @@ import Media from "../components/media";
 import Video from "../components/video";
 import Paragraph from "../components/paragraph";
 
-const Single = ({ content, direct }) => {
+const Single = ({ content, direct, noTitle, ...props }) => {
 	if (!content) {
 		return ``;
 	}
@@ -18,14 +18,15 @@ const Single = ({ content, direct }) => {
 	return (
 		<div
 			className={`single-content ${direct ? `no-padding` : `separator`}`}
+			{...props}
 		>
-			<Row>
+			{!noTitle && <Row>
 				<div className="col-12">
 					{content.title && (
 						<h1 className="single-title">{content.title}</h1>
 					)}
 				</div>
-			</Row>
+			</Row>}
 			{rows ? (
 				rows.map((item, i) => (
 					<Row key={`row-${i}`} classes="my-md-4 my-5 my-lg-7">
