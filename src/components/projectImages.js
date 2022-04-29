@@ -12,7 +12,7 @@ const ProjectImages = ({ images }) => {
 	return (
 		<>
 			<Separator />
-			<Row>
+			<Row id="project-pictures">
 				<div className="col col-12 mt-5 mb-6">
 					<h1>{images.title}</h1>
 				</div>

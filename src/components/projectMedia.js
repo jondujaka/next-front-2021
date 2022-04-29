@@ -6,8 +6,6 @@ const ProjectMedia = ({ media }) => {
 	const images = media.images;
 	const videos = media.videos;
 
-	console.log(videos);
-
 	return (
 		<>
 			{videos.videos?.length && <ProjectVideos videos={videos} />}
