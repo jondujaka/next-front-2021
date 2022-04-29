@@ -130,3 +130,70 @@
 	max-width: 190rem;
 	margin: 0 auto;
 }
+
+
+
+// PROJECT PAGE
+
+.small-images p img {
+	height: auto;
+}
+
+.project-menu {
+	background: white;
+	margin-top: 0 !important;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.project-nav {
+	align-items: center;
+	height: 100%;
+	ul {
+		display: flex;
+		margin: 0;
+		padding:0;
+		height: 100%;
+		align-items: center;
+
+		li {
+			margin: 0;
+			&:not(:first-of-type){
+				margin-left: 1rem;
+			}
+
+			&.active a{
+				text-decoration: underline;
+			}
+
+			a {
+				@extend .text-nav-small;
+			}
+		}
+	}
+}
+
+.menu-images {
+	display: flex;
+	align-items: center;
+	figure {
+		max-height: 40px;
+	}
+
+	.single-menu-image {
+		&:not(:last-of-type){
+			margin-right: 2rem;
+		}
+	}
+}
+
+
+#project-about,
+#project-grants,
+#project-news,
+#project-pictures,
+#project-videos {
+	padding-top: 100px;
+	margin-top: -100px;
+}
