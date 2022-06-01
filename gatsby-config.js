@@ -13,7 +13,7 @@ module.exports = {
 		{
 			resolve: `gatsby-source-wordpress`,
 			options: {
-				url: 'https://nextcontent.a2hosted.com/graphql',
+				url: process.env.WORDPRESS_URL,
 				verboseOutput: true,
 				debug: {
 					graphql: {
