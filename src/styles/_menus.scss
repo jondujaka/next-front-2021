@@ -370,7 +370,7 @@ footer {
 		height: 70px;
 
 		.menu-images figure {
-			max-height: 30px
+			max-height: 60px
 		}
 	}
 }
@@ -382,6 +382,8 @@ footer {
 .project-mobile-nav {
 	display: flex;
 	align-items: center;
+	margin-bottom: 1rem;
+	margin-top: auto;
 
 	a,
 	.Dropdown-root {

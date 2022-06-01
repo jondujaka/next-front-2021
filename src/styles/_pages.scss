@@ -140,6 +140,7 @@
 }
 
 .project-menu {
+	height: 110px;
 	background: white;
 	margin-top: 0 !important;
 	display: flex;
@@ -155,7 +156,8 @@
 		margin: 0;
 		padding:0;
 		height: 100%;
-		align-items: center;
+		align-items: flex-end;
+padding-bottom: 1rem;
 
 		li {
 			margin: 0;
@@ -178,12 +180,12 @@
 	display: flex;
 	align-items: center;
 	figure {
-		max-height: 40px;
+		max-height: 65px;
 	}
 
 	.single-menu-image {
 		&:not(:last-of-type){
-			margin-right: 2rem;
+			margin-right: 3rem;
 		}
 	}
 }
