@@ -116,6 +116,14 @@ const Project = ({ data: { project, news }, pageContext }) => {
 			</Row>
 			{hasProjectMenu && (
 				<div className="project-menu edition-menu-wrapper  position-sticky">
+				<div className="menu-images">
+						{menuImages &&
+							menuImages.map(image => (
+								<div className="single-menu-image">
+									<Image srcSet={image.srcSet || ""} />
+								</div>
+							))}
+					</div>
 					<nav className="project-nav project-desktop-nav">
 						<Scrollspy
 							items={sectionIds}
@@ -139,14 +147,7 @@ const Project = ({ data: { project, news }, pageContext }) => {
 						/>
 					</div>
 
-					<div className="menu-images">
-						{menuImages &&
-							menuImages.map(image => (
-								<div className="single-menu-image">
-									<Image srcSet={image.srcSet || ""} />
-								</div>
-							))}
-					</div>
+					
 				</div>
 			)}
 
