@@ -1,42 +1,42 @@
-name: Build and Deploy
-on:
-  push:
-    branches: main
-jobs:
-  build-and-deploy:
-    name: Build and deploy Gatsby site
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2.3.1
+# name: Build and Deploy
+# on:
+#   push:
+#     branches: main
+# jobs:
+#   build-and-deploy:
+#     name: Build and deploy Gatsby site
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout Code
+#         uses: actions/checkout@v2.3.1
       
-      - name: Install Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: '13.x'
+#       - name: Install Node.js
+#         uses: actions/setup-node@v1
+#         with:
+#           node-version: '13.x'
       
-      - name: Install Project Dependencies
-        run: npm ci
+#       - name: Install Project Dependencies
+#         run: npm ci
       
-      - name: Install Gatsby CLI
-        run: npm install -g gatsby-cli@2.12.34
+#       - name: Install Gatsby CLI
+#         run: npm install -g gatsby-cli@2.12.34
       
-      - name: Build
-        env:
-            # incremental builds
-            # https://www.gatsbyjs.org/docs/page-build-optimizations-for-incremental-data-changes/
-            WP_GRAPHQL_URL: https://nextfestival.sk/content/graphql
-        run: gatsby build
+#       - name: Build
+#         env:
+#             # incremental builds
+#             # https://www.gatsbyjs.org/docs/page-build-optimizations-for-incremental-data-changes/
+#             WP_GRAPHQL_URL: https://nextfestival.sk/content/graphql
+#         run: gatsby build
       
-      - name: Verify build
-        run: ls -la public
+#       - name: Verify build
+#         run: ls -la public
 
-      - name: 📂 Sync files
-        uses: SamKirkland/FTP-Deploy-Action@4.0.0
-        with:
-          server: multiplace.org
-          username: jondujaka
-          password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftps
-          local-dir: ./public/
-          server-dir: ./nextfestival.sk/front/
+#       - name: 📂 Sync files
+#         uses: SamKirkland/FTP-Deploy-Action@4.0.0
+#         with:
+#           server: multiplace.org
+#           username: jondujaka
+#           password: ${{ secrets.FTP_PASSWORD }}
+#           protocol: ftps
+#           local-dir: ./public/
+#           server-dir: ./nextfestival.sk/front/
