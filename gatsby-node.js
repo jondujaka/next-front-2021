@@ -683,7 +683,7 @@ const getEditionInfo = async (year, { graphql, reporter }) => {
 				editionContent {
 					fieldGroupName
 					content {
-						... on WpEdition2021_Editioncontent_Content_WorkshopsSection {
+						... on WpEdition${year}_Editioncontent_Content_WorkshopsSection {
 							fieldGroupName
 							title
 							workshops {
@@ -706,7 +706,7 @@ const getEditionInfo = async (year, { graphql, reporter }) => {
 							  }
 							}
 						  }
-					  ... on WpEdition2021_Editioncontent_Content_ArtistsSection {
+					  ... on WpEdition${year}_Editioncontent_Content_ArtistsSection {
 						fieldGroupName
 						title
 						artists {
@@ -729,7 +729,7 @@ const getEditionInfo = async (year, { graphql, reporter }) => {
 						  }
 						}
 					  }
-					  ... on WpEdition2021_Editioncontent_Content_Link {
+					  ... on WpEdition${year}_Editioncontent_Content_Link {
 						fieldGroupName
 						textOrButton
 						link {
@@ -737,15 +737,15 @@ const getEditionInfo = async (year, { graphql, reporter }) => {
 						  title
 						}
 					  }
-					  ... on WpEdition2021_Editioncontent_Content_Paragraph {
+					  ... on WpEdition${year}_Editioncontent_Content_Paragraph {
 						fieldGroupName
 						text
 					  }
-					  ... on WpEdition2021_Editioncontent_Content_Title {
+					  ... on WpEdition${year}_Editioncontent_Content_Title {
 						fieldGroupName
 						text
 					  }
-					  ... on WpEdition2021_Editioncontent_Content_Media {
+					  ... on WpEdition${year}_Editioncontent_Content_Media {
 						fieldGroupName
 						mediaType
 						images {
@@ -804,6 +804,8 @@ const getEditionInfo = async (year, { graphql, reporter }) => {
 		);
 		return;
 	}
+
+	console.log(graphqlResult.data.wpMenu)
 
 	return {
 		editionData: graphqlResult.data[`wpEdition${year}`],

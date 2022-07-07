@@ -122,7 +122,7 @@ const Layout = ({
 			>
 				{!embeded && (
 					<Header
-						noLang={editionHeader.menuItems || false}
+						noLang={editionHeader?.menuItems || false}
 						isSk={isSk}
 						translationSlug={translationSlug}
 						style={style}

@@ -15,7 +15,7 @@ const EditionMenu = ({
 	sticky
 }) => {
 	const navItems = items.nodes;
-	const skNavItems = skMenu.nodes;
+	const skNavItems = skMenu?.nodes;
 	const menuItems = navItems
 		.map((item, i) => {
 			if (i === 0 || item.menuItems.hide) {
