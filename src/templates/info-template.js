@@ -23,7 +23,7 @@ const Info = ({ data, pageContext }) => {
 		page => page.node.language.slug === lang
 	);
 
-	const sections = translatedContent.node.about.section;
+	const sections = translatedContent?.node?.about?.section;
 
 	let scrollSpyItems =
 		sections && sections.map(section => section.title.toLowerCase());
