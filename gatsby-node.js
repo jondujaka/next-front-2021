@@ -7,7 +7,7 @@
 // You can delete this file if you're not using it
 
 const path = require(`path`);
-const editions = [2021];
+const editions = [2021, 2022];
 const editionsToBuild = [];
 const templateMap = {
 	news: `news-page`,
@@ -683,30 +683,7 @@ const getEditionInfo = async (year, { graphql, reporter }) => {
 				editionContent {
 					fieldGroupName
 					content {
-						... on WpEdition2021_Editioncontent_Content_WorkshopsSection {
-							fieldGroupName
-							title
-							workshops {
-							  ... on WpEvent {
-								id
-								uri
-								title
-								artistEventContent {
-									images {
-										srcSet
-									}
-								}
-								language {
-									slug
-								}
-								translations {
-									uri
-									title
-								}
-							  }
-							}
-						  }
-					  ... on WpEdition2021_Editioncontent_Content_ArtistsSection {
+					  ... on WpEdition${year}_Editioncontent_Content_ArtistsSection {
 						fieldGroupName
 						title
 						artists {
@@ -729,7 +706,7 @@ const getEditionInfo = async (year, { graphql, reporter }) => {
 						  }
 						}
 					  }
-					  ... on WpEdition2021_Editioncontent_Content_Link {
+					  ... on WpEdition${year}_Editioncontent_Content_Link {
 						fieldGroupName
 						textOrButton
 						link {
@@ -737,15 +714,15 @@ const getEditionInfo = async (year, { graphql, reporter }) => {
 						  title
 						}
 					  }
-					  ... on WpEdition2021_Editioncontent_Content_Paragraph {
+					  ... on WpEdition${year}_Editioncontent_Content_Paragraph {
 						fieldGroupName
 						text
 					  }
-					  ... on WpEdition2021_Editioncontent_Content_Title {
+					  ... on WpEdition${year}_Editioncontent_Content_Title {
 						fieldGroupName
 						text
 					  }
-					  ... on WpEdition2021_Editioncontent_Content_Media {
+					  ... on WpEdition${year}_Editioncontent_Content_Media {
 						fieldGroupName
 						mediaType
 						images {
