@@ -20,7 +20,7 @@ const Info = ({ data, pageContext }) => {
 	const translationSlug = `/${langSlug}${edition}/info`;
 
 	const translatedContent = infoPages.find(
-		page => page.node.language.slug === lang
+		page => page.node?.language?.slug === lang
 	);
 
 	const sections = translatedContent?.node?.about?.section;
