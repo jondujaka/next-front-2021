@@ -130,10 +130,11 @@ const WorkshopsTemplate = ({ data, pageContext }) => {
 export default WorkshopsTemplate;
 
 export const workshopsQuery = graphql`
-	query workshopsPage($lang: String!) {
+	query workshopsPage($lang: String!, $edition: String!) {
 		workshops: allWpEvent(
 			filter: {
 				formats: { nodes: { elemMatch: { slug: { eq: "workshop" } } } }
+				editions:{nodes:{elemMatch:{slug:{eq: $edition}}}}
 				language: { slug: { eq: $lang } }
 			}
 			sort: { order: DESC, fields: date }

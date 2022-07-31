@@ -20,15 +20,20 @@ const EditionMenu = ({
 		.map((item, i) => {
 			if (i === 0 || item.menuItems.hide) {
 				return null;
-			} else {
-				let newUrl = parseUrl(isSk, item.url);
-				let newLabel =
-					isSk && skNavItems ? skNavItems[i].label : item.label;
-				return {
-					value: newUrl,
-					label: newLabel
-				};
 			}
+
+			if(isSk && (skNavItems || skNavItems[i])){
+				return null;
+			}
+
+
+			let newUrl = parseUrl(isSk, item.url);
+			let newLabel =
+				isSk && skNavItems ? skNavItems[i].label : item.label;
+			return {
+				value: newUrl,
+				label: newLabel
+			};
 		})
 		.filter(item => item && item.label !== pageName);
 
@@ -43,6 +48,10 @@ const EditionMenu = ({
 			background: ${colors.borderColor};
 			border-color: ${colors.borderColor};
 		}
+
+		.Dropdown-menu {
+			background: ${colors.backgroundColor};
+		}
 		.Dropdown-option:hover,
 		.Dropdown-option.is-selected {
 			color: ${colors.backgroundColor};
@@ -52,6 +61,10 @@ const EditionMenu = ({
 		: ``;
 
 	const getHomeText = () => (isSk ? `Domov` : `Home`);
+
+	const isDev =
+			process.env.GATSBY_IS_PREVIEW ||
+			process.env.CONTEXT !== `production`;
 
 	return Style.it(
 		styles,
@@ -64,9 +77,13 @@ const EditionMenu = ({
 			<nav className="edition-nav">
 				<ul className="desktop-edition-menu">
 					<li>
-						{navItems.length &&
+						{navItems?.length &&
 							navItems.map((item, i) => {
-								if (item.menuItems.hide) {
+								if (item.menuItems.hide && !isDev) {
+									return "";
+								}
+
+								if(isSk && (skNavItems || skNavItems[i])){
 									return "";
 								}
 								return (
@@ -76,7 +93,7 @@ const EditionMenu = ({
 										getProps={isActive(item.url)}
 										partiallyActive
 									>
-										{isSk && skNavItems
+										{isSk
 											? skNavItems[i].label
 											: item.label}
 									</Link>
@@ -92,19 +109,19 @@ const EditionMenu = ({
 								to={parseUrl(isSk, navItems[0].url)}
 								partiallyActive
 							>
-								{isSk && skNavItems
-									? skNavItems[0].label
+								{isSk
+									? skNavItems && skNavItems[0]?.label ? skNavItems[0]?.label : ""
 									: navItems[0].label}
 							</Link>
 						</li>
 					</ul>
-					<Dropdown
+					{menuItems && <Dropdown
 						options={menuItems}
 						onChange={internalHandleClick}
 						placeholder={
 							pageName === `index` ? getHomeText() : pageName
 						}
-					/>
+					/>}
 				</div>
 
 				{translationSlug && !sticky && (
@@ -153,6 +170,7 @@ const isActive =
 	};
 
 const parseUrl = (isSk, url) => {
+	console.log(url)
 	let parsedUrl = url;
 	if (url.endsWith(`/`)) {
 		parsedUrl = url.substring(0, url.length - 1);
