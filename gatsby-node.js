@@ -338,7 +338,7 @@ exports.createPages = async gatsbyUtilities => {
 };
 
 const buildEdition = async (year, gatsbyUtilities) => {
-	// console.log(`start building edition: ${year}`);
+	console.log(`start building edition: ${year}`);
 	let editionInfo = await getEditionInfo(year, gatsbyUtilities);
 	// console.log(editionInfo);
 
@@ -376,8 +376,11 @@ console.log(editionInfo.editionData.settings)
 		let shouldBuild = false;
 		let isDev =
 			process.env.GATSBY_IS_PREVIEW ||
-			process.env.NODE_ENV === `development`;
+			process.env.CONTEXT !== `production`;
 		let { liveWebsite, testWebsite } = editionInfo.editionData.settings;
+
+		console.log(year);
+		console.log(editionInfo.editionData);
 
 		if (isDev) {
 			shouldBuild = liveWebsite || testWebsite;

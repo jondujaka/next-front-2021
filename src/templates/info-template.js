@@ -20,7 +20,7 @@ const Info = ({ data, pageContext }) => {
 	const translationSlug = `/${langSlug}${edition}/info`;
 
 	const translatedContent = infoPages.find(
-		page => page.node.language.slug === lang
+		page => page.node?.language?.slug === lang
 	);
 
 	const sections = translatedContent?.node?.about?.section;
@@ -73,6 +73,7 @@ const Info = ({ data, pageContext }) => {
 								id={section.title.toLowerCase()}
 								key={`about-section-${section.title}-${i}`}
 							>
+
 								{section.title !== "Banner" && (
 									<h2 className="d-md-none d-block about-title">
 										{section.title}
@@ -82,6 +83,8 @@ const Info = ({ data, pageContext }) => {
 							</div>
 						))}
 				</div>
+
+				{!sections?.length &&  <h2>{isSk ? 'Už čoskoro' : 'Coming soon'}</h2>}
 			</div>
 		</Layout>
 	);

@@ -66,7 +66,7 @@ const Events = ({ data: { event }, pageContext }) => {
 							/>
 						))
 					) : (
-						<h4>Description coming soon...</h4>
+						<h4>{isSk ? 'Už čoskoro' : 'Coming soon'}</h4>
 					)}
 				</div>
 			</Row>
