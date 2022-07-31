@@ -131,7 +131,7 @@ const Layout = ({
 				{editionHeader && editionHeader.menuItems && (
 					<EditionMenu
 						items={editionHeader.menuItems}
-						skMenu={skMenu.menuItems}
+						skMenu={skMenu?.menuItems || []}
 						bg={style.backgroundColor}
 						translationSlug={translationSlug}
 						isSk={isSk}

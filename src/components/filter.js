@@ -70,6 +70,9 @@ const Filter = ({
 				color: ${colors.backgroundColor};
 				background: ${colors.textColor};
 			}
+			.Dropdown-menu {
+				background: ${colors.backgroundColor};
+			}
 		`
 		: ``;
 
