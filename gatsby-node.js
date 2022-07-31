@@ -372,6 +372,7 @@ const buildEdition = async (year, gatsbyUtilities) => {
 	) {
 		// Create the edition
 
+console.log(editionInfo.editionData.settings)
 		let shouldBuild = false;
 		let isDev =
 			process.env.GATSBY_IS_PREVIEW ||
