@@ -83,9 +83,9 @@ const EditionMenu = ({
 									return "";
 								}
 
-								if(isSk && (skNavItems || skNavItems[i])){
-									return "";
-								}
+								// if(isSk && (skNavItems || skNavItems[i])){
+								// 	return "";
+								// }
 								return (
 									<Link
 										key={`item-${item.url}`}

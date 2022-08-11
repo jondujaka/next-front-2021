@@ -65,7 +65,6 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 		});
 
 		setAllEvents(newEvents);
-		isInitLoad(false);
 	};
 
 	const setUpDays = () => {
@@ -129,6 +128,7 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 		});
 		setDayFilterItems(sortedAllDays);
 		setAllDays(allDaysInit);
+		isInitLoad(false);
 	};
 
 	useEffect(() => {
