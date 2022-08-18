@@ -120,7 +120,7 @@ const WorkshopsTemplate = ({ data, pageContext }) => {
 				{allWorkshops && allWorkshops.length ? (
 					<ArtistsGrid colors={settings} items={allWorkshops} />
 				) : (
-					<h3>No workshops for the selected filters.</h3>
+					<h3>{isSk ? `Viac info čoskoro` : `Info coming soon`}</h3>
 				)}
 			</Row>
 		</Layout>
@@ -134,7 +134,7 @@ export const workshopsQuery = graphql`
 		workshops: allWpEvent(
 			filter: {
 				formats: { nodes: { elemMatch: { slug: { eq: "workshop" } } } }
-				editions:{nodes:{elemMatch:{slug:{eq: $edition}}}}
+				editions: { nodes: { elemMatch: { slug: { eq: $edition } } } }
 				language: { slug: { eq: $lang } }
 			}
 			sort: { order: DESC, fields: date }

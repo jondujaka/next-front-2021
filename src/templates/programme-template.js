@@ -187,9 +187,9 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 						) : (
 							<div className="col col-12 mt-7">
 								<h3>
-									{initLoad
-										? `Loading the programme...`
-										: `Sorry, there are no events with the selected filters.`}
+									{isSk
+										? `Viac info čoskoro`
+										: `Info coming soon`}
 								</h3>
 							</div>
 						)}
