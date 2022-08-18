@@ -82,6 +82,9 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 			}
 
 			eventInfo.dates.forEach(date => {
+				if (!date.date) {
+					return;
+				}
 				let dateSlug = date.date;
 
 				if (!allDaysInit.hasOwnProperty(dateSlug)) {

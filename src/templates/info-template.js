@@ -152,10 +152,6 @@ export const infoQuery = graphql`
 		) {
 			edges {
 				node {
-					id
-					... on WpEdition2022 {
-						title
-					}
 					... on WpEdition2021 {
 						id
 						title
@@ -180,6 +176,72 @@ export const infoQuery = graphql`
 										}
 									}
 									... on WpEdition2021_About_section_Content_Text {
+										big
+										fieldGroupName
+										textContent
+									}
+								}
+								title
+							}
+						}
+					}
+					... on WpEdition2022 {
+						id
+						title
+						language {
+							slug
+						}
+						about {
+							fieldGroupName
+							section {
+								content {
+									... on WpEdition2022_About_section_Content_Partners {
+										fieldGroupName
+										partnerImages {
+											srcSet
+											sourceUrl
+										}
+									}
+									... on WpEdition2022_About_section_Content_Media {
+										fieldGroupName
+										image {
+											srcSet
+										}
+									}
+									... on WpEdition2022_About_section_Content_Text {
+										big
+										fieldGroupName
+										textContent
+									}
+								}
+								title
+							}
+						}
+					}
+					... on WpEdition2023 {
+						id
+						title
+						language {
+							slug
+						}
+						about {
+							fieldGroupName
+							section {
+								content {
+									... on WpEdition2023_About_section_Content_Partners {
+										fieldGroupName
+										partnerImages {
+											srcSet
+											sourceUrl
+										}
+									}
+									... on WpEdition2023_About_section_Content_Media {
+										fieldGroupName
+										image {
+											srcSet
+										}
+									}
+									... on WpEdition2023_About_section_Content_Text {
 										big
 										fieldGroupName
 										textContent
