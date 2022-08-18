@@ -73,7 +73,6 @@ const Info = ({ data, pageContext }) => {
 								id={section.title.toLowerCase()}
 								key={`about-section-${section.title}-${i}`}
 							>
-
 								{section.title !== "Banner" && (
 									<h2 className="d-md-none d-block about-title">
 										{section.title}
@@ -83,8 +82,6 @@ const Info = ({ data, pageContext }) => {
 							</div>
 						))}
 				</div>
-
-				{!sections?.length &&  <h2>{isSk ? 'Už čoskoro' : 'Coming soon'}</h2>}
 			</div>
 		</Layout>
 	);
