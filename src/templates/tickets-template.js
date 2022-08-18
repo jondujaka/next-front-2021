@@ -30,7 +30,7 @@ const TicketsTemplate = ({ pageContext }) => {
 			<Row>
 				<Helmet>
 					<script
-						src="https://partners.goout.net/sk-bratislava/nextfestivalsk.js"
+						src="https://partners.goout.net/sk-bratislava/nextfestivalsk.js?v=1.1"
 						type="text/javascript"
 					/>
 				</Helmet>
