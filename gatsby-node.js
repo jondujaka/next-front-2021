@@ -181,23 +181,24 @@ const initPostTypes = async gatsbyUtilities => {
 
 		const eventsList = [];
 
-		allEvents.flatMap(eventInfo => {
-			if (
-				eventInfo.event.eventInfo &&
-				eventInfo.event.eventInfo.artists &&
-				eventInfo.event.eventInfo.artists.some(artist => {
-					return artist.id === artistInfo.artist.id;
-				})
-			) {
-				return {
-					title: eventInfo.event.title,
-					url: eventInfo.event.uri,
-					eventInfo: eventInfo.event.eventInfo
-				};
-			} else {
-				return [];
-			}
-		});
+		allEvents &&
+			allEvents.flatMap(eventInfo => {
+				if (
+					eventInfo.event.eventInfo &&
+					eventInfo.event.eventInfo.artists &&
+					eventInfo.event.eventInfo.artists.some(artist => {
+						return artist.id === artistInfo.artist.id;
+					})
+				) {
+					return {
+						title: eventInfo.event.title,
+						url: eventInfo.event.uri,
+						eventInfo: eventInfo.event.eventInfo
+					};
+				} else {
+					return [];
+				}
+			});
 
 		{
 			const slug = artistInfo.artist.uri;
@@ -372,7 +373,7 @@ const buildEdition = async (year, gatsbyUtilities) => {
 	) {
 		// Create the edition
 
-console.log(editionInfo.editionData.settings)
+		console.log(editionInfo.editionData.settings);
 		let shouldBuild = false;
 		let isDev =
 			process.env.GATSBY_IS_PREVIEW ||
