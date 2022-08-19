@@ -229,11 +229,6 @@ export const artistsQuery = graphql`
 			edges {
 				node {
 					eventInfo {
-						artists {
-							... on WpArtist {
-								id
-							}
-						}
 						dates {
 							date
 						}
