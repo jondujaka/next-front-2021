@@ -128,9 +128,10 @@ const initPostTypes = async gatsbyUtilities => {
 	};
 	const allEvents = await getPostType(eventSettings, gatsbyUtilities);
 	const createEventPromises = [];
-	allEvents?.length &&
+	allEvents &&
+		allEvents.length &&
 		allEvents.map(eventInfo => {
-			const year = eventInfo.event.editions?.nodes?.length
+			const year = eventInfo.event.editions.nodes.length
 				? eventInfo.event.editions.nodes.reduce((a, b) =>
 						Math.max(parseInt(a.slug), parseInt(b.slug))
 				  )
@@ -180,23 +181,24 @@ const initPostTypes = async gatsbyUtilities => {
 
 		const eventsList = [];
 
-		allEvents?.flatMap(eventInfo => {
-			if (
-				eventInfo.event.eventInfo &&
-				eventInfo.event.eventInfo.artists &&
-				eventInfo.event.eventInfo.artists.some(artist => {
-					return artist.id === artistInfo.artist.id;
-				})
-			) {
-				return {
-					title: eventInfo.event.title,
-					url: eventInfo.event.uri,
-					eventInfo: eventInfo.event.eventInfo
-				};
-			} else {
-				return [];
-			}
-		});
+		allEvents &&
+			allEvents.flatMap(eventInfo => {
+				if (
+					eventInfo.event.eventInfo &&
+					eventInfo.event.eventInfo.artists &&
+					eventInfo.event.eventInfo.artists.some(artist => {
+						return artist.id === artistInfo.artist.id;
+					})
+				) {
+					return {
+						title: eventInfo.event.title,
+						url: eventInfo.event.uri,
+						eventInfo: eventInfo.event.eventInfo
+					};
+				} else {
+					return [];
+				}
+			});
 
 		{
 			const slug = artistInfo.artist.uri;
@@ -596,7 +598,11 @@ const getPostType = async (settings, { graphql, reporter }) => {
 
 	let eventsFragment = `
 		eventInfo {
-			
+			artists {
+				... on WpArtist {
+				  	id
+				}
+			}
 			venue {
 				... on WpVenue {
 				  uri
