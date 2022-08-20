@@ -12,6 +12,7 @@ const Home = ({ data: { page, news }, pageContext, location }) => {
 	const { latestEdition } = pageContext;
 
 	const allNews = news.edges;
+	const isSk = page.language.slug !== `en`;
 
 	const editionContext = latestEdition
 		? {
@@ -21,12 +22,11 @@ const Home = ({ data: { page, news }, pageContext, location }) => {
 				translation: latestEdition.content.translations[0],
 				menu: latestEdition.menu,
 				skMenu: latestEdition.skMenu,
-				content: latestEdition.content
+				content: isSk ? latestEdition.skContent : latestEdition.content
 		  }
 		: null;
 
 	const langSlug = page.language.slug === `en` ? `sk` : ``;
-	const isSk = page.language.slug !== `en`;
 	const translationSlug = `/${langSlug}`;
 
 	const editionBorder = {

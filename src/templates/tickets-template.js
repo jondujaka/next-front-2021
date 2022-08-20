@@ -13,6 +13,21 @@ const TicketsTemplate = ({ pageContext }) => {
 	const langSlug = lang === `en` ? `sk/` : ``;
 	const translationSlug = `/${langSlug}${edition}/tickets`;
 
+	useEffect(() => {
+		const script = document.createElement("script");
+
+		script.src =
+			"https://partners.goout.net/sk-bratislava/nextfestivalsk.js?v=1.1";
+		script.type = "text/javascript";
+		script.async = true;
+
+		document.body.appendChild(script);
+
+		return () => {
+			document.body.removeChild(script);
+		};
+	}, []);
+
 	return (
 		<Layout
 			style={{
@@ -28,12 +43,6 @@ const TicketsTemplate = ({ pageContext }) => {
 			pageName={isSk ? `Lístky` : `Tickets`}
 		>
 			<Row>
-				<Helmet>
-					<script
-						src="https://partners.goout.net/sk-bratislava/nextfestivalsk.js?v=1.1"
-						type="text/javascript"
-					/>
-				</Helmet>
 				<div className="col col-12 px-0">
 					<h1 className="normal-line-height fw-title">
 						{isSk ? `Lístky` : `Tickets`}

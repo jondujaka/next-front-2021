@@ -338,7 +338,8 @@ exports.createPages = async gatsbyUtilities => {
 
 const buildEdition = async (year, gatsbyUtilities) => {
 	console.log(`start building edition: ${year}`);
-	let editionInfo = await getEditionInfo(year, gatsbyUtilities);
+	let editionInfo = await getEditionInfo(year, "en", gatsbyUtilities);
+	let editionInfoSK = await getEditionInfo(year, "sk", gatsbyUtilities);
 	// console.log(editionInfo);
 
 	const editionPages = [
@@ -400,7 +401,8 @@ const buildEdition = async (year, gatsbyUtilities) => {
 				menu: editionInfo.menu,
 				skMenu: editionInfo.skMenu,
 				year,
-				content: editionInfo.editionData
+				content: editionInfo.editionData,
+				skContent: editionInfoSK.editionData
 			});
 		}
 
@@ -470,7 +472,7 @@ const buildEdition = async (year, gatsbyUtilities) => {
 				gatsbyUtilities
 			)
 		);
-		if (skPage) {
+		if (editionInfoSK?.editionData.editionContent) {
 			editionIndexPromises.push(
 				createIndividualPage(
 					`/sk/${year}/`,
@@ -480,7 +482,9 @@ const buildEdition = async (year, gatsbyUtilities) => {
 						id: skPage.id,
 						lang: `sk`,
 						translation: { language: { slug: `en` } },
-						content: { ...editionInfo.editionData.editionContent },
+						content: {
+							...editionInfoSK.editionData.editionContent
+						},
 						settings: { ...editionInfo.editionData.settings },
 						menu: { ...editionInfo.menu },
 						skMenu: { ...editionInfo.skMenu }
@@ -661,12 +665,12 @@ const getPostType = async (settings, { graphql, reporter }) => {
 	return graphqlResult.data[settings.gqlName].edges;
 };
 
-const getEditionInfo = async (year, { graphql, reporter }) => {
+const getEditionInfo = async (year, lang, { graphql, reporter }) => {
 	console.log(`getting edition: ${year}`);
 	const graphqlResult = await graphql(/* GraphQL */ `
 		query editionSettings {
 			# Query index pages from edition
-			wpEdition${year}( slug: {regex: "/^index/"}, language: {slug: { eq: "en"}}) {
+			wpEdition${year}( slug: {regex: "/^index/"}, language: {slug: { eq: "${lang}"}}) {
 				id
 				settings: editionSettings {
 					textColor
@@ -901,6 +905,8 @@ const initSingleMainPage = async (settings, gatsbyUtils) => {
 		skUri = `/sk/`;
 	}
 
+	const latestEdition = getLatestEdition();
+
 	let contextEn = {
 		id: pageData.id,
 		lang: `en`,
@@ -912,7 +918,8 @@ const initSingleMainPage = async (settings, gatsbyUtils) => {
 
 	let skData = pageData;
 	let contextSk = {
-		...contextEn
+		...contextEn,
+		latestEdition: latestEdition.skContent
 	};
 	if (!skUri) {
 		skUri = `sk/${pageData.slug}`;

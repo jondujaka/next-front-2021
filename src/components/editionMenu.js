@@ -16,16 +16,16 @@ const EditionMenu = ({
 }) => {
 	const navItems = items.nodes;
 	const skNavItems = skMenu?.nodes;
+	console.log(skNavItems);
 	const menuItems = navItems
 		.map((item, i) => {
 			if (i === 0 || item.menuItems.hide) {
 				return null;
 			}
 
-			if(isSk && (skNavItems || skNavItems[i])){
+			if (isSk && (!skNavItems || !skNavItems[i])) {
 				return null;
 			}
-
 
 			let newUrl = parseUrl(isSk, item.url);
 			let newLabel =
@@ -63,8 +63,7 @@ const EditionMenu = ({
 	const getHomeText = () => (isSk ? `Domov` : `Home`);
 
 	const isDev =
-			process.env.GATSBY_IS_PREVIEW ||
-			process.env.CONTEXT !== `production`;
+		process.env.GATSBY_IS_PREVIEW || process.env.CONTEXT !== `production`;
 
 	return Style.it(
 		styles,
@@ -110,18 +109,22 @@ const EditionMenu = ({
 								partiallyActive
 							>
 								{isSk
-									? skNavItems && skNavItems[0]?.label ? skNavItems[0]?.label : ""
+									? skNavItems && skNavItems[0]?.label
+										? skNavItems[0]?.label
+										: ""
 									: navItems[0].label}
 							</Link>
 						</li>
 					</ul>
-					{menuItems && <Dropdown
-						options={menuItems}
-						onChange={internalHandleClick}
-						placeholder={
-							pageName === `index` ? getHomeText() : pageName
-						}
-					/>}
+					{menuItems && (
+						<Dropdown
+							options={menuItems}
+							onChange={internalHandleClick}
+							placeholder={
+								pageName === `index` ? getHomeText() : pageName
+							}
+						/>
+					)}
 				</div>
 
 				{translationSlug && !sticky && (
@@ -170,7 +173,7 @@ const isActive =
 	};
 
 const parseUrl = (isSk, url) => {
-	console.log(url)
+	console.log(url);
 	let parsedUrl = url;
 	if (url.endsWith(`/`)) {
 		parsedUrl = url.substring(0, url.length - 1);
