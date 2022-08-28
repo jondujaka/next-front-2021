@@ -137,7 +137,7 @@ export const workshopsQuery = graphql`
 				editions: { nodes: { elemMatch: { slug: { eq: $edition } } } }
 				language: { slug: { eq: $lang } }
 			}
-			sort: { order: DESC, fields: date }
+			sort: { order: ASC, fields: menuOrder }
 		) {
 			edges {
 				node {
@@ -145,6 +145,7 @@ export const workshopsQuery = graphql`
 					slug
 					uri
 					title
+					menuOrder
 					formats {
 						nodes {
 							slug

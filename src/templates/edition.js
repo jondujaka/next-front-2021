@@ -111,21 +111,24 @@ const Edition = ({ data, pageContext, embeded, style }) => {
 					}
 				})}
 
-			<Row classes="my-4 my-md-5">
-				<div className="col col-12">
-					<video
-						className="home-video"
-						loop
-						autoPlay="true"
-						muted="true"
-						playsInline="true"
-						poster="https://nextcontent.a2hosted.com/wp-content/uploads/2021/11/vlcsnap-2021-11-19-15h59m22s677.jpg"
-					>
-						<source src={videoMp4} type="video/mp4" />
-						<source src={videoWebm} type="video/webm" />
-					</video>
-				</div>
-			</Row>
+			{parsedContent.video?.mp4Format?.mediaItemUrl && 
+				<Row classes="my-4 my-md-5">
+					<div className="col col-12">
+						<video
+							className="home-video"
+							loop
+							autoPlay="true"
+							muted="true"
+							playsInline="true"
+							poster={parsedContent.video.poster?.mediaItemUrl || ''}
+						>
+							<source src={parsedContent.video.mp4Format.mediaItemUrl} type="video/mp4" />
+							{parsedContent.video.webmFormat?.mediaItemUrl && <source src={parsedContent.video.webmFormat.mediaItemUrl} type="video/webm" />}
+						</video>
+					</div>
+				</Row>
+			}
+			
 		</Layout>
 	);
 };

@@ -465,7 +465,7 @@ const buildEdition = async (year, gatsbyUtilities) => {
 					id: editionInfo.editionData.id,
 					lang: `en`,
 					translation: skPage ? skPage : {},
-					content: { ...editionInfo.editionData.editionContent },
+					content: { ...editionInfo.editionData.editionContent, video: editionInfo.editionData.editionContent.video },
 					settings: { ...editionInfo.editionData.settings },
 					menu: { ...editionInfo.menu }
 				},
@@ -483,7 +483,8 @@ const buildEdition = async (year, gatsbyUtilities) => {
 						lang: `sk`,
 						translation: { language: { slug: `en` } },
 						content: {
-							...editionInfoSK.editionData.editionContent
+							...editionInfoSK.editionData.editionContent,
+							video: editionInfo.editionData.editionContent.video
 						},
 						settings: { ...editionInfo.editionData.settings },
 						menu: { ...editionInfo.menu },
@@ -685,6 +686,17 @@ const getEditionInfo = async (year, lang, { graphql, reporter }) => {
 				}
 				editionContent {
 					fieldGroupName
+					video {
+						mp4Format {
+							mediaItemUrl
+						}
+						webmFormat {
+							mediaItemUrl
+						}
+						poster {
+							mediaItemUrl
+						}
+					}
 					content {
 					  ... on WpEdition${year}_Editioncontent_Content_ArtistsSection {
 						fieldGroupName

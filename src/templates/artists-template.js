@@ -196,7 +196,7 @@ export default ArtistsTemplate;
 export const artistsQuery = graphql`
 	query artistsPage($edition: String!, $lang: String!) {
 		artists: allWpArtist(
-			sort: { order: ASC, fields: slug }
+			sort: { order: ASC, fields: menuOrder }
 			filter: {
 				editions: { nodes: { elemMatch: { slug: { eq: $edition } } } }
 				language: { slug: { eq: $lang } }
@@ -208,6 +208,7 @@ export const artistsQuery = graphql`
 					slug
 					uri
 					title
+					menuOrder
 					language {
 						slug
 					}
