@@ -278,7 +278,7 @@ const ScheduleItem = ({ item, colors }) => {
 		styles,
 		<Link to={item.uri} className="schedule-item">
 			<span className="item-time">{time}</span>
-			<span className="item-info mt-5 mt-lg-0">{item.title} - {item.menuOrder}</span>
+			<span className="item-info mt-5 mt-lg-0">{item.title}</span>
 			<div className="item-location">
 				{venue && venue.title !== "Online" && (
 					<a
