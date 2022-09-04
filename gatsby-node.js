@@ -20,6 +20,7 @@ const templateMap = {
 	getTickets: `get-tickets`,
 	privacy: `privacy-policy`
 };
+const EMPTY_ARTIST_IDS = ['cG9zdDo1NDMz', 'cG9zdDo1NDM5'];
 
 const getLatestEdition = () =>
 	editionsToBuild.length &&
@@ -179,6 +180,10 @@ const initPostTypes = async gatsbyUtilities => {
 		);
 
 		const eventsList = [];
+
+		if(EMPTY_ARTIST_IDS.includes(artistInfo.id)){
+			return;
+		}
 
 		allEvents?.flatMap(eventInfo => {
 			if (
@@ -601,7 +606,11 @@ const getPostType = async (settings, { graphql, reporter }) => {
 
 	let eventsFragment = `
 		eventInfo {
-			
+			artists {
+				... on WpArtist {
+				  	id
+				}
+			}
 			venue {
 				... on WpVenue {
 				  uri
