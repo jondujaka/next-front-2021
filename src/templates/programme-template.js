@@ -221,6 +221,13 @@ const RenderDays = ({ allDays, dayFilter, settings }) => {
 
 const Day = ({ day, colors }) => {
 	day.items = day.items.sort((a, b) => {
+		if(!a.date.starttime || !b.date.starttime){
+			return a.menuOrder > b.menuOrder ? 1 : -1;
+		}
+
+		if(!b.date.starttime){
+			return -1;
+		}
 		return a.date.starttime > b.date.starttime ? 1 : -1;
 	});
 	return (
@@ -271,7 +278,7 @@ const ScheduleItem = ({ item, colors }) => {
 		styles,
 		<Link to={item.uri} className="schedule-item">
 			<span className="item-time">{time}</span>
-			<span className="item-info mt-5 mt-lg-0">{item.title}</span>
+			<span className="item-info mt-5 mt-lg-0">{item.title} - {item.menuOrder}</span>
 			<div className="item-location">
 				{venue && venue.title !== "Online" && (
 					<a
