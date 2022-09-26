@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { graphql, Link } from "gatsby";
+import { graphql, Link, navigate } from "gatsby";
 import Layout from "../components/layout";
 import ReactPlayer from "react-player/youtube";
 import Row from "../components/row";
@@ -13,6 +13,22 @@ const Home = ({ data: { page, news }, pageContext, location }) => {
 
 	const allNews = news.edges;
 	const isSk = page.language.slug !== `en`;
+
+	useEffect(() => {
+		if (page.mainHome.redirectToEditionPage) {
+			if (latestEdition) {
+				if (isSk) {
+					navigate(latestEdition.skContent.uri);
+					return;
+				}
+				navigate(latestEdition.content.uri);
+			}
+		}
+	}, []);
+
+	if (page.mainHome.redirectToEditionPage) {
+		return null;
+	}
 
 	const editionContext = latestEdition
 		? {
@@ -161,6 +177,7 @@ export const pageQuery = graphql`
 				slug
 			}
 			mainHome {
+				redirectToEditionPage
 				topLinks {
 					item {
 						link {

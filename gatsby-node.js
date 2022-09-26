@@ -20,7 +20,7 @@ const templateMap = {
 	getTickets: `get-tickets`,
 	privacy: `privacy-policy`
 };
-const EMPTY_ARTIST_IDS = ['cG9zdDo1NDMz', 'cG9zdDo1NDM5'];
+const EMPTY_ARTIST_IDS = ["cG9zdDo1NDMz", "cG9zdDo1NDM5"];
 
 const getLatestEdition = () =>
 	editionsToBuild.length &&
@@ -181,7 +181,7 @@ const initPostTypes = async gatsbyUtilities => {
 
 		const eventsList = [];
 
-		if(EMPTY_ARTIST_IDS.includes(artistInfo.id)){
+		if (EMPTY_ARTIST_IDS.includes(artistInfo.id)) {
 			return;
 		}
 
@@ -470,7 +470,10 @@ const buildEdition = async (year, gatsbyUtilities) => {
 					id: editionInfo.editionData.id,
 					lang: `en`,
 					translation: skPage ? skPage : {},
-					content: { ...editionInfo.editionData.editionContent, video: editionInfo.editionData.editionContent.video },
+					content: {
+						...editionInfo.editionData.editionContent,
+						video: editionInfo.editionData.editionContent.video
+					},
 					settings: { ...editionInfo.editionData.settings },
 					menu: { ...editionInfo.menu }
 				},
@@ -899,10 +902,6 @@ const getSpecificPage = async (settings, { graphql, reporter }) => {
 			}
 		}
 	`);
-
-	if (isHomePage) {
-		console.log(graphqlResult.data);
-	}
 
 	if (graphqlResult.errors) {
 		reporter.panicOnBuild(

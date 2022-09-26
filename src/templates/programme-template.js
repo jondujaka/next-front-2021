@@ -13,8 +13,11 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 
 	const initEvents = data.events.edges;
 	const [allDays, setAllDays] = useState([]);
+	console.time("YES");
 
-	const [initLoad, isInitLoad] = useState(true);
+	console.timeLog("YES");
+
+	const [initLoad, setInitLoad] = useState(true);
 
 	const [allEvents, setAllEvents] = useState(initEvents);
 
@@ -131,12 +134,12 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 		});
 		setDayFilterItems(sortedAllDays);
 		setAllDays(allDaysInit);
-		isInitLoad(false);
+		setInitLoad(false);
 	};
 
 	useEffect(() => {
 		setUpDays();
-	}, [allEvents]);
+	}, []);
 
 	const isSk = lang !== `en`;
 	const langSlug = lang === `en` ? `sk/` : ``;
@@ -176,7 +179,7 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 				</div>
 			</Row>
 			<Row>
-				{allDays && !isInitLoad && (
+				{allDays && !initLoad && (
 					<>
 						{Object.keys(allDays).length ? (
 							<RenderDays
@@ -195,7 +198,7 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 						)}
 					</>
 				)}
-				{isInitLoad && (
+				{initLoad && (
 					<div className="col col-12 mt-7">
 						<h3>Loading programme...</h3>
 					</div>
@@ -226,11 +229,11 @@ const RenderDays = ({ allDays, dayFilter, settings }) => {
 
 const Day = ({ day, colors }) => {
 	day.items = day.items.sort((a, b) => {
-		if(!a.date.starttime || !b.date.starttime){
+		if (!a.date.starttime || !b.date.starttime) {
 			return a.menuOrder > b.menuOrder ? 1 : -1;
 		}
 
-		if(!b.date.starttime){
+		if (!b.date.starttime) {
 			return -1;
 		}
 		return a.date.starttime > b.date.starttime ? 1 : -1;

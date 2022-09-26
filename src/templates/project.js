@@ -76,16 +76,17 @@ const Project = ({ data: { project, news }, pageContext }) => {
 	};
 
 	const changeActiveItem = value => {
-		if(!value?.id) {
+		if (!value?.id) {
 			return;
 		}
-		const targetItem = menuItems.find(item => item.value === `#${value.id}`);
+		const targetItem = menuItems.find(
+			item => item.value === `#${value.id}`
+		);
 
-		console.log(targetItem)
-		if(targetItem){
+		if (targetItem) {
 			setCurrentItem(targetItem);
 		}
-	}
+	};
 
 	return (
 		<Layout
@@ -116,7 +117,7 @@ const Project = ({ data: { project, news }, pageContext }) => {
 			</Row>
 			{hasProjectMenu && (
 				<div className="project-menu edition-menu-wrapper  position-sticky">
-				<div className="menu-images">
+					<div className="menu-images">
 						{menuImages &&
 							menuImages.map(image => (
 								<div className="single-menu-image">
@@ -146,8 +147,6 @@ const Project = ({ data: { project, news }, pageContext }) => {
 							value={currentItem.value}
 						/>
 					</div>
-
-					
 				</div>
 			)}
 

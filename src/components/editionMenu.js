@@ -16,7 +16,6 @@ const EditionMenu = ({
 }) => {
 	const navItems = items.nodes;
 	const skNavItems = skMenu?.nodes;
-	console.log(skNavItems);
 	const menuItems = navItems
 		.map((item, i) => {
 			if (i === 0 || item.menuItems.hide) {
@@ -173,7 +172,6 @@ const isActive =
 	};
 
 const parseUrl = (isSk, url) => {
-	console.log(url);
 	let parsedUrl = url;
 	if (url.endsWith(`/`)) {
 		parsedUrl = url.substring(0, url.length - 1);
