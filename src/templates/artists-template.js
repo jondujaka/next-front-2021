@@ -7,15 +7,18 @@ import Filter from "../components/filter";
 import { format, localeFormat } from "light-date";
 import { node } from "prop-types";
 
+
+const EMPTY_ARTIST_IDS = ['cG9zdDo1NDMz', 'cG9zdDo1NDM5'];
+
 const ArtistsTemplate = ({ data, pageContext }) => {
 	const { settings, edition, menu, lang, skMenu } = pageContext;
 	const isSk = lang !== `en`;
 	const langSlug = lang === `en` ? `sk/` : ``;
 	const translationSlug = `/${langSlug}${edition}/artists`;
 
-	let artistsList = data.artists.edges;
+	let artistsList = data.artists.edges.filter(artist => !EMPTY_ARTIST_IDS.includes(artist.id));
 
-	const eventsList = data.events.edges;
+	const eventsList = data.events.edges.filter(event => event?.node?.eventInfo?.artists);
 
 	const venueFilter = useRef("all");
 	const formatFilter = useRef("all");
@@ -196,7 +199,7 @@ export default ArtistsTemplate;
 export const artistsQuery = graphql`
 	query artistsPage($edition: String!, $lang: String!) {
 		artists: allWpArtist(
-			sort: { order: ASC, fields: slug }
+			sort: { order: ASC, fields: menuOrder }
 			filter: {
 				editions: { nodes: { elemMatch: { slug: { eq: $edition } } } }
 				language: { slug: { eq: $lang } }
@@ -208,6 +211,7 @@ export const artistsQuery = graphql`
 					slug
 					uri
 					title
+					menuOrder
 					language {
 						slug
 					}
@@ -229,6 +233,11 @@ export const artistsQuery = graphql`
 			edges {
 				node {
 					eventInfo {
+						artists {
+							... on WpArtist {
+								id
+							}
+						}
 						dates {
 							date
 						}

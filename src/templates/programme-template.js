@@ -226,6 +226,13 @@ const RenderDays = ({ allDays, dayFilter, settings }) => {
 
 const Day = ({ day, colors }) => {
 	day.items = day.items.sort((a, b) => {
+		if(!a.date.starttime || !b.date.starttime){
+			return a.menuOrder > b.menuOrder ? 1 : -1;
+		}
+
+		if(!b.date.starttime){
+			return -1;
+		}
 		return a.date.starttime > b.date.starttime ? 1 : -1;
 	});
 	return (
@@ -281,11 +288,11 @@ const ScheduleItem = ({ item, colors }) => {
 				{venue && venue.title !== "Online" && (
 					<a
 						className="venue-info"
-						href={venue.venueInfo.mapsLink}
+						href={venue.venueInfo?.mapsLink}
 						target="_blank"
 						onClick={handleClick}
 					>
-						<MapPin color={venue.venueInfo.color} />
+						<MapPin color={venue.venueInfo?.color} />
 						{venue.title}
 					</a>
 				)}
@@ -293,7 +300,7 @@ const ScheduleItem = ({ item, colors }) => {
 				{online.length || (venue && venue.title == "Online") ? (
 					<a
 						className="watch-link"
-						href={online || venue.venueInfo.mapsLink}
+						href={online || venue.venueInfo?.mapsLink}
 						target="_blank"
 						onClick={handleClick}
 					>
@@ -310,7 +317,7 @@ export default ProgrammeTemplate;
 export const scheduleItemsQuery = graphql`
 	query allEvents($edition: String!, $lang: String!) {
 		events: allWpEvent(
-			sort: { order: DESC, fields: date }
+			sort: { order: ASC, fields: menuOrder }
 			filter: {
 				editions: { nodes: { elemMatch: { slug: { eq: $edition } } } }
 				language: { slug: { eq: $lang } }
@@ -322,6 +329,7 @@ export const scheduleItemsQuery = graphql`
 					slug
 					uri
 					title
+					menuOrder
 					featuredImage {
 						node {
 							sizes

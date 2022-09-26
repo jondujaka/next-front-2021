@@ -20,6 +20,7 @@ const templateMap = {
 	getTickets: `get-tickets`,
 	privacy: `privacy-policy`
 };
+const EMPTY_ARTIST_IDS = ['cG9zdDo1NDMz', 'cG9zdDo1NDM5'];
 
 const getLatestEdition = () =>
 	editionsToBuild.length &&
@@ -179,6 +180,10 @@ const initPostTypes = async gatsbyUtilities => {
 		);
 
 		const eventsList = [];
+
+		if(EMPTY_ARTIST_IDS.includes(artistInfo.id)){
+			return;
+		}
 
 		allEvents?.flatMap(eventInfo => {
 			if (
@@ -465,7 +470,7 @@ const buildEdition = async (year, gatsbyUtilities) => {
 					id: editionInfo.editionData.id,
 					lang: `en`,
 					translation: skPage ? skPage : {},
-					content: { ...editionInfo.editionData.editionContent },
+					content: { ...editionInfo.editionData.editionContent, video: editionInfo.editionData.editionContent.video },
 					settings: { ...editionInfo.editionData.settings },
 					menu: { ...editionInfo.menu }
 				},
@@ -483,7 +488,8 @@ const buildEdition = async (year, gatsbyUtilities) => {
 						lang: `sk`,
 						translation: { language: { slug: `en` } },
 						content: {
-							...editionInfoSK.editionData.editionContent
+							...editionInfoSK.editionData.editionContent,
+							video: editionInfo.editionData.editionContent.video
 						},
 						settings: { ...editionInfo.editionData.settings },
 						menu: { ...editionInfo.menu },
@@ -600,7 +606,11 @@ const getPostType = async (settings, { graphql, reporter }) => {
 
 	let eventsFragment = `
 		eventInfo {
-			
+			artists {
+				... on WpArtist {
+				  	id
+				}
+			}
 			venue {
 				... on WpVenue {
 				  uri
@@ -685,6 +695,17 @@ const getEditionInfo = async (year, lang, { graphql, reporter }) => {
 				}
 				editionContent {
 					fieldGroupName
+					video {
+						mp4Format {
+							mediaItemUrl
+						}
+						webmFormat {
+							mediaItemUrl
+						}
+						poster {
+							mediaItemUrl
+						}
+					}
 					content {
 					  ... on WpEdition${year}_Editioncontent_Content_ArtistsSection {
 						fieldGroupName

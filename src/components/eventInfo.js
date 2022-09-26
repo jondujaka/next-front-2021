@@ -17,7 +17,7 @@ const EventInfo = ({ event, showDetails = false }) => {
 				<a
 					target="_blank"
 					rel="noreferrer noopener"
-					href={venue.venueInfo.mapsLink}
+					href={venue.venueInfo?.mapsLink}
 					className="big"
 				>
 					{venue.title}
