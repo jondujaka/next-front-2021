@@ -850,9 +850,17 @@ const initMainPages = async gatsbyUtils => {
 };
 
 const getSpecificPage = async (settings, { graphql, reporter }) => {
+	const homePageFragment = `
+		mainHome {
+			redirectToEditionPage
+		}
+	`;
+	const isHomePage = settings.slug === "index";
 	const graphqlResult = await graphql(/* GraphQL */ `
 		query ${settings.queryName} {
-			${settings.type}(slug: { eq: "${settings.slug}"}, language: { slug: {eq: "en"}}){
+			${settings.type}(slug: { eq: "${
+		settings.slug
+	}"}, language: { slug: {eq: "en"}}){
 				id
 				language {
 					slug
@@ -866,9 +874,14 @@ const getSpecificPage = async (settings, { graphql, reporter }) => {
 				slug
 				uri
 				title
+				${isHomePage ? homePageFragment : ``}
 			}
 		}
 	`);
+
+	if (isHomePage) {
+		console.log(graphqlResult.data);
+	}
 
 	if (graphqlResult.errors) {
 		reporter.panicOnBuild(
@@ -899,13 +912,27 @@ const initSingleMainPage = async (settings, gatsbyUtils) => {
 	let uri = pageData.uri;
 	let skUri;
 
+	const latestEdition = getLatestEdition();
+
 	// Rewrite url for home pages
 	if (slug === `index`) {
 		uri = `/`;
 		skUri = `/sk/`;
-	}
 
-	const latestEdition = getLatestEdition();
+		if (pageData.mainHome.redirectToEditionPage) {
+			const { createRedirect } = gatsbyUtils.actions;
+
+			createRedirect({
+				fromPath: `/`,
+				toPath: latestEdition.uri
+			});
+
+			createRedirect({
+				fromPath: `/sk`,
+				toPath: latestEdition.uri
+			});
+		}
+	}
 
 	let contextEn = {
 		id: pageData.id,

@@ -81,6 +81,12 @@ const Info = ({ data, pageContext }) => {
 								<AboutSection content={section.content} />
 							</div>
 						))}
+
+					{!sections?.length && (
+						<h3>
+							{isSk ? `Viac info čoskoro` : `Info coming soon`}
+						</h3>
+					)}
 				</div>
 			</div>
 		</Layout>

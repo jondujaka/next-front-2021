@@ -176,7 +176,7 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 				</div>
 			</Row>
 			<Row>
-				{allDays && (
+				{allDays && !isInitLoad && (
 					<>
 						{Object.keys(allDays).length ? (
 							<RenderDays
@@ -194,6 +194,11 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 							</div>
 						)}
 					</>
+				)}
+				{isInitLoad && (
+					<div className="col col-12 mt-7">
+						<h3>Loading programme...</h3>
+					</div>
 				)}
 			</Row>
 		</Layout>
