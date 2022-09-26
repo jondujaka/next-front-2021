@@ -919,17 +919,21 @@ const initSingleMainPage = async (settings, gatsbyUtils) => {
 		uri = `/`;
 		skUri = `/sk/`;
 
-		if (pageData.mainHome.redirectToEditionPage) {
+		console.log("is home");
+		if (
+			pageData.mainHome.redirectToEditionPage &&
+			latestEdition?.content?.uri
+		) {
 			const { createRedirect } = gatsbyUtils.actions;
 
 			createRedirect({
-				fromPath: `/`,
-				toPath: latestEdition.uri
+				fromPath: uri,
+				toPath: latestEdition.content.uri
 			});
 
 			createRedirect({
-				fromPath: `/sk`,
-				toPath: latestEdition.uri
+				fromPath: skUri,
+				toPath: latestEdition.content.uri
 			});
 		}
 	}

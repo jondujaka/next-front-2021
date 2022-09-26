@@ -153,6 +153,10 @@ footer {
 
 .edition-btn {
 	margin-right: 0.6em;
+
+	&.active {
+		display: none;
+	}
 }
 
 .edition-nav {
@@ -370,7 +374,7 @@ footer {
 		height: 70px;
 
 		.menu-images figure {
-			max-height: 60px
+			max-height: 60px;
 		}
 	}
 }

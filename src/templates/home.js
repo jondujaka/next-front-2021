@@ -41,7 +41,10 @@ const Home = ({ data: { page, news }, pageContext, location }) => {
 			style={editionContext.settings}
 		>
 			<Row classes="main-title-wrapper" fullWidth={true}>
-				<ScrollVideo layer={page.mainHome.videoLayer} />
+				<ScrollVideo
+					layer={page.mainHome.videoLayer}
+					link={page.mainHome.videoLayer?.button?.url}
+				/>
 				{page.mainHome.videoLayer.button &&
 				page.mainHome.videoLayer.button.title ? (
 					<Link
@@ -82,13 +85,15 @@ const Home = ({ data: { page, news }, pageContext, location }) => {
 	);
 };
 
-const ScrollVideo = ({ layer, show }) => {
+const ScrollVideo = ({ layer, show, link }) => {
 	return (
-		<section id="media-container" className={`media-container`}>
-			<div className="media-wrapper">
-				<Media media={layer.media} homePage />
-			</div>
-		</section>
+		<Link to={link || ""}>
+			<section id="media-container" className={`media-container`}>
+				<div className="media-wrapper">
+					<Media media={layer.media} homePage />
+				</div>
+			</section>
+		</Link>
 	);
 };
 
