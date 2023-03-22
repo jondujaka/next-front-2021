@@ -138,6 +138,7 @@ const HomeHeader = ({ items, classes }) => {
 };
 
 const Media = ({ media }) => {
+	console.log(media);
 	if (media.imageOrVideo === `image`) {
 		return <img srcSet={`${media.image.srcSet}`} />;
 	} else {
@@ -148,10 +149,9 @@ const Media = ({ media }) => {
 				autoPlay="true"
 				muted="true"
 				playsInline="true"
-				poster="https://nextcontent.a2hosted.com/wp-content/uploads/2021/11/vlcsnap-2021-11-19-11h31m25s233.jpg"
 			>
-				<source src={videoMp4} type="video/mp4" />
-				<source src={videoWebm} type="video/webm" />
+				<source src={media.video} type="video/mp4" />
+				{/* <source src={videoWebm} type="video/webm" /> */}
 			</video>
 		);
 	}
