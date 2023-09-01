@@ -9,6 +9,15 @@ import Image from "../components/image";
 const Product = ({ data, pageContext }) => {
 	const product = data.product;
 	const carouselItems = product.productInfo.images;
+
+	let singleImage;
+	
+	if(!carouselItems?.length) {
+		singleImage = data.product.featuredImage.node;
+	} else {
+		singleImage = carouselItems[0];
+	}
+		
 	const { latestEdition } = pageContext;
 
 	return (
@@ -29,7 +38,7 @@ const Product = ({ data, pageContext }) => {
 						<Carousel items={carouselItems} />
 					) : (
 						<div className="carousel-container">
-							<Image srcSet={carouselItems[0].srcSet} />
+							<Image srcSet={singleImage?.srcSet} />
 						</div>
 					)}
 				</div>
