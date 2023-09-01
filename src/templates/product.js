@@ -25,7 +25,7 @@ const Product = ({ data, pageContext }) => {
 			</Row>
 			<Row classes="my-6">
 				<div className="col col-12 col-lg-6 product-carousel">
-					{carouselItems.length > 1 ? (
+					{carouselItems?.length > 1 ? (
 						<Carousel items={carouselItems} />
 					) : (
 						<div className="carousel-container">
