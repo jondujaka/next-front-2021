@@ -8,60 +8,15 @@ const Filter = ({
 	data,
 	handleClick,
 	dayItems,
-	noFormats,
+	formatItems,
 	colors,
-	isSk = false
+	isSk = false,
+	venueItems
 }) => {
 	const internalHandleClick = (slug, type) => {
 		handleClick(slug, type);
 	};
 
-	const { venues, formats } = useStaticQuery(
-		graphql`
-			query {
-				venues: allWpVenue(sort: { fields: title }) {
-					edges {
-						node {
-							slug
-							title
-							language {
-								slug
-							}
-						}
-					}
-				}
-				formats: allWpFormat(sort: { fields: name }) {
-					edges {
-						node {
-							slug
-							name
-						}
-					}
-				}
-			}
-		`
-	);
-
-	const venueByLanguage = venues.edges.filter(edge => {
-		if (isSk) {
-			return edge.node.language.slug === "sk";
-		}
-		return edge.node.language.slug === "en";
-	});
-	const venueItems = [
-		{ value: `all`, label: isSk ? `Všetky miesta` : `All Venues` },
-		...venueByLanguage.map(edge => ({
-			value: edge.node.slug,
-			label: edge.node.title
-		}))
-	];
-	const formatItems = [
-		{ value: `all`, label: isSk ? `Všetky formáty` : `All Formats` },
-		...formats.edges.map(edge => ({
-			value: edge.node.slug,
-			label: edge.node.name
-		}))
-	];
 
 	const styles = colors
 		? `
@@ -86,18 +41,18 @@ const Filter = ({
 					placeholder={isSk ? `Všetky dni` : `All Days`}
 				/>
 			)}
-			{venueItems && (
+			{venueItems.length && (
 				<Dropdown
 					options={venueItems}
 					onChange={e => internalHandleClick(e.value, `venue`)}
-					placeholder={venueItems[0].label}
+					placeholder={isSk ? `Všetky miesta` : `All Venues`}
 				/>
 			)}
-			{formatItems && !noFormats && (
+			{formatItems && (
 				<Dropdown
 					options={formatItems}
 					onChange={e => internalHandleClick(e.value, `format`)}
-					placeholder={formatItems[0].label}
+					placeholder={isSk ? `Všetky formáty` : `All Formats`}
 				/>
 			)}
 		</div>
