@@ -41,7 +41,7 @@ const Filter = ({
 					placeholder={isSk ? `Všetky dni` : `All Days`}
 				/>
 			)}
-			{venueItems.length && (
+			{venueItems?.length && (
 				<Dropdown
 					options={venueItems}
 					onChange={e => internalHandleClick(e.value, `venue`)}

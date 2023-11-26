@@ -377,15 +377,11 @@ const buildEdition = async (year, gatsbyUtilities) => {
 	) {
 		// Create the edition
 
-		console.log(editionInfo.editionData.settings);
 		let shouldBuild = false;
 		let isDev =
 			process.env.GATSBY_IS_PREVIEW ||
 			process.env.CONTEXT !== `production`;
 		let { liveWebsite, testWebsite } = editionInfo.editionData.settings;
-
-		console.log(year);
-		console.log(editionInfo.editionData);
 
 		if (isDev) {
 			shouldBuild = liveWebsite || testWebsite;

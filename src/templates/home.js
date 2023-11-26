@@ -138,7 +138,7 @@ const HomeHeader = ({ items, classes }) => {
 };
 
 const Media = ({ media }) => {
-	console.log(media);
+	
 	if (media.imageOrVideo === `image`) {
 		return <img srcSet={`${media.image.srcSet}`} />;
 	} else {

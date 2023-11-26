@@ -40,8 +40,6 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 			setDayFilter(slug);
 		}
 		if (type === `venue`) {
-			console.log(slug);
-			console.log(initEvents)
 			venueFilter.current = slug;
 		}
 		if (type === `format`) {
@@ -120,7 +118,6 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 				return;
 			}
 
-			console.log(eventInfo.format)
 
 			formatsFilter.push({
 				value: eventInfo.format.slug,
