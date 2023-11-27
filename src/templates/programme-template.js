@@ -11,6 +11,9 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 	// const artistsList = data.artists.edges;
 	const { settings, edition, menu, lang, skMenu } = pageContext;
 
+	const isSk = lang !== `en`;
+	const locale = isSk ? 'sk-SK' : 'en-GB';
+
 	const initEvents = data.events.edges;
 	const [allDays, setAllDays] = useState([]);
 
@@ -153,9 +156,9 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 					return;
 				}
 				const dateobj = new Date(date.date);
-				const dayName = localeFormat(dateobj, "{EEE}");
-				const monthName = localeFormat(dateobj, "{MMM}");
-				const dayNr = format(dateobj, `{dd}`);
+				const dayName = new Intl.DateTimeFormat(locale, { weekday: 'long' }).format(dateobj);
+				const monthName = new Intl.DateTimeFormat(locale, { month: 'short' }).format(dateobj);
+				const dayNr = new Intl.DateTimeFormat(locale, { day: 'numeric' }).format(dateobj);
 				const dateSlug = date.date;
 				const dayTitle = `${dayName} ${dayNr} ${monthName}`;
 
@@ -211,11 +214,14 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 
 				if (!allDaysInit.hasOwnProperty(dateSlug)) {
 					const dateobj = new Date(date.date);
-					const dayName = localeFormat(dateobj, "{EEE}");
-					const monthName = localeFormat(dateobj, "{MMM}");
-					const dayNr = format(dateobj, `{dd}`);
+					// const dayName = localeFormat(dateobj, "{EEEE}", locale);
+					const dayName = new Intl.DateTimeFormat(locale, { weekday: 'long' }).format(dateobj);
+					const monthName = new Intl.DateTimeFormat(locale, { month: 'short' }).format(dateobj);
+					const dayNr = new Intl.DateTimeFormat(locale, { day: 'numeric' }).format(dateobj);
 
 					const dayTitle = `${dayName} ${dayNr} ${monthName}`;
+					console.log(dayTitle)
+					console.log(locale)
 					allDaysInit[dateSlug] = {
 						name: dayTitle,
 						slug: dateSlug,
@@ -249,7 +255,7 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 		setUpFormats();
 	}, [])
 
-	const isSk = lang !== `en`;
+
 	const langSlug = lang === `en` ? `sk/` : ``;
 	const translationSlug = `/${langSlug}${edition}/programme`;
 

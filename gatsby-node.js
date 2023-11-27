@@ -628,6 +628,9 @@ const getPostType = async (settings, { graphql, reporter }) => {
 		}
 	`;
 
+
+	console.log('getting')
+
 	const graphqlResult = await graphql(/* GraphQL */ `
 		query ${settings.queryName} {
 			# Query index pages from edition
@@ -664,11 +667,16 @@ const getPostType = async (settings, { graphql, reporter }) => {
 	`);
 
 	if (graphqlResult.errors) {
+		console.log(settings.postType)
 		reporter.panicOnBuild(
 			`There was an error loading your blog posts`,
 			graphqlResult.errors
 		);
 		return;
+	}
+
+	if(settings.postType === 'event'){
+		console.log(graphqlResult.data[settings.gqlName].edges)
 	}
 
 	return graphqlResult.data[settings.gqlName].edges;
