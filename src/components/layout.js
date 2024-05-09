@@ -173,9 +173,9 @@ const Layout = ({
 									</span>
 								)}
 							</div>
-							<div className="col col-12">
-								<span>
-									Copyright 2021 &copy; NEXT.{" "}
+							<div className="col col-12 mb-6">
+								<span className="credits>
+									Copyright &copy; NEXT.{" "}
 									<Link to="/privacy">
 										Privacy Policy and Cookies
 									</Link>
