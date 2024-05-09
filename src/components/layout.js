@@ -174,7 +174,7 @@ const Layout = ({
 								)}
 							</div>
 							<div className="col col-12 mb-6">
-								<span className="credits>
+								<span className="credits">
 									Copyright &copy; NEXT.{" "}
 									<Link to="/privacy">
 										Privacy Policy and Cookies
