@@ -7,7 +7,7 @@
 // You can delete this file if you're not using it
 
 const path = require(`path`);
-const editions = [2021, 2022, 2023];
+const editions = [2021, 2022, 2023, 2024];
 const editionsToBuild = [];
 const templateMap = {
 	news: `news-page`,
