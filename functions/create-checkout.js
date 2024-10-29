@@ -15,7 +15,7 @@ exports.handler = async event => {
 		const price = isVariation
 			? item.variation.node.price
 			: item.product.node.price;
-			
+
 		return {
 			price_data: {
 				currency: "eur",

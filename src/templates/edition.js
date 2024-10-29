@@ -111,7 +111,7 @@ const Edition = ({ data, pageContext, embeded, style }) => {
 					}
 				})}
 
-			{parsedContent.video?.mp4Format?.mediaItemUrl && 
+			{parsedContent.video?.mp4Format?.mediaItemUrl && (
 				<Row classes="my-4 my-md-5">
 					<div className="col col-12">
 						<video
@@ -120,15 +120,27 @@ const Edition = ({ data, pageContext, embeded, style }) => {
 							autoPlay="true"
 							muted="true"
 							playsInline="true"
-							poster={parsedContent.video.poster?.mediaItemUrl || ''}
+							poster={
+								parsedContent.video.poster?.mediaItemUrl || ""
+							}
 						>
-							<source src={parsedContent.video.mp4Format.mediaItemUrl} type="video/mp4" />
-							{parsedContent.video.webmFormat?.mediaItemUrl && <source src={parsedContent.video.webmFormat.mediaItemUrl} type="video/webm" />}
+							<source
+								src={parsedContent.video.mp4Format.mediaItemUrl}
+								type="video/mp4"
+							/>
+							{parsedContent.video.webmFormat?.mediaItemUrl && (
+								<source
+									src={
+										parsedContent.video.webmFormat
+											.mediaItemUrl
+									}
+									type="video/webm"
+								/>
+							)}
 						</video>
 					</div>
 				</Row>
-			}
-			
+			)}
 		</Layout>
 	);
 };
@@ -191,7 +203,7 @@ const editionRow = (isSk, section, i, year, colors) => {
 							};
 						}
 						return artist;
-				  })
+					})
 				: section.artists;
 
 			return (
@@ -230,7 +242,7 @@ const editionRow = (isSk, section, i, year, colors) => {
 							};
 						}
 						return workshop;
-				  })
+					})
 				: section.workshops;
 
 			return (

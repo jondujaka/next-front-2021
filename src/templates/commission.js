@@ -8,10 +8,12 @@ import CommissionsGrid from "../components/blockGrids/commissionsGrid";
 import Single from "./single";
 
 const Commission = ({ data: { commission }, pageContext }) => {
-	let related = pageContext.related ? pageContext.related.map(commission => {
-		let newObj = { node: { ...commission.commission } };
-		return newObj;
-	}) : [];
+	let related = pageContext.related
+		? pageContext.related.map(commission => {
+				let newObj = { node: { ...commission.commission } };
+				return newObj;
+			})
+		: [];
 
 	const { latestEdition } = pageContext;
 
@@ -22,7 +24,11 @@ const Commission = ({ data: { commission }, pageContext }) => {
 		: null;
 
 	return (
-		<Layout isSk={isSk} translationSlug={translationSlug} style={latestEdition}>
+		<Layout
+			isSk={isSk}
+			translationSlug={translationSlug}
+			style={latestEdition}
+		>
 			<Row>
 				<div className="col col-12 mt-5 mb-6">
 					<h2 className="festival-page-title">
@@ -39,7 +45,9 @@ const Commission = ({ data: { commission }, pageContext }) => {
 					<Separator />
 					<Row classes="justify-content-center">
 						<div class="col col-12 mb-5 mt-lg-5 mb-lg-6">
-							<h1>{isSk ? `Viac objednávok` : `More commissions`}</h1>
+							<h1>
+								{isSk ? `Viac objednávok` : `More commissions`}
+							</h1>
 						</div>
 						<CommissionsGrid items={related} />
 					</Row>

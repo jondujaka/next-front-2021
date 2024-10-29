@@ -1,13 +1,16 @@
 import React from "react";
 import ArtistBlock from "../artistBlock";
 
-const ArtistsGrid = ({ items,colors }) => {
-
+const ArtistsGrid = ({ items, colors }) => {
 	return (
 		<>
 			{items.map((item, i) => {
 				return (
-					<ArtistBlock colors={colors} key={`artist-${item.id || i}`} item={item} />
+					<ArtistBlock
+						colors={colors}
+						key={`artist-${item.id || i}`}
+						item={item}
+					/>
 				);
 			})}
 		</>

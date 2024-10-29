@@ -11,13 +11,13 @@ const Product = ({ data, pageContext }) => {
 	const carouselItems = product.productInfo.images;
 
 	let singleImage;
-	
-	if(!carouselItems?.length) {
+
+	if (!carouselItems?.length) {
 		singleImage = data.product.featuredImage.node;
 	} else {
 		singleImage = carouselItems[0];
 	}
-		
+
 	const { latestEdition } = pageContext;
 
 	return (
@@ -50,9 +50,13 @@ const Product = ({ data, pageContext }) => {
 					<div className="formats mb-4">
 						{product.productInfo.variations &&
 							product.productInfo.variations.map(format => {
-								return <ProductInfo product={product} format={format} />;
-							})
-						}
+								return (
+									<ProductInfo
+										product={product}
+										format={format}
+									/>
+								);
+							})}
 					</div>
 					<div className="product-description">
 						<p
@@ -72,9 +76,11 @@ const renderImage = image => {
 	return <Image srcSet={image.srcSet} />;
 };
 
-const ProductInfo = ({product, format }) => (
+const ProductInfo = ({ product, format }) => (
 	<div key={`format-${format.price}`} className="format mb-4">
-		{format && format.format !== 'default' && <span className="product-format">{format.format}</span>}
+		{format && format.format !== "default" && (
+			<span className="product-format">{format.format}</span>
+		)}
 		<span className="price">&euro;{format.price ? format.price : `0`}</span>
 		<CartButton
 			format={format}

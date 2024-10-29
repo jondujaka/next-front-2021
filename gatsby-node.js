@@ -133,8 +133,8 @@ const initPostTypes = async gatsbyUtilities => {
 		allEvents.map(eventInfo => {
 			const year = eventInfo.event.editions?.nodes?.length
 				? eventInfo.event.editions.nodes.reduce((a, b) =>
-					Math.max(parseInt(a.slug), parseInt(b.slug))
-				)
+						Math.max(parseInt(a.slug), parseInt(b.slug))
+					)
 				: 2021;
 			const editionSettings = editionsToBuild.find(
 				edition => edition.year == year.slug
@@ -172,8 +172,8 @@ const initPostTypes = async gatsbyUtilities => {
 	allArtists.map(artistInfo => {
 		const year = artistInfo.artist.editions.nodes.length
 			? artistInfo.artist.editions.nodes.reduce((a, b) =>
-				Math.max(parseInt(a.slug), parseInt(b.slug))
-			)
+					Math.max(parseInt(a.slug), parseInt(b.slug))
+				)
 			: 2021;
 		const editionSettings = editionsToBuild.find(
 			edition => edition.year == year.slug
@@ -287,7 +287,7 @@ const initPostTypes = async gatsbyUtilities => {
 					.filter(
 						commission =>
 							commission.commission.id !==
-							commissionsInfo.commission.id &&
+								commissionsInfo.commission.id &&
 							commission.commission.language.slug === lang
 					)
 					.slice(0, 5),
@@ -628,8 +628,7 @@ const getPostType = async (settings, { graphql, reporter }) => {
 		}
 	`;
 
-
-	console.log('getting')
+	console.log("getting");
 
 	const graphqlResult = await graphql(/* GraphQL */ `
 		query ${settings.queryName} {
@@ -667,14 +666,12 @@ const getPostType = async (settings, { graphql, reporter }) => {
 	`);
 
 	if (graphqlResult.errors) {
-
 		reporter.panicOnBuild(
 			`There was an error loading your blog posts`,
 			graphqlResult.errors
 		);
 		return;
 	}
-
 
 	return graphqlResult.data[settings.gqlName].edges;
 };
@@ -883,8 +880,9 @@ const getSpecificPage = async (settings, { graphql, reporter }) => {
 	const isHomePage = settings.slug === "index";
 	const graphqlResult = await graphql(/* GraphQL */ `
 		query ${settings.queryName} {
-			${settings.type}(slug: { eq: "${settings.slug
-		}"}, language: { slug: {eq: "en"}}){
+			${settings.type}(slug: { eq: "${
+				settings.slug
+			}"}, language: { slug: {eq: "en"}}){
 				id
 				language {
 					slug

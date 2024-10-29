@@ -1,3 +1,3 @@
-import { HoverImageShader } from './shaders/HoverImageShader'
+import { HoverImageShader } from "./shaders/HoverImageShader";
 
-export { HoverImageShader }
+export { HoverImageShader };

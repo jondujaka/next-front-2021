@@ -1,6 +1,6 @@
 import React from "react";
 
-const MapPin = ({ color = "#000", hoverColor="#fcfcfc" }) => {
+const MapPin = ({ color = "#000", hoverColor = "#fcfcfc" }) => {
 	return (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"

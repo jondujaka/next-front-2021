@@ -1,8 +1,7 @@
 import React from "react";
 import { Link } from "gatsby";
-import { fromPromise } from "apollo-link";
 
-const Product = ({item}) => {
+const Product = ({ item }) => {
 	const content = item.node;
 	const image = content.featuredImage?.node?.srcSet || ``;
 
@@ -18,19 +17,35 @@ const Product = ({item}) => {
 			</div> */}
 
 			<div className="product-info col col-12 text-center">
-					<h3 className="product-title">{content.title || content.name}</h3>
-					{content.productInfo?.subtitle && (
-						<h3 className="product-title">
-							{content.productInfo.subtitle}
-						</h3>
-					)}
-				</div>
-				<div className="product-image col col-12">
-					{image && <img srcSet={image} />}
-					{formats && formats.length ? <div className="product-formats">
-						{formats.map(format => format.format !== 'default' && <span className="product-format" key={format.format}>{format.format}</span>)}
-					</div> : ``}
-				</div>
+				<h3 className="product-title">
+					{content.title || content.name}
+				</h3>
+				{content.productInfo?.subtitle && (
+					<h3 className="product-title">
+						{content.productInfo.subtitle}
+					</h3>
+				)}
+			</div>
+			<div className="product-image col col-12">
+				{image && <img srcSet={image} />}
+				{formats && formats.length ? (
+					<div className="product-formats">
+						{formats.map(
+							format =>
+								format.format !== "default" && (
+									<span
+										className="product-format"
+										key={format.format}
+									>
+										{format.format}
+									</span>
+								)
+						)}
+					</div>
+				) : (
+					``
+				)}
+			</div>
 		</Link>
 	);
 };

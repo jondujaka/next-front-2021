@@ -257,6 +257,39 @@ export const infoQuery = graphql`
 							}
 						}
 					}
+					... on WpEdition2024 {
+						id
+						title
+						language {
+							slug
+						}
+						about {
+							fieldGroupName
+							section {
+								content {
+									... on WpEdition2024_About_section_Content_Partners {
+										fieldGroupName
+										partnerImages {
+											srcSet
+											sourceUrl
+										}
+									}
+									... on WpEdition2024_About_section_Content_Media {
+										fieldGroupName
+										image {
+											srcSet
+										}
+									}
+									... on WpEdition2024_About_section_Content_Text {
+										big
+										fieldGroupName
+										textContent
+									}
+								}
+								title
+							}
+						}
+					}
 				}
 			}
 		}

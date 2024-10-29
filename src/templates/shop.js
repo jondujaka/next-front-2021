@@ -12,7 +12,6 @@ const Shop = ({ data, pageContext }) => {
 	const isSk = pageContext.lang !== `en`;
 	const translationSlug = `/${langSlug}shop`;
 
-
 	return (
 		<Layout
 			isSk={isSk}

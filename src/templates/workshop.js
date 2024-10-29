@@ -26,9 +26,7 @@ const Workshop = ({ data: { workshop }, pageContext, preview }) => {
 	// }
 
 	return (
-		<Layout
-			
-		>
+		<Layout>
 			{!content && !content.content ? (
 				<h1>No content yet</h1>
 			) : (

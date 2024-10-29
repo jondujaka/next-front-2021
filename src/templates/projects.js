@@ -13,7 +13,11 @@ const Projects = ({ data, pageContext }) => {
 	const translationSlug = `/${langSlug}projects`;
 
 	return (
-		<Layout isSk={isSk} translationSlug={translationSlug} style={latestEdition}>
+		<Layout
+			isSk={isSk}
+			translationSlug={translationSlug}
+			style={latestEdition}
+		>
 			<Row>
 				<div className="col col-12 mt-5 mb-6">
 					<h2 className="festival-page-title">{data.page.title}</h2>
@@ -29,7 +33,7 @@ export default Projects;
 export const projectsQuery = graphql`
 	query allProject(
 		# these variables are passed in via createPage.pageContext in gatsby-node.js
-		$id: String,
+		$id: String
 		$lang: String!
 	) {
 		projects: allWpProject(
@@ -52,9 +56,7 @@ export const projectsQuery = graphql`
 				}
 			}
 		}
-		page: wpPage(
-			id: { eq: $id}
-		) {
+		page: wpPage(id: { eq: $id }) {
 			id
 			title
 		}

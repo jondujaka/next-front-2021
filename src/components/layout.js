@@ -39,7 +39,6 @@ const Layout = ({
 }) => {
 	const meta = isSk ? allMeta.sk : allMeta.en;
 
-
 	let parsedStyle = {
 		...style,
 		borderColor: style.textColor

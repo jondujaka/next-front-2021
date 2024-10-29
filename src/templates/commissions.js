@@ -9,12 +9,16 @@ const Commissions = ({ data, pageContext }) => {
 	const coms = data.commissions.edges;
 	const { latestEdition } = pageContext;
 
-	const langSlug = pageContext.lang ===`en` ? `sk/` : ``;
+	const langSlug = pageContext.lang === `en` ? `sk/` : ``;
 	const isSk = pageContext.lang !== `en`;
 	const translationSlug = `/${langSlug}commissions`;
 
 	return (
-		<Layout isSk={isSk} translationSlug={translationSlug} style={latestEdition}>
+		<Layout
+			isSk={isSk}
+			translationSlug={translationSlug}
+			style={latestEdition}
+		>
 			<Row>
 				<div className="col col-12 mt-5 mb-md-6 mb-4">
 					<h2 className="festival-page-title">{data.page.title}</h2>
@@ -32,7 +36,7 @@ export default Commissions;
 export const commissionsQuery = graphql`
 	query commissionsPage(
 		# these variables are passed in via createPage.pageContext in gatsby-node.js
-		$id: String,
+		$id: String
 		$lang: String!
 	) {
 		commissions: allWpCommission(
@@ -66,9 +70,7 @@ export const commissionsQuery = graphql`
 				}
 			}
 		}
-		page: wpPage(
-			id: { eq: $id}
-		) {
+		page: wpPage(id: { eq: $id }) {
 			id
 			title
 		}

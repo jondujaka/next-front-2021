@@ -42,7 +42,8 @@ const ScrollSpy = ({
 				const target = targetElements[i];
 
 				const isVisible =
-					target.offsetTop >= 0 && target.offsetTop > scrollElement.scrollTop;
+					target.offsetTop >= 0 &&
+					target.offsetTop > scrollElement.scrollTop;
 
 				if (isVisible) {
 					source.classList.add(className);

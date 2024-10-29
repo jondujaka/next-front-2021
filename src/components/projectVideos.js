@@ -22,7 +22,10 @@ const ProjectVideos = ({ videos }) => {
 						return null;
 					}
 					return (
-						<div key={video.videoUrl} className="project-videos col col-12 col-md-6 col-lg-4 my-4">
+						<div
+							key={video.videoUrl}
+							className="project-videos col col-12 col-md-6 col-lg-4 my-4"
+						>
 							<h4>{video.videoTitle}</h4>
 							<ReactPlayer
 								className="inline-player"

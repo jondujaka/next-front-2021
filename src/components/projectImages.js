@@ -70,7 +70,7 @@ const RenderImage = ({ image }) => {
 				<LightBox
 					key={`lightbox-${image.sourceUrl}`}
 					image={image}
-					close={()=>setOpenLightbox(false)}
+					close={() => setOpenLightbox(false)}
 				/>
 			) : (
 				``

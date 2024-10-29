@@ -39,7 +39,7 @@ const Home = ({ data: { page, news }, pageContext, location }) => {
 				menu: latestEdition.menu,
 				skMenu: latestEdition.skMenu,
 				content: isSk ? latestEdition.skContent : latestEdition.content
-		  }
+			}
 		: null;
 
 	const langSlug = page.language.slug === `en` ? `sk` : ``;
@@ -138,7 +138,6 @@ const HomeHeader = ({ items, classes }) => {
 };
 
 const Media = ({ media }) => {
-	
 	if (media.imageOrVideo === `image`) {
 		return <img srcSet={`${media.image.srcSet}`} />;
 	} else {

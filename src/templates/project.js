@@ -16,7 +16,7 @@ const Project = ({ data: { project, news }, pageContext }) => {
 		? pageContext.related.map(project => {
 				let newObj = { node: { ...project.project } };
 				return newObj;
-		  })
+			})
 		: [];
 
 	const isSk = project.language.slug === `sk`;

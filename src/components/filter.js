@@ -17,7 +17,6 @@ const Filter = ({
 		handleClick(slug, type);
 	};
 
-
 	const styles = colors
 		? `
 			.Dropdown-option:hover,

@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { useEmblaCarousel } from "embla-carousel/react";
+import useEmblaCarousel from "embla-carousel-react";
 
 const Carousel = ({ items, style }) => {
 	const [emblaRef, emblaApi] = useEmblaCarousel();
@@ -74,7 +74,7 @@ const Button = ({ style, active, toggleSlide }) => {
 							borderColor: style.color,
 							background:
 								hover || active ? style.color : "transparent"
-					  }
+						}
 					: {}
 			}
 			className={active ? `active` : ``}

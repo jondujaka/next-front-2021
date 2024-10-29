@@ -20,13 +20,15 @@ const Single = ({ content, direct, noTitle, ...props }) => {
 			className={`single-content ${direct ? `no-padding` : `separator`}`}
 			{...props}
 		>
-			{!noTitle && <Row>
-				<div className="col-12">
-					{content.title && (
-						<h1 className="single-title">{content.title}</h1>
-					)}
-				</div>
-			</Row>}
+			{!noTitle && (
+				<Row>
+					<div className="col-12">
+						{content.title && (
+							<h1 className="single-title">{content.title}</h1>
+						)}
+					</div>
+				</Row>
+			)}
 			{rows ? (
 				rows.map((item, i) => (
 					<Row key={`row-${i}`} classes="my-md-4 my-5 my-lg-7">

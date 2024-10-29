@@ -12,7 +12,7 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 	const { settings, edition, menu, lang, skMenu } = pageContext;
 
 	const isSk = lang !== `en`;
-	const locale = isSk ? 'sk-SK' : 'en-GB';
+	const locale = isSk ? "sk-SK" : "en-GB";
 
 	const initEvents = data.events.edges;
 	const [allDays, setAllDays] = useState([]);
@@ -26,8 +26,8 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 	const formatFilter = useRef("all");
 
 	const [dayFilterItems, setDayFilterItems] = useState([]);
-	const [venueFilterItems, setVenueFilterItems] = useState([])
-	const [formatsFilterItems, setFormatsFilterItems] = useState([])
+	const [venueFilterItems, setVenueFilterItems] = useState([]);
+	const [formatsFilterItems, setFormatsFilterItems] = useState([]);
 
 	const styles = settings
 		? `
@@ -72,14 +72,12 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 		setAllEvents(newEvents);
 	};
 
-
 	const parseVenues = () => {
 		console.time("Venues");
 
-
 		const venuesFilter = [
 			{ value: `all`, label: isSk ? `Všetky miesta` : `All Venues` }
-		]
+		];
 
 		allEvents.forEach(event => {
 			const { eventInfo } = event.node;
@@ -96,19 +94,17 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 				value: eventInfo.venue.slug,
 				label: eventInfo.venue.title
 			});
-		})
+		});
 
-		setVenueFilterItems(venuesFilter)
+		setVenueFilterItems(venuesFilter);
 		console.timeLog("Venues");
-	}
-
+	};
 
 	const setUpFormats = () => {
 		console.time("Formats");
 		const formatsFilter = [
-			{ value: `all`, label: isSk ? `Všetky formáty` : `All Formats` },
-		]
-
+			{ value: `all`, label: isSk ? `Všetky formáty` : `All Formats` }
+		];
 
 		allEvents.forEach(event => {
 			const { eventInfo } = event.node;
@@ -117,25 +113,26 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 			}
 
 			const formatSlug = eventInfo.format.slug;
-			if (formatsFilter.find(formatItem => formatItem.value === formatSlug)) {
+			if (
+				formatsFilter.find(
+					formatItem => formatItem.value === formatSlug
+				)
+			) {
 				return;
 			}
-
 
 			formatsFilter.push({
 				value: eventInfo.format.slug,
 				label: eventInfo.format.name
 			});
-		})
+		});
 
-		setFormatsFilterItems(formatsFilter)
+		setFormatsFilterItems(formatsFilter);
 
 		console.timeLog("Formats");
-	}
-
+	};
 
 	const setDayFilters = () => {
-
 		console.time("Days filter");
 		let dayFilters = [
 			{
@@ -156,9 +153,15 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 					return;
 				}
 				const dateobj = new Date(date.date);
-				const dayName = new Intl.DateTimeFormat(locale, { weekday: 'long' }).format(dateobj);
-				const monthName = new Intl.DateTimeFormat(locale, { month: 'short' }).format(dateobj);
-				const dayNr = new Intl.DateTimeFormat(locale, { day: 'numeric' }).format(dateobj);
+				const dayName = new Intl.DateTimeFormat(locale, {
+					weekday: "long"
+				}).format(dateobj);
+				const monthName = new Intl.DateTimeFormat(locale, {
+					month: "short"
+				}).format(dateobj);
+				const dayNr = new Intl.DateTimeFormat(locale, {
+					day: "numeric"
+				}).format(dateobj);
 				const dateSlug = date.date;
 				const dayTitle = `${dayName} ${dayNr} ${monthName}`;
 
@@ -166,12 +169,11 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 					return;
 				}
 
-
 				dayFilters.push({
 					value: dateSlug,
 					label: dayTitle
 				});
-			})
+			});
 		});
 
 		// Sort events for each day
@@ -191,13 +193,10 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 		setDayFilterItems(sortedAllDays);
 
 		console.timeLog("Days filter");
-	}
-
-
+	};
 
 	const setUpDays = () => {
-
-		console.time("days")
+		console.time("days");
 		const allDaysInit = {};
 		allEvents.forEach(event => {
 			const { eventInfo } = event.node;
@@ -215,20 +214,23 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 				if (!allDaysInit.hasOwnProperty(dateSlug)) {
 					const dateobj = new Date(date.date);
 					// const dayName = localeFormat(dateobj, "{EEEE}", locale);
-					const dayName = new Intl.DateTimeFormat(locale, { weekday: 'long' }).format(dateobj);
-					const monthName = new Intl.DateTimeFormat(locale, { month: 'short' }).format(dateobj);
-					const dayNr = new Intl.DateTimeFormat(locale, { day: 'numeric' }).format(dateobj);
+					const dayName = new Intl.DateTimeFormat(locale, {
+						weekday: "long"
+					}).format(dateobj);
+					const monthName = new Intl.DateTimeFormat(locale, {
+						month: "short"
+					}).format(dateobj);
+					const dayNr = new Intl.DateTimeFormat(locale, {
+						day: "numeric"
+					}).format(dateobj);
 
 					const dayTitle = `${dayName} ${dayNr} ${monthName}`;
-					console.log(dayTitle)
-					console.log(locale)
 					allDaysInit[dateSlug] = {
 						name: dayTitle,
 						slug: dateSlug,
 						primitive: format(new Date(dateSlug), "{yyyy}{MM}{dd}"),
 						items: []
 					};
-
 				}
 
 				let simplifiedEvent = {
@@ -236,25 +238,23 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 					date: eventInfo.dates.find(date => date.date === dateSlug)
 				};
 				allDaysInit[dateSlug].items.push(simplifiedEvent);
-
 			});
 		});
 
 		setAllDays(allDaysInit);
 		setInitLoad(false);
-		console.timeLog("days")
+		console.timeLog("days");
 	};
 
 	useEffect(() => {
-		setUpDays()
-	}, [allEvents])
+		setUpDays();
+	}, [allEvents]);
 
 	useEffect(() => {
 		parseVenues();
 		setDayFilters();
 		setUpFormats();
-	}, [])
-
+	}, []);
 
 	const langSlug = lang === `en` ? `sk/` : ``;
 	const translationSlug = `/${langSlug}${edition}/programme`;
@@ -295,13 +295,13 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 				</div>
 			</Row>
 			<Row>
-				{!initEvents.length && (<div className="col col-12 mt-7">
-					<h3>
-						{isSk
-							? `Viac info čoskoro`
-							: `Info coming soon`}
-					</h3>
-				</div>)}
+				{!initEvents.length && (
+					<div className="col col-12 mt-7">
+						<h3>
+							{isSk ? `Viac info čoskoro` : `Info coming soon`}
+						</h3>
+					</div>
+				)}
 
 				{allDays && !initLoad && initEvents.length && (
 					<>
