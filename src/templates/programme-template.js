@@ -303,7 +303,7 @@ const ProgrammeTemplate = ({ data, pageContext }) => {
 					</div>
 				)}
 
-				{allDays && !initLoad && initEvents.length && (
+				{allDays && !initLoad && Boolean(initEvents.length) && (
 					<>
 						{Object.keys(allDays).length ? (
 							<RenderDays
