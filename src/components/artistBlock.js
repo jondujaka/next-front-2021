@@ -15,12 +15,18 @@ const ArtistBlock = ({
 		item = item.node;
 	}
 
-	let image = item.artistEventContent?.images[0]?.mediaDetails?.sizes.find(
+	if(!item.artistEventContent.images){
+		console.log(item)
+	}
+
+	const images = item.artistEventContent.images;
+
+	let image = images.length && images[0]?.mediaDetails?.sizes.find(
 		size => size.name === `big-thumbnail`
 	);
 
 	if (!image) {
-		if (item.artistEventContent?.images.length) {
+		if (images.length) {
 			image = item.artistEventContent.images[0].srcSet;
 		} else if (item.featuredImage) {
 			image = item.featuredImage && item.featuredImage.node.srcSet;
