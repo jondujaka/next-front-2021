@@ -11,6 +11,8 @@ import Scrollspy from "react-scrollspy";
 const Info = ({ data, pageContext }) => {
 	const { settings, edition, menu, lang, skMenu } = pageContext;
 
+	console.log({data})
+
 	// if (!data.wpContentNode) {
 	// 	return <h1>No data</h1>;
 	// }
@@ -281,6 +283,39 @@ export const infoQuery = graphql`
 										}
 									}
 									... on WpEdition2024_About_section_Content_Text {
+										big
+										fieldGroupName
+										textContent
+									}
+								}
+								title
+							}
+						}
+					}
+						... on WpEdition2025 {
+						id
+						title
+						language {
+							slug
+						}
+						about {
+							fieldGroupName
+							section {
+								content {
+									... on WpEdition2025_About_section_Content_Partners {
+										fieldGroupName
+										partnerImages {
+											srcSet
+											sourceUrl
+										}
+									}
+									... on WpEdition2025_About_section_Content_Media {
+										fieldGroupName
+										image {
+											srcSet
+										}
+									}
+									... on WpEdition2025_About_section_Content_Text {
 										big
 										fieldGroupName
 										textContent
