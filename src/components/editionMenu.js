@@ -173,6 +173,10 @@ const isActive =
 
 const parseUrl = (isSk, url) => {
 	let parsedUrl = url;
+
+	if(url.startsWith('https://')){
+		return url;
+	}
 	if (url.endsWith(`/`)) {
 		parsedUrl = url.substring(0, url.length - 1);
 	}
