@@ -5,7 +5,7 @@ export function onRouteUpdate() {
 			.classList.remove("overflow-hidden");
 	}
 
-	if (process.env === 'PRODUCTION' && window.fbq && typeof window.fbq === `function`) {
+	if (process.env.CONTEXT === 'production' && window.fbq && typeof window.fbq === `function`) {
 		console.log('test')
 		window.fbq("track", "ViewContent");
 	}
