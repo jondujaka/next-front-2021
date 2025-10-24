@@ -2,7 +2,7 @@ const React = require("react");
 
 let warning = false;
 
-exports.onRenderBody = ({ setPostBodyComponents }, options = {}) => {
+exports.onRenderBody = ({ setPostBodyComponents, setHeadComponents }, options = {}) => {
 	options = Object.assign(
 		{
 			apiKey: process.env.SNIPC_PUBLIC,
@@ -42,5 +42,6 @@ exports.onRenderBody = ({ setPostBodyComponents }, options = {}) => {
 			/>
 		);
 	}
-	return setPostBodyComponents(components);
+
+	setPostBodyComponents(components);
 };

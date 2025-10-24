@@ -14,7 +14,6 @@ module.exports = {
 			resolve: `gatsby-source-wordpress`,
 			options: {
 				url: process.env.WORDPRESS_URL,
-				verboseOutput: true,
 				debug: {
 					graphql: {
 						showQueryVarsOnError: true,
@@ -31,9 +30,6 @@ module.exports = {
 				production: {
 					allow404Images: true
 				},
-				development: {
-					allow404Images: true
-				}
 			}
 		},
 		`gatsby-plugin-react-helmet`,

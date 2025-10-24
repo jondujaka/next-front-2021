@@ -64,6 +64,8 @@ const EditionMenu = ({
 	const isDev =
 		process.env.GATSBY_IS_PREVIEW || process.env.CONTEXT !== `production`;
 
+	console.log({navItems})
+
 	return Style.it(
 		styles,
 		<div
