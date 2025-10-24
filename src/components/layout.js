@@ -106,7 +106,7 @@ const Layout = ({
 					src="//cdn.cookie-script.com/s/3c8bb78d413c45af28f18270091bf0dc.js"
 				/>
 
-				{process.env.CONTEXT === 'production' && <><script>
+				<script>
 					{`
         !function(f,b,e,v,n,t,s)
         {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -120,13 +120,13 @@ const Layout = ({
         fbq('track', 'PageView');
       `}
 				</script>
-					<noscript>
-						{`
+				<noscript>
+					{`
               <img height="1" width="1" style="display:none"
                 src="https://www.facebook.com/tr?id=120588998411833&ev=PageView&noscript=1"
               />
             `}
-					</noscript></>}
+				</noscript>
 
 
 				{/* SNIPCART */}
