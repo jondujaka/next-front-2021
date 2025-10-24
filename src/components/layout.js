@@ -106,7 +106,7 @@ const Layout = ({
 					src="//cdn.cookie-script.com/s/3c8bb78d413c45af28f18270091bf0dc.js"
 				/>
 
-				{process.env.CONTEXT === 'PRODUCTION' && <><script>
+				{process.env.CONTEXT === 'production' && <><script>
 					{`
         !function(f,b,e,v,n,t,s)
         {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
