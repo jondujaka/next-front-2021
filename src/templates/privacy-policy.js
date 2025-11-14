@@ -14,239 +14,258 @@ const PrivacyPolicy = ({ pageContext }) => {
 			style={latestEdition}
 		>
 			<Row>
-				<div className="col col-12 mt-5 mb-6">
-					<h2 className="festival-page-title">Privacy Policy</h2>
-				</div>
-				<div className="col col-12 mt-5 mb-6">
-					<p>Effective date: 2021-11-22</p>
-					<p>Updated on: 2021-11-22</p>
-					<p>
-						<input id="csconsentcheckbox" type="checkbox" />
-						<label for="csconsentcheckbox">
-							I agree with Cookie Policy
-						</label>
-					</p>
-					<p>
-						This Privacy Policy explains the policies of Next
-						Festival on the collection and use of the information we
-						collect when you access https://nextfestival.sk (the
-						“Service”). This Privacy Policy describes your privacy
-						rights and how you are protected under privacy laws.
-					</p>
-					<p>
-						By using our Service, you are consenting to the
-						collection and use of your information in accordance
-						with this Privacy Policy. Please do not access or use
-						our Service if you do not consent to the collection and
-						use of your information as outlined in this Privacy
-						Policy. This Privacy Policy has been created with the
-						help of
-						<a
-							target="_blank"
-							href="https://cookie-script.com/privacy-policy-generator"
-						>
-							CookieScript Privacy Policy Generator
-						</a>
-						.
-					</p>
-					<p>
-						Next Festival is authorized to modify this Privacy
-						Policy at any time. This may occur without prior notice.
-					</p>
-					<p>
-						Next Festival will post the revised Privacy Policy on
-						the https://nextfestival.sk website
-					</p>
+				<div className="col col-12 mt-5 mb-6 privacy">
+					<h2>INFORMÁCIA O SPRACÚVANÍ OSOBNÝCH ÚDAJOV
+					</h2>
+					<div class="section">
+						<p>Atrakt Art, občianske združenie je organizátorom spoločenskej a kultúrnej udalosti – medzinárodného festivalu NEXT Festival a v rámci svojej činnosti venuje najvyššiu pozornosť ochrane osobných údajov autorov, návštevníkov, prípadne iných dotknutých osôb. Táto Informácia o spracúvaní osobných údajov obsahuje informácie o spracúvaní osobných údajov autorov, návštevníkov a iných fyzických osôb, ktorých osobné údaje je nevyhnutné získať a spracúvať pri vykonávaní našej činnosti. Vaše osobné údaje sú spracúvané v súlade se všetkými všeobecne záväznými právnymi predpismi platnými v Slovenskej republike, najmä, nie však výlučne v súlade s Nariadením Európskeho Parlamentu a Rady (EÚ) 2016/679 z 27. apríla 2016 o ochrane fyzických osôb pri spracúvaní osobných údajov a o voľnom pohybe takýchto údajov, ktorým sa zrušuje smernica 95/46/ES (všeobecné nariadenie o ochrane údajov) (ďalej len „Nariadenie"), zákonom č. 18/2018 Z. z. o ochrane osobných údajov (ďalej len „Zákon o ochrane osobných údajov").</p>
 
-					<h3>Collection and Use of Your Personal Information</h3>
-					<h4>Information We Collect</h4>
-					<p>
-						When using our Service, you will be prompted to provide
-						us with personal information used to contact or identify
-						you. https://nextfestival.sk collects the following
-						information:
-					</p>
-
-					<p>
-						<ul>
-							<li>Usage Data</li>
-						</ul>
-					</p>
-
-					<p>Usage Data includes the following:</p>
-					<p>
-						<ul>
-							<li>
-								Internet Protocol (IP) address of computers
-								accessing the site
-							</li>
-							<li>Web page requests</li>
-							<li>Referring web pages</li>
-							<li>Browser used to access site</li>
-							<li>Time and date of access</li>
-						</ul>
-					</p>
-					<h4>How We Collect Information</h4>
-					<p>
-						https://nextfestival.sk collects and receives
-						information from you in the following manner:
-						<ul>
-							<li>When you interact with our Service.</li>
-							<li>From external, public sources.</li>
-						</ul>
-					</p>
-					<p>
-						Your information will be stored for up to 30 days after
-						it is no longer required to provide you the services.
-						Your information may be retained for longer periods for
-						reporting or record- keeping in accordance with
-						applicable laws. Information which does not identify you
-						personally may be stored indefinitely.
-					</p>
-
-					<h4>How We Use Your Information</h4>
-					<p>
-						https://nextfestival.sk may use your information for the
-						following purposes:
-						<ul>
-							<li>
-								<b>Providing and maintaining our Service,</b> as
-								well as monitoring the usage of our Service.
-							</li>
-							<li>
-								<b>For other purposes.</b> Next Festival will
-								use your information for data analysis to
-								identify usage trends or determine the effective
-								of our marketing campaigns when reasonable. We
-								will use your information to evaluate and
-								improve our Service, products, services, and
-								marketing efforts.
-							</li>
-						</ul>
-					</p>
-
-					<h4>Third-party Sharing</h4>
-					<p>
-						Any third party we share your information with must
-						disclose the purpose for which they intend to use your
-						information. They must retain your information only for
-						the duration disclosed when requesting or receiving said
-						information. The third-party service provider must not
-						further collect, sell, or use your personal information
-						except as necessary to perform the specified purpose.
-					</p>
-					<p>
-						Your information may be shared to a third-party for
-						reasons including:
-						<ul>
-							<li>
-								<b>Analytics information.</b> Your information
-								might be shared with online analytics tools in
-								order to track and analyse website traffic.
-							</li>
-							<li>
-								<b>Payment processing and recovery services.</b>
-								Your information will be used in order to
-								process payments in the event of a purchase,
-								refund, or other similar request.
-							</li>
-						</ul>
-					</p>
-					<p>
-						If you choose to provide such information during
-						registration or otherwise, you are giving Next Festival
-						permission to use, share, and store that information in
-						a manner consistent with this Privacy Policy.
-					</p>
-
-					<p>
-						Your information may be disclosed for additional
-						reasons, including:
-						<ul>
-							<li>
-								Complying with applicable laws, regulations, or
-								court orders.
-							</li>
-							<li>
-								Responding to claims that your use of our
-								Service violates third-party rights.
-							</li>
-							<li>
-								Enforcing agreements you make with us, including
-								this Privacy Policy.
-							</li>
-						</ul>
-					</p>
-
-					<h4>Cookies</h4>
-					<p>
-						Cookies are small text files that are placed on your
-						computer by websites that you visit. Websites use
-						cookies to help users navigate efficiently and perform
-						certain functions. Cookies that are required for the
-						website to operate properly are allowed to be set
-						without your permission. All other cookies need to be
-						approved before they can be set in the browser.
-					</p>
-					<p>
-						<ul>
-							<li>
-								<b>Strictly necessary cookies.</b> Strictly
-								necessary cookies allow core website
-								functionality such as user login and account
-								management. The website cannot be used properly
-								without strictly necessary cookies.
-							</li>
-							<li>
-								<b>Performance cookies.</b> Performance cookies
-								are used to see how visitors use the website,
-								eg. analytics cookies. Those cookies cannot be
-								used to directly identify a certain visitor.
-							</li>
-						</ul>
-					</p>
-
-					<div class="cookie-report-container">
-						<p data-cookiereport="true">
-							You can change your consent to cookie usage below.
-						</p>
-						<script
-							type="text/javascript"
-							charset="UTF-8"
-							data-cookiescriptreport="report"
-							data-cs-lang="en"
-							src="//report.cookie-script.com/r/3c8bb78d413c45af28f18270091bf0dc.js"
-						></script>
+						<p>Odporúčame Vám, aby ste si dôkladne prečítali túto Informáciu o spracúvaní osobných údajov a oboznámili sa tak so všetkými svojimi právami. V prípade akýchkoľvek nejasností týkajúcich sa obsahu tejto Informácie o spracúvaní osobných údajov, kontaktujte prosím nižšie uvedenú kontaktnú osobu.</p>
 					</div>
 
-					<h4>Security</h4>
-					<p>
-						Your information’s security is important to us.
-						https://nextfestival.sk utilizes a range of security
-						measures to prevent the misuse, loss, or alteration of
-						the information you have given us. However, because we
-						cannot guarantee the security of the information you
-						provide us, you must access our service at your own
-						risk.
-					</p>
-					<p>
-						Next Festival is not responsible for the performance of
-						websites operated by third parties or your interactions
-						with them. When you leave this website, we recommend you
-						review the privacy practices of other websites you
-						interact with and determine the adequacy of those
-						practices.
-					</p>
+					<div class="section">
+						<h4>V tejto Informácii o spracúvaní osobných údajov Vás informujeme o tom:</h4>
+						<ul>
+							<li>Kto sme a ako nás môžete kontaktovať</li>
+							<li>Na koho sa vzťahuje táto Informácia o spracúvaní osobných údajov</li>
+							<li>Aké osobné údaje zhromažďujeme</li>
+							<li>Ako používame vaše osobné údaje a aký je právny základ spracúvania vašich osobných údajov</li>
+							<li>Komu sprístupňujeme vaše osobné údaje a prečo</li>
+							<li>Ako dlho uchovávame vaše osobné údaje</li>
+							<li>Ako prenášame Vaše osobné údaje mimo Európskej únie</li>
+							<li>Aké sú vaše práva a ako si ich môžete uplatniť</li>
+						</ul>
+					</div>
 
-					<h4>Contact Us</h4>
-					<p>
-						For any questions, please contact us through the
-						following methods:
-					</p>
-					<p>Name: Next Festival</p>
-					<p>Address: Address, Bratislava, SK</p>
-					<p>Email: info(at)nextfestival.sk</p>
-					<p>Website: https://nextfestival.sk</p>
+					<h4>KTO SME A AKO NÁS MÔŽETE KONTAKTOVAŤ</h4>
+
+					<div class="contact-info">
+						<p><strong>Prevádzkovateľom pri spracúvaní Vašich osobných údajov je:</strong></p>
+						<p>
+							<strong>ATRAKT ART, občianske združenie</strong><br />
+							Sídlo: Gallayová 43, 841 02, Bratislava<br />
+							IČO: 36066273
+						</p>
+						<p>(ďalej označený aj ako „prevádzkovateľ", „NEXT Festival")</p>
+						<p>
+							<strong>Kontaktná osoba:</strong><br />
+							Mária Hejtmánková - maria (at) nextfestival (dot) sk
+						</p>
+					</div>
+
+					<h4>NA KOHO SA VZŤAHUJE TÁTO INFORMÁCIA O SPRACÚVANÍ OSOBNÝCH ÚDAJOV</h4>
+
+					<ul>
+						<li>fyzické osoby – autori, distribútori, producenti, prípadne iní tvorcovia - fyzické osoby podieľajúce sa na výrobe filmu resp. diela</li>
+						<li>fyzické osoby – hostia programu festivalu</li>
+						<li>fyzické osoby – pozvaní účastníci, bežní návštevníci festivalu</li>
+						<li>fyzické osoby – zástupcovia médií</li>
+						<li>fyzické osoby – registrovaný zákazníci, potenciálni záujemcovia o účasť na festivale</li>
+						<li>fyzické osoby - dodávatelia tovarov a služieb, dobrovoľníci, resp. iní zmluvní partneri, vrátane oprávnených zástupcov a kontaktných osôb dodávateľov tovarov a služieb – právnických osôb</li>
+						<li>ďalšie fyzické osoby, ktorých osobné údaje spracúvame za podmienok uvedených ďalej v tejto Informácií o spracúvaní osobných údajov</li>
+					</ul>
+
+					<h4>AKÉ OSOBNÉ ÚDAJE ZHROMAŽĎUJEME</h4>
+
+					<p>Rozsah osobných údajov, ktoré zhromažďujeme a používame, bude závisieť od toho, prečo ich potrebujeme. Zhromažďujeme len take osobné údaje, ktoré nevyhnutne potrebujeme na dosiahnutie stanoveného účelu spracúvania. Spracúvame najmä nasledovné kategórie Vašich osobných údajov:</p>
+
+					<ul>
+						<li>meno, priezvisko</li>
+						<li>adresa trvalého alebo iného pobytu, adresa bydliska</li>
+						<li>dátum narodenia</li>
+						<li>číslo dokladu totožnosti, cestovného pasu (v prípade, ak zabezpečujeme letenku)</li>
+						<li>údaje zo životopisu</li>
+						<li>bankové spojenie</li>
+						<li>fotografia (podobizeň)</li>
+						<li>videozáznam a zvukový záznam (prejavy osobnej povahy)</li>
+						<li>pohlavie</li>
+						<li>údaje o zamestnávateľovi, pracovná pozícia</li>
+						<li>telefónne číslo</li>
+						<li>e-mailová adresa</li>
+						<li>IČO</li>
+						<li>IČ DPH</li>
+						<li>fakturačné a platobné údaje</li>
+						<li>vlastnoručný podpis</li>
+					</ul>
+
+					<h4>AKO POUŽÍVAME VAŠE OSOBNÉ ÚDAJE A AKÝ JE PRÁVNY ZÁKLAD SPRACÚVANIA VAŠICH OSOBNÝCH ÚDAJOV</h4>
+
+					<p>V tejto časti Vás chceme informovať o tom, na aké účely, akým spôsobom a prečo používame Vaše osobné údaje, a tiež aký je právny základ spracúvania Vašich osobných údajov.</p>
+
+					<table>
+						<thead>
+							<tr>
+								<th>Účel spracúvania osobných údajov</th>
+								<th>Právny základ spracúvania osobných údajov</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>
+									<strong>Vykonávanie činností spojených s prihlásením/výberom filmov na festival</strong><br /><br />
+									(Výzva na prihlasovanie filmov, výber filmov na festival z prihlásených, zostavovanie programu, kontakt s autormi/tvorcami/prihlasovateľmi, kuratelovaný výber filmov, výber špeciálnych hostí, programových hostí, činnosti spojené so získavaním práv k filmu, rokovanie s distribútormi)
+								</td>
+								<td>Plnenie zmluvy<br />(čl. 6 ods. 1 písm. b) Nariadenia)</td>
+							</tr>
+							<tr>
+								<td>
+									<strong>Vykonávanie činností spojených s propagáciou festivalu a zabezpečením preukaznej dokumentácie pre partnerov festivalu</strong><br /><br />
+									(Uverejnenie informácií o vybraných filmoch a ich autoroch v propagačných materiáloch festivalu, tlačové správy, vyhotovenie zvukového a obrazového záznamu a portrétnych fotografií za účelom propagácie vybraných filmov, ich autorov a tvorcov)
+								</td>
+								<td>Oprávnený záujem<br />(čl. 6 ods. 1 písm. f) Nariadenia)</td>
+							</tr>
+							<tr>
+								<td>
+									<strong>Vykonávanie činností spojených so zabezpečením účasti hostí, členov poroty a návštevníkov</strong><br /><br />
+									(Tvorba poroty, výber a zasielanie pozvánok členom poroty, zasielanie pozvánok programovým hosťom, prihlásenie účastníka na voliteľné workshopy s obmedzenou kapacitou, zasielanie pozvánok vybraným návštevníkom, predaj lístkov na festival bežným návštevníkom)
+								</td>
+								<td>Vykonanie opatrení pred uzatvorením zmluvy – predzmluvný vzťah<br /><br />Plnenie zmluvy<br />(čl. 6 ods. 1 písm. b) Nariadenia)</td>
+							</tr>
+							<tr>
+								<td><strong>Vyhlásenie výsledkov súťaže na záverečnom ceremoniáli festivalu</strong></td>
+								<td>Oprávnený záujem<br />(čl. 6 ods. 1 písm. f) Nariadenia)</td>
+							</tr>
+							<tr>
+								<td>
+									<strong>Vykonávanie činností spojených so zabezpečením dodávok tovaru a služieb pre festival</strong><br /><br />
+									(Prenájom priestorov a techniky, zabezpečenie občerstvenia, strážnej služby, služieb zdravotníkov a pod., výber spolupracovníkov, nábor dobrovoľníkov a guidov na vykonávanie rôznych činností a pomocných prác spojených s organizáciou a zabezpečením priebehu festivalu, konkrétne dojednanie komerčných/technických podmienok s vybraným dodávateľom/poskytovateľom služieb, príprava návrhu zmluvy, finalizácia a podpis zmluvy s dodávateľom, vystavenie a zaslanie objednávky, potvrdenie objednávky zo strany dodávateľa)
+								</td>
+								<td>Vykonanie opatrení pred uzatvorením zmluvy – predzmluvný vzťah<br /><br />Plnenie zmluvy<br />(čl. 6 ods. 1 písm. b) Nariadenia)</td>
+							</tr>
+							<tr>
+								<td>
+									<strong>Vykonávanie činností súvisiacich s distribúciou krátkych filmov</strong><br /><br />
+									(Oslovenie vybraných autorov príp. iných tvorcov krátkych filmov, rokovanie a uzatvorenie licenčnej zmluvy)
+								</td>
+								<td>Vykonanie opatrení pred uzatvorením zmluvy – predzmluvný vzťah<br /><br />Plnenie zmluvy<br />(čl. 6 ods. 1 písm. b) Nariadenia)</td>
+							</tr>
+							<tr>
+								<td>
+									<strong>Zasielanie newslettra</strong><br /><br />
+									(Informovanie existujúcich zákazníkov a potenciálnych záujemcov o účasť na festivale o novinkách, aktuálnych a pripravovaných podujatiach organizovaných prevádzkovateľom, výhodných ponukách a pod., najmä za účelom propagácie a prezentácie produktov festivalu)
+								</td>
+								<td>Oprávnený záujem<br />(čl. 6 ods. 1 písm. f) Nariadenia)</td>
+							</tr>
+							<tr>
+								<td>
+									<strong>Kontaktný formulár</strong><br /><br />
+									(Kontaktovanie fyzických osôb prostredníctvom e-mailu, prípadne iným spôsobom za účelom poskytnutia odpovedí na otázky alebo žiadosti týkajúce sa činnosti alebo služieb prevádzkovateľa v prípade, žiadosti zaslanej prostredníctvom kontaktného formulára zverejneného na webstránke prevádzkovateľa)
+								</td>
+								<td>Oprávnený záujem<br />(čl. 6 ods. 1 písm. f) Nariadenia)</td>
+							</tr>
+							<tr>
+								<td>
+									<strong>Komunikácia s médiami</strong><br /><br />
+									(Zasielanie tlačových správ, pozvánok na tlačové konferencie, dopytov na mediálne partnerstvá a výziev na akreditáciu predstaviteľom médií, za účelom propagácie a prezentácie produktov festivalu)
+								</td>
+								<td>Oprávnený záujem<br />(čl. 6 ods. 1 písm. f) Nariadenia)</td>
+							</tr>
+							<tr>
+								<td>
+									<strong>Vyhotovovanie foto a videodokumentácie z festivalu</strong><br /><br />
+									(Vyhotovovanie a uchovávanie dokumentácie za účelom propagácie festivalu pre ďalšie ročníky, pre partnerov festivalu a donorov, za účelom prezentácie festivalu ako významnej kultúrnej a spoločenskej udalosti, plnenia osvetovej, publikačnej, vedeckej, výchovnej, vzdelávacej a konfrontačnej funkcie festivalu v súvislosti s domácou a zahraničnou produkciou animovaných filmov)
+								</td>
+								<td>Oprávnený záujem<br />(čl. 6 ods. 1 písm. f) Nariadenia)</td>
+							</tr>
+							<tr>
+								<td>
+									<strong>Vybavovanie sťažností</strong><br /><br />
+									(Vybavovanie reklamácií, sťažností, žiadostí, či podnetov, uplatňovanie práv a právnych nárokov, ktoré sa týkajú dotknutých osôb alebo prevádzkovateľa)
+								</td>
+								<td>Oprávnený záujem<br />(čl. 6 ods. 1 písm. f) Nariadenia)</td>
+							</tr>
+							<tr>
+								<td>
+									<strong>Vedenie účtovníctva a činnosti súvisiace s ekonomickou agendou</strong><br /><br />
+									(Vedenie účtovníctva a vyhotovovanie účtovných dokladov, správa a fakturácia služieb poskytnutých na základe zmlúv, spracúvanie účtovných, daňových dokladov a faktúr, zabezpečenie auditu účtovnej závierky, prijímanie peňažných a nepeňažných plnení, zabezpečenie vyradenia dokumentácie)
+								</td>
+								<td>Plnenie zákonnej povinnosti<br />(čl. 6 ods. 1 písm. c) Nariadenia)<br /><br />Plnenie zmluvy<br />(čl. 6 ods. 1 písm. b) Nariadenia)</td>
+							</tr>
+							<tr>
+								<td>
+									<strong>Prevádzkovanie webstránky</strong><br /><br />
+									(Spravovanie webstránky prevádzkovateľa, zlepšovanie ponuky tovarov a služieb prevádzkovateľa. Prevádzkovateľ na webstránkach využíva súbory cookie a ďalšie podobné technológie za účelom umožnenia čo najlepšieho užívania funkcie webstránok. Podrobné informácie o súboroch cookie a o možnosti ich vypnutia sú uvedené v Informácii o používaní súborov cookie a iných internetových techonológií)
+								</td>
+								<td>Oprávnený záujem<br />(čl. 6 ods. 1 písm. f) Nariadenia)</td>
+							</tr>
+						</tbody>
+					</table>
+
+					<h4>KOMU SPRÍSTUPŇUJEME VAŠE OSOBNÉ ÚDAJE A PREČO</h4>
+
+					<p>V tejto časti uvádzame, ktorým príjemcom môžeme poskytovať Vaše osobné údaje, či ich s nimi zdieľať. Niektoré Vaše osobné údaje môžeme poskytovať subjektom, ktoré nám poskytujú služby, subjektom, ktoré informujú o našej činnosti, alebo subjektom, ktoré na základe príslušných všeobecne záväzných právnych predpisov kontrolujú vykonávanie alebo financovanie našej činnosti. Od všetkých poskytovateľov služieb a ďalších subjektov, ktorým sprístupňujeme osobné údaje striktne vyžadujeme, aby dôsledne dbali na ochranu osobných údajov a nepoužívali Vaše osobné údaje na vlastné marketingové účely, pokiaľ im na to sami neudelíte súhlas. Zdieľame iba tie osobné údaje, ktoré tieto subjekty nevyhnutne potrebujú na poskytovanie služieb. Ide napríklad o nasledovné subjekty:</p>
+
+					<ul>
+						<li>spolupracovníkom a členom tímu NEXT Festival</li>
+						<li>poskytovatelia ubytovacích služieb</li>
+						<li>letecké spoločnosti/sprostredkovatelia služieb leteckých spoločností, cestovné agentúry, dopravcovia</li>
+						<li>médiá, novinári</li>
+						<li>účtovníctvo, daňové poradenstvo, audítorské služby</li>
+						<li>Fond na podporu umenia, Nadácia mesta Bratislavy, Staré mesto Bratislava pod.</li>
+						<li>technologické služby (napr. poskytovanie a správa virtuálneho prostredia, vývoj, prevádzka a správa aplikácií, poskytovanie služieb hardvérového servisu na všetkých zariadeniach infraštruktúry, poskytovanie systémovej podpory na IT infraštruktúre, správa siete, ticketingová služba (tootoot s.r.o., Slovenská republika)</li>
+					</ul>
+
+					<p>Niektoré Vaše osobné údaje môžeme poskytovať štátnym orgánom, správnym a samosprávnym orgánom, a iným orgánom verejnej moci a správy, v prípadoch, keď nám taká povinnosť vyplýva zo zákona, alebo je to potrebné na určenie, uplatnenie alebo obhajobu práv a oprávnených záujmov nášho združenia, alebo tretích osôb.</p>
+
+					<h4>AKO DLHO UCHOVÁVAME VAŠE OSOBNÉ ÚDAJE</h4>
+
+					<p>Doba, počas ktorej budeme Vaše osobné údaje uchovávať je vo väčšine prípadov najviac 10 rokov odo dňa kedy sme osobné údaje získali. Vo výnimočných prípadoch, ak to okolnosti vyžadujú, sa môže doba uchovávania osobných údajov predĺžiť z dôvodov uplatnenia, preukázania, obhajovania a/alebo výkonu práv, nárokov a oprávnených záujmov Vás ako dotknutej osoby alebo našich alebo z dôvodu archivácie niektorých dokumentov a záznamov na účely spoločenského, kultúrneho, výchovného, vzdelávacieho a iného obdobného významu, a to v nevyhnutnej miere.</p>
+
+					<h4>AKO PRENÁŠAME VAŠE OSOBNÉ ÚDAJE MIMO EURÓPSKEJ ÚNIE</h4>
+
+					<p>Nemáme v úmysle uskutočňovať cezhraničný prenos Vašich osobných údajov do tretích krajín mimo Európskeho hospodárskeho priestoru (EÚ, Island, Nórsko a Lichtenštajnsko).</p>
+
+					<h4>AKÉ SÚ VAŠE PRÁVA A AKO SI ICH MÔŽETE UPLATNIŤ</h4>
+
+					<p>Ak o Vás spracúvame osobné údaje výlučne na základe Vášho súhlasu so spracúvaním osobných údajov (čl. 6 ods. 1 písm. a) Nariadenia), máte právo kedykoľvek svoj súhlas odvolať. Odvolanie súhlasu nemá vplyv na zákonnosť spracúvania osobných údajov založeného na súhlase pred jeho odvolaním. Udelený súhlas môžete odvolať rovnakým spôsobom, akým bol súhlas udelený, t. j. písomne.</p>
+
+					<p>V súvislosti so spracúvaním Vašich osobných údajov máte v rozsahu ustanovenom všeobecne záväznými právnymi predpismi nasledovné práva:</p>
+
+					<h4>1. Právo namietať proti spracúvaniu osobných údajov</h4>
+					<p>Máte právo kedykoľvek namietať z dôvodov týkajúcich sa Vašej konkrétnej situácie proti spracúvaniu osobných údajov, ktoré sa Vás týka, ak je spracúvanie vykonávané na splnenie úlohy realizovanej vo verejnom záujme alebo nevyhnutné na účely oprávnených záujmov, ktoré sledujeme.</p>
+
+					<h4>2. Právo na prístup k osobným údajom</h4>
+					<p>Na základe Vašej žiadosti adresovanej kontaktnej osobe uvedenej v tejto Informácii o spracúvaní osobných údajov Vám poskytneme kópiu osobných údajov, ktoré o Vás spracúvame, a to prostredníctvom e-mailu, ak nepožiadate o iný spôsob poskytnutia osobných údajov.</p>
+
+					<h4>3. Právo na opravu osobných údajov</h4>
+					<p>Máte právo na to, aby sme bez zbytočného odkladu opravili nesprávne osobné údaje, ktoré sa Vás týkajú. So zreteľom na účely spracúvania osobných údajov máte tiež právo na doplnenie neúplných osobných údajov.</p>
+
+					<h4>4. Právo na vymazanie (právo na zabudnutie)</h4>
+					<p>Máte právo, aby sme bez zbytočného odkladu vymazali Vaše osobné údaje v prípade, ak:</p>
+					<ul>
+						<li>osobné údaje už nie sú potrebné na účely, na ktoré sa získavali alebo inak spracúvali;</li>
+						<li>odvoláte súhlas, na základe ktorého sa spracúvanie vykonáva, a ak neexistuje iný právny základ pre spracúvanie;</li>
+						<li>namietate voči spracúvaniu Vašich osobných údajov z dôvodov uvedených v bode 1. vyššie a neprevažujú žiadne oprávnené dôvody na spracúvanie;</li>
+						<li>sa Vaše osobné údaje sa spracúvali nezákonne;</li>
+						<li>Vaše osobné údaje musia byť vymazané, aby sa splnila zákonná povinnosť podľa práva Európskej únie alebo práva Slovenskej republiky.</li>
+					</ul>
+
+					<h4>5. Právo na obmedzenie spracúvania osobných údajov</h4>
+					<p>Máte právo, aby sme obmedzili spracúvanie Vašich osobných údajov v prípade, ak:</p>
+					<ul>
+						<li>ste napadli správnosť osobných údajov, a to počas obdobia umožňujúceho nám overiť správnosť osobných údajov;</li>
+						<li>spracúvanie je protizákonné a namietate proti vymazaniu osobných údajov a žiadate namiesto toho obmedzenie ich použitia;</li>
+						<li>už nepotrebujeme Vaše osobné údaje na účely spracúvania, ale potrebujete ich vy na preukázanie, uplatňovanie alebo obhajovanie právnych nárokov;</li>
+						<li>ste namietali voči spracúvaniu Vašich osobných údajov z dôvodov uvedených v bode 1. vyššie, a to až do overenia, či oprávnené dôvody na strane prevádzkovateľa prevažujú nad oprávnenými dôvodmi dotknutej osoby.</li>
+					</ul>
+
+					<h4>6. Právo na prenosnosť údajov</h4>
+					<p>Máte právo získať osobné údaje, ktoré sa Vás týkajú a ktoré ste nám poskytli v štruktúrovanom, bežne používanom a strojovo čitateľnom formáte a máte právo preniesť tieto údaje ďalšiemu prevádzkovateľovi bez toho, aby sme Vám v tom bránili, ak:</p>
+					<ul>
+						<li>je spracúvanie osobných údajov založené na Vašom súhlase alebo na zmluve;</li>
+						<li>ak sa spracúvanie vykonáva automatizovanými prostriedkami.</li>
+					</ul>
+
+					<h4>7. Právo podať sťažnosť dozornému orgánu</h4>
+					<p>V prípade, ak sa domnievate, že došlo k porušeniu Vašich práv pri spracúvaní osobných údajov alebo k porušeniu všeobecne záväzných právnych predpisov v oblasti ochrany osobných údajov, máte právo obrátiť sa na Úrad na ochranu osobných údajov Slovenskej republiky s návrhom na začatie konania o ochrane osobných údajov podľa § 99 Zákona o ochrane osobných údajov.</p>
+
+					<p>Všetky svoje práva si môžete uplatniť kontaktovaním kontaktnej osoby uvedenej v tejto Informácii o spracúvaní osobných údajov, písomne, vrátane e-mailu, a tiež zákonom ustanoveným postupom adresovaným dozornému orgánu, ktorým je Úrad na ochranu osobných údajov Slovenskej republiky, Hraničná 12, 820 07 Bratislava, tel.: + 421 2 32 31 32 14, e-mail: <a href="mailto:statny.dozor@pdp.gov.sk">statny.dozor@pdp.gov.sk</a>, webstránka: <a href="http://www.dataprotection.gov.sk/" target="_blank">http://www.dataprotection.gov.sk/</a>.</p>
+
+					<p>Vaša žiadosť môže byť zamietnutá v prípadoch dovolených alebo ustanovených zákonom.</p>
+
+					<h4>ZMENA INFORMÁCIE O OCHRANE OSOBNÝCH ÚDAJOV</h4>
+
+					<p>Túto Informáciu o spracúvaní osobných údajov môžeme niekedy zmeniť alebo doplniť. Taká zmena alebo doplnenie sa nijakým spôsobom bez Vášho výslovného súhlasu nedotkne Vašich práv, ktoré Vám vyplývajú z príslušných všeobecne záväzných právnych predpisov o ochrane osobných údajov.</p>
 				</div>
 			</Row>
 		</Layout>

@@ -100,11 +100,16 @@ const Layout = ({
 					content="black-translucent"
 				/>
 
-				<script
+				<link rel="stylesheet" id="silktide-consent-manager-css" href="/silktide-consent-manager.css" />
+				<script src="/silktide-consent-manager.js" />
+
+				{/* <script
 					type="text/javascript"
 					charset="UTF-8"
 					src="//cdn.cookie-script.com/s/3c8bb78d413c45af28f18270091bf0dc.js"
-				/>
+				/> */}
+
+
 
 				<script>
 					{`
@@ -129,7 +134,59 @@ const Layout = ({
 				</noscript>
 
 
-				{/* SNIPCART */}
+
+
+				<script type="text/javascript">
+					{`silktideCookieBannerManager.updateCookieBannerConfig({
+  background: {
+    showBackground: false
+  },
+  cookieIcon: {
+    position: "bottomLeft"
+  },
+  cookieTypes: [
+    {
+      id: "analytics",
+      name: "Analytics",
+      description: "<p>These cookies are necessary for the website to function properly and cannot be switched off. They help with things like logging in and setting your privacy preferences.</p>",
+      required: false,
+      onAccept: function() {
+        gtag('consent', 'update', {
+          analytics_storage: 'granted',
+        });
+        dataLayer.push({
+          'event': 'consent_accepted_analytics',
+        });
+      },
+      onReject: function() {
+        gtag('consent', 'update', {
+          analytics_storage: 'denied',
+        });
+      }
+    }
+  ],
+  text: {
+    banner: {
+      description: "<p>We use cookies on our site to enhance your user experience, provide personalized content, and analyze our traffic. <a href='https://nextfestival.sk/privacy' target='_blank'>Cookie Policy.</a></p>",
+      acceptAllButtonText: "Accept all",
+      acceptAllButtonAccessibleLabel: "Accept all cookies",
+      rejectNonEssentialButtonText: "Reject non-essential",
+      rejectNonEssentialButtonAccessibleLabel: "Reject non-essential",
+      preferencesButtonText: "Preferences",
+      preferencesButtonAccessibleLabel: "Toggle preferences"
+    },
+    preferences: {
+      title: "Customize your cookie preferences",
+      description: "<p>We respect your right to privacy. You can choose not to allow some types of cookies. Your cookie preferences will apply across our website.</p>",
+      creditLinkText: "Get this banner for free",
+      creditLinkAccessibleLabel: "Get this banner for free"
+    }
+  },
+  position: {
+    banner: "bottomLeft"
+  }
+});`}
+				</script>
 			</Helmet>
 
 			{/* <Header siteTitle={data.site.siteMetadata?.title || `Title`} /> */}
@@ -198,7 +255,11 @@ const Layout = ({
 								<span className="credits">
 									Copyright &copy; NEXT.{" "}
 									<Link to="/privacy">
-										Privacy Policy and Cookies
+										Privacy Policy
+									</Link>
+									{" / "}
+									<Link to="/cookies">
+										Cookies
 									</Link>
 								</span>
 							</div>

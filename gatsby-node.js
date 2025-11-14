@@ -18,7 +18,8 @@ const templateMap = {
 	shop: `shop`,
 	records: `records`,
 	getTickets: `get-tickets`,
-	privacy: `privacy-policy`
+	privacy: `privacy-policy`,
+	cookies: `cookies`
 };
 const EMPTY_ARTIST_IDS = ["cG9zdDo1NDMz", "cG9zdDo1NDM5"];
 
@@ -859,6 +860,13 @@ const initMainPages = async gatsbyUtils => {
 			slug: `privacy`,
 			title: `Privacy Policy`,
 			id: `20211122`
+		},
+		{
+			queryName: false,
+			type: `page`,
+			slug: `cookies`,
+			title: `Cookies`,
+			id: `20211123`
 		}
 	];
 

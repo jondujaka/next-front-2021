@@ -433,3 +433,30 @@ hr {
 	border-top: 3px solid $primaryBlue;
 	margin: 1.5rem 0;
 }
+
+.privacy {
+	max-width: 1200px;
+	h4 {
+		margin-top: 2rem;
+		font-weight: 600;
+	}
+	ul li {
+		display: list-item;
+	}
+	p {
+		font-size: 16px;
+		line-height: 1.4;
+		margin-bottom: 1rem;
+	}
+
+	strong {
+		font-weight: 600 !important;
+	}
+
+	table {
+		th,td {
+			border: 1px solid black;
+			padding-left: 1em;
+		}
+	}
+}
