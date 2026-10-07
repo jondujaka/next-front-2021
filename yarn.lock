@@ -8814,9 +8814,9 @@ optionator@^0.9.1:
     word-wrap "^1.2.5"
 
 ordered-binary@^1.2.4:
-  version "1.5.2"
-  resolved "https://registry.yarnpkg.com/ordered-binary/-/ordered-binary-1.5.2.tgz#2007072bcc4cb3454e250ca8ecc994f092ca03dc"
-  integrity sha512-JTo+4+4Fw7FreyAvlSLjb1BBVaxEQAacmjD3jjuyPZclpbEghTvQZbXBb2qPd2LeIMxiHwXBZUcpmG2Gl/mDEA==
+  version "1.6.2"
+  resolved "https://registry.yarnpkg.com/ordered-binary/-/ordered-binary-1.6.2.tgz#705821f835a9c35aac4a92726e6b762d88954911"
+  integrity sha512-BY+qgDArmYpvvmij141xbkB4Cw8RFLBQM5Zj4MODFb1SyXBRE/xO4Xj/QWbR7aUEBxbkjuNdsFVCL2TmbYrlNg==
 
 os-tmpdir@~1.0.2:
   version "1.0.2"
